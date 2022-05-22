@@ -1,42 +1,65 @@
 package com.twilio;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
+import org.apache.commons.io.IOUtils;
 
 import com.twilio.json.BularioEletronicoConteudoJson;
 import com.twilio.json.BularioEletronicoJson;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Headers;
 
 public class NavegadorPaginaBulario {
-
-	public interface BularioEletronicoClient {
-		@GET("/api/consulta/bulario?count=10&filter[nomeProduto]=Dorflex&page=1")
-		@Headers({ "accept: application/json", "authorization: Guest" })
-		CompletableFuture<BularioEletronicoJson> getBulario();
-	}
 
 	private static BularioEletronicoJson obterBularioEletronico(Retrofit retrofit)
 			throws InterruptedException, ExecutionException {
 		BularioEletronicoClient bularioEletronicoClient = retrofit.create(BularioEletronicoClient.class);
 
-		CompletableFuture<BularioEletronicoJson> response = bularioEletronicoClient.getBulario();
+		CompletableFuture<BularioEletronicoJson> response = bularioEletronicoClient.getBulario(10,"Dorflex",1);
 
 		// do other stuff here while the request is in-flight
 
 		BularioEletronicoJson bularioEletronicoJson = response.get();
 
 		return bularioEletronicoJson;
+	}
+
+	private static void obterArquivoBula(Retrofit retrofit, String nomeArquivo, String chave) throws InterruptedException, ExecutionException {
+		BularioEletronicoClient bularioEletronicoClient = retrofit.create(BularioEletronicoClient.class);
+		
+		bularioEletronicoClient.getArquivoBula(nomeArquivo).enqueue(new Callback<ResponseBody>() {
+			
+			@Override
+			public void onResponse(Call<ResponseBody> arg0, Response<ResponseBody> arg1) {
+				 try {
+                     File path = new File("D:\\Temp\\anvisa\\");
+                     File file = new File(path, "bula"+chave+".pdf");
+                     FileOutputStream fileOutputStream = new FileOutputStream(file);
+                     IOUtils.write(arg1.body().bytes(), fileOutputStream);
+                 }
+                 catch (Exception ex){
+                	 ex.printStackTrace();
+                	 System.out.println("Erro no responde de obter arquivo de bula "+ex.getMessage());
+                 }
+				
+			}
+			
+			@Override
+			public void onFailure(Call<ResponseBody> arg0, Throwable arg1) {
+				// TODO Auto-generated method stub
+				System.out.println("falha ao obter arquivo da bula: "+arg1.getMessage());
+			}
+			
+		});
+		
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -56,7 +79,11 @@ public class NavegadorPaginaBulario {
 				
 				for (BularioEletronicoConteudoJson bularioEletronicoConteudoJson : bularioEletronicoJson.getContent()) {
 					System.out.println("Item: "+bularioEletronicoConteudoJson.toString());
+					
+					obterArquivoBula(retrofit, bularioEletronicoConteudoJson.getIdBulaPacienteProtegido(), bularioEletronicoConteudoJson.getIdBulaPacienteProtegido());
 				}
+				
+
 
 			}
 			else {
@@ -68,14 +95,5 @@ public class NavegadorPaginaBulario {
 			System.out.println(e.getMessage());
 		}
 
-	}
-
-	public static void get(String uri) throws Exception {
-		HttpClient client = HttpClient.newHttpClient();
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(uri)).build();
-
-		HttpResponse<Path> response = client.send(request, BodyHandlers.ofFile(Paths.get("body.txt")));
-
-		System.out.println("Response in file:" + response.body());
 	}
 }
