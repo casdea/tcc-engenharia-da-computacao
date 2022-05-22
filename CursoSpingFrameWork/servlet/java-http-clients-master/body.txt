@@ -1,0 +1,260 @@
+{"error":"br.gov.anvisa.consultas.interceptor.BusinessException: mensagens.MSG-004","detail":"mensagens.MSG-004","validations":{}}<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Consultas - Agência Nacional de Vigilância Sanitária</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="scripts/app/components/anvs-multiselect/anvs-multiselect.css"/>
+
+    <!-- build:css assets/styles/vendor.css -->
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="vendor/open-sans/css/open-sans.css">
+    <link rel="stylesheet" type="text/css" href="vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="vendor/AngularJS-Toaster/toaster.css" />
+    <link rel="stylesheet" href="vendor/ng-table/dist/ng-table.min.css" />
+    <link rel="stylesheet" href="vendor/owl.carousel/dist/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="vendor/owl.carousel/dist/assets/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="vendor/angular-loading/angular-loading.css" />
+    <link rel="stylesheet" href="vendor/angular-tree-control/css/tree-control.css">
+    <link rel="stylesheet" href="vendor/angular-tree-control/css/tree-control-attribute.css">
+    <link rel="stylesheet" href="vendor/angular-ui-select/dist/select.min.css">
+    <!-- endbuild -->
+    <!-- build:css assets/styles/app.css -->
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <script src='assets/scripts/base64.js'></script>
+    <script src='assets/scripts/upperCaseF.js'></script>
+    <!-- endbuild -->
+</head>
+<body ng-app="consultas" >
+
+<div id="barra-brasil" class="no-print"><div id="wrapper-barra-brasil"><div class="brasil-flag"><a href="http://brasil.gov.br" class="link-barra">Brasil</a></div><span class="acesso-info"><a href="http://www.servicos.gov.br/?pk_campaign=barrabrasil&amp;orgao=http://estruturaorganizacional.dados.gov.br/id/unidade-organizacional/36687" class="link-barra" id="barra-brasil-orgao">Serviços</a></span><nav><ul class="list"><li><a href="#" id="menu-icon"></a></li><li class="list-item first"><a href="http://brasil.gov.br/barra#participe" class="link-barra">Participe</a></li><li class="list-item"><a href="http://brasil.gov.br/barra#acesso-informacao" class="link-barra">Acesso à informação</a></li><li class="list-item"><a href="http://www.planalto.gov.br/legislacao" class="link-barra">Legislação</a></li><li class="list-item last last-item"><a href="http://brasil.gov.br/barra#orgaos-atuacao-canais" class="link-barra">Canais</a></li></ul></nav><nav id="brasil-vlibras"><ul><li><a class="logo-vlibras" href="#"></a><a href="http://www.vlibras.gov.br/" class="link-vlibras">Acessível em Libras</a></li></ul></nav></div></div>
+
+<header id="header-portal" class="no-print">
+    <div class="container max-width">
+        <div class="row-custom">
+            <div class="col-md-6 menu-ancoras hidden-xs">
+                <ul>
+                    <li>
+                        <a accesskey="1" href="#conteudo">
+                            Ir para o conteúdo <span>1</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a accesskey="2" href="#menu">
+                            Ir para o menu <span>2</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a accesskey="3" href="#busca">
+                            Ir para a busca <span>3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a accesskey="4" href="#footer">
+                            Ir para o rodapé <span>4</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6 col-sm-12 menu-acessibilidade">
+                <ul>
+                    <li>
+                        <a href="acessibilidade" title="Acessibilidade" accesskey="5">Acessibilidade</a>
+                    </li>
+                    <li>
+                        <a href="#" title="Alto Contraste" id="alto_contraste_id" accesskey="6">Alto Contraste</a>
+                    </li>
+                    <li>
+                        <a href="mapa-do-site" title="Mapa do Site" accesskey="7">Mapa do Site</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row-custom">
+            <div class="col-md-7 col-sm-12">
+                <a href="#/login" title="Ir para a página inicial" class="titulo-portal">
+                    <h1 translate>Consultas</h1>
+                    <p>Anvisa - Agência Nacional de Vigilância Sanitária</p>
+                </a>
+            </div>
+
+            <!-- uiView: perfil --><div ui-view="perfil" class="ng-scope"></div>
+
+        </div>
+    </div>
+
+    <!-- section-->
+    <!-- uiView: menu --><div ui-view="menu" class="ng-scope"></div>
+    <!-- fim - section-->
+</header>
+
+
+<toaster-container toaster-options="{'close-button': true}"></toaster-container>
+
+<div class="container" dw-loading="content"
+     dw-loading-options="{text: ('global.carregando' | translate) }"  >
+    <ui-breadcrumbs displayname-property="data.displayName"
+                    template-url="vendor/angular-utils-ui-breadcrumbs/uiBreadcrumbs.tpl.html">
+    </ui-breadcrumbs>
+
+    <div ui-view="content"></div>
+</div>
+
+<!-- build:js scripts/vendor.js -->
+<script src="vendor/modernizr/modernizr.js"></script>
+<script src="vendor/jquery/dist/jquery.js"></script>
+<script src="vendor/angular/angular.js"></script>
+<script src="vendor/angular-animate/angular-animate.js"></script>
+<script src="vendor/AngularJS-Toaster/toaster.js"></script>
+<script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="vendor/angular-confirm-modal/angular-confirm.min.js"></script>
+<script src="vendor/angular-i18n/angular-locale_pt-br.js"></script>
+<script src="vendor/angular-messages/angular-messages.js"></script>
+<script src="vendor/angular-sanitize/angular-sanitize.js"></script>
+<script src="vendor/angular-translate/angular-translate.js"></script>
+<script src="vendor/messageformat/messageformat.js"></script>
+<script src="vendor/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js"></script>
+<script src="vendor/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
+<script src="vendor/angular-ui-mask/dist/mask.js"></script>
+<script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="vendor/angular-ui-select/dist/select.min.js"></script>
+<script src="vendor/angular-utils-ui-breadcrumbs/uiBreadcrumbs.js"></script>
+<script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+<script src="vendor/jquery-mask-plugin/dist/jquery.mask.js"></script>
+<script src="vendor/ng-table/dist/ng-table.min.js"></script>
+<script src="vendor/lodash/lodash.js"></script>
+<script src="vendor/restangular/dist/restangular.js"></script>
+<script src="vendor/stringjs/dist/string.min.js"></script>
+<script src="vendor/messageformat/locale/pt.js"></script>
+<script src="vendor/jquery-form/jquery.form.js"></script>
+<script src="vendor/angular-input-masks/angular-input-masks-standalone.min.js"></script>
+<script src="vendor/moment/min/moment.min.js"></script>
+<script src="vendor/moment/min/moment-with-locales.min.js"></script>
+<script src="vendor/owl.carousel/dist/owl.carousel.min.js"></script>
+<script src="vendor/angular-jwt/dist/angular-jwt.min.js"></script>
+<script src="vendor/angular-permission/dist/angular-permission.min.js"></script>
+<script src="vendor/angular-permission/dist/angular-permission-ui.min.js"></script>
+<script src="vendor/spin.js/spin.js"></script>
+<script src="vendor/angular-loading/angular-loading.min.js"></script>
+<script src="vendor/file-saver/FileSaver.js"></script>
+<script src="vendor/angular-tree-control/angular-tree-control.js"></script>
+<!-- endbuild -->
+<!-- build:js scripts/app.js -->
+<script src="scripts/app/app.js"></script>
+<!-- Piwik -->
+<script src="scripts/app/piwik.js"></script>
+
+<!-- Aplicação -->
+<script src="scripts/app/main/main.controller.js"></script>
+<script src="scripts/app/medicamentos/medicamentos.controller.js"></script>
+<script src="scripts/app/alimentos/alimentos.controller.js"></script>
+<script src="scripts/app/produtos/produtos.controller.js"></script>
+<script src="scripts/app/captcha/captcha.controller.js"></script>
+<script src="scripts/app/monitoramento/monitoramento.controller.js"></script>
+<script src="scripts/app/funcionamento/funcionamentoTipo.controller.js"></script>
+<script src="scripts/app/funcionamento/nacional/filtro/filtro.controller.js"></script>
+<script src="scripts/app/funcionamento/nacional/result/result.controller.js"></script>
+<script src="scripts/app/funcionamento/nacional/detail/detail.controller.js"></script>
+<script src="scripts/app/funcionamento/nacional/nacional.controller.js"></script>
+<script src="scripts/app/funcionamento/internacional/filtro/filtro.controller.js"></script>
+<script src="scripts/app/funcionamento/internacional/result/result.controller.js"></script>
+<script src="scripts/app/funcionamento/internacional/detail/detail.controller.js"></script>
+<script src="scripts/app/funcionamento/internacional/internacional.controller.js"></script>
+<script src="scripts/app/documentos/documentos.controller.js"></script>
+<script src="scripts/app/certificado/filtro/filtro.controller.js"></script>
+<script src="scripts/app/certificado/result/result.controller.js"></script>
+<script src="scripts/app/certificado/detail/detail.controller.js"></script>
+<script src="scripts/app/certificado/certificado.controller.js"></script>
+<script src="scripts/app/certificado/certificado-medicamento.controller.js"></script>
+<script src="scripts/app/dossie/dossie.controller.js"></script>
+<script src="scripts/app/cosmeticos/cosmeticos.controller.js"></script>
+<script src="scripts/app/cosmeticos/registrado/cosmeticos.controller.js"></script>
+<script src="scripts/app/cosmeticos/notificado/cosmeticos.controller.js"></script>
+<script src="scripts/app/cosmeticos/regularizado/cosmeticos.controller.js"></script>
+<script src="scripts/app/saude/saude.controller.js"></script>
+<script src="scripts/app/saneantes/saneantes.controller.js"></script>
+<script src="scripts/app/saneantes/produto/saneantes.controller.js"></script>
+<script src="scripts/app/saneantes/notificado/saneantes.controller.js"></script>
+<script src="scripts/app/genericos/genericos.controller.js"></script>
+<script src="scripts/app/filas/fila.controller.js"></script>
+<script src="scripts/app/listas/lista.controller.js"></script>
+<script src="scripts/app/tabaco/tabaco.controller.js"></script>
+<script src="scripts/app/cannabis/cannabis.controller.js"></script>
+<script src="scripts/app/pareceres/parecer.controller.js"></script>
+<script src="scripts/app/bulario/bulario.controller.js"></script>
+<script src="scripts/app/nomesTecnicos/nomesTecnicos.controller.js"></script>
+
+<!-- Services -->
+<script src="scripts/services/app.service.js"></script>
+<script src="scripts/services/alimento.service.js"></script>
+<script src="scripts/services/consulta.service.js"></script>
+<script src="scripts/services/certificado.service.js"></script>
+<script src="scripts/services/dossie.service.js"></script>
+<script src="scripts/services/empresa.service.js"></script>
+<script src="scripts/services/empresaInternacional.service.js"></script>
+<script src="scripts/services/substancia.service.js"></script>
+<script src="scripts/services/categoria.produto.service.js"></script>
+<script src="scripts/services/monitoramento.service.js"></script>
+<script src="scripts/services/uf.service.js"></script>
+<script src="scripts/services/pais.service.js"></script>
+<script src="scripts/services/documento.service.js"></script>
+<script src="scripts/services/valida.input.service.js"></script>
+<script src="scripts/services/medicamento.service.js"></script>
+<script src="scripts/services/fila.service.js"></script>
+<script src="scripts/services/grupoPopulacional.service.js"></script>
+<script src="scripts/services/viaAdministracao.service.js"></script>
+<script src="scripts/services/composicaoAlergenico.service.js"></script>
+<script src="scripts/services/cannabis.service.js"></script>
+<script src="scripts/services/tabaco.service.js"></script>
+<script src="scripts/services/parecer.service.js"></script>
+<script src="scripts/services/bulario.service.js"></script>
+<script src="scripts/services/informacaoRegulatoria.service.js"></script>
+
+<!-- endbuild -->
+<!-- build:js scripts/components.js -->
+
+<!-- Componentes -->
+<script src="scripts/components/components.js"></script>
+<script src="scripts/components/filters/mask.filter.js"></script>
+<script src="scripts/components/message/message.directive.js"></script>
+<script src="scripts/components/message/message.factory.js"></script>
+<script src="scripts/components/confirm/confirm.service.js"></script>
+<script src="scripts/components/pagination/ngtableparams.anvisa.js"></script>
+<script src="scripts/components/date/datepicker.anvisa.directive.js"></script>
+<script src="scripts/components/date/date-month-year-picker.anvisa.directive.js"></script>
+<script src="scripts/components/modal-form/modal-form.directive.js"></script>
+<script src="scripts/components/anvs-form-group/form-group.directive.js"></script>
+<script src="scripts/components/anvs-label/label.directive.js"></script>
+<script src="scripts/components/anvs-message/message.directive.js"></script>
+<script src="scripts/components/confirm/confirm.service.js"></script>
+<script src="scripts/components/pagination/ngtableparams.anvisa.js"></script>
+<script src="scripts/components/owl-carousel/owl-carousel.directive.js"></script>
+<script src="scripts/components/autocomplete/autocomplete.directive.js"></script>
+<script src="scripts/components/inline-spinner/inline-spinner.directive.js"></script>
+<script src="scripts/app/components/input-empresa/input-empresa.directive.js"></script>
+<script src="scripts/app/components/input-empresa-extendido/input-empresa.directive.js"></script>
+<script src="scripts/app/components/input-empresa-internacional/input-empresa-internacional.directive.js"></script>
+<script src="scripts/app/components/input-empresa-dossie/input-empresa-dossie.directive.js"></script>
+<script src="scripts/app/components/input-substancia/input-substancia.directive.js"></script>
+<script src="scripts/app/components/captcha/captcha.directive.js"></script>
+<script src="scripts/app/components/monitoramento/monitoramento.directive.js"></script>
+<script src="scripts/app/components/monitoramentoGenerico/monitoramento.directive.js"></script>
+<script src="scripts/app/components/input-numero/input-numero.directive.js"></script>
+<script src="scripts/app/components/anvs-radio/anvs-radio.directive.js"></script>
+<script src="scripts/app/components/anvs-radio/anvs-radio-sim-nao.directive.js"></script>
+<script src="scripts/app/components/anvs-select/anvs-select.directive.js"></script>
+<script src="scripts/app/components/anvs-multiselect/anvs-multiselect.directive.js"></script>
+<script src="scripts/app/components/input-search/input-search.directive.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+</script>
+<!-- endbuild -->
+</body>
+</html>

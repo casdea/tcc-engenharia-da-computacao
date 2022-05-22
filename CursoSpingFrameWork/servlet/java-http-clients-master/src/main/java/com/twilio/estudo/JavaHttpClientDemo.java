@@ -1,4 +1,4 @@
-package com.twilio;
+package com.twilio.estudo;
 
 import java.io.IOException;
 import java.net.URI;
@@ -7,6 +7,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
+
+import com.twilio.JsonBodyHandler;
 
 public class JavaHttpClientDemo {
 
