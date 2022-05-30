@@ -1,0 +1,184 @@
+**** *ARTIGO_DORFLEX
+
+Propoxifeno: o uso concomitante de orfenadrina com propoxifeno pode causar confusão, ansiedade e tremores. 
+
+ 
+
+Fenotiazínicos: os fenotiazínicos, como a clorpromazina, podem interferir no controle de termorregulação corporal, causando tanto 
+hipotermia como hipertermia. A dipirona pode potencializar eventual hipotermia causada por fenotiazínicos. 
+
+ 
+
+Antipsicóticos: agentes anticolinérgicos, como a orfenadrina, não controlam a discinesia tardia associada ao uso prolongado de 
+antipsicóticos. Seu uso pode mesmo exacerbar os sintomas de liberação extrapiramidal associados a estas drogas. 
+
+ 
+
+Indução farmacocinética de enzimas metabolizadoras: 
+
+A dipirona pode induzir enzimas metabolizadoras, incluindo CYP2B6 e CYP3A4. 
+
+A co-administração de dipirona com substratos do CYP2B6 e/ou CYP3A4, como bupropiona, efavirenz, metadona, ciclosporina, tacrolimus 
+ou sertralina, pode causar uma redução nas concentrações plasmáticas destes medicamentos. 
+
+Portanto, recomenda-se cautela quando dipirona e substrato de CYP2B6 e/ou CYP3A4 são administrados concomitantemente; a resposta 
+clínica e/ou os níveis do medicamento devem ser seguidos de monitoramento terapêutico do medicamento. 
+
+ 
+
+valproato: A dipirona pode diminuir os níveis séricos de valproato quando coadministrado, o que pode resultar em eficácia potencialmente 
+diminuída do valproato. Os prescritores devem monitorar a resposta clínica (controle das convulsões ou controle do humor) e considerar o 
+monitoramento dos níveis séricos de valproato, conforme apropriado. 
+
+
+ 
+
+Adicionar dipirona ao metotrexato pode aumentar a hematotoxicidade do metotrexato, particularmente em pacientes idosos. Portanto, esta 
+combinação deve ser evitada. 
+
+ 
+
+A dipirona pode reduzir o efeito do ácido acetilsalicílico na agregação plaquetária, quando tomado concomitantemente. Portanto, esta 
+combinação deve ser usada com cautela em pacientes que tomam ácido acetil salicílico em baixas doses para proteção cardiovascular. 
+
+ 
+
+ 
+
+Medicamento-alimento: não há dados disponíveis até o momento sobre a administração concomitante de alimentos e DORFLEX. 
+
+ 
+
+Medicamento-exames laboratoriais: foram reportadas interferências em testes laboratoriais que utilizam reações de Trinder (ex.: testes 
+para medir níveis séricos de creatinina, triglicérides, colesterol HDL e ácido úrico) em pacientes utilizando dipirona. 
+
+
+**** *ARTIGO_GERMED
+
+Alterações fisiológicas resultantes da cessação tabágica em si, com ou sem tratamento com cloridrato de bupropiona, 
+podem influenciar a farmacocinética de certas drogas usadas concomitantemente. 
+
+A bupropiona é metabolizada em seu principal metabólito ativo, a hidroxibupropiona, sobretudo através do citocromo 
+P450 2B6, o CYP2B6 (vide “Propriedades Farmacocinéticas” em “Características Farmacológicas”). Deve-se ter 
+cuidado ao administrar concomitantemente cloridrato de bupropiona e drogas que afetam a isoenzima CYP2B6, como 
+orfenadrina, ciclofosfamida, isofosfamida, ticlopidina e clopidogrel. 
+
+Embora a bupropiona não seja metabolizada pela isoenzima CYP2D6, estudos in vitro com P450 humanos 
+demonstraram que a bupropiona e a hidroxibupropiona são inibidores da via CYP2D6. Em um estudo de 
+farmacocinética em humanos, a administração de bupropiona aumentou os níveis plasmáticos da desipramina. 
+
+Esse efeito foi mantido por pelo menos sete dias após a última dose de bupropiona. Por esse motivo, a terapia 
+concomitante com drogas predominantemente metabolizadas por essa isoenzima (tais como betabloqueadores, 
+antiarrítmicos, ISRSs, TCAs, antipsicóticos) deve ser iniciada com a menor dose da faixa terapêutica da medicação 
+concomitante. Se cloridrato de bupropiona for adicionado ao tratamento de pacientes que já estejam recebendo drogas 
+metabolizadas pela isoenzima CYP2D6, deve-se considerar a redução da dose da medicação original, particularmente se 
+ela tiver índice terapêutico estreito (vide “Características Farmacológicas”). 
+
+Drogas que requerem ativação metabólica pelo CYP2D6, a fim de serem eficazes (por exemplo, tamoxifeno), podem ter 
+uma eficácia reduzida quando administradas concomitantemente com inibidores da CYP2D6, como a bupropiona. 
+
+Apesar do citalopram não ser primariamente metabolizado pelo CYP2D6, em um estudo a bupropiona aumentou a 
+Cmáx e a ASC do citalopram em 30% e 40%, respectivamente. 
+
+Em virtude do extenso metabolismo da bupropiona, a coadministração de agentes reconhecidamente “indutores do 
+metabolismo” (como a carbamazepina, o fenobarbital, fenitoína, ritonavir e efavirenz) ou inibidores do metabolismo 
+pode afetar a atividade clínica dessa droga. 
+
+Em uma série de estudos clínicos com voluntários sadios, o uso de ritonavir 100 ou 600 mg duas vezes ao dia ou de 
+ritonavir 100 mg associado ao lopinavir 400 mg duas vezes ao dia reduziu a exposição da bupropiona e de seus 
+principais metabólitos em aproximadamente 20% a 80%, de maneira dependente de dose. De modo similar, com 
+efavirenz 600 mg uma vez ao dia por duas semanas essa redução foi de cerca de 55%. Acredita-se que tal efeito do 
+ritonavir associado a lopinavir e do efavirenz ocorra devido à indução do metabolismo da bupropiona. Pacientes que 
+estejam recebendo qualquer uma dessas drogas em associação com bupropiona podem precisar de doses maiores da 
+bupropiona, mas a dose máxima recomendada não deve ser excedida. 
+
+
+A despeito de não haver estudos clínicos que identifiquem interações farmacocinéticas entre a bupropiona e o álcool, 
+existem relatos, que são raros, de eventos neuropsiquiátricos adversos ou de redução da tolerância alcoólica em 
+pacientes que fazem uso de bebidas alcoólicas durante o tratamento. O consumo de álcool durante o uso de cloridrato de 
+bupropiona deve ser minimizado ou evitado. 
+
+Os dados pós-comercialização mostram uma possível interação farmacodinâmica entre bupropiona e ISRSs e IRSNs 
+resultando em um risco aumentado de síndrome da serotonina (vide “Advertências e Precauções”). 
+
+Dados clínicos limitados sugerem maior incidência de reações adversas neuropsiquiátricas em pacientes que recebem 
+bupropiona concomitantemente com levodopa ou amantadina. Recomenda-se cautela na administração de cloridrato de 
+bupropiona a pacientes que estejam recebendo um desses dois fármacos. 
+
+Doses orais múltiplas de bupropiona não tiveram efeitos estatisticamente significativos sobre a farmacocinética da dose 
+única da lamotrigina em 12 indivíduos e mostraram apenas um ligeiro aumento da ASC de lamotrigina glicuronídeo. 
+
+Estudos sugerem que a exposição à bupropiona pode aumentar quando os comprimidos de liberação prolongada são 
+tomados junto com alimentos (vide “Características Farmacológicas”). 
+
+A coadministração de digoxina com bupropiona pode reduzir os níveis de digoxina. A ASC0-24h da digoxina diminuiu 
+1,6 vezes e a clearance renal aumentou 1,8 vezes em estudo com voluntários sadios. 
+
+ 
+
+Testes laboratoriais 
+
+A bupropiona tem demonstrado interferir em testes usados para detecção de drogas em urina, podendo resultar em 
+falsos positivos, particularmente para anfetaminas. Um método laboratorial alternativo mais específico deve ser 
+utilizado para confirmar um resultado positivo. 
+
+**** *ARTIGO_EMS
+
+Alterações fisiológicas resultantes da cessação tabágica em si, com ou sem tratamento com cloridrato de bupropiona, 
+podem influenciar a farmacocinética de certas drogas usadas concomitantemente. 
+
+A bupropiona é metabolizada em seu principal metabólito ativo, a hidroxibupropiona, sobretudo através do citocromo 
+P450 2B6, o CYP2B6 (vide “Propriedades Farmacocinéticas” em “Características Farmacológicas”). Deve-se ter cuidado 
+ao administrar concomitantemente cloridrato de bupropiona e drogas que afetam a isoenzima CYP2B6, como orfenadrina, 
+ciclofosfamida, isofosfamida, ticlopidina e clopidogrel. 
+
+Embora a bupropiona não seja metabolizada pela isoenzima CYP2D6, estudos in vitro com P450 humanos demonstraram 
+que a bupropiona e a hidroxibupropiona são inibidores da via CYP2D6. Em um estudo de farmacocinética em humanos, 
+a administração de bupropiona aumentou os níveis plasmáticos da desipramina. 
+
+Esse efeito foi mantido por pelo menos sete dias após a última dose de bupropiona. Por esse motivo, a terapia concomitante 
+com drogas predominantemente metabolizadas por essa isoenzima (tais como betabloqueadores, antiarrítmicos, ISRSs, 
+TCAs, antipsicóticos) deve ser iniciada com a menor dose da faixa terapêutica da medicação concomitante. Se cloridrato 
+de bupropiona for adicionado ao tratamento de pacientes que já estejam recebendo drogas metabolizadas pela isoenzima 
+CYP2D6, deve-se considerar a redução da dose da medicação original, particularmente se ela tiver índice terapêutico 
+estreito (vide “Características Farmacológicas”). 
+
+Drogas que requerem ativação metabólica pelo CYP2D6, a fim de serem eficazes (por exemplo, tamoxifeno), podem ter 
+uma eficácia reduzida quando administradas concomitantemente com inibidores da CYP2D6, como a bupropiona. 
+
+Apesar do citalopram não ser primariamente metabolizado pelo CYP2D6, em um estudo a bupropiona aumentou a Cmáx 
+e a ASC do citalopram em 30% e 40%, respectivamente. 
+
+Em virtude do extenso metabolismo da bupropiona, a coadministração de agentes reconhecidamente “indutores do 
+metabolismo” (como a carbamazepina, o fenobarbital, fenitoína, ritonavir e efavirenz) ou inibidores do metabolismo pode 
+afetar a atividade clínica dessa droga. 
+
+Em uma série de estudos clínicos com voluntários sadios, o uso de ritonavir 100 ou 600 mg duas vezes ao dia ou de 
+ritonavir 100 mg associado ao lopinavir 400 mg duas vezes ao dia reduziu a exposição da bupropiona e de seus principais 
+metabólitos em aproximadamente 20% a 80%, de maneira dependente de dose. De modo similar, com efavirenz 600 mg 
+uma vez ao dia por duas semanas essa redução foi de cerca de 55%. Acredita-se que tal efeito do ritonavir associado a 
+lopinavir e do efavirenz ocorra devido à indução do metabolismo da bupropiona. Pacientes que estejam recebendo 
+qualquer uma dessas drogas em associação com bupropiona podem precisar de doses maiores da bupropiona, mas a dose 
+máxima recomendada não deve ser excedida. 
+
+A despeito de não haver estudos clínicos que identifiquem interações farmacocinéticas entre a bupropiona e o álcool, 
+existem relatos, que são raros, de eventos neuropsiquiátricos adversos ou de redução da tolerância alcoólica em pacientes 
+que fazem uso de bebidas alcoólicas durante o tratamento. O consumo de álcool durante o uso de cloridrato de bupropiona 
+deve ser minimizado ou evitado. 
+
+Os dados pós-comercialização mostram uma possível interação farmacodinâmica entre bupropiona e ISRSs e IRSNs 
+resultando em um risco aumentado de síndrome da serotonina (vide “Advertências e Precauções”). 
+
+Dados clínicos limitados sugerem maior incidência de reações adversas neuropsiquiátricas em pacientes que recebem 
+bupropiona concomitantemente com levodopa ou amantadina. Recomenda-se cautela na administração de cloridrato de 
+bupropiona a pacientes que estejam recebendo um desses dois fármacos. 
+
+
+Doses orais múltiplas de bupropiona não tiveram efeitos estatisticamente significativos sobre a farmacocinética da dose 
+única da lamotrigina em 12 indivíduos e mostraram apenas um ligeiro aumento da ASC de lamotrigina glicuronídeo. 
+
+Estudos sugerem que a exposição à bupropiona pode aumentar quando os comprimidos de liberação prolongada são 
+tomados junto com alimentos (vide “Características Farmacológicas”). 
+
+A coadministração de digoxina com bupropiona pode reduzir os níveis de digoxina. A ASC0-24h da digoxina diminuiu 
+1,6 vezes e a clearance renal aumentou 1,8 vezes em estudo com voluntários sadios. 
