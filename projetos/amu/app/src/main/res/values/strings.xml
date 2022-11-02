@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">amu</string>
+    <string name="consulta_medicamentos">Consulta de Medicamentos</string>
+    <string name="horarios_medicamentos">Horários de Medicamentos</string>
+    <string name="uso_medicamentos">Uso de Medicamentos</string>
+    <string name="cadastro_medicamentos">Cadastro de Medicamentos</string>
+    <string name="estoque_medicamentos">Estoque de Medicamentos</string>
+    <string name="perfil_usuario">Perfil de Usuário</string>
+</resources>
