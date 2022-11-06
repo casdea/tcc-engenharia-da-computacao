@@ -6,4 +6,8 @@
     <string name="cadastro_medicamentos">Cadastro de Medicamentos</string>
     <string name="estoque_medicamentos">Estoque de Medicamentos</string>
     <string name="perfil_usuario">Perfil de Usuário</string>
+    <string name="title_activity_cadastro_medicamento">Cadastro de Medicamentos</string>
+    <string name="nome_medicamento">Nome do Medicamento</string>
+    <string name="pesquisar">Pesquisar</string>
+    <string name="hint_pesquisar">Digite o argumento e pesquise</string>
 </resources>
