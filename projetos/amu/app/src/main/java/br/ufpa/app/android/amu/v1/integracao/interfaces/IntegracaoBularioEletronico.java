@@ -6,5 +6,6 @@ import java.util.List;
 
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 
-public interface IntegracaoUsuario {
+public interface IntegracaoBularioEletronico {
+    public List<MedicamentoRetDTO> consultarDadosMedicamentos(Context context, String nomeComercial);
 }
