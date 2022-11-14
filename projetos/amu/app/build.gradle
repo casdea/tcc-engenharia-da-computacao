@@ -38,6 +38,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.squareup.retrofit2:retrofit:2.7.2'
     implementation 'com.squareup.retrofit2:converter-jackson:2.7.2'
-    implementation 'com.itextpdf:itextpdf:5.1.2'
+    //implementation 'com.itextpdf:itextpdf:5.1.2'
+    implementation 'com.itextpdf:itextpdf:5.5.10'
     implementation 'commons-io:commons-io:2.11.0'
 }

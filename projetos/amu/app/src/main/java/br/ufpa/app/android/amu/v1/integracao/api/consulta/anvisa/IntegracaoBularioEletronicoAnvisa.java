@@ -2,6 +2,7 @@ package br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa;
 
 import android.content.Context;
 import android.os.Environment;
+import android.webkit.DownloadListener;
 
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import br.ufpa.app.android.amu.v1.integracao.dto.ConsultarMedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoBularioEletronico;
 import okhttp3.ResponseBody;
@@ -32,21 +34,17 @@ public class IntegracaoBularioEletronicoAnvisa implements IntegracaoBularioEletr
     private static final String DIRETORIO_PDF = "pdfs";
     private static final String DIRETORIO_TXT = "txts";
     private static final String URL_CONSULTAS_API_ANVISA = "https://consultas.anvisa.gov.br";
-    private int arquivosBaixados;
 
     @Override
-    public List<MedicamentoRetDTO> consultarDadosMedicamentos(Context context, String nomeComercial) {
+    public ConsultarMedicamentoRetDTO consultarDadosMedicamentos(Context context, String nomeComercial) {
 
-        List<MedicamentoRetDTO> medicamentos = new ArrayList<>();
+        ConsultarMedicamentoRetDTO consultarMedicamentoRetDTO = new ConsultarMedicamentoRetDTO(true, "");
 
         try {
 
-            Retrofit retrofit = RetrofitBuilder.getInstance(context);// new Retrofit.Builder().baseUrl(URL_CONSULTAS_API_ANVISA)
-                    //.addConverterFactory(JacksonConverterFactory.create()).build();
+            Retrofit retrofit = RetrofitBuilder.getInstance(context);
 
             BularioEletronicoJson bularioEletronicoJson = obterBularioEletronico(retrofit, nomeComercial);
-
-            arquivosBaixados = 0;
 
             if (bularioEletronicoJson != null) {
 
@@ -56,40 +54,14 @@ public class IntegracaoBularioEletronicoAnvisa implements IntegracaoBularioEletr
 
                 for (BularioEletronicoConteudoJson bularioEletronicoConteudoJson : bularioEletronicoJson.getContent()) {
                     System.out.println("Item: " + bularioEletronicoConteudoJson.toString());
-                    medicamentos.add(new MedicamentoRetDTO(bularioEletronicoConteudoJson.getNomeProduto(),bularioEletronicoConteudoJson.getRazaoSocial()));
-
-                    //obterArquivoBula(retrofit, bularioEletronicoConteudoJson.getIdBulaPacienteProtegido(),
-                    //        bularioEletronicoConteudoJson.getIdBulaPacienteProtegido());
-
-                    //obterArquivoBula(retrofit, bularioEletronicoConteudoJson.getIdBulaProfissionalProtegido(),
-                    //        bularioEletronicoConteudoJson.getIdBulaProfissionalProtegido());
+                    consultarMedicamentoRetDTO.getMedicamentos().add(
+                            new MedicamentoRetDTO(
+                                    bularioEletronicoConteudoJson.getNomeProduto(),
+                                    bularioEletronicoConteudoJson.getRazaoSocial(),
+                                    bularioEletronicoConteudoJson.getIdBulaPacienteProtegido(),
+                                    bularioEletronicoConteudoJson.getIdProduto()+"_"+bularioEletronicoConteudoJson.getData()+".pdf",
+                                    bularioEletronicoConteudoJson.getIdProduto()+"_"+bularioEletronicoConteudoJson.getData()+".txt"));
                 }
-
-                System.out.println("Aguardando os arquivos serem baixados...");
-
-                int contador = 0;
-
-                //while (contador <= 5)
-                //{
-                  //  if (arquivosBaixados == 4) break;
-
-                  //  Thread.sleep(15000);
-                  //  contador++;
-                //}
-
-                System.out.println("Transformando em texto...");
-
-                //String dirPdf = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/"+ DIRETORIO_PDF;
-                //String dirTxt = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/"+ DIRETORIO_TXT;
-
-                for (BularioEletronicoConteudoJson bularioEletronicoConteudoJson : bularioEletronicoJson.getContent()) {
-                    //parsePdf(dirPdf+"/"+bularioEletronicoConteudoJson.getIdBulaPacienteProtegido()+".pdf", dirTxt+"/"+bularioEletronicoConteudoJson.getIdBulaPacienteProtegido()+".txt");
-                    //parsePdf(dirPdf+bularioEletronicoConteudoJson.getIdBulaProfissionalProtegido()+".pdf", dirTxt+bularioEletronicoConteudoJson.getIdBulaProfissionalProtegido()+".txt");
-
-                    System.out.println("Arquivo: " + bularioEletronicoConteudoJson.toString());
-                    //return "Arquivo: " + bularioEletronicoConteudoJson.toString();
-                }
-
             } else {
                 System.out.println("CONSULTA NAO FOI EXECUTADA");
             }
@@ -97,9 +69,11 @@ public class IntegracaoBularioEletronicoAnvisa implements IntegracaoBularioEletr
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
+            consultarMedicamentoRetDTO.setOperacaoExecutada(false);
+            consultarMedicamentoRetDTO.setMensagemExecucao(e.getMessage());
         }
 
-        return medicamentos;
+        return consultarMedicamentoRetDTO;
     }
 
     private BularioEletronicoJson obterBularioEletronico(Retrofit retrofit, String nomeComercial)
@@ -114,69 +88,84 @@ public class IntegracaoBularioEletronicoAnvisa implements IntegracaoBularioEletr
         return bularioEletronicoJson;
     }
 
-    private void obterArquivoBula(Retrofit retrofit, String nomeArquivo, String chave)
-            throws InterruptedException, ExecutionException {
-        BularioEletronicoClient bularioEletronicoClient = retrofit.create(BularioEletronicoClient.class);
+    public void downloadBulaOld(Context context, String nomeArquivoBulaPaciente) {
 
-        System.out.println("Enfieirando download do arquivo "+nomeArquivo);
+        try {
+            Retrofit retrofit = RetrofitBuilder.getInstance(context);
 
-        bularioEletronicoClient.getArquivoBula(nomeArquivo).enqueue(new Callback<ResponseBody>() {
+            BularioEletronicoClient bularioEletronicoClient = retrofit.create(BularioEletronicoClient.class);
 
-            @Override
-            public void onResponse(Call<ResponseBody> arg0, Response<ResponseBody> arg1) {
-                try {
-                    File path = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), DIRETORIO_PDF);
+            System.out.println("Enfieirando download do arquivo " + nomeArquivoBulaPaciente);
 
-                    if (!path.exists()) {
-                        if (!path.mkdirs()) {
-                            throw new Exception("Diretorio não foi criado "+DIRETORIO_PDF);
-                        } else {
-                            //create new folder
-                        }
+            bularioEletronicoClient.getArquivoBula(nomeArquivoBulaPaciente).enqueue(new Callback<ResponseBody>() {
+
+                @Override
+                public void onResponse(Call<ResponseBody> arg0, Response<ResponseBody> arg1) {
+                    try {
+                        File path = UtilAvisa.criarDiretorio(DIRETORIO_PDF);
+
+                        UtilAvisa.criarDiretorio(DIRETORIO_TXT);
+
+                        File file = new File(path, nomeArquivoBulaPaciente + ".pdf");
+                        FileOutputStream fileOutputStream = new FileOutputStream(file);
+                        IOUtils.write(arg1.body().bytes(), fileOutputStream);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        System.out.println("Erro ao Obter arquivo de bula " + ex.getMessage());
                     }
-
-                    File pathTxt = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), DIRETORIO_TXT);
-
-                    if (!pathTxt.exists()) {
-                        if (!pathTxt.mkdirs()) {
-                            throw new Exception("Diretorio não foi criado "+DIRETORIO_TXT);
-                        } else {
-                            //create new folder
-                        }
-                    }
-
-                    File file = new File(path, chave + ".pdf");
-                    FileOutputStream fileOutputStream = new FileOutputStream(file);
-                    IOUtils.write(arg1.body().bytes(), fileOutputStream);
-                    arquivosBaixados++;
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    System.out.println("Erro no responde de obter arquivo de bula " + ex.getMessage());
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> arg0, Throwable arg1) {
-                // TODO Auto-generated method stub
-                System.out.println("falha ao obter arquivo da bula: " + arg1.getMessage());
-            }
+                @Override
+                public void onFailure(Call<ResponseBody> arg0, Throwable arg1) {
+                    // TODO Auto-generated method stub
+                    System.out.println("falha ao obter arquivo de bula: " + arg1.getMessage());
+                }
 
-        });
-
-    }
-
-    public static void parsePdf(String pdf, String txt) throws IOException {
-        PdfReader reader = new PdfReader(pdf);
-        PdfReaderContentParser parser = new PdfReaderContentParser(reader);
-        PrintWriter out = new PrintWriter(new FileOutputStream(txt));
-        TextExtractionStrategy strategy;
-        for (int i = 1; i <= reader.getNumberOfPages(); i++) {
-            strategy = parser.processContent(i, new SimpleTextExtractionStrategy());
-            out.println(strategy.getResultantText());
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
-        out.flush();
-        out.close();
-        reader.close();
     }
 
+    @Override
+    public void downloadBula(Context context, String nomeArquivoBulaPaciente) {
+
+        try {
+            Retrofit retrofit = RetrofitBuilder.getInstance(context);
+
+            BularioEletronicoClient bularioEletronicoClient = retrofit.create(BularioEletronicoClient.class);
+
+            System.out.println("Enfieirando download do arquivo " + nomeArquivoBulaPaciente);
+
+            Response<ResponseBody> arg = bularioEletronicoClient.getArquivoBula(nomeArquivoBulaPaciente).execute();
+
+            File path = UtilAvisa.criarDiretorio(DIRETORIO_PDF);
+
+            UtilAvisa.criarDiretorio(DIRETORIO_TXT);
+
+            File file = new File(path, nomeArquivoBulaPaciente + ".pdf");
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            IOUtils.write(arg.body().bytes(), fileOutputStream);
+        } catch (
+                Exception e) {
+            e.printStackTrace();
+            System.out.println("falha ao obter arquivo de bula: " + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public String obterTextoBula(MedicamentoRetDTO medicamentoRetDTO) {
+        try {
+            //downloadBula(context, nomeArquivoBulaPaciente);
+            new DownloadBulaTask().execute(medicamentoRetDTO);
+
+            return "";
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return "Não foi possivel obter texto da bula. Detalhes: " + e.getMessage();
+        }
+    }
 }

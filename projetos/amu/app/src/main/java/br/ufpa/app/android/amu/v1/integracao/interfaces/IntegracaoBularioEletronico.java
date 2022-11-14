@@ -4,8 +4,13 @@ import android.content.Context;
 
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.integracao.dto.ConsultarMedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 
 public interface IntegracaoBularioEletronico {
-    public List<MedicamentoRetDTO> consultarDadosMedicamentos(Context context, String nomeComercial);
+    public ConsultarMedicamentoRetDTO consultarDadosMedicamentos(Context context, String nomeComercial);
+
+    public void downloadBula(Context context, String nomeArquivoBulaPaciente);
+
+    public String obterTextoBula(MedicamentoRetDTO medicamentoRetDTO);
 }
