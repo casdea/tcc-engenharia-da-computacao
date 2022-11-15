@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa.IntegracaoBularioEletronicoAnvisa;
+import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.dto.ConsultarMedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoBularioEletronico;
@@ -55,7 +56,8 @@ public class ConsultaMedicamentoActivity extends AppCompatActivity implements Vi
         btnPesquisar.setOnClickListener(this);
 
         ActivityCompat.requestPermissions(ConsultaMedicamentoActivity.this, PERMISSIONS, 112);
-        App.context = this;
+
+        App.integracaoUsuario.bemVindoFuncao(TipoFuncao.CONSULTA_MEDICAMENTOS);
     }
 
     @Override
@@ -65,9 +67,7 @@ public class ConsultaMedicamentoActivity extends AppCompatActivity implements Vi
             TextView txvStatusConsulta = (TextView) findViewById(R.id.txvStatusConsulta);
             txvStatusConsulta.setText("");
 
-            final IntegracaoBularioEletronico integracaoBularioEletronico = new FactoryIntegracaoBularioEletronico().createIntegracaoBularioEletronico("ANVISA");
-
-            ConsultarMedicamentoRetDTO consultarMedicamentoRetDTO = integracaoBularioEletronico.consultarDadosMedicamentos(this, edtNomeComercial.getText().toString());
+            ConsultarMedicamentoRetDTO consultarMedicamentoRetDTO = App.integracaoBularioEletronico.consultarDadosMedicamentos(this, edtNomeComercial.getText().toString());
 
             if (consultarMedicamentoRetDTO.isOperacaoExecutada() == false)
             {
@@ -96,7 +96,7 @@ public class ConsultaMedicamentoActivity extends AppCompatActivity implements Vi
                     } else {
                         Log.v(TAG, "obterTextoBula() Method HAVE PERMISSIONS ");
 
-                        String bula = integracaoBularioEletronico.obterTextoBula(medicamentoRetDTO);
+                        String bula = App.integracaoBularioEletronico.obterTextoBula(medicamentoRetDTO);
 
                         Log.v(TAG, "obterTextoBula() Method completed ");
 

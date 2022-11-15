@@ -48,7 +48,7 @@
         android:text="@string/estoque_medicamentos" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/btnPerfilUsuario"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -61,6 +61,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:background="@drawable/speak" />
+        android:background="@drawable/speak"
+        android:contentDescription="" />
+
+    <TextView
+        android:id="@+id/txvStatusComando"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:text="Status" />
 
 </LinearLayout>
