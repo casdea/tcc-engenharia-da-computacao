@@ -16,6 +16,7 @@ import br.ufpa.app.android.amu.v1.util.App;
 public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
     private MediaPlayer mediaPlayer;
+    protected static final int RESULT_SPEECH = 1;
 
     private String[] NUMERO_UM = {
             "1",
@@ -150,7 +151,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         });
     }
 
-    public View.OnClickListener criarRecursoVoz() {
+/*    public View.OnClickListener criarRecursoVoz() {
         App.integracaoUsuario.pararMensagem();
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -158,19 +159,19 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-BR");
         //intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
         try {
-            startActivityForResult(intent, RESULT_SPEECH);
+            App.context.startActivityForResult(intent, RESULT_SPEECH);
             //tvText.setText("");
         } catch (ActivityNotFoundException e) {
             String appPackageName = "com.google.android.googlequicksearchbox";
             try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                App.context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
             } catch (android.content.ActivityNotFoundException anfe) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                App.context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
             }
 
-            Toast.makeText(getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_SHORT).show();
+            Toast.makeText(App.context.getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
-
+*/
 }

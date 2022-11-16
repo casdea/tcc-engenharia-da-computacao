@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "137704960184",
+    "project_id": "auxilio-de-uso-de-medicamentos",
+    "storage_bucket": "auxilio-de-uso-de-medicamentos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137704960184:android:98e795da1bde9ae062c44d",
+        "android_client_info": {
+          "package_name": "br.ufpa.app.android.amu.v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137704960184-ij346v58089k40mlabnuf7ppabi0iibo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.ufpa.app.android.amu.v1",
+            "certificate_hash": "981dff5920ea8b2f78566c00ee3fdbebbd29f094"
+          }
+        },
+        {
+          "client_id": "137704960184-kgnse580alrha7ktlfrm38183n01ktkl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZgptQR9br4wtZcDgzssWq5VR-zWX3RaE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137704960184-kgnse580alrha7ktlfrm38183n01ktkl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
