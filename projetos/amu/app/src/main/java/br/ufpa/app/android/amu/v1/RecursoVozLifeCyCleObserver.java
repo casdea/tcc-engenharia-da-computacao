@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.view.View;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -18,7 +18,9 @@ import androidx.lifecycle.LifecycleOwner;
 
 import java.util.ArrayList;
 
+import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.UtilThread;
 
 public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
     private final ActivityResultRegistry mRegistry;
@@ -36,6 +38,10 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == Activity.RESULT_OK) {
+                            App.integracaoUsuario.capturarComandoEncerrado();
+
+                            UtilThread.esperar(UtilThread.CINCO_SEGUNDOS);
+
                             // There are no request codes
                             Intent data = result.getData();
                             ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
@@ -45,18 +51,22 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
                                 return;
                             }
 
-                            int idView = App.integracaoUsuario.findComando(text.get(0));
+                            if (App.comandoAtualVoz.equals(TipoFuncao.CHAMADA_TELA)) {
+                                int idView = App.integracaoUsuario.findComando(text.get(0));
 
-                            if (idView == -1) {
-                                //txvStatusComando.setText("Comando não foi reconhecido");
-                                return;
+                                if (idView == -1) {
+                                    //txvStatusComando.setText("Comando não foi reconhecido");
+                                    return;
+                                }
+
+                                if (idView == R.id.btnConsultaMedicamento) {
+                                    Intent intent = new Intent();
+                                    intent.setClass(App.context, ConsultaMedicamentoActivity.class);
+                                    App.context.startActivity(intent);
+                                }
                             }
-
-                            if (idView == R.id.btnConsultaMedicamento)
-                            {
-                                Intent intent = new Intent();
-                                intent.setClass(App.context, ConsultaMedicamentoActivity.class);
-                                App.context.startActivity(intent);
+                            else
+                            if (App.comandoAtualVoz.equals(TipoFuncao.PESQUISA_MEDICAMENTOS)) {
                             }
 
                             //onClick(view);
@@ -68,15 +78,14 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
 
     public void chamarItenteReconechimentoVoz()
     {
-        App.integracaoUsuario.pararMensagem();
+        App.integracaoUsuario.capturarComandoIniciado();
+        UtilThread.esperar(UtilThread.QUATRO_SEGUNDOS);
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-BR");
         //intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
         try {
-            //startActivityForResult(intent, RESULT_SPEECH);
-            //Intent intent = new Intent(this, SomeActivity.class);
             mGetRecursoVoz.launch(intent);
             //tvText.setText("");
         } catch (ActivityNotFoundException e) {

@@ -1,6 +1,6 @@
 package br.ufpa.app.android.amu.v1.integracao.api.usuario.comum;
 
-import android.content.Context;
+import android.speech.tts.TextToSpeech;
 
 import java.util.List;
 
@@ -26,6 +26,26 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
 
     @Override
     public void bemVindoFuncao(TipoFuncao tipoFuncao) {
+
+    }
+
+    @Override
+    public void capturarComandoIniciado() {
+
+    }
+
+    @Override
+    public void capturarComandoEncerrado() {
+
+    }
+
+    @Override
+    public void instrucaoParaUsuario(int idSom) {
+
+    }
+
+    @Override
+    public void exibirMedicamentosEncontrados(TextToSpeech textoLido, List<MedicamentoRetDTO> medicamentos, String argumento) {
 
     }
 }
