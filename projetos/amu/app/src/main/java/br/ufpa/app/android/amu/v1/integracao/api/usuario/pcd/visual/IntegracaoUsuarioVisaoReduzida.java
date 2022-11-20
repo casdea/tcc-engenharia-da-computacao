@@ -10,6 +10,7 @@ import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoUsuario;
 import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
 public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
@@ -185,8 +186,9 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
         for (MedicamentoRetDTO medicamentoRetDTO : medicamentos)
         {
-            textoLido.speak("Item " +item+" Nome: "+medicamentoRetDTO.getNomeComercial()+" Laboratorio: "+medicamentoRetDTO.getNomeLaboratorio(), TextToSpeech.QUEUE_ADD, null);
+            textoLido.speak("Item " +item+" "+medicamentoRetDTO.getNomeComercial()+medicamentoRetDTO.getNomeLaboratorio(), TextToSpeech.QUEUE_ADD, null);
             item++;
+            ThreadUtil.esperar(ThreadUtil.HUM_SEGUNDO);
         }
 
     }

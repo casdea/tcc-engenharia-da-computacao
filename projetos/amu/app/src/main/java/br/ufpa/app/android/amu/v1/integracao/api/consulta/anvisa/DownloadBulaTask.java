@@ -3,25 +3,20 @@ package br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
-import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 
-import br.ufpa.app.android.amu.v1.ConsultaMedicamentoActivity;
-import br.ufpa.app.android.amu.v1.DetalheMedicamentoActivity;
+import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.dto.RetornoExecucaoDTO;
 import br.ufpa.app.android.amu.v1.util.App;
