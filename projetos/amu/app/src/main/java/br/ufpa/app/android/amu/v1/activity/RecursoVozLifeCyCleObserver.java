@@ -96,7 +96,7 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
                 App.context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
             }
 
-            //Toast.makeText(getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_LONG).show();
             //e.printStackTrace();
         }
     }

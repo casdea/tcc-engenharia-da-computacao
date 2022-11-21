@@ -5,5 +5,4 @@ import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
 
 public interface IUsuarioDao extends IDao<Usuario>
 {
-
 }

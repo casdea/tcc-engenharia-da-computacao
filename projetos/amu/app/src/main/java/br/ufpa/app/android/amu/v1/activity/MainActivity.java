@@ -19,13 +19,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
-import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
-import br.ufpa.app.android.amu.v1.integracao.classes.FontesConsulta;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoBularioEletronico;
 import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoUsuario;
-import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -51,10 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        App.context = this;
-        App.tipoPerfil = TipoPerfil.COMUM;
-        App.fontesConsulta = FontesConsulta.ANVISA;
 
         setContentView(R.layout.activity_main);
 
@@ -83,22 +76,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
-        {
+        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
             App.comandoAtualVoz = TipoFuncao.CHAMADA_TELA;
             mRecursoVozObserver.chamarItenteReconechimentoVoz();
-        }
-        else {
+        } else {
             if (v.getId() == R.id.btnCadastroMedicamento) {
-                GerenteServicos gerenteServicos = new GerenteServicos();
-                gerenteServicos.incluirUsuario(new UsuarioDTO(2, "RUI BARBOSA", "rui@gmail.com", "1234444", TipoPerfil.COMUM.name()));
-
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, MedicamentoActivity.class);
                 startActivity(intent);
             } else if (v.getId() == R.id.btnConsultaMedicamento) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, ConsultaMedicamentoActivity.class);
+                startActivity(intent);
+            } else if (v.getId() == R.id.btnPerfilUsuario) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, UsuarioActivity.class);
                 startActivity(intent);
             } else if (v.getId() == R.id.btnSpeak) {
                 mRecursoVozObserver.chamarItenteReconechimentoVoz();
@@ -115,8 +107,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menuSair :
+        switch (item.getItemId()) {
+            case R.id.menuSair:
                 autenticacao.signOut();
                 startActivity(new Intent(this, BemVindoActivity.class));
                 finish();
@@ -124,4 +116,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return super.onOptionsItemSelected(item);
     }
- }
+}

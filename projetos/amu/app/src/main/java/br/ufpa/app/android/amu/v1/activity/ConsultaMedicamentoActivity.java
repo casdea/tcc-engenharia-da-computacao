@@ -1,11 +1,5 @@
 package br.ufpa.app.android.amu.v1.activity;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -24,6 +18,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -131,7 +131,7 @@ public class ConsultaMedicamentoActivity extends AppCompatActivity implements Vi
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
             }
 
-            //Toast.makeText(getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_LONG).show();
             //e.printStackTrace();
         }
     }
@@ -210,6 +210,6 @@ public class ConsultaMedicamentoActivity extends AppCompatActivity implements Vi
     }
 
     private void toast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }

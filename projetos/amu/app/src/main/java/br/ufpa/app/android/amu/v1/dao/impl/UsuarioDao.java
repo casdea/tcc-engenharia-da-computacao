@@ -1,39 +1,36 @@
 package br.ufpa.app.android.amu.v1.dao.impl;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import br.ufpa.app.android.amu.v1.dao.idao.IUsuarioDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
 
-public class UsuarioDao extends AbstractEntityDao<Usuario> implements IUsuarioDao
-{
+public class UsuarioDao extends AbstractEntityDao<Usuario> implements IUsuarioDao {
 
-	public UsuarioDao(DatabaseReference em)
-	{
-		super(em);
-	}
+    private ValueEventListener valueEventListenerUsuario;
 
-	public Class<Usuario> getClassImplement()
-	{
-		return Usuario.class;
-	}
+    public UsuarioDao(DatabaseReference em) {
+        super(em);
+    }
 
-	@Override
-	public Usuario create(Usuario usuario)
-	{
-		DatabaseReference usuarios = em.child(usuario.getNomeTabela());
-		usuarios.child(String.valueOf(usuario.getId())).setValue(usuario);
+    public Class<Usuario> getClassImplement() {
+        return Usuario.class;
+    }
 
-		return usuario;
-	}
+    @Override
+    public Usuario create(Usuario usuario) {
+        DatabaseReference usuariosRef = em.child(usuario.getNomeTabela());
+        usuariosRef.child(String.valueOf(usuario.getIdUsuario())).setValue(usuario);
+        return usuario;
+    }
 
-	@Override
-	public Usuario update(Usuario usuario)
-	{
-		DatabaseReference usuarios = em.child(usuario.getNomeTabela());
-		usuarios.child(String.valueOf(usuario.getId())).setValue(usuario);
+    @Override
+    public Usuario update(Usuario usuario) {
+        DatabaseReference usuariosRef = em.child(usuario.getNomeTabela());
+        usuariosRef.child(String.valueOf(usuario.getIdUsuario())).setValue(usuario);
 
-		return usuario;
-	}
+        return usuario;
+    }
 }

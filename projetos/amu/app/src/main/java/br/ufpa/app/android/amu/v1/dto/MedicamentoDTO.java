@@ -1,8 +1,6 @@
 package br.ufpa.app.android.amu.v1.dto;
 
-import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
-
-public class MedicamentoDTO extends AbstractEntity {
+public class MedicamentoDTO {
     private String idMedicamento;
     private String nomeComercial;
     private String cor;

@@ -1,46 +1,64 @@
 package br.ufpa.app.android.amu.v1.dao.modelo;
 
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
-import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 
 public class Medicamento extends AbstractEntity {
+    //automatico
+    //nao aparece
     private String idMedicamento;
+    //edittext
+    //DORFLEX
     private String nomeComercial;
+    //selecao de cores
+    //Cores Basicas VERMELHO AZUL AMARELO ROSEO
     private String cor;
+    //edit text
+    //dipirona monoidratada + citrato de orfenadrina + cafeína anidra
     private String principioAtivo;
+    //edit text
+    //Sanofi Medley Farmacêutica Ltda
+    //Laboratorios fernao dias
     private String fabricante;
-    private String formato;
+    //dose dos principios ativos
+    //Comprimido 300mg + 35mg + 50mg
+    //caixa de texto
+    //Solucao de 350ml
+    //Frasco de 30ml
+    //Creme de contato
+    private String formaApresentacao;
+
+    //caixa de texto
+    //Cada comprimido contém 300 mg de dipirona monoidratada, 35 mg de citrato de orfenadrina (equivalente a 20,4                                                                                             mg de orfenadrina base) e 50 mg de cafeína anidra.
+    //Excipientes: amido de milho, amidoglicolato de sódio, talco e estearato de magnésio.
     private String composicao;
-    private String formaUso;
-    private String indicacaoIdade;
+    //oral injetavel topico
+    private String viaAdministracao;
+    //
+    private String publicoAlvo;
+    //
+    //DORFLEX é indicado no alívio da dor associada a contraturas musculares, incluindo dor de cabeça tensiona
     private String textoParaQueIndicado;
+    //DORFLEX possui ação analgésica e relaxante muscular. O início da ação ocorre a partir de 30 minutos
     private String textoComoFunciona;
+    //Você deve tomar os comprimidos com líquido (aproximadamente ½ a 1 copo), por via oral.
+    //Posologia: 1 a 2 comprimidos, 3 a 4 vezes ao dia. Não ultrapassar estes limites.
+    //Não há estudos dos efeitos de DORFLEX administrado por vias não recomendadas. Portanto, por segurança e para
+    //eficácia deste medicamento, a administração deve ser somente pela via oral.
+    //Siga corretamente o modo de usar. Em caso de dúvidas sobre este medicamento, procure orientação do
+    //farmacêutico. Não desaparecendo os sintomas, procure orien tação de seu médico ou cirurgião-dentista.
+    //Este medicamento não deve ser partido, aberto ou mastigado
     private String textoComoUsar;
+    //Baseando-se nos sintomas, reintroduzir a medicação respeitando sempre os horários e intervalos recomendados.
+    //Nunca devem ser administradas duas doses ao mesmo tempo.
     private String textoSeEsquecerQueFazer;
+    //nao aparece
     private String idProdutoAnvisa;
+    //nao aparece
     private String dataProdutoAnvisa;
+    //nao aparece
     private String idUsuario;
 
     public Medicamento() {
-    }
-
-    public Medicamento(MedicamentoDTO medicamentoDTO) {
-        this.idMedicamento = medicamentoDTO.getIdMedicamento();
-        this.nomeComercial = nomeComercial;
-        this.cor = cor;
-        this.principioAtivo = principioAtivo;
-        this.fabricante = fabricante;
-        this.formato = formato;
-        this.composicao = composicao;
-        this.formaUso = formaUso;
-        this.indicacaoIdade = indicacaoIdade;
-        this.textoParaQueIndicado = textoParaQueIndicado;
-        this.textoComoFunciona = textoComoFunciona;
-        this.textoComoUsar = textoComoUsar;
-        this.textoSeEsquecerQueFazer = textoSeEsquecerQueFazer;
-        this.idProdutoAnvisa = idProdutoAnvisa;
-        this.dataProdutoAnvisa = dataProdutoAnvisa;
-        this.idUsuario = idUsuario;
     }
 
     public String getIdMedicamento() {
@@ -83,12 +101,12 @@ public class Medicamento extends AbstractEntity {
         this.fabricante = fabricante;
     }
 
-    public String getFormato() {
-        return formato;
+    public String getFormaApresentacao() {
+        return formaApresentacao;
     }
 
-    public void setFormato(String formato) {
-        this.formato = formato;
+    public void setFormaApresentacao(String formaApresentacao) {
+        this.formaApresentacao = formaApresentacao;
     }
 
     public String getComposicao() {
@@ -99,20 +117,20 @@ public class Medicamento extends AbstractEntity {
         this.composicao = composicao;
     }
 
-    public String getFormaUso() {
-        return formaUso;
+    public String getViaAdministracao() {
+        return viaAdministracao;
     }
 
-    public void setFormaUso(String formaUso) {
-        this.formaUso = formaUso;
+    public void setViaAdministracao(String viaAdministracao) {
+        this.viaAdministracao = viaAdministracao;
     }
 
-    public String getIndicacaoIdade() {
-        return indicacaoIdade;
+    public String getPublicoAlvo() {
+        return publicoAlvo;
     }
 
-    public void setIndicacaoIdade(String indicacaoIdade) {
-        this.indicacaoIdade = indicacaoIdade;
+    public void setPublicoAlvo(String publicoAlvo) {
+        this.publicoAlvo = publicoAlvo;
     }
 
     public String getTextoParaQueIndicado() {

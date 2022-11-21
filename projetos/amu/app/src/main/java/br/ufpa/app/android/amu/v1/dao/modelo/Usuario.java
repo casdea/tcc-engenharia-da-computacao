@@ -1,14 +1,15 @@
 package br.ufpa.app.android.amu.v1.dao.modelo;
 
+import com.google.firebase.database.Exclude;
+
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
 import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
 
 public class Usuario extends AbstractEntity {
 
-    private long id;
+    private String idUsuario;
     private String nome;
     private String email;
-    private String senha;
     private String tipoPerfil;
 
     public Usuario() {
@@ -16,19 +17,20 @@ public class Usuario extends AbstractEntity {
     }
 
     public Usuario(UsuarioDTO usuarioDTO) {
-        this.id = usuarioDTO.getId();
+        nomeTabela = "usuarios";
+        this.idUsuario = usuarioDTO.getIdUsuario();
         this.nome = usuarioDTO.getNome();
         this.email = usuarioDTO.getEmail();
-        this.senha = usuarioDTO.getSenha();
         this.tipoPerfil = usuarioDTO.getTipoPerfil();
     }
 
-    public long getId() {
-        return id;
+    @Exclude
+    public String getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNome() {
@@ -45,14 +47,6 @@ public class Usuario extends AbstractEntity {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public String getTipoPerfil() {

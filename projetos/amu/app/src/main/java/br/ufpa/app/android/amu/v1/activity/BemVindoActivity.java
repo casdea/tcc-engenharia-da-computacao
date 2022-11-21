@@ -4,23 +4,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 
 import br.ufpa.app.android.amu.v1.R;
-import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
+import br.ufpa.app.android.amu.v1.integracao.classes.FontesConsulta;
+import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
+import br.ufpa.app.android.amu.v1.util.App;
 
-public class BemVindoActivity extends IntroActivity {
-
-    private FirebaseAuth autenticacao;
+public class BemVindoActivity extends IntroActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        App.context = this;
+        App.fontesConsulta = FontesConsulta.ANVISA;
+
         setButtonBackVisible(false);
         setButtonNextVisible(false);
+
+        //findViewById(R.id.btnCadastrar).setOnClickListener(this);
+        //findViewById(R.id.txvEntrar).setOnClickListener(this);
 
         addSlide( new FragmentSlide.Builder()
                 .background(android.R.color.white)
@@ -52,26 +57,20 @@ public class BemVindoActivity extends IntroActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        verificarUsuarioLogado();
+        GerenteServicos gerenteServicos = new GerenteServicos();
+        gerenteServicos.verificarUsuarioLogado(this);
     }
 
-    public void btEntrar(View view){
-        startActivity(new Intent(this, LoginActivity.class));
-    }
-
-    public void btCadastrar(View view){
-        startActivity(new Intent(this, CadastroActivity.class));
-    }
-
-    public void verificarUsuarioLogado(){
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-
-        if( autenticacao.getCurrentUser() != null ){
-            abrirTelaPrincipal();
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.txvEntrar)
+        {
+            startActivity(new Intent(this, LoginActivity.class));
         }
-    }
-
-    public void abrirTelaPrincipal(){
-        startActivity(new Intent(this, MainActivity.class));
+        else if (view.getId() == R.id.btnCadastrar)
+        {
+            App.usuario = null;
+            startActivity(new Intent(this, UsuarioActivity.class));
+        }
     }
 }

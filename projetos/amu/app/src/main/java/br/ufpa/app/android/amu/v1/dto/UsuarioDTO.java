@@ -1,10 +1,8 @@
 package br.ufpa.app.android.amu.v1.dto;
 
-import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
+public class UsuarioDTO  {
 
-public class UsuarioDTO extends AbstractEntity {
-
-    private long id;
+    private String idUsuario;
     private String nome;
     private String email;
     private String senha;
@@ -13,20 +11,20 @@ public class UsuarioDTO extends AbstractEntity {
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(long id, String nome, String email, String senha, String tipoPerfil) {
-        this.id = id;
+    public UsuarioDTO(String idUsuario, String nome, String email, String senha, String tipoPerfil) {
+        this.idUsuario = idUsuario;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.tipoPerfil = tipoPerfil;
     }
 
-    public long getId() {
-        return id;
+    public String getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNome() {

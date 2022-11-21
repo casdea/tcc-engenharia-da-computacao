@@ -1,8 +1,8 @@
 package br.ufpa.app.android.amu.v1.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import br.ufpa.app.android.amu.v1.R;
 
