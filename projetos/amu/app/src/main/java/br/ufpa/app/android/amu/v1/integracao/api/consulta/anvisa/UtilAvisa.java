@@ -1,21 +1,92 @@
 package br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa;
 
+import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
+import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
+import br.ufpa.app.android.amu.v1.util.App;
+
 public class UtilAvisa {
 
     public static final String DIRETORIO_PDF = "pdfs";
     public static final String DIRETORIO_TXT = "txts";
+    public static final String CHAVE_IDENTIFICACAO = "X@@@X0@";
+    public static final String CHAVE_PARA_QUE_INDICADO = "X@@@X1@";
+    public static final String CHAVE_COMO_FUNCIONA = "X@@@X2@";
+    public static final String CHAVE_QUANDO_NAO_USAR = "X@@@X3@";
+    public static final String CHAVE_SABER_ANTES_USAR = "X@@@X4@";
+    public static final String CHAVE_QUANTO_TEMPO_GUARDAR = "X@@@X5@";
+    public static final String CHAVE_COMO_USAR = "X@@@X6@";
+    public static final String CHAVE_QUANDO_ESQUECER = "X@@@X7@";
+    public static final String CHAVE_MALES_CAUSAM = "X@@@X8@";
+    public static final String CHAVE_SUPERDOSAGEM = "X@@@X9@";
+    public static final String CHAVE_DIZERES_LEGAIS = "X@@@X10@";
+    public static final String CHAVE_HISTORICO_ALTERACAO_BULA1 = "X@@@X11@";
+    public static final String CHAVE_HISTORICO_ALTERACAO_BULA2 = "X@@@X11@";
+
+    public static final String CODIGO_IDENTIFICACAO = "0@";
+    public static final String CODIGO_PARA_QUE_INDICADO = "1@";
+    public static final String CODIGO_COMO_FUNCIONA = "2@";
+    public static final String CODIGO_QUANDO_NAO_USAR = "3@";
+    public static final String CODIGO_SABER_ANTES_USAR = "4@";
+    public static final String CODIGO_QUANTO_TEMPO_GUARDAR = "5@";
+    public static final String CODIGO_COMO_USAR = "6@";
+    public static final String CODIGO_QUANDO_ESQUECER = "7@";
+    public static final String CODIGO_MALES_CAUSAM = "8@";
+    public static final String CODIGO_SUPERDOSAGEM = "9@";
+    public static final String CODIGO_DIZERES_LEGAIS = "10@";
+    public static final String CODIGO_HISTORICO_ALTERACAO_BULA1 = "11@";
+    public static final String CODIGO_HISTORICO_ALTERACAO_BULA2 = "11@";
+
+    public static final String PARA_QUE_INDICADO = "1. PARA QUE ESTE MEDICAMENTO É INDICADO?";
+    public static final String COMO_FUNCIONA = "2. COMO ESTE MEDICAMENTO FUNCIONA?";
+    public static final String QUANDO_NAO_USAR = "3. QUANDO NÃO DEVO USAR ESTE MEDICAMENTO?";
+    public static final String SABER_ANTES_USAR = "4. O QUE DEVO SABER ANTES DE USAR ESTE MEDICAMENTO?";
+    public static final String QUANTO_TEMPO_GUARDAR = "5. ONDE, COMO E POR QUANTO TEMPO POSSO GUARDAR ESTE MEDICAMENTO?";
+    public static final String COMO_USAR = "6. COMO DEVO USAR ESTE MEDICAMENTO?";
+    public static final String QUANDO_ESQUECER = "7. O QUE DEVO FAZER QUANDO EU ME ESQUECER DE USAR ESTE MEDICAMENTO?";
+    public static final String MALES_CAUSAM = "8. QUAIS OS MALES QUE ESTE MEDICAMENTO PODE ME CAUSAR?";
+    public static final String SUPERDOSAGEM = "9. O QUE FAZER SE ALGUÉM USAR UMA QUANTIDADE MAIOR DO QUE A INDICADA DESTE MEDICAMENTO?";
+    public static final String DIZERES_LEGAIS = "DIZERES LEGAIS";
+    public static final String HISTORICO_ALTERACAO_BULA1 = "Histórico de Alteração da Bula";
+    public static final String HISTORICO_ALTERACAO_BULA2 = "Histórico de Alteração para a Bula";
+
+    public static final String CHAVE_IDENTIFICACAO_APRESENTACAO = "APRESENTAÇÕES";
+    public static final String CHAVE_IDENTIFICACAO_COMPOSICAO = "COMPOSIÇÃO";
+    public static final String CHAVE_IDENTIFICACAO_USO = "USO";
+
+    public static final String CODIGO_IDENTIFICACAO_APRESENTACAO = "X@@@X21@";
+    public static final String CODIGO_IDENTIFICACAO_COMPOSICAO = "X@@@X22@";
+    public static final String CODIGO_IDENTIFICACAO_USO = "X@@@X23@";
+
+    public static final String IDENTIFICACAO_APRESENTACAO = "APRESENTAÇÕES";
+    public static final String IDENTIFICACAO_COMPOSICAO = "COMPOSIÇÃO";
+    public static final String IDENTIFICACAO_USO = "USO";
+    public static final String CHAVE_QUEBRA = "X@@@X";
+
+    //0@®ANADOR  (dipirona monoidratada)    Sanofi Medley Farmacêutica Ltda.
+    // Comprimidos  500 mg®ANADOR dipirona monoidratada
+    // APRESENTAÇÕES
+    //    Comprimidos 500 mg: embalagem com 24, 128, 240 ou 512
+    // USO
+    //   ORAL.
+    // USO
+    //   ADULTO E PEDIÁTRICO ACIMA DE 15 ANOS.
+    // COMPOSIÇÃO
+    //    ANADOR 500 mg: Cada comprimido contém 500 mg de dipirona monoidratada.
+    //    Excipientes: estearato de magnésio, macrogol 4000.
 
     public static File criarDiretorio(String diretorio) {
 
         try {
-            File path = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), diretorio);
+            File path = new File(diretorioRoot(), diretorio);
 
             if (!path.exists()) {
                 if (!path.mkdirs()) {
@@ -31,14 +102,11 @@ public class UtilAvisa {
         }
     }
 
-    public static String lerArquivoTexto(String filename) throws Exception
-    {
-        try
-        {
+    public static String lerArquivoTexto(String filename) throws Exception {
+        try {
             FileReader fileReader = new FileReader(filename);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
-            try
-            {
+            try {
                 StringBuffer texto = new StringBuffer();
                 // lê a primeira linha
                 String linha = bufferedReader.readLine();
@@ -46,23 +114,18 @@ public class UtilAvisa {
                     texto.append(linha);
                 // a variável "linha" recebe o valor "null" quando o processo
                 // de repetição atingir o final do arquivo texto
-                while (linha != null)
-                {
+                while (linha != null) {
                     // lê da segunda até a última linha
                     linha = bufferedReader.readLine();
                     if (linha != null)
                         texto.append(linha);
                 }
                 return texto.toString().trim();
-            }
-            finally
-            {
+            } finally {
                 bufferedReader.close();
                 fileReader.close();
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new Exception(e.getMessage());
         }
     }
@@ -70,9 +133,9 @@ public class UtilAvisa {
     public static boolean arquivoExiste(String nomeArquivo) {
 
         try {
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), nomeArquivo);
+            File file = new File(diretorioRoot(), nomeArquivo);
 
-            boolean existe = file.exists() && file.length()>0.00;
+            boolean existe = file.exists() && file.length() > 0.00;
 
             return existe;
 
@@ -83,10 +146,91 @@ public class UtilAvisa {
     }
 
     public static String obterDiretorioPdfs() {
-       return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+"/"+DIRETORIO_PDF+"/";
+        return diretorioRoot() + "/" + DIRETORIO_PDF + "/";
     }
 
     public static String obterDiretorioTxts() {
-        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+"/"+DIRETORIO_TXT+"/";
+        return diretorioRoot() + "/" + DIRETORIO_TXT + "/";
     }
+
+    public static String diretorioRoot() {
+        //Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
+            Log.i("Nome do Arquivo 1", App.context.getExternalFilesDir(Environment.DIRECTORY_DCIM) + "");
+            return App.context.getExternalFilesDir(Environment.DIRECTORY_DCIM) + "";
+        } else {
+            Log.i("Nome do Arquivo 2", Environment.getExternalStorageDirectory().toString());
+            return Environment.getExternalStorageDirectory().toString();
+        }
+    }
+
+    private static String findParteByChave(String[] partes, String chaveParte) {
+        String parte = "";
+
+        for (int i = 0; i < partes.length - 1; i++) {
+            parte = partes[i].trim();
+
+            if (parte.equals("") || parte.length()<=5) continue;
+
+            Log.i("Decodificando a parte ",parte);
+            try {
+                if (parte.substring(0, 2).equals(chaveParte)) {
+                    return parte.substring(chaveParte.length());
+                }
+            } catch (Exception ex) {
+                System.out.println("Erro ao procurar arquivo " + ex.getMessage());
+            }
+
+        }
+
+        return "";
+    }
+
+    public static Medicamento textoToMedicamento(MedicamentoRetDTO medicamentoRetDTO, String bula) {
+        bula = CHAVE_IDENTIFICACAO + bula.trim();
+        bula = bula.replaceAll(PARA_QUE_INDICADO, CHAVE_PARA_QUE_INDICADO);
+        bula = bula.replaceAll(COMO_FUNCIONA, CHAVE_COMO_FUNCIONA);
+        bula = bula.replaceAll(QUANDO_NAO_USAR, CHAVE_QUANDO_NAO_USAR);
+        bula = bula.replaceAll(SABER_ANTES_USAR, CHAVE_SABER_ANTES_USAR);
+        bula = bula.replaceAll(QUANTO_TEMPO_GUARDAR, CHAVE_QUANTO_TEMPO_GUARDAR);
+        bula = bula.replaceAll(COMO_USAR, CHAVE_COMO_USAR);
+        bula = bula.replaceAll(QUANDO_ESQUECER, CHAVE_QUANDO_ESQUECER);
+        bula = bula.replaceAll(MALES_CAUSAM, CHAVE_MALES_CAUSAM);
+        bula = bula.replaceAll(SUPERDOSAGEM, CHAVE_SUPERDOSAGEM);
+        bula = bula.replaceAll(DIZERES_LEGAIS, CHAVE_DIZERES_LEGAIS);
+        bula = bula.replaceAll(HISTORICO_ALTERACAO_BULA1, CHAVE_HISTORICO_ALTERACAO_BULA1);
+        bula = bula.replaceAll(HISTORICO_ALTERACAO_BULA2, CHAVE_HISTORICO_ALTERACAO_BULA2);
+
+        String[] partes = bula.split(CHAVE_QUEBRA);
+
+        for (int i = 0; i < partes.length - 1; i++) {
+
+            System.out.println("Parte " + String.valueOf(i + 1) + " " + partes[i]);
+        }
+
+        String identificacao = findParteByChave(partes, CODIGO_IDENTIFICACAO);
+        identificacao = identificacao.replaceAll(IDENTIFICACAO_APRESENTACAO,CHAVE_QUEBRA);
+        identificacao = identificacao.replaceAll(IDENTIFICACAO_COMPOSICAO,CHAVE_QUEBRA);
+        identificacao = identificacao.replaceAll(IDENTIFICACAO_USO,CHAVE_QUEBRA);
+
+        String[] partesIdentificacao = identificacao.split(CHAVE_QUEBRA);
+
+        Medicamento medicamento = new Medicamento();
+        //preencher dados
+        medicamento.setNomeComercial(medicamentoRetDTO.getNomeComercial());
+        medicamento.setFabricante(medicamentoRetDTO.getNomeLaboratorio());
+        medicamento.setPrincipioAtivo("(cetoconazol + dipropionato de betametasona sulfato de neomicina");
+        medicamento.setFormaApresentacao(findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO_APRESENTACAO));
+        medicamento.setViaAdministracao("USO DERMATOLÓGICO");
+        medicamento.setPublicoAlvo("USO ADULTO E PEDIÁTRICO");
+        //INTERAÇÕES MEDICAMENTOSAS
+        //Interações medicamentosas
+        medicamento.setComposicao(findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO_COMPOSICAO));
+        medicamento.setTextoParaQueIndicado(findParteByChave(partes, CODIGO_PARA_QUE_INDICADO));
+        medicamento.setTextoComoFunciona(findParteByChave(partes, CODIGO_COMO_FUNCIONA));
+        medicamento.setTextoComoUsar(findParteByChave(partes, CODIGO_COMO_USAR));
+        medicamento.setTextoSeEsquecerQueFazer(findParteByChave(partes, CODIGO_QUANDO_ESQUECER));
+        return medicamento;
+    }
+
 }

@@ -3,6 +3,7 @@ package br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.itextpdf.text.pdf.PdfReader;
@@ -57,6 +58,7 @@ public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, Retorno
                 UtilAvisa.criarDiretorio(UtilAvisa.DIRETORIO_TXT);
 
                 File file = new File(path, this.medicamentoRetDTO.getNomeArquivoPdf());
+                Log.i("Arquivo pdf ",file.getName());
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
                 IOUtils.write(arg.body().bytes(), fileOutputStream);
             }
@@ -100,6 +102,8 @@ public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, Retorno
                         if (convertidoParaTexto)
                             texto = UtilAvisa.lerArquivoTexto(UtilAvisa.obterDiretorioTxts() + this.medicamentoRetDTO.getNomeArquivoTxt());
 
+                        App.medicamento = UtilAvisa.textoToMedicamento(this.medicamentoRetDTO, texto);
+
                         Intent intent = new Intent();
                         intent.putExtra("texto", texto);
                         intent.setClass(App.context, DetalheMedicamentoActivity.class);
@@ -130,6 +134,8 @@ public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, Retorno
             out.flush();
             out.close();
             reader.close();
+
+            Log.i("Arquivo convertido txt ",txt);
 
             return true;
         } catch (Exception e) {

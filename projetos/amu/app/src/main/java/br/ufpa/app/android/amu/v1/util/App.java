@@ -3,6 +3,7 @@ package br.ufpa.app.android.amu.v1.util;
 import android.app.Application;
 import android.content.Context;
 
+import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
 import br.ufpa.app.android.amu.v1.integracao.classes.FontesConsulta;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
@@ -23,4 +24,5 @@ public class App extends Application {
     public static IntegracaoBularioEletronico integracaoBularioEletronico;
     public static TipoFuncao comandoAtualVoz;
     public static Usuario usuario;
+    public static Medicamento medicamento;
 }

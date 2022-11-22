@@ -161,10 +161,12 @@ public class ConsultaMedicamentoActivity extends AppCompatActivity implements Vi
 
                 String bula = App.integracaoBularioEletronico.obterTextoBula(medicamentoRetDTO);
 
+/*                App.medicamento = App.integracaoBularioEletronico.textoToMedicamento(bula);
+
                 Intent intent = new Intent();
-                intent.putExtra("texto", bula);
+                //intent.putExtra("texto", bula);
                 intent.setClass(ConsultaMedicamentoActivity.this, DetalheMedicamentoActivity.class);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
     }

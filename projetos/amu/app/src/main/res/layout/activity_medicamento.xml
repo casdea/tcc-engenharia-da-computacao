@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="false"
+    tools:context=".activity.MedicamentoActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".activity.MedicamentoActivity"
         tools:layout_editor_absoluteX="-1dp"
         tools:layout_editor_absoluteY="-34dp">
@@ -21,13 +22,13 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/nome_comercial"
-            app:layout_constraintBottom_toTopOf="@+id/textView12"
+            app:layout_constraintBottom_toTopOf="@+id/txvNomeComercial"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/txvNomeComercial"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -47,13 +48,13 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/fabricante_ou_laboratorio"
-            app:layout_constraintBottom_toTopOf="@+id/textView14"
+            app:layout_constraintBottom_toTopOf="@+id/txvNomeFabricante"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+            app:layout_constraintTop_toBottomOf="@+id/txvNomeComercial" />
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/txvNomeFabricante"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -66,6 +67,23 @@
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
         <TextView
+            android:id="@+id/textView26"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/colorPrimary"
+            android:text="Identificação do Medicamento"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textView15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvNomeFabricante" />
+
+        <TextView
             android:id="@+id/textView15"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -73,142 +91,263 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/principios_ativos"
-            app:layout_constraintBottom_toTopOf="@+id/textView16"
+            app:layout_constraintBottom_toTopOf="@+id/txvPrincipioAtivo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
         <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Forma de Apresentação"
-            app:layout_constraintBottom_toTopOf="@+id/textView18"
-            app:layout_constraintTop_toBottomOf="@+id/textView16"
-            tools:layout_editor_absoluteX="13dp" />
-
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Cada 1 g de creme contém: cetoconazol ............................................................................................................................................................ 20,0 mg dipropionato de betametasona* .............................................................................................................................. 0,64 mg sulfato de neomicina**............................................................................................................................................. 2,5 mg excipientes*** q.s.p. ................................................................................................................................................... 1,0 g *Cada 0,64 mg de dipropionato de betametasona equivale a 0,5 mg de betametasona base. **Cada 2,5 mg de sulfato de neomicina equivale a 1,5 mg de neomicina base. ***Excipientes: petrolato líquido, acetato de cetila, hidróxido de sódio, sulfito de sódio, butil-hidroxitolueno, cera  autoemulsionante, álcool de lanolina, álcool de lanolina acetilado, propilenoglicol, fenoxietanol, butilparabeno,  etilparabeno, propilparabeno, metilparabeno, ácido clorídrico e água deionizada."
-            app:layout_constraintBottom_toTopOf="@+id/textView25"
-            app:layout_constraintTop_toBottomOf="@+id/textView23"
-            tools:layout_editor_absoluteX="14dp" />
-
-        <TextView
-            android:id="@+id/textView21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Publico Alvo"
-            app:layout_constraintBottom_toTopOf="@+id/textView22"
-            app:layout_constraintTop_toBottomOf="@+id/textView20"
-            tools:layout_editor_absoluteX="17dp" />
-
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="USO DERMATOLÓGICO"
-            app:layout_constraintBottom_toTopOf="@+id/textView21"
-            app:layout_constraintTop_toBottomOf="@+id/textView19"
-            tools:layout_editor_absoluteX="18dp" />
-
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Composição"
-            app:layout_constraintBottom_toTopOf="@+id/textView24"
-            app:layout_constraintTop_toBottomOf="@+id/textView22"
-            tools:layout_editor_absoluteX="13dp" />
-
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Creme 20,0 mg/g + 0,64 mg/g + 2,5 mg/g: embalagens com 1 bisnaga contendo 10 ou 30 g."
-            app:layout_constraintBottom_toTopOf="@+id/textView19"
-            app:layout_constraintTop_toBottomOf="@+id/textView17"
-            tools:layout_editor_absoluteX="14dp" />
-
-        <TextView
-            android:id="@+id/textView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="USO ADULTO E PEDIÁTRICO"
-            app:layout_constraintBottom_toTopOf="@+id/textView23"
-            app:layout_constraintTop_toBottomOf="@+id/textView21"
-            tools:layout_editor_absoluteX="17dp" />
-
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Via de Administração"
-            app:layout_constraintBottom_toTopOf="@+id/textView20"
-            app:layout_constraintTop_toBottomOf="@+id/textView18"
-            tools:layout_editor_absoluteX="17dp" />
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="cetoconazol + dipropionato de betametasona  + sulfato de neomicina"
-            app:layout_constraintBottom_toTopOf="@+id/textView17"
-            app:layout_constraintTop_toBottomOf="@+id/textView15"
-            tools:layout_editor_absoluteX="14dp" />
-
-        <TextView
-            android:id="@+id/textView25"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Informações ao Paciente"
-            app:layout_constraintBottom_toTopOf="@+id/textView27"
-            app:layout_constraintTop_toBottomOf="@+id/textView24"
-            tools:layout_editor_absoluteX="13dp" />
-
-        <TextView
-            android:id="@+id/textView26"
+            android:id="@+id/txvPrincipioAtivo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Identificação do Medicamento"
-            app:layout_constraintBottom_toTopOf="@+id/textView15"
+            android:text="cetoconazol + dipropionato de betametasona  + sulfato de neomicina"
+            app:layout_constraintBottom_toTopOf="@+id/textView17"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Forma de Apresentação"
+            app:layout_constraintBottom_toTopOf="@+id/txvFormaApresentacao"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvPrincipioAtivo" />
+
+        <TextView
+            android:id="@+id/txvFormaApresentacao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Creme 20,0 mg/g + 0,64 mg/g + 2,5 mg/g: embalagens com 1 bisnaga contendo 10 ou 30 g."
+            app:layout_constraintBottom_toTopOf="@+id/textView19"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Via de Administração"
+            app:layout_constraintBottom_toTopOf="@+id/txvViaAdministracao"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvFormaApresentacao" />
+
+        <TextView
+            android:id="@+id/txvViaAdministracao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="USO DERMATOLÓGICO"
+            app:layout_constraintBottom_toTopOf="@+id/textView21"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Publico Alvo"
+            app:layout_constraintBottom_toTopOf="@+id/txvPublicoAlvo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvViaAdministracao" />
+
+        <TextView
+            android:id="@+id/txvPublicoAlvo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="USO ADULTO E PEDIÁTRICO"
+            app:layout_constraintBottom_toTopOf="@+id/textView23"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Composição"
+            app:layout_constraintBottom_toTopOf="@+id/txvTextoComposicao"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvPublicoAlvo" />
+
+        <TextView
+            android:id="@+id/txvTextoComposicao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="texto composicao"
+            app:layout_constraintBottom_toTopOf="@+id/textView25"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/colorPrimary"
+            android:text="Informações ao Paciente"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/textView27"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvTextoComposicao" />
 
         <TextView
             android:id="@+id/textView27"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/mi_ripple_color"
             android:text="PARA QUE ESTE MEDICAMENTO É INDICADO?"
-            app:layout_constraintBottom_toTopOf="@+id/textView28"
-            app:layout_constraintTop_toBottomOf="@+id/textView25"
-            tools:layout_editor_absoluteX="14dp" />
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toTopOf="@+id/txvTextoParaQue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
         <TextView
-            android:id="@+id/textView28"
-            android:layout_width="wrap_content"
+            android:id="@+id/txvTextoParaQue"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Trok-N ® (cetoconazol + dipropionato de betametasona + sulfato de neomicina) é indicado no tratamento de doenças de  pele, onde se exigem ações anti-inflamatória, antibacteriana e antimicótica, causadas por germes sensíveis, como:  • Dermatite de contato (uma inflamação da pele, causada por uma substância que entra em contato com o corpo);  • Dermatite atópica (doença que geralmente dura muito tempo e que causa inflamação da pele, levando ao aparecimento  de lesões e coceira);  • Dermatite seborreica (doença que se manifesta em partes do corpo onde existe maior produção de sebo pelas glândulas  sebáceas associado a presença de um fungo);  • Intertrigo (irritação entre dobras da pele causada pela retenção de suor, calor, umidade e aumento de germes no local);  • Disidrose (lesões que aparecem exclusivamente nas mãos e pés cuja origem pode ser parasitária, medicamentosa ou  alérgica);  • Neurodermatite (inflamação da pele caracterizada por um ciclo contínuo de coceira e espessamento da pele). "
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView27"
-            tools:layout_editor_absoluteX="13dp" />
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="texto para que este medicamento é indicado"
+            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="9dp"
+            android:background="@color/mi_ripple_color"
+            android:text=" COMO ESTE MEDICAMENTO FUNCIONA? "
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toTopOf="@+id/txvTextoComoFunciona"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvTextoParaQue" />
+
+        <TextView
+            android:id="@+id/txvTextoComoFunciona"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="como este medicamento funciona"
+            app:layout_constraintBottom_toTopOf="@+id/textView29"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="9dp"
+            android:background="@color/mi_ripple_color"
+            android:text=" COMO DEVO USAR ESTE MEDICAMENTO? "
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toTopOf="@+id/txvTextoComoDevoUsar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvTextoComoFunciona" />
+
+        <TextView
+            android:id="@+id/txvTextoComoDevoUsar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="7dp"
+            android:text="Antes do uso, bata levemente a bisnaga em superfície plana e macia com a tampa virada para cima, para que o conteúdo"
+            app:layout_constraintBottom_toTopOf="@+id/textView31"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/mi_ripple_color"
+            android:text="O QUE DEVO FAZER QUANDO EU ME ESQUECER DE USAR ESTE MEDICAMENTO?"
+            android:textAlignment="viewStart"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toTopOf="@+id/txvTextoQuandoEsquecer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvTextoComoDevoUsar" />
+
+        <TextView
+            android:id="@+id/txvTextoQuandoEsquecer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Retomar o tratamento até o alívio dos sinais e sintomas da doença. Em caso de dúvidas, procure orientação do farmacêutico ou de seu médico, ou cirurgião-dentista"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
