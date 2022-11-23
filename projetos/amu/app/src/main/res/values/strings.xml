@@ -33,4 +33,5 @@
     <string name="fabricante_ou_laboratorio">Fabricante ou Laboratório</string>
     <string name="cor">Cor</string>
     <string name="principios_ativos">Principios Ativos</string>
+    <string name="registrar_medicamento">Registrar Medicamento</string>
 </resources>

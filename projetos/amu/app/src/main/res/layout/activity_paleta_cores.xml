@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PaletaCoresActivity"
+    tools:layout_editor_absoluteX="40dp"
+    tools:layout_editor_absoluteY="13dp">
+
+    <TextView
+        android:id="@+id/txvCor1"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="#4CAF50"
+        app:layout_constraintBottom_toTopOf="@+id/txvCor3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txvCor10"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txvCor2"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="24dp"
+        android:background="#01C9D5"
+        app:layout_constraintBottom_toTopOf="@+id/txvCor4"
+        app:layout_constraintEnd_toStartOf="@+id/txvCor3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvCor10" />
+
+    <TextView
+        android:id="@+id/txvCor3"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="#FF9800"
+        app:layout_constraintBottom_toTopOf="@+id/txvCor5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txvCor2"
+        app:layout_constraintTop_toBottomOf="@+id/txvCor1" />
+
+    <TextView
+        android:id="@+id/txvCor4"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="24dp"
+        android:background="#BD88FD"
+        app:layout_constraintBottom_toTopOf="@+id/txvCor6"
+        app:layout_constraintEnd_toStartOf="@+id/txvCor5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvCor2" />
+
+    <TextView
+        android:id="@+id/txvCor5"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="#03A9F4"
+        app:layout_constraintBottom_toTopOf="@+id/txvCor7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txvCor4"
+        app:layout_constraintTop_toBottomOf="@+id/txvCor3" />
+
+    <TextView
+        android:id="@+id/txvCor6"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="24dp"
+        android:background="#17090909"
+        app:layout_constraintBottom_toTopOf="@+id/txvCor8"
+        app:layout_constraintEnd_toStartOf="@+id/txvCor7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvCor4" />
+
+    <TextView
+        android:id="@+id/txvCor7"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="#FBC02D"
+        app:layout_constraintBottom_toTopOf="@+id/txvCor9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txvCor6"
+        app:layout_constraintTop_toBottomOf="@+id/txvCor5" />
+
+    <TextView
+        android:id="@+id/txvCor8"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="20dp"
+        android:background="#FFEB3B"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/txvCor9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvCor6" />
+
+    <TextView
+        android:id="@+id/txvCor9"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="32dp"
+        android:background="#9E9D24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txvCor8"
+        app:layout_constraintTop_toBottomOf="@+id/txvCor7" />
+
+    <TextView
+        android:id="@+id/txvCor10"
+        android:layout_width="120dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="24dp"
+        android:background="#CC534E"
+        app:layout_constraintBottom_toTopOf="@+id/txvCor2"
+        app:layout_constraintEnd_toStartOf="@+id/txvCor1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

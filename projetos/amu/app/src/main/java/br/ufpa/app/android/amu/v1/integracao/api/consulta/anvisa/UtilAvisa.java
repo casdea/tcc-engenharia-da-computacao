@@ -58,17 +58,20 @@ public class UtilAvisa {
     public static final String HISTORICO_ALTERACAO_BULA1 = "Histórico de Alteração da Bula";
     public static final String HISTORICO_ALTERACAO_BULA2 = "Histórico de Alteração para a Bula";
 
-    public static final String CHAVE_IDENTIFICACAO_APRESENTACAO = "APRESENTAÇÕES";
-    public static final String CHAVE_IDENTIFICACAO_COMPOSICAO = "COMPOSIÇÃO";
-    public static final String CHAVE_IDENTIFICACAO_USO = "USO";
+    public static final String CHAVE_IDENTIFICACAO_APRESENTACAO = "X@@@X21@";
+    public static final String CHAVE_IDENTIFICACAO_COMPOSICAO = "X@@@X22@";
+    public static final String CHAVE_IDENTIFICACAO_VIA_ADM = "X@@@X23@";
+    public static final String CHAVE_IDENTIFICACAO_PUBLICO_ALVO = "X@@@X24@";
 
-    public static final String CODIGO_IDENTIFICACAO_APRESENTACAO = "X@@@X21@";
-    public static final String CODIGO_IDENTIFICACAO_COMPOSICAO = "X@@@X22@";
-    public static final String CODIGO_IDENTIFICACAO_USO = "X@@@X23@";
+    public static final String CODIGO_IDENTIFICACAO_APRESENTACAO = "21@";
+    public static final String CODIGO_IDENTIFICACAO_COMPOSICAO = "22@";
+    public static final String CODIGO_IDENTIFICACAO_VIA_ADM = "23@";
+    public static final String CODIGO_IDENTIFICACAO_PUBLICO_ALVO = "24@";
 
     public static final String IDENTIFICACAO_APRESENTACAO = "APRESENTAÇÕES";
     public static final String IDENTIFICACAO_COMPOSICAO = "COMPOSIÇÃO";
-    public static final String IDENTIFICACAO_USO = "USO";
+    public static final String IDENTIFICACAO_VIA_ADM = " USO ";
+    public static final String IDENTIFICACAO_PUBLICO_ALVO = " USO ";
     public static final String CHAVE_QUEBRA = "X@@@X";
 
     //0@®ANADOR  (dipirona monoidratada)    Sanofi Medley Farmacêutica Ltda.
@@ -167,14 +170,14 @@ public class UtilAvisa {
     private static String findParteByChave(String[] partes, String chaveParte) {
         String parte = "";
 
-        for (int i = 0; i < partes.length - 1; i++) {
+        for (int i = 0; i < partes.length; i++) {
             parte = partes[i].trim();
 
             if (parte.equals("") || parte.length()<=5) continue;
 
             Log.i("Decodificando a parte ",parte);
             try {
-                if (parte.substring(0, 2).equals(chaveParte)) {
+                if (parte.substring(0, chaveParte.length()).equals(chaveParte)) {
                     return parte.substring(chaveParte.length());
                 }
             } catch (Exception ex) {
@@ -209,9 +212,16 @@ public class UtilAvisa {
         }
 
         String identificacao = findParteByChave(partes, CODIGO_IDENTIFICACAO);
-        identificacao = identificacao.replaceAll(IDENTIFICACAO_APRESENTACAO,CHAVE_QUEBRA);
-        identificacao = identificacao.replaceAll(IDENTIFICACAO_COMPOSICAO,CHAVE_QUEBRA);
-        identificacao = identificacao.replaceAll(IDENTIFICACAO_USO,CHAVE_QUEBRA);
+
+        boolean usoInfatil = identificacao.toUpperCase().contains("PEDIATRICO");
+        boolean usoAdulto = identificacao.toUpperCase().contains("ADULTO");
+
+        identificacao = CHAVE_IDENTIFICACAO + identificacao.trim();
+        identificacao = identificacao.replaceAll(IDENTIFICACAO_APRESENTACAO,CHAVE_IDENTIFICACAO_APRESENTACAO);
+        identificacao = identificacao.replaceAll(IDENTIFICACAO_COMPOSICAO,CHAVE_IDENTIFICACAO_COMPOSICAO);
+        identificacao = identificacao.replace(IDENTIFICACAO_VIA_ADM,CHAVE_IDENTIFICACAO_VIA_ADM);
+        identificacao = identificacao.replace(IDENTIFICACAO_PUBLICO_ALVO,CHAVE_IDENTIFICACAO_PUBLICO_ALVO);
+
 
         String[] partesIdentificacao = identificacao.split(CHAVE_QUEBRA);
 
@@ -219,10 +229,10 @@ public class UtilAvisa {
         //preencher dados
         medicamento.setNomeComercial(medicamentoRetDTO.getNomeComercial());
         medicamento.setFabricante(medicamentoRetDTO.getNomeLaboratorio());
-        medicamento.setPrincipioAtivo("(cetoconazol + dipropionato de betametasona sulfato de neomicina");
+        medicamento.setPrincipioAtivo(findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO));
         medicamento.setFormaApresentacao(findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO_APRESENTACAO));
-        medicamento.setViaAdministracao("USO DERMATOLÓGICO");
-        medicamento.setPublicoAlvo("USO ADULTO E PEDIÁTRICO");
+        medicamento.setViaAdministracao("USO "+findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO_VIA_ADM));
+        medicamento.setPublicoAlvo("USO "+(usoInfatil ? "PEDIATRICO " : "") + (usoAdulto ? " ADULTO " : ""));
         //INTERAÇÕES MEDICAMENTOSAS
         //Interações medicamentosas
         medicamento.setComposicao(findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO_COMPOSICAO));

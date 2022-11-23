@@ -1,6 +1,8 @@
 package br.ufpa.app.android.amu.v1.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,5 +59,14 @@ public class DetalheMedicamentoActivity extends AppCompatActivity {
         txvTextoComoFunciona.setText(App.medicamento.getTextoComoFunciona());
         txvTextoComoDevoUsar.setText(App.medicamento.getTextoComoUsar());
         txvTextoQuandoEsquecer.setText(App.medicamento.getTextoSeEsquecerQueFazer());
+
+        findViewById(R.id.btnRegistrarMedicamento).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DetalheMedicamentoActivity.this, MedicamentoActivity.class));
+            }
+        });
+
+
     }
 }
