@@ -1,9 +1,10 @@
 package br.ufpa.app.android.amu.v1.dao.factoryDao;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
+import br.ufpa.app.android.amu.v1.dao.idao.IMedicamentoDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IUsuarioDao;
+import br.ufpa.app.android.amu.v1.dao.impl.MedicamentoDao;
 import br.ufpa.app.android.amu.v1.dao.impl.UsuarioDao;
 
 public class FactoryDAO {
@@ -26,4 +27,14 @@ public class FactoryDAO {
         return usuarioDao;
     }
 
+    private IMedicamentoDao medicamentoDao;
+
+    public IMedicamentoDao getMedicamentosDao()
+    {
+        if (medicamentoDao == null)
+        {
+            medicamentoDao = new MedicamentoDao(em);
+        }
+        return medicamentoDao;
+    }
 }

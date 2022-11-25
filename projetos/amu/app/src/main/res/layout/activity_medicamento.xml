@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="700dp"
+    android:layout_height="match_parent"
     android:fillViewport="true"
     tools:context=".activity.MedicamentoActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".activity.MedicamentoActivity"
         tools:layout_editor_absoluteX="-1dp"
         tools:layout_editor_absoluteY="-34dp">
@@ -36,7 +36,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Trok N"
+            android:text="@string/exemplo_nome_comercial"
             app:layout_constraintBottom_toTopOf="@+id/textView13"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Eurofarma"
+            android:text="@string/exemplo_fabricante"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
@@ -77,7 +77,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Via de Administração"
+            android:text="@string/via_administracao"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txvViaAdministracao"
@@ -94,7 +94,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="USO DERMATOLÓGICO"
+            android:text="@string/uso_dermatologico"
             app:layout_constraintBottom_toTopOf="@+id/textView7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -110,32 +110,34 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@color/teal_200"
-            android:text="Informações Complementares"
+            android:text="@string/informacoes_complementares"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+            app:layout_constraintBottom_toTopOf="@+id/textInpLayApelidoMedicamento"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txvViaAdministracao" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
+            android:id="@+id/textInpLayApelidoMedicamento"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/textView9"
+            app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
             app:layout_constraintEnd_toStartOf="@+id/txvCorSelecionada"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInpTextApelido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Apelido do Medicamento" />
+                android:hint="@string/apelido_medicamento"
+                android:inputType="textPersonName" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -146,74 +148,97 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:padding="5dp"
-            android:text="Click aqui para\nSelecionar a COR"
+            android:text="@string/click_aqui"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textInpLayApelidoMedicamento"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInpLayQtdeEmbalagem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/textView9"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textInputLayout"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInpTextQtdeEmbalagem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/qtde_embalagem"
+                android:text="@string/exemplo_qtde_medicamento" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="7dp"
             android:layout_marginEnd="8dp"
             android:background="#D1CA48"
-            android:text="Horários"
+            android:text="@string/horarios"
             android:textAlignment="center"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/textInpLayQtdeEmbalagem" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
+            android:id="@+id/textInpLayInicioAdministracao"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:onClick="showDatePickerDialog"
-            app:layout_constraintEnd_toStartOf="@+id/textInputLayout3"
+            app:layout_constraintEnd_toStartOf="@+id/textInpLayHorarioPrimeiraDose"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInpTextInicioAdministracao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:editable="false"
                 android:enabled="true"
-                android:hint="Inicio da Administração"
-                android:onClick="showDatePickerDialog"
-                android:text="01/12/2022"
+                android:inputType="date"
+                android:hint="@string/inicio_administracao"
+                android:text="@string/exemplo_inicio_adm"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout3"
+            android:id="@+id/textInpLayHorarioPrimeiraDose"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:onClick="showTimePickerDialog"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
+            app:layout_constraintStart_toEndOf="@+id/textInpLayInicioAdministracao"
             app:layout_constraintTop_toBottomOf="@+id/textView9">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInpTextHorarioPrimeiraDose"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:enabled="true"
-                android:hint="Horário da Primeira Dose"
-                android:onClick="showTimePickerDialog"
-                android:text="08:00"
+                android:hint="@string/horario_primeira_dose"
+                android:inputType="time"
+                android:text="@string/exemplo_hora_inicio"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -225,12 +250,12 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Intervalo"
+            android:text="@string/intervalo"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/spIntervalos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+            app:layout_constraintTop_toBottomOf="@+id/textInpLayInicioAdministracao" />
 
         <Spinner
             android:id="@+id/spIntervalos"
@@ -241,6 +266,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@color/mi_ripple_color"
+            android:contentDescription="@string/selecione_intervalo"
             android:spinnerMode="dialog"
             app:layout_constraintBottom_toTopOf="@+id/textView16"
             app:layout_constraintEnd_toEndOf="parent"
@@ -256,52 +282,86 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="#D1CA48"
-            android:text="Doses do Medicamento"
+            android:text="@string/doses_do_medicamento"
             android:textAlignment="center"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout5"
+            app:layout_constraintBottom_toTopOf="@+id/textInpLayDosesDia"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spIntervalos" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout5"
+            android:id="@+id/textInpLayDosesDia"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/switch2"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textInpLayQtdeDose"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInpTextDosesDia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Doses administradas por Dia"
-                android:text="2"
+                android:hint="@string/doses_administradas_por_dia"
+                android:inputType="number"
+                android:text="@string/exemplo_doses_administrada"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Switch
-            android:id="@+id/switch2"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInpLayQtdeDose"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Ativo"
-            android:textAlignment="viewStart"
-            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textInpLayDosesDia"
+            app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInpTextQtdeDose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/qtde_por_dose"
+                android:inputType="number"
+                android:text="@string/exemplo_qtde_por_dose"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Switch
+            android:id="@+id/swAtivo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:minHeight="48dp"
+            android:text="@string/ativo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInpLayDosesDia" />
+
+        <Button
+            android:id="@+id/btnConfirmar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="149dp"
+            android:layout_marginEnd="156dp"
+            android:layout_marginBottom="32dp"
+            android:contentDescription="@string/Botao_Confirmar_Registro_Medicamento"
+            android:text="@string/confirmar"
+            android:textAllCaps="false"
+            android:textColor="#5E35B1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
+            app:layout_constraintTop_toBottomOf="@+id/textInpLayDosesDia"
+            app:layout_constraintVertical_bias="0.26" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

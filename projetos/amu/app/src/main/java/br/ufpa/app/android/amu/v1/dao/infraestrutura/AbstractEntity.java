@@ -1,12 +1,13 @@
 package br.ufpa.app.android.amu.v1.dao.infraestrutura;
 
-import java.io.Serializable;
+import com.google.firebase.database.Exclude;
 
-import br.ufpa.app.android.amu.v1.dao.exception.InfraStructureException;
+import java.io.Serializable;
 
 public abstract class AbstractEntity implements Serializable {
     protected String nomeTabela;
 
+    @Exclude
     public String getNomeTabela() {
         return nomeTabela;
     }

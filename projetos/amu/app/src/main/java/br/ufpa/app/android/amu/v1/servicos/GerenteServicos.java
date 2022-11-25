@@ -12,12 +12,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
+
 import br.ufpa.app.android.amu.v1.activity.BemVindoActivity;
-import br.ufpa.app.android.amu.v1.activity.MainActivity;
+import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.factoryDao.FactoryDAO;
 import br.ufpa.app.android.amu.v1.dao.helper.Base64Custom;
+import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
+import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.util.App;
@@ -76,7 +80,8 @@ public class GerenteServicos {
     }
 
     public void abrirTelaPrincipal(AppCompatActivity atividade){
-        App.context.startActivity(new Intent(atividade, MainActivity.class));
+        //App.context.startActivity(new Intent(atividade, MainActivity.class));
+        App.context.startActivity(new Intent(atividade, PrincipalActivity.class));
     }
 
     public void abrirTelaBoasVindas(FirebaseAuth autenticacao, AppCompatActivity atividade) {
@@ -85,5 +90,14 @@ public class GerenteServicos {
         atividade.finish();
     }
 
+    public Medicamento incluirMedicamento(MedicamentoDTO medicamentoDTO) {
+        FactoryDAO factoryDAO = new FactoryDAO(em);
+        Medicamento medicamento = new Medicamento(medicamentoDTO);
+        return factoryDAO.getMedicamentosDao().create(medicamento);
+    }
 
+    public List<MedicamentoDTO> obterListaMedicamentosByUsuario(String idUsuario) {
+        FactoryDAO factoryDAO = new FactoryDAO(em);
+        return factoryDAO.getMedicamentosDao().findAllByUsuario(idUsuario);
+    }
 }

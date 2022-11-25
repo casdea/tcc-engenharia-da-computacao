@@ -1,6 +1,11 @@
 package br.ufpa.app.android.amu.v1.dao.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
+import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
+import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 
 public class Medicamento extends AbstractEntity {
     //automatico
@@ -9,6 +14,7 @@ public class Medicamento extends AbstractEntity {
     //edittext
     //DORFLEX
     private String nomeComercial;
+    private String nomeFantasia;
     //selecao de cores
     //Cores Basicas VERMELHO AZUL AMARELO ROSEO
     private String cor;
@@ -58,7 +64,40 @@ public class Medicamento extends AbstractEntity {
     //nao aparece
     private String idUsuario;
 
+    private int qtdeEmbalagem;
+
+    private List<Horario> horarios;
+
     public Medicamento() {
+        this.nomeTabela = "medicamentos";
+    }
+
+    public Medicamento(MedicamentoDTO medicamentoDTO) {
+        this.nomeTabela = "medicamentos";
+        
+        this.idMedicamento = medicamentoDTO.getIdMedicamento();
+        this.nomeComercial = medicamentoDTO.getNomeComercial();
+        this.nomeFantasia = medicamentoDTO.getNomeFantasia();
+        this.cor = medicamentoDTO.getCor();
+        this.principioAtivo = medicamentoDTO.getPrincipioAtivo();
+        this.fabricante = medicamentoDTO.getFabricante();
+        this.formaApresentacao = medicamentoDTO.getFormaApresentacao();
+        this.composicao = medicamentoDTO.getComposicao();
+        this.viaAdministracao = medicamentoDTO.getViaAdministracao();
+        this.publicoAlvo = medicamentoDTO.getPublicoAlvo();
+        this.textoParaQueIndicado = medicamentoDTO.getTextoParaQueIndicado();
+        this.textoComoFunciona = medicamentoDTO.getTextoComoFunciona();
+        this.textoComoUsar = medicamentoDTO.getTextoComoUsar();
+        this.textoSeEsquecerQueFazer = medicamentoDTO.getTextoSeEsquecerQueFazer();
+        this.idProdutoAnvisa = medicamentoDTO.getIdProdutoAnvisa();
+        this.dataProdutoAnvisa = medicamentoDTO.getDataProdutoAnvisa();
+        this.idUsuario = medicamentoDTO.getIdUsuario();
+        this.qtdeEmbalagem = medicamentoDTO.getQtdeEmbalagem();
+        this.horarios = new ArrayList<>();
+        for (HorarioDTO horarioDTO : medicamentoDTO.getHorarios())
+        {
+            this.horarios.add(new Horario(horarioDTO));
+        }
     }
 
     public String getIdMedicamento() {
@@ -75,6 +114,14 @@ public class Medicamento extends AbstractEntity {
 
     public void setNomeComercial(String nomeComercial) {
         this.nomeComercial = nomeComercial;
+    }
+
+    public String getNomeFantasia() {
+        return nomeFantasia;
+    }
+
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
     }
 
     public String getCor() {
@@ -187,5 +234,21 @@ public class Medicamento extends AbstractEntity {
 
     public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public List<Horario> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<Horario> horarios) {
+        this.horarios = horarios;
+    }
+
+    public int getQtdeEmbalagem() {
+        return qtdeEmbalagem;
+    }
+
+    public void setQtdeEmbalagem(int qtdeEmbalagem) {
+        this.qtdeEmbalagem = qtdeEmbalagem;
     }
 }

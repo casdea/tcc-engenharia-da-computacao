@@ -1,9 +1,6 @@
-package br.ufpa.app.android.amu.v1.dao.modelo;
+package br.ufpa.app.android.amu.v1.dto;
 
-import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
-import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
-
-public class Horario extends AbstractEntity {
+public class HorarioDTO {
     private String idHorario;
     private String idMedicamento;
     private String idUsuario;
@@ -13,22 +10,6 @@ public class Horario extends AbstractEntity {
     private String intervalo;
     private int nrDoses;
     private String ativo;
-
-    public Horario() {
-    }
-
-    public Horario(HorarioDTO horarioDTO) {
-        this.idHorario = horarioDTO.getIdHorario();
-        this.idMedicamento = horarioDTO.getIdMedicamento();
-        this.idUsuario = horarioDTO.getIdUsuario();
-        this.qtdePorDose = horarioDTO.getQtdePorDose();
-        this.dataInicial = horarioDTO.getDataInicial();
-        this.horarioInicial = horarioDTO.getHorarioInicial();
-        this.intervalo = horarioDTO.getIntervalo();
-        this.nrDoses = horarioDTO.getNrDoses();
-        this.qtdePorDose = horarioDTO.getQtdePorDose();
-        this.ativo = horarioDTO.getAtivo();
-    }
 
     public String getIdHorario() {
         return idHorario;

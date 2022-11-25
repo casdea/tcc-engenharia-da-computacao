@@ -24,7 +24,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.PaletaCoresActivity"
+            android:name=".activity.PrincipalActivity"
+            android:exported="false">
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".helper.PaletaCoresActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -34,6 +42,7 @@
             android:name=".activity.BemVindoActivity"
             android:exported="true"
             android:theme="@style/Theme.Intro">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

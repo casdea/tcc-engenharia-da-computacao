@@ -131,7 +131,6 @@ public class UsuarioActivity extends AppCompatActivity {
         return true;
     }
 
-
     public void cadastrarUsuario() {
         if (App.usuario == null) {
             FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
@@ -181,20 +180,6 @@ public class UsuarioActivity extends AppCompatActivity {
             App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
             finish();
-
-            /*
-            Reset Senha
-            FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-            FirebaseUser usuarioLogado = autenticacao.getCurrentUser();
-
-            usuarioLogado.updatePassword(usuarioDTO.getSenha()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-
-                }
-            });
-
-             */
         }
     }
 }
