@@ -2,25 +2,17 @@ package br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa;
 
 import android.content.Context;
 
-import org.apache.commons.io.IOUtils;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import br.ufpa.app.android.amu.v1.integracao.dto.ConsultarMedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoBularioEletronico;
-import okhttp3.ResponseBody;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class IntegracaoBularioEletronicoAnvisa implements IntegracaoBularioEletronico {
-
-    private static final String DIRETORIO_PDF = "pdfs";
-    private static final String DIRETORIO_TXT = "txts";
-    private static final String URL_CONSULTAS_API_ANVISA = "https://consultas.anvisa.gov.br";
 
     @Override
     public ConsultarMedicamentoRetDTO consultarDadosMedicamentos(Context context, String nomeComercial) {
@@ -76,43 +68,8 @@ public class IntegracaoBularioEletronicoAnvisa implements IntegracaoBularioEletr
     }
 
     @Override
-    public void downloadBula(Context context, String nomeArquivoBulaPaciente) {
-
-        try {
-            Retrofit retrofit = RetrofitBuilder.getInstance(context);
-
-            BularioEletronicoClient bularioEletronicoClient = retrofit.create(BularioEletronicoClient.class);
-
-            System.out.println("Enfieirando download do arquivo " + nomeArquivoBulaPaciente);
-
-            Response<ResponseBody> arg = bularioEletronicoClient.getArquivoBula(nomeArquivoBulaPaciente).execute();
-
-            File path = UtilAvisa.criarDiretorio(DIRETORIO_PDF);
-
-            UtilAvisa.criarDiretorio(DIRETORIO_TXT);
-
-            File file = new File(path, nomeArquivoBulaPaciente + ".pdf");
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            IOUtils.write(arg.body().bytes(), fileOutputStream);
-        } catch (
-                Exception e) {
-            e.printStackTrace();
-            System.out.println("falha ao obter arquivo de bula: " + e.getMessage());
-        }
-
-    }
-
-    @Override
-    public String obterTextoBula(MedicamentoRetDTO medicamentoRetDTO) {
-        try {
-            new DownloadBulaTask().execute(medicamentoRetDTO);
-
-            return "";
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            return "Não foi possivel obter texto da bula. Detalhes: " + e.getMessage();
-        }
+    public void obterTextoBula(AppCompatActivity atividade, MedicamentoRetDTO medicamentoRetDTO) {
+        new DownloadBulaTask(atividade).execute(medicamentoRetDTO);
     }
 
 }

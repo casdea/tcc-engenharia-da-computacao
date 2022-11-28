@@ -1,10 +1,11 @@
 package br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
@@ -17,18 +18,26 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
-import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.dto.RetornoExecucaoDTO;
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.Constantes;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, RetornoExecucaoDTO> {
 
+    private GerenteServicosListener gerenteServicosListener;
     protected ProgressDialog pDialog;
     private MedicamentoRetDTO medicamentoRetDTO;
+    private AppCompatActivity atividade;
+
+    public DownloadBulaTask(AppCompatActivity atividade) {
+        this.atividade = atividade;
+        this.gerenteServicosListener = (GerenteServicosListener) atividade;
+    }
 
     @Override
     protected void onPreExecute() {
@@ -104,10 +113,8 @@ public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, Retorno
 
                         App.medicamento = UtilAvisa.textoToMedicamento(this.medicamentoRetDTO, texto);
 
-                        Intent intent = new Intent();
-                        intent.putExtra("texto", texto);
-                        intent.setClass(App.context, DetalheMedicamentoActivity.class);
-                        App.context.startActivity(intent);
+                        gerenteServicosListener.executarAcao(Constantes.ACAO_RECEBER_TEXTO_BULA, null);
+
                     } else
                         App.mensagemExecucao = "Não foi possivel consultar a bula";
                 }

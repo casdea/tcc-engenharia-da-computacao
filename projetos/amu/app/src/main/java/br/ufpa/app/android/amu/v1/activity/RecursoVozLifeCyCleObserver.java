@@ -61,7 +61,7 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
 
                                 if (idView == R.id.btnConsultaMedicamento) {
                                     Intent intent = new Intent();
-                                    intent.setClass(App.context, ConsultaMedicamentoActivity.class);
+                                    intent.setClass(App.context, ConsultaAnvisaActivity.class);
                                     App.context.startActivity(intent);
                                 }
                             }

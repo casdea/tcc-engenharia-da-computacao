@@ -1,5 +1,7 @@
 package br.ufpa.app.android.amu.v1.dao.factoryDao;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DatabaseReference;
 
 import br.ufpa.app.android.amu.v1.dao.idao.IMedicamentoDao;
@@ -10,10 +12,12 @@ import br.ufpa.app.android.amu.v1.dao.impl.UsuarioDao;
 public class FactoryDAO {
 
     private DatabaseReference em;
+    private AppCompatActivity atividade;
 
-    public FactoryDAO(DatabaseReference em)
+    public FactoryDAO(DatabaseReference em, AppCompatActivity atividade)
     {
         this.em = em;
+        this.atividade = atividade;
     }
 
     private IUsuarioDao usuarioDao;
@@ -22,7 +26,7 @@ public class FactoryDAO {
     {
         if (usuarioDao == null)
         {
-            usuarioDao = new UsuarioDao(em);
+            usuarioDao = new UsuarioDao(em, atividade);
         }
         return usuarioDao;
     }
@@ -33,7 +37,7 @@ public class FactoryDAO {
     {
         if (medicamentoDao == null)
         {
-            medicamentoDao = new MedicamentoDao(em);
+            medicamentoDao = new MedicamentoDao(em, atividade);
         }
         return medicamentoDao;
     }

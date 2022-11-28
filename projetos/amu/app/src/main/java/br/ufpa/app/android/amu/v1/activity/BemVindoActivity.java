@@ -7,12 +7,15 @@ import android.view.View;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 
+import java.util.List;
+
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.integracao.classes.FontesConsulta;
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 
-public class BemVindoActivity extends IntroActivity implements View.OnClickListener {
+public class BemVindoActivity extends IntroActivity implements View.OnClickListener, GerenteServicosListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,7 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-        GerenteServicos gerenteServicos = new GerenteServicos();
+        GerenteServicos gerenteServicos = new GerenteServicos(BemVindoActivity.this);
         gerenteServicos.verificarUsuarioLogado(this);
     }
 
@@ -72,5 +75,15 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
             App.usuario = null;
             startActivity(new Intent(this, UsuarioActivity.class));
         }
+    }
+
+    @Override
+    public void carregarLista(List<?> lista) {
+
+    }
+
+    @Override
+    public void executarAcao(int numeroAcao, String[] parametros) {
+
     }
 }

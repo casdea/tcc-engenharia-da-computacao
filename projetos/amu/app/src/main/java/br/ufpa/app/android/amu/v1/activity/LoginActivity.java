@@ -18,12 +18,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
+import java.util.List;
+
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements GerenteServicosListener {
 
     private EditText campoEmail, campoSenha;
     private TextView txvEsqueciMinhaSenha;
@@ -114,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()) {
-                    GerenteServicos gerenteServicos = new GerenteServicos();
+                    GerenteServicos gerenteServicos = new GerenteServicos(LoginActivity.this);
                     gerenteServicos.verificarUsuarioLogado(LoginActivity.this);
 
                 } else {
@@ -137,6 +140,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    @Override
+    public void carregarLista(List<?> lista) {}
+
+    @Override
+    public void executarAcao(int numeroAcao, String[] parametros) {
 
     }
 }

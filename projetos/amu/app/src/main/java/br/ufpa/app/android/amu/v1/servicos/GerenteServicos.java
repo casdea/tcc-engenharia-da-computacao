@@ -12,8 +12,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
-
 import br.ufpa.app.android.amu.v1.activity.BemVindoActivity;
 import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
@@ -24,29 +22,34 @@ import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
+import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.util.App;
 
 public class GerenteServicos {
 
     private DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+    private AppCompatActivity atividade;
+
+    public GerenteServicos(AppCompatActivity atividade) {
+        this.atividade = atividade;
+    }
 
     public Usuario incluirUsuario(UsuarioDTO usuarioDTO) {
-        FactoryDAO factoryDAO = new FactoryDAO(em);
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
         Usuario usuario = new Usuario(usuarioDTO);
         return factoryDAO.getUsuarioDao().create(usuario);
     }
 
     public Usuario alterarUsuario(UsuarioDTO usuarioDTO) {
-        FactoryDAO factoryDAO = new FactoryDAO(em);
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
         Usuario usuario = new Usuario(usuarioDTO);
         return factoryDAO.getUsuarioDao().update(usuario);
     }
 
-    public void verificarUsuarioLogado(AppCompatActivity atividade) {
+    public void verificarUsuarioLogado(AppCompatActivity atividadeLocal) {
         FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
 
-        if( autenticacao.getCurrentUser() != null )
-        {
+        if (autenticacao.getCurrentUser() != null) {
             String emailUsuario = autenticacao.getCurrentUser().getEmail();
             String idUsuario = Base64Custom.codificarBase64(emailUsuario);
 
@@ -55,19 +58,18 @@ public class GerenteServicos {
             usuariosRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    App.usuario = snapshot.getValue( Usuario.class );
+                    App.usuario = snapshot.getValue(Usuario.class);
 
                     if (App.usuario != null) {
                         App.usuario.setIdUsuario(idUsuario);
                         App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
-                        abrirTelaPrincipal(atividade);
-                    }
-                    else {
+                        abrirTelaPrincipal(atividadeLocal);
+                    } else {
                         Toast.makeText(App.context,
                                 "Usuário não tem mais um cadastrado válido !",
                                 Toast.LENGTH_LONG).show();
 
-                        abrirTelaBoasVindas(autenticacao, atividade);
+                        abrirTelaBoasVindas(autenticacao, atividadeLocal);
                     }
                 }
 
@@ -79,25 +81,32 @@ public class GerenteServicos {
         }
     }
 
-    public void abrirTelaPrincipal(AppCompatActivity atividade){
-        //App.context.startActivity(new Intent(atividade, MainActivity.class));
+    public void abrirTelaPrincipal(AppCompatActivity atividadeLocal) {
+        //App.context.startActivity(new Intent(atividadeLocal, MainActivity.class));
         App.context.startActivity(new Intent(atividade, PrincipalActivity.class));
     }
 
-    public void abrirTelaBoasVindas(FirebaseAuth autenticacao, AppCompatActivity atividade) {
+    public void abrirTelaBoasVindas(FirebaseAuth autenticacao, AppCompatActivity atividadeLocal) {
         autenticacao.signOut();
-        App.context.startActivity(new Intent(atividade, BemVindoActivity.class));
-        atividade.finish();
+        App.context.startActivity(new Intent(atividadeLocal, BemVindoActivity.class));
+        atividadeLocal.finish();
     }
 
     public Medicamento incluirMedicamento(MedicamentoDTO medicamentoDTO) {
-        FactoryDAO factoryDAO = new FactoryDAO(em);
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
         Medicamento medicamento = new Medicamento(medicamentoDTO);
         return factoryDAO.getMedicamentosDao().create(medicamento);
     }
 
-    public List<MedicamentoDTO> obterListaMedicamentosByUsuario(String idUsuario) {
-        FactoryDAO factoryDAO = new FactoryDAO(em);
-        return factoryDAO.getMedicamentosDao().findAllByUsuario(idUsuario);
+    public void obterListaMedicamentosByUsuario(String idUsuario) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        factoryDAO.getMedicamentosDao().findAllByUsuario(idUsuario);
     }
+
+    public void obterTextoBula(MedicamentoRetDTO medicamentoRetDTO)
+    {
+        App.integracaoBularioEletronico.obterTextoBula(atividade, medicamentoRetDTO);
+    }
+
+
 }

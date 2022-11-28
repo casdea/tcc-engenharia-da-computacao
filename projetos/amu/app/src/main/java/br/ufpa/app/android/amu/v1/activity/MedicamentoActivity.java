@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
@@ -32,13 +33,14 @@ import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.fragments.DatePickerFragment;
 import br.ufpa.app.android.amu.v1.fragments.TimePickerFragment;
 import br.ufpa.app.android.amu.v1.helper.PaletaCoresActivity;
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.interfaces.PickDateListener;
 import br.ufpa.app.android.amu.v1.interfaces.PickTimeListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.DataUtil;
 
-public class MedicamentoActivity extends AppCompatActivity implements PickDateListener, PickTimeListener {
+public class MedicamentoActivity extends AppCompatActivity implements PickDateListener, PickTimeListener, GerenteServicosListener {
 
     private String cor;
 
@@ -232,7 +234,7 @@ public class MedicamentoActivity extends AppCompatActivity implements PickDateLi
 
                 //private double qtdeMedicamento;
 
-                GerenteServicos gerenteServicos = new GerenteServicos();
+                GerenteServicos gerenteServicos = new GerenteServicos(MedicamentoActivity.this);
                 App.medicamento = gerenteServicos.incluirMedicamento(medicamentoDTO);
 
             }
@@ -257,6 +259,15 @@ public class MedicamentoActivity extends AppCompatActivity implements PickDateLi
         textInpTextHorarioPrimeiraDose.setText(DataUtil.convertTimeToString(hora));
 
         Log.i("Hora ",hora.toString());
+    }
+
+    @Override
+    public void carregarLista(List<?> lista) {}
+
+    @Override
+    public void executarAcao(int numeroAcao, String[] parametros) {
+      setResult(Activity.RESULT_OK, null);
+      finish();
     }
 }
 

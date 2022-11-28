@@ -1,46 +1,75 @@
 package br.ufpa.app.android.amu.v1.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 
-import androidx.annotation.NonNull;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.adapter.MedicamentoAdapter;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
-import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
+import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
+import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoBularioEletronico;
+import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoUsuario;
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
+import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 
-public class PrincipalActivity extends AppCompatActivity {
+public class PrincipalActivity extends AppCompatActivity implements GerenteServicosListener {
 
     private RecyclerView recyclerView;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+    private ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
+        App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
+        App.integracaoBularioEletronico = new FactoryIntegracaoBularioEletronico().createIntegracaoBularioEletronico(App.fontesConsulta);
+
         recyclerView = findViewById(R.id.recyclerView);
 
-        carregarLista();
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(PrincipalActivity.this, ConsultaAnvisaActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        prepararLista();
     }
 
     @Override
@@ -61,43 +90,46 @@ public class PrincipalActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void carregarLista() {
-        //GerenteServicos gerenteServicos = new GerenteServicos();
-        //List<MedicamentoDTO> listaMedicamentos = gerenteServicos.obterListaMedicamentosByUsuario(App.usuario.getIdUsuario());
-        List<MedicamentoDTO> listaMedicamentos = new ArrayList<>();
-        DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+    private void prepararLista() {
+        GerenteServicos gerenteServicos = new GerenteServicos(PrincipalActivity.this);
+        gerenteServicos.obterListaMedicamentosByUsuario(App.usuario.getIdUsuario());
+    }
 
-        Query medicamentosQuery = em.child("medicamentos").orderByChild("idUsuario").equalTo(App.usuario.getIdUsuario());
 
-        medicamentosQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    Medicamento medicamento = postSnapshot.getValue(Medicamento.class);
-                    MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
-                    medicamentoDTO.setNomeComercial(medicamento.getNomeComercial());
-                    medicamentoDTO.setNomeFantasia(medicamento.getNomeFantasia());
-                    medicamentoDTO.setFabricante(medicamento.getFabricante());
-                    listaMedicamentos.add(medicamentoDTO);
-                    Log.i("Lendo dados ",postSnapshot.toString());
-                    // TODO: handle the post
-                }
+    @Override
+    public void carregarLista(List<?> lista) {
+        MedicamentoAdapter medicamentoAdapter = new MedicamentoAdapter((List<MedicamentoDTO>) lista);
 
-                MedicamentoAdapter medicamentoAdapter = new MedicamentoAdapter(listaMedicamentos);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(medicamentoAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
+                getApplicationContext(),
+                recyclerView,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(PrincipalActivity.this, DetalheMedicamentoActivity.class);
+                        detalheMedicamentoActivityResultLauncher.launch(intent);
 
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(medicamentoAdapter);
+                    }
 
-            }
+                    @Override
+                    public void onLongItemClick(View view, int position) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    }
 
-            }
-        });
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                    }
+                }));
+    }
+
+    @Override
+    public void executarAcao(int numeroAcao, String[] parametros) {
 
     }
 }

@@ -18,15 +18,18 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
+import java.util.List;
+
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.helper.Base64Custom;
 import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 
-public class UsuarioActivity extends AppCompatActivity {
+public class UsuarioActivity extends AppCompatActivity implements GerenteServicosListener {
 
     private EditText campoNome, campoEmail, campoSenha;
     private Button botaoCadastrar;
@@ -143,7 +146,7 @@ public class UsuarioActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         usuarioDTO.setIdUsuario(Base64Custom.codificarBase64(usuarioDTO.getEmail()));
 
-                        GerenteServicos gerenteServicos = new GerenteServicos();
+                        GerenteServicos gerenteServicos = new GerenteServicos(UsuarioActivity.this);
                         App.usuario = gerenteServicos.incluirUsuario(usuarioDTO);
                         App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
@@ -175,11 +178,19 @@ public class UsuarioActivity extends AppCompatActivity {
         else {
             usuarioDTO.setIdUsuario(Base64Custom.codificarBase64(usuarioDTO.getEmail()));
 
-            GerenteServicos gerenteServicos = new GerenteServicos();
+            GerenteServicos gerenteServicos = new GerenteServicos(UsuarioActivity.this);
             App.usuario = gerenteServicos.alterarUsuario(usuarioDTO);
             App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
             finish();
         }
+    }
+
+    @Override
+    public void carregarLista(List<?> lista) {}
+
+    @Override
+    public void executarAcao(int numeroAcao, String[] parametros) {
+
     }
 }

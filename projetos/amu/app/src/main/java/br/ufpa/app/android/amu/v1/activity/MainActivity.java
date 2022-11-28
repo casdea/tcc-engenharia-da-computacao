@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             } else if (v.getId() == R.id.btnConsultaMedicamento) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, ConsultaMedicamentoActivity.class);
+                intent.setClass(MainActivity.this, ConsultaAnvisaActivity.class);
                 startActivity(intent);
             } else if (v.getId() == R.id.btnPerfilUsuario) {
                 Intent intent = new Intent();
