@@ -1,5 +1,6 @@
 package br.ufpa.app.android.amu.v1.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MedicamentoDTO {
@@ -62,13 +63,13 @@ public class MedicamentoDTO {
 
     private int qtdeEmbalagem;
 
-    private List<HorarioDTO> horarios;
-
     private List<EstoqueDTO> estoques;
 
     private List<UtilizacaoDTO> utilizacoes;
 
     public MedicamentoDTO() {
+        this.estoques = new ArrayList<>();
+        this.utilizacoes = new ArrayList<>();
     }
 
     public String getIdMedicamento() {
@@ -213,14 +214,6 @@ public class MedicamentoDTO {
 
     public void setQtdeEmbalagem(int qtdeEmbalagem) {
         this.qtdeEmbalagem = qtdeEmbalagem;
-    }
-
-    public List<HorarioDTO> getHorarios() {
-        return horarios;
-    }
-
-    public void setHorarios(List<HorarioDTO> horarios) {
-        this.horarios = horarios;
     }
 
     public List<EstoqueDTO> getEstoques() {

@@ -78,7 +78,7 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
     }
 
     @Override
-    public void carregarLista(List<?> lista) {
+    public void carregarLista(int numeroAcao, List<?> lista) {
 
     }
 

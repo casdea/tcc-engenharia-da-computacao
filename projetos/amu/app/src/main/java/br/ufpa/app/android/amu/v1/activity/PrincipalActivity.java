@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
@@ -32,11 +33,13 @@ import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoUsuario;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class PrincipalActivity extends AppCompatActivity implements GerenteServicosListener {
 
     private RecyclerView recyclerView;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+    private List<MedicamentoDTO> listaMedicamentos = new ArrayList<>();
 
     private ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -44,7 +47,17 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
+                    }
+                }
+            });
 
+    private ActivityResultLauncher<Intent> consultarAvisaActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        prepararLista();
                     }
                 }
             });
@@ -63,9 +76,8 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(PrincipalActivity.this, ConsultaAnvisaActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(PrincipalActivity.this, ConsultaAnvisaActivity.class);
+                consultarAvisaActivityResultLauncher.launch(intent);
             }
         });
 
@@ -97,35 +109,40 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
 
     @Override
-    public void carregarLista(List<?> lista) {
-        MedicamentoAdapter medicamentoAdapter = new MedicamentoAdapter((List<MedicamentoDTO>) lista);
+    public void carregarLista(int numeroAcao, List<?> lista) {
+        if (numeroAcao == Constantes.ACAO_OBTER_LISTA_MEDICAMENTO_POR_USUARIO) {
+            this.listaMedicamentos = (List<MedicamentoDTO>) lista;
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(medicamentoAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
-                getApplicationContext(),
-                recyclerView,
-                new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(PrincipalActivity.this, DetalheMedicamentoActivity.class);
-                        detalheMedicamentoActivityResultLauncher.launch(intent);
+            MedicamentoAdapter medicamentoAdapter = new MedicamentoAdapter((List<MedicamentoDTO>) lista);
 
-                    }
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setAdapter(medicamentoAdapter);
+            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+            recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
+                    getApplicationContext(),
+                    recyclerView,
+                    new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            App.medicamentoDTO = (MedicamentoDTO) listaMedicamentos.get(position);
+                            Intent intent = new Intent(PrincipalActivity.this, DetalheMedicamentoActivity.class);
+                            detalheMedicamentoActivityResultLauncher.launch(intent);
 
-                    @Override
-                    public void onLongItemClick(View view, int position) {
+                        }
 
-                    }
+                        @Override
+                        public void onLongItemClick(View view, int position) {
 
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        }
 
-                    }
-                }));
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        }
+                    }));
+        }
     }
 
     @Override

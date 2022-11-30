@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
     }
 
     @Override
-    public void carregarLista(List<?> lista) {}
+    public void carregarLista(int numeroAcao, List<?> lista) {}
 
     @Override
     public void executarAcao(int numeroAcao, String[] parametros) {

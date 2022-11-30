@@ -17,8 +17,10 @@ import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.factoryDao.FactoryDAO;
 import br.ufpa.app.android.amu.v1.dao.helper.Base64Custom;
+import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
 import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
+import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
@@ -92,10 +94,11 @@ public class GerenteServicos {
         atividadeLocal.finish();
     }
 
-    public Medicamento incluirMedicamento(MedicamentoDTO medicamentoDTO) {
+    public void incluirMedicamento(MedicamentoDTO medicamentoDTO, HorarioDTO horarioDTO) {
         FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
         Medicamento medicamento = new Medicamento(medicamentoDTO);
-        return factoryDAO.getMedicamentosDao().create(medicamento);
+        Horario horario = new Horario(horarioDTO);
+        factoryDAO.getMedicamentosDao().create(medicamento,horario);
     }
 
     public void obterListaMedicamentosByUsuario(String idUsuario) {
@@ -108,5 +111,26 @@ public class GerenteServicos {
         App.integracaoBularioEletronico.obterTextoBula(atividade, medicamentoRetDTO);
     }
 
+    public void obterMedicamentoByUsuarioIdProduto(String idUsuario, String idProduto) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        factoryDAO.getMedicamentosDao().findByUsuarioIdProduto(idUsuario, idProduto);
+    }
+
+    public void incluirHorario(HorarioDTO horarioDTO) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        Horario horario = new Horario(horarioDTO);
+        factoryDAO.getHorarioDao().create(horario);
+    }
+
+    public void alterarHorario(HorarioDTO horarioDTO) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        Horario horario = new Horario(horarioDTO);
+        factoryDAO.getHorarioDao().update(horario);
+    }
+
+    public void obterListaHorariosByUsuarioMedicamento(String idUsuario, String idMedicamento) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        factoryDAO.getHorarioDao().findAllByUsuarioIdMedicamento(idUsuario,idMedicamento);
+    }
 
 }

@@ -114,13 +114,13 @@
             android:layout_marginBottom="8dp"
             android:text="Remedio para dor"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView12"
+            app:layout_constraintBottom_toTopOf="@+id/txvCorSelecionada"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/txvCorSelecionada"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -145,13 +145,13 @@
             android:textColor="@color/design_default_color_secondary_variant"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView20"
+            app:layout_constraintBottom_toTopOf="@+id/txvQtdeEmbalagem"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+            app:layout_constraintTop_toBottomOf="@+id/txvCorSelecionada" />
 
         <TextView
-            android:id="@+id/textView20"
+            android:id="@+id/txvQtdeEmbalagem"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -178,7 +178,7 @@
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView20" />
+            app:layout_constraintTop_toBottomOf="@+id/txvQtdeEmbalagem" />
 
         <LinearLayout
             android:id="@+id/linearLayout"

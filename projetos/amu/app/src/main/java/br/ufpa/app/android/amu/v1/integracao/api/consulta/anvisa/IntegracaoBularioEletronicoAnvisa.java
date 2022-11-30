@@ -38,8 +38,8 @@ public class IntegracaoBularioEletronicoAnvisa implements IntegracaoBularioEletr
                                     bularioEletronicoConteudoJson.getNomeProduto(),
                                     bularioEletronicoConteudoJson.getRazaoSocial(),
                                     bularioEletronicoConteudoJson.getIdBulaPacienteProtegido(),
-                                    bularioEletronicoConteudoJson.getIdProduto() + "_" + bularioEletronicoConteudoJson.getData() + ".pdf",
-                                    bularioEletronicoConteudoJson.getIdProduto() + "_" + bularioEletronicoConteudoJson.getData() + ".txt"));
+                                    String.valueOf(bularioEletronicoConteudoJson.getIdProduto()),
+                                    bularioEletronicoConteudoJson.getData()));
                 }
             } else {
                 System.out.println("CONSULTA NAO FOI EXECUTADA");

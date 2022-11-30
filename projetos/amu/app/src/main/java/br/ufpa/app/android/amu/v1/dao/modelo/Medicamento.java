@@ -1,10 +1,6 @@
 package br.ufpa.app.android.amu.v1.dao.modelo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
-import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 
 public class Medicamento extends AbstractEntity {
@@ -66,8 +62,6 @@ public class Medicamento extends AbstractEntity {
 
     private int qtdeEmbalagem;
 
-    private List<Horario> horarios;
-
     public Medicamento() {
         this.nomeTabela = "medicamentos";
     }
@@ -93,11 +87,6 @@ public class Medicamento extends AbstractEntity {
         this.dataProdutoAnvisa = medicamentoDTO.getDataProdutoAnvisa();
         this.idUsuario = medicamentoDTO.getIdUsuario();
         this.qtdeEmbalagem = medicamentoDTO.getQtdeEmbalagem();
-        this.horarios = new ArrayList<>();
-        for (HorarioDTO horarioDTO : medicamentoDTO.getHorarios())
-        {
-            this.horarios.add(new Horario(horarioDTO));
-        }
     }
 
     public String getIdMedicamento() {
@@ -234,14 +223,6 @@ public class Medicamento extends AbstractEntity {
 
     public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    public List<Horario> getHorarios() {
-        return horarios;
-    }
-
-    public void setHorarios(List<Horario> horarios) {
-        this.horarios = horarios;
     }
 
     public int getQtdeEmbalagem() {

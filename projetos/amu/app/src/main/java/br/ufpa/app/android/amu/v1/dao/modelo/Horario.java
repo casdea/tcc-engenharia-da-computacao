@@ -15,9 +15,11 @@ public class Horario extends AbstractEntity {
     private String ativo;
 
     public Horario() {
+        this.nomeTabela = "horarios";
     }
 
     public Horario(HorarioDTO horarioDTO) {
+        this.nomeTabela = "horarios";
         this.idHorario = horarioDTO.getIdHorario();
         this.idMedicamento = horarioDTO.getIdMedicamento();
         this.idUsuario = horarioDTO.getIdUsuario();

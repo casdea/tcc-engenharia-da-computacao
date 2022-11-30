@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -712,5 +713,8 @@ public abstract class StringUtil {
 		return digito;
 	}
 
+	public static String createId() {
+		return UUID.randomUUID().toString();
+	}
 	
 }

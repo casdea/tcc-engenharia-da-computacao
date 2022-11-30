@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.integracao.dto.ConsultarMedicamentoRetDTO;
@@ -40,6 +41,19 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
 public class ConsultaAnvisaActivity extends AppCompatActivity implements View.OnClickListener, GerenteServicosListener {
+
+    private MedicamentoRetDTO medicamentoRetDTO;
+
+    private ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+
+                    }
+                }
+            });
 
     private ActivityResultLauncher<Intent> consultarMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -171,10 +185,10 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
         lvMedicamentos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MedicamentoRetDTO medicamentoRetDTO = consultarMedicamentoRetDTO.getMedicamentos().get(position);
+                medicamentoRetDTO = consultarMedicamentoRetDTO.getMedicamentos().get(position);
 
                 GerenteServicos gerenteServicos = new GerenteServicos(ConsultaAnvisaActivity.this);
-                gerenteServicos.obterTextoBula(medicamentoRetDTO);
+                gerenteServicos.obterMedicamentoByUsuarioIdProduto(App.usuario.getIdUsuario(), medicamentoRetDTO.getIdProduto());
             }
         });
     }
@@ -220,8 +234,17 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
     }
 
     @Override
-    public void carregarLista(List<?> lista) {
-
+    public void carregarLista(int numeroAcao, List<?> lista) {
+        if (numeroAcao == Constantes.ACAO_OBTER_MEDICAMENTO_POR_USUARIO_PRODUTO) {
+            if (lista.size() == 0) {
+                GerenteServicos gerenteServicos = new GerenteServicos(ConsultaAnvisaActivity.this);
+                gerenteServicos.obterTextoBula(medicamentoRetDTO);
+            } else {
+                MedicamentoDTO medicamentoDTO = (MedicamentoDTO) lista.get(0);
+                Intent intent = new Intent(ConsultaAnvisaActivity.this, DetalheMedicamentoActivity.class);
+                detalheMedicamentoActivityResultLauncher.launch(intent);
+            }
+        }
     }
 
     @Override

@@ -5,15 +5,25 @@ public class MedicamentoRetDTO {
     private String nomeComercial;
     private String nomeLaboratorio;
     private String nomeArquivoBulaPaciente;
-    private String nomeArquivoPdf;
-    private String nomeArquivoTxt;
+    private String idProduto;
+    private String dataProduto;
 
-    public MedicamentoRetDTO(String nomeComercial, String nomeLaboratorio, String nomeArquivoBulaPaciente, String nomeArquivoPdf, String nomeArquivoTxt) {
+    public String getNomeArquivoPdf() {
+
+        return this.idProduto + "_" + this.dataProduto + ".pdf";
+    }
+
+    public String getNomeArquivoTxt() {
+
+        return this.idProduto + "_" + this.dataProduto + ".txt";
+    }
+
+    public MedicamentoRetDTO(String nomeComercial, String nomeLaboratorio, String nomeArquivoBulaPaciente, String idPoduto, String dataProduto) {
         this.nomeComercial = nomeComercial;
         this.nomeLaboratorio = nomeLaboratorio;
         this.nomeArquivoBulaPaciente = nomeArquivoBulaPaciente;
-        this.nomeArquivoPdf = nomeArquivoPdf;
-        this.nomeArquivoTxt = nomeArquivoTxt;
+        this.idProduto = idPoduto;
+        this.dataProduto = dataProduto;
     }
 
     public String getNomeComercial() {
@@ -40,19 +50,19 @@ public class MedicamentoRetDTO {
         this.nomeArquivoBulaPaciente = nomeArquivoBulaPaciente;
     }
 
-    public String getNomeArquivoPdf() {
-        return nomeArquivoPdf;
+    public String getIdProduto() {
+        return idProduto;
     }
 
-    public void setNomeArquivoPdf(String nomeArquivoPdf) {
-        this.nomeArquivoPdf = nomeArquivoPdf;
+    public void setIdProduto(String idProduto) {
+        this.idProduto = idProduto;
     }
 
-    public String getNomeArquivoTxt() {
-        return nomeArquivoTxt;
+    public String getDataProduto() {
+        return dataProduto;
     }
 
-    public void setNomeArquivoTxt(String nomeArquivoTxt) {
-        this.nomeArquivoTxt = nomeArquivoTxt;
+    public void setDataProduto(String dataProduto) {
+        this.dataProduto = dataProduto;
     }
 }

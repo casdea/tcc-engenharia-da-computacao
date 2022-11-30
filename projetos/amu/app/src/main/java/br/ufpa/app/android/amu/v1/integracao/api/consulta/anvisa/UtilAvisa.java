@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
+import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.util.App;
 
@@ -189,7 +189,7 @@ public class UtilAvisa {
         return "";
     }
 
-    public static Medicamento textoToMedicamento(MedicamentoRetDTO medicamentoRetDTO, String bula) {
+    public static MedicamentoDTO textoToMedicamento(MedicamentoRetDTO medicamentoRetDTO, String bula) {
         bula = CHAVE_IDENTIFICACAO + bula.trim();
         bula = bula.replaceAll(PARA_QUE_INDICADO, CHAVE_PARA_QUE_INDICADO);
         bula = bula.replaceAll(COMO_FUNCIONA, CHAVE_COMO_FUNCIONA);
@@ -225,22 +225,24 @@ public class UtilAvisa {
 
         String[] partesIdentificacao = identificacao.split(CHAVE_QUEBRA);
 
-        Medicamento medicamento = new Medicamento();
+        MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
         //preencher dados
-        medicamento.setNomeComercial(medicamentoRetDTO.getNomeComercial());
-        medicamento.setFabricante(medicamentoRetDTO.getNomeLaboratorio());
-        medicamento.setPrincipioAtivo(findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO));
-        medicamento.setFormaApresentacao(findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO_APRESENTACAO));
-        medicamento.setViaAdministracao("USO "+findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO_VIA_ADM));
-        medicamento.setPublicoAlvo("USO "+(usoInfatil ? "PEDIATRICO " : "") + (usoAdulto ? " ADULTO " : ""));
+        medicamentoDTO.setNomeComercial(medicamentoRetDTO.getNomeComercial());
+        medicamentoDTO.setFabricante(medicamentoRetDTO.getNomeLaboratorio());
+        medicamentoDTO.setIdProdutoAnvisa(medicamentoRetDTO.getIdProduto());
+        medicamentoDTO.setDataProdutoAnvisa(medicamentoRetDTO.getDataProduto());
+        medicamentoDTO.setPrincipioAtivo(findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO));
+        medicamentoDTO.setFormaApresentacao(findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO_APRESENTACAO));
+        medicamentoDTO.setViaAdministracao("USO "+findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO_VIA_ADM));
+        medicamentoDTO.setPublicoAlvo("USO "+(usoInfatil ? "PEDIATRICO " : "") + (usoAdulto ? " ADULTO " : ""));
         //INTERAÇÕES MEDICAMENTOSAS
         //Interações medicamentosas
-        medicamento.setComposicao(findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO_COMPOSICAO));
-        medicamento.setTextoParaQueIndicado(findParteByChave(partes, CODIGO_PARA_QUE_INDICADO));
-        medicamento.setTextoComoFunciona(findParteByChave(partes, CODIGO_COMO_FUNCIONA));
-        medicamento.setTextoComoUsar(findParteByChave(partes, CODIGO_COMO_USAR));
-        medicamento.setTextoSeEsquecerQueFazer(findParteByChave(partes, CODIGO_QUANDO_ESQUECER));
-        return medicamento;
+        medicamentoDTO.setComposicao(findParteByChave(partesIdentificacao, CODIGO_IDENTIFICACAO_COMPOSICAO));
+        medicamentoDTO.setTextoParaQueIndicado(findParteByChave(partes, CODIGO_PARA_QUE_INDICADO));
+        medicamentoDTO.setTextoComoFunciona(findParteByChave(partes, CODIGO_COMO_FUNCIONA));
+        medicamentoDTO.setTextoComoUsar(findParteByChave(partes, CODIGO_COMO_USAR));
+        medicamentoDTO.setTextoSeEsquecerQueFazer(findParteByChave(partes, CODIGO_QUANDO_ESQUECER));
+        return medicamentoDTO;
     }
 
 }

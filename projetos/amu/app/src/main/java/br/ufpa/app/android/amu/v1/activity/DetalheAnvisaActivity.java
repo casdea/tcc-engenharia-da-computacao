@@ -65,17 +65,17 @@ public class DetalheAnvisaActivity extends AppCompatActivity {
         txvTextoQuandoEsquecer = findViewById(R.id.txvTextoQuandoEsquecer);
         txvNomeFabricante = findViewById(R.id.txvNomeFabricante);
         //preencher dados
-        txvNomeComercial.setText(App.medicamento.getNomeComercial());
-        txvNomeFabricante.setText(App.medicamento.getFabricante());
-        txvPrincipioAtivo.setText(App.medicamento.getPrincipioAtivo());
-        txvFormaApresentacao.setText(App.medicamento.getFormaApresentacao());
-        txvViaAdministracao.setText(App.medicamento.getViaAdministracao());
-        txvPublicoAlvo.setText(App.medicamento.getPublicoAlvo());
-        txvTextoComposicao.setText(App.medicamento.getComposicao());
-        txvTextoParaQue.setText(App.medicamento.getTextoParaQueIndicado());
-        txvTextoComoFunciona.setText(App.medicamento.getTextoComoFunciona());
-        txvTextoComoDevoUsar.setText(App.medicamento.getTextoComoUsar());
-        txvTextoQuandoEsquecer.setText(App.medicamento.getTextoSeEsquecerQueFazer());
+        txvNomeComercial.setText(App.medicamentoDTO.getNomeComercial());
+        txvNomeFabricante.setText(App.medicamentoDTO.getFabricante());
+        txvPrincipioAtivo.setText(App.medicamentoDTO.getPrincipioAtivo());
+        txvFormaApresentacao.setText(App.medicamentoDTO.getFormaApresentacao());
+        txvViaAdministracao.setText(App.medicamentoDTO.getViaAdministracao());
+        txvPublicoAlvo.setText(App.medicamentoDTO.getPublicoAlvo());
+        txvTextoComposicao.setText(App.medicamentoDTO.getComposicao());
+        txvTextoParaQue.setText(App.medicamentoDTO.getTextoParaQueIndicado());
+        txvTextoComoFunciona.setText(App.medicamentoDTO.getTextoComoFunciona());
+        txvTextoComoDevoUsar.setText(App.medicamentoDTO.getTextoComoUsar());
+        txvTextoQuandoEsquecer.setText(App.medicamentoDTO.getTextoSeEsquecerQueFazer());
 
         findViewById(R.id.btnNovaConsulta).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +87,8 @@ public class DetalheAnvisaActivity extends AppCompatActivity {
         findViewById(R.id.btnCapturarDados).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 Intent intent = new Intent(DetalheAnvisaActivity.this, MedicamentoActivity.class);
                 cadastrarMedicamentoActivityResultLauncher.launch(intent);
 

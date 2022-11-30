@@ -111,7 +111,7 @@ public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, Retorno
                         if (convertidoParaTexto)
                             texto = UtilAvisa.lerArquivoTexto(UtilAvisa.obterDiretorioTxts() + this.medicamentoRetDTO.getNomeArquivoTxt());
 
-                        App.medicamento = UtilAvisa.textoToMedicamento(this.medicamentoRetDTO, texto);
+                        App.medicamentoDTO = UtilAvisa.textoToMedicamento(this.medicamentoRetDTO, texto);
 
                         gerenteServicosListener.executarAcao(Constantes.ACAO_RECEBER_TEXTO_BULA, null);
 

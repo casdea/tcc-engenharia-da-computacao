@@ -29,7 +29,6 @@ import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
-import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.fragments.DatePickerFragment;
 import br.ufpa.app.android.amu.v1.fragments.TimePickerFragment;
 import br.ufpa.app.android.amu.v1.helper.PaletaCoresActivity;
@@ -39,6 +38,7 @@ import br.ufpa.app.android.amu.v1.interfaces.PickTimeListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.DataUtil;
+import br.ufpa.app.android.amu.v1.util.StringUtil;
 
 public class MedicamentoActivity extends AppCompatActivity implements PickDateListener, PickTimeListener, GerenteServicosListener {
 
@@ -69,9 +69,9 @@ public class MedicamentoActivity extends AppCompatActivity implements PickDateLi
         TextView txvNomeFabricante = findViewById(R.id.txvNomeFabricante);
         TextView txvViaAdministracao = findViewById(R.id.txvViaAdministracao);
 
-        txvNomeComercial.setText(App.medicamento.getNomeComercial());
-        txvNomeFabricante.setText(App.medicamento.getFabricante());
-        txvViaAdministracao.setText(App.medicamento.getViaAdministracao());
+        txvNomeComercial.setText(App.medicamentoDTO.getNomeComercial());
+        txvNomeFabricante.setText(App.medicamentoDTO.getFabricante());
+        txvViaAdministracao.setText(App.medicamentoDTO.getViaAdministracao());
 
         this.cor = null;
 
@@ -187,7 +187,6 @@ public class MedicamentoActivity extends AppCompatActivity implements PickDateLi
                 }
 
                 Log.i("Dados Cadastrados ","Medicamentos");
-                Log.i("Dados Cadastrados ","Medicamentos");
                 Log.i("Apelido do Medicamento ",textInpTextApelido.getText().toString());
                 Log.i("Qtde Embalagem ",textInpTextQtdeEmbalagem.getText().toString());
                 Log.i("Data Inicio ",textInpTextInicioAdministracao.getText().toString());
@@ -197,45 +196,25 @@ public class MedicamentoActivity extends AppCompatActivity implements PickDateLi
                 Log.i("Qtde Dose ",textInpTextQtdeDose.getText().toString());
                 Log.i("Ativo ",swAtivo.isChecked() ? "SIM" : "NAO");
 
-                MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
-                medicamentoDTO.setIdMedicamento(App.medicamento.getIdMedicamento());
-                medicamentoDTO.setNomeComercial(App.medicamento.getNomeComercial());
-                medicamentoDTO.setNomeFantasia(textInpTextApelido.getText().toString());
-                medicamentoDTO.setFabricante(App.medicamento.getFabricante());
-                medicamentoDTO.setViaAdministracao(App.medicamento.getViaAdministracao());
-                medicamentoDTO.setCor(cor);
-                medicamentoDTO.setPrincipioAtivo(App.medicamento.getPrincipioAtivo());
-                medicamentoDTO.setFormaApresentacao(App.medicamento.getFormaApresentacao());
-                medicamentoDTO.setComposicao(App.medicamento.getComposicao());
-                medicamentoDTO.setPublicoAlvo(App.medicamento.getPublicoAlvo());
-                medicamentoDTO.setTextoParaQueIndicado(App.medicamento.getTextoParaQueIndicado());
-                medicamentoDTO.setTextoComoFunciona(App.medicamento.getTextoComoFunciona());
-                medicamentoDTO.setTextoComoUsar(App.medicamento.getTextoComoUsar());
-                medicamentoDTO.setTextoSeEsquecerQueFazer(App.medicamento.getTextoSeEsquecerQueFazer());
-                medicamentoDTO.setIdProdutoAnvisa(App.medicamento.getIdProdutoAnvisa());
-                medicamentoDTO.setDataProdutoAnvisa(App.medicamento.getDataProdutoAnvisa());
-                medicamentoDTO.setIdUsuario(App.usuario.getIdUsuario());
-                medicamentoDTO.setQtdeEmbalagem(Integer.parseInt(textInpTextQtdeEmbalagem.getText().toString()));
-                medicamentoDTO.setHorarios(new ArrayList<>());
-                medicamentoDTO.setEstoques(new ArrayList<>());
-                medicamentoDTO.setUtilizacoes(new ArrayList<>());
+                App.medicamentoDTO.setNomeFantasia(textInpTextApelido.getText().toString());
+                App.medicamentoDTO.setCor(cor);
+                App.medicamentoDTO.setIdUsuario(App.usuario.getIdUsuario());
+                App.medicamentoDTO.setQtdeEmbalagem(Integer.parseInt(textInpTextQtdeEmbalagem.getText().toString()));
+                App.medicamentoDTO.setEstoques(new ArrayList<>());
+                App.medicamentoDTO.setUtilizacoes(new ArrayList<>());
 
-                HorarioDTO horarioDTO = new HorarioDTO();
-                //private String idHorario;
-                //private String idMedicamento;
-                //private String idUsuario;
-                horarioDTO.setDataInicial(textInpTextInicioAdministracao.getText().toString());
-                horarioDTO.setHorarioInicial(textInpTextHorarioPrimeiraDose.getText().toString());
-                horarioDTO.setIntervalo(textInpTextHorarioPrimeiraDose.getText().toString());
-                horarioDTO.setNrDoses(Integer.parseInt(textInpTextDosesDia.getText().toString()));
-                horarioDTO.setQtdePorDose(Integer.parseInt(textInpTextQtdeDose.getText().toString()));
-                horarioDTO.setAtivo(swAtivo.isChecked() ? "SIM" : "NAO");
-                medicamentoDTO.getHorarios().add(horarioDTO);
-
-                //private double qtdeMedicamento;
+                App.horarioDTO = new HorarioDTO();
+                App.horarioDTO.setIdHorario(StringUtil.createId());
+                App.horarioDTO.setIdUsuario(App.usuario.getIdUsuario());
+                App.horarioDTO.setDataInicial(textInpTextInicioAdministracao.getText().toString());
+                App.horarioDTO.setHorarioInicial(textInpTextHorarioPrimeiraDose.getText().toString());
+                App.horarioDTO.setIntervalo(textInpTextHorarioPrimeiraDose.getText().toString());
+                App.horarioDTO.setNrDoses(Integer.parseInt(textInpTextDosesDia.getText().toString()));
+                App.horarioDTO.setQtdePorDose(Integer.parseInt(textInpTextQtdeDose.getText().toString()));
+                App.horarioDTO.setAtivo(swAtivo.isChecked() ? "SIM" : "NAO");
 
                 GerenteServicos gerenteServicos = new GerenteServicos(MedicamentoActivity.this);
-                App.medicamento = gerenteServicos.incluirMedicamento(medicamentoDTO);
+                gerenteServicos.incluirMedicamento(App.medicamentoDTO, App.horarioDTO);
 
             }
         });
@@ -262,7 +241,7 @@ public class MedicamentoActivity extends AppCompatActivity implements PickDateLi
     }
 
     @Override
-    public void carregarLista(List<?> lista) {}
+    public void carregarLista(int numeroAcao, List<?> lista) {}
 
     @Override
     public void executarAcao(int numeroAcao, String[] parametros) {

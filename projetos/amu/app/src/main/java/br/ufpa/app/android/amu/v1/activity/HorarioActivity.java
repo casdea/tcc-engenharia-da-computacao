@@ -1,0 +1,179 @@
+package br.ufpa.app.android.amu.v1.activity;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.List;
+
+import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
+import br.ufpa.app.android.amu.v1.fragments.DatePickerFragment;
+import br.ufpa.app.android.amu.v1.fragments.TimePickerFragment;
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
+import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
+import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.Constantes;
+import br.ufpa.app.android.amu.v1.util.DataUtil;
+import br.ufpa.app.android.amu.v1.util.StringUtil;
+
+public class HorarioActivity extends AppCompatActivity implements GerenteServicosListener {
+
+    private TextInputEditText textInpTextInicioAdministracao;
+    private TextInputEditText textInpTextHorarioPrimeiraDose;
+    private Spinner spIntervalos;
+    private TextInputEditText textInpTextDosesDia;
+    private TextInputEditText textInpTextQtdeDose;
+    private Switch swAtivo;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_horario);
+
+        textInpTextInicioAdministracao = findViewById(R.id.textInpTextInicioAdministracao);
+        textInpTextHorarioPrimeiraDose =  findViewById(R.id.textInpTextHorarioPrimeiraDose);
+        spIntervalos = findViewById(R.id.spIntervalos);
+        textInpTextDosesDia = findViewById(R.id.textInpTextDosesDia);
+        textInpTextQtdeDose = findViewById(R.id.textInpTextQtdeDose);
+        swAtivo = findViewById(R.id.swAtivo);
+
+        findViewById(R.id.textInpTextInicioAdministracao).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
+
+        findViewById(R.id.textInpTextHorarioPrimeiraDose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFragment = new TimePickerFragment();
+                newFragment.show(getSupportFragmentManager(), "timePicker");
+            }
+        });
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.horarios, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        Spinner spIntervalos = findViewById(R.id.spIntervalos);
+        spIntervalos.setAdapter(adapter);
+
+        spIntervalos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        findViewById(R.id.btnConfirmar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (textInpTextInicioAdministracao.getText().toString().isEmpty()) {
+                    Toast.makeText(HorarioActivity.this,
+                            "Escolha uma data de Inicio de Administração do Medicamento !",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (!DataUtil.isDataValida(textInpTextInicioAdministracao.getText().toString())) {
+                    Toast.makeText(HorarioActivity.this,
+                            "Data de Inicio de Administração do Medicamento inválida !",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (textInpTextHorarioPrimeiraDose.getText().toString().isEmpty()) {
+                    Toast.makeText(HorarioActivity.this,
+                            "Escolha uma Hora Inicio da Primeira Dose !",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (spIntervalos.getSelectedItem()==null) {
+                    Toast.makeText(HorarioActivity.this,
+                            "Escolha um intervalo entre as doses !",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (textInpTextDosesDia.getText().toString().isEmpty()) {
+                    Toast.makeText(HorarioActivity.this,
+                            "Preencha o numero de doses diárias !",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (textInpTextQtdeDose.getText().toString().isEmpty()) {
+                    Toast.makeText(HorarioActivity.this,
+                            "Preencha Quantidade por dose !",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                Log.i("Dados Cadastrados ","Medicamentos");
+                Log.i("Data Inicio ",textInpTextInicioAdministracao.getText().toString());
+                Log.i("Hora Inicio ",textInpTextHorarioPrimeiraDose.getText().toString());
+                Log.i("Intervalo ",spIntervalos.getSelectedItem().toString());
+                Log.i("Dose/Dia ",textInpTextDosesDia.getText().toString());
+                Log.i("Qtde Dose ",textInpTextQtdeDose.getText().toString());
+                Log.i("Ativo ",swAtivo.isChecked() ? "SIM" : "NAO");
+
+                App.horarioDTO = new HorarioDTO();
+                App.horarioDTO.setIdHorario(StringUtil.createId());
+                App.horarioDTO.setIdUsuario(App.usuario.getIdUsuario());
+                App.horarioDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
+                App.horarioDTO.setDataInicial(textInpTextInicioAdministracao.getText().toString());
+                App.horarioDTO.setHorarioInicial(textInpTextHorarioPrimeiraDose.getText().toString());
+                App.horarioDTO.setIntervalo(spIntervalos.getSelectedItem().toString());
+                App.horarioDTO.setNrDoses(Integer.parseInt(textInpTextDosesDia.getText().toString()));
+                App.horarioDTO.setQtdePorDose(Integer.parseInt(textInpTextQtdeDose.getText().toString()));
+                App.horarioDTO.setAtivo(swAtivo.isChecked() ? "SIM" : "NAO");
+
+                GerenteServicos gerenteServicos = new GerenteServicos(HorarioActivity.this);
+                gerenteServicos.incluirHorario(App.horarioDTO);
+
+            }
+        });
+
+        if (App.horarioDTO != null) {
+            textInpTextInicioAdministracao.setText(App.horarioDTO.getDataInicial());
+            textInpTextHorarioPrimeiraDose.setText(App.horarioDTO.getHorarioInicial());
+            //spIntervalos.setSelection( App.horarioDTO.getIntervalo());
+            textInpTextDosesDia.setText(String.valueOf(App.horarioDTO.getNrDoses()));
+            textInpTextQtdeDose.setText(String.valueOf(App.horarioDTO.getQtdePorDose()));
+            swAtivo.setChecked(App.horarioDTO.getAtivo().equals("SIM"));
+        }
+    }
+
+    @Override
+    public void carregarLista(int numeroAcao, List<?> lista) {
+
+    }
+
+    @Override
+    public void executarAcao(int numeroAcao, String[] parametros) {
+        if (numeroAcao == Constantes.ACAO_REGISTRAR_HORARIO) {
+            setResult(Activity.RESULT_OK, null);
+            finish();
+        }
+    }
+}
