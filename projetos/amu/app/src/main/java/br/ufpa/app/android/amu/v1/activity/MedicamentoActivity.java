@@ -1,14 +1,14 @@
 package br.ufpa.app.android.amu.v1.activity;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -23,26 +23,29 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.adapter.IntervaloAdapter;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
-import br.ufpa.app.android.amu.v1.fragments.DatePickerFragment;
 import br.ufpa.app.android.amu.v1.fragments.TimePickerFragment;
 import br.ufpa.app.android.amu.v1.helper.PaletaCoresActivity;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
-import br.ufpa.app.android.amu.v1.interfaces.PickDateListener;
 import br.ufpa.app.android.amu.v1.interfaces.PickTimeListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.Constantes;
 import br.ufpa.app.android.amu.v1.util.DataUtil;
 import br.ufpa.app.android.amu.v1.util.StringUtil;
 
-public class MedicamentoActivity extends AppCompatActivity implements PickDateListener, PickTimeListener, GerenteServicosListener {
+public class MedicamentoActivity extends AppCompatActivity implements PickTimeListener, GerenteServicosListener {
 
     private String cor;
+    private Calendar calendar;
 
     private ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -83,14 +86,6 @@ public class MedicamentoActivity extends AppCompatActivity implements PickDateLi
             }
         });
 
-        findViewById(R.id.textInpTextInicioAdministracao).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getSupportFragmentManager(), "datePicker");
-            }
-        });
-
         findViewById(R.id.textInpTextHorarioPrimeiraDose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,25 +93,46 @@ public class MedicamentoActivity extends AppCompatActivity implements PickDateLi
                 newFragment.show(getSupportFragmentManager(), "timePicker");
             }
         });
-        //textInpTextPrimeiraDose
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.horarios, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        TextInputEditText textInpTextInicioAdministracao = findViewById(R.id.textInpTextInicioAdministracao);
+        textInpTextInicioAdministracao.addTextChangedListener(DataUtil.mask("##/##/####", textInpTextInicioAdministracao));
+        calendar = Calendar.getInstance();
 
-        Spinner spIntervalos = findViewById(R.id.spIntervalos);
-        spIntervalos.setAdapter(adapter);
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
-        spIntervalos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
+                textInpTextInicioAdministracao.setText("");
+
+                String myFormat = "dd/MM/yyyy"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+                textInpTextInicioAdministracao.setText(sdf.format(calendar.getTime()));
             }
 
+        };
+
+        textInpTextInicioAdministracao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    new DatePickerDialog(MedicamentoActivity.this, date, calendar
+                            .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                            calendar.get(Calendar.DAY_OF_MONTH)).show();
+                }
 
             }
         });
+
+
+        Spinner spIntervalos = findViewById(R.id.spIntervalos);
+        spIntervalos.setAdapter(new IntervaloAdapter(this, Constantes.intervalos));
 
         findViewById(R.id.btnConfirmar).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,16 +234,6 @@ public class MedicamentoActivity extends AppCompatActivity implements PickDateLi
 
             }
         });
-    }
-
-    @Override
-    public void atualizarDataListener(int day, int month, int year) {
-
-        Date data = DataUtil.encodeDateByDiaMesAno(day, month, year);
-        TextInputEditText textInpTextInicioAdministracao = findViewById(R.id.textInpTextInicioAdministracao);
-        textInpTextInicioAdministracao.setText(DataUtil.convertDateToString(data));
-
-        Log.i("Dia ",data.toString());
     }
 
     @Override

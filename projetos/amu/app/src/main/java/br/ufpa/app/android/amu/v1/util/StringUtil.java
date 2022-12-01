@@ -716,5 +716,15 @@ public abstract class StringUtil {
 	public static String createId() {
 		return UUID.randomUUID().toString();
 	}
-	
+
+	public static int findByValor(String[] lista, String valor)
+	{
+		for (int i = 0; i < lista.length; i++) {
+			if (lista[i].equals(valor)) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
 }

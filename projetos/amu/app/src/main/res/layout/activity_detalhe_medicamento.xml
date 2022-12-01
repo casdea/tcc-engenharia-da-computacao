@@ -83,102 +83,40 @@
             android:layout_marginEnd="8dp"
             android:text="Trok N"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView13"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <TextView
-            android:id="@+id/textView13"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/txvCorSelecionada"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Apelido do Medicamento"
-            android:textColor="@color/design_default_color_secondary_variant"
-            android:textSize="16sp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/click_aqui"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/txvNomeFantasia"
+            app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textInpLayApelidoMedicamento"
             app:layout_constraintTop_toBottomOf="@+id/txvNomeComercial" />
 
         <TextView
-            android:id="@+id/txvNomeFantasia"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Remedio para dor"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/txvCorSelecionada"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-        <TextView
-            android:id="@+id/txvCorSelecionada"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Cor Selecionada do Medicamento"
-            app:layout_constraintBottom_toTopOf="@+id/textView18"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txvNomeFantasia" />
-
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/qtde_embalagem"
-            android:textColor="@color/design_default_color_secondary_variant"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/txvQtdeEmbalagem"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txvCorSelecionada" />
-
-        <TextView
-            android:id="@+id/txvQtdeEmbalagem"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/exemplo_qtde_medicamento"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18" />
-
-        <TextView
             android:id="@+id/textView22"
-            android:layout_width="0dp"
+            android:layout_width="784dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:text="@string/detalhes"
             android:textAlignment="center"
             android:textColor="@color/design_default_color_secondary_variant"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txvQtdeEmbalagem" />
+            app:layout_constraintTop_toBottomOf="@+id/textInpLayQtdeEmbalagem" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -198,40 +136,79 @@
                 android:id="@+id/viewpagertab"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                app:stl_indicatorAlwaysInCenter="false"
-                app:stl_indicatorWithoutPadding="false"
-                app:stl_indicatorInFront="false"
-                app:stl_indicatorInterpolation="smart"
-                app:stl_indicatorGravity="bottom"
-                app:stl_indicatorColor="#40C4FF"
-                app:stl_indicatorThickness="4dp"
-                app:stl_indicatorWidth="auto"
-                app:stl_indicatorCornerRadius="2dp"
-                app:stl_overlineColor="#4D000000"
-                app:stl_overlineThickness="0dp"
-                app:stl_underlineColor="#4D000000"
-                app:stl_underlineThickness="1dp"
-                app:stl_dividerColor="#4D000000"
-                app:stl_dividerThickness="1dp"
+                app:stl_clickable="true"
                 app:stl_defaultTabBackground="?attr/selectableItemBackground"
                 app:stl_defaultTabTextAllCaps="true"
                 app:stl_defaultTabTextColor="#FC000000"
-                app:stl_defaultTabTextSize="12sp"
                 app:stl_defaultTabTextHorizontalPadding="16dp"
                 app:stl_defaultTabTextMinWidth="0dp"
+                app:stl_defaultTabTextSize="12sp"
                 app:stl_distributeEvenly="false"
-                app:stl_clickable="true"
-                app:stl_titleOffset="24dp"
+                app:stl_dividerColor="#4D000000"
+                app:stl_dividerThickness="1dp"
                 app:stl_drawDecorationAfterTab="false"
-                />
+                app:stl_indicatorAlwaysInCenter="false"
+                app:stl_indicatorColor="#40C4FF"
+                app:stl_indicatorCornerRadius="2dp"
+                app:stl_indicatorGravity="bottom"
+                app:stl_indicatorInFront="false"
+                app:stl_indicatorInterpolation="smart"
+                app:stl_indicatorThickness="4dp"
+                app:stl_indicatorWidth="auto"
+                app:stl_indicatorWithoutPadding="false"
+                app:stl_overlineColor="#4D000000"
+                app:stl_overlineThickness="0dp"
+                app:stl_titleOffset="24dp"
+                app:stl_underlineColor="#4D000000"
+                app:stl_underlineThickness="1dp" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/viewpagertab"
-                />
+                android:layout_below="@id/viewpagertab" />
         </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInpLayApelidoMedicamento"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
+            app:layout_constraintEnd_toStartOf="@+id/txvCorSelecionada"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvNomeComercial">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInpTextApelido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/apelido_medicamento"
+                android:text="@string/exemplo_nome_fantasia" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInpLayQtdeEmbalagem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView22"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInpTextQtdeEmbalagem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/qtde_embalagem"
+                android:text="@string/exemplo_qtde_medicamento" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

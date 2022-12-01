@@ -83,8 +83,23 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
     @Override
     public Medicamento update(Medicamento medicamento) {
         DatabaseReference medicamentosRef = em.child(medicamento.getNomeTabela()).child(medicamento.getIdMedicamento());
-        medicamentosRef.setValue(medicamento);
+        medicamentosRef.setValue(medicamento).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(App.context,
+                        "Registro Salvo !",
+                        Toast.LENGTH_LONG).show();
 
+                gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_MEDICAMENTO, null);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(App.context,
+                        "Falha ao Registrar.Detalhes " + e.getMessage(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
         return medicamento;
     }
 

@@ -44,12 +44,15 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
     @Override
     public Horario create(Horario horario) {
         DatabaseReference horariosRef = em.child(horario.getNomeTabela());
-        horariosRef.push().setValue(horario).addOnSuccessListener(new OnSuccessListener<Void>() {
+        String chave = horariosRef.push().getKey();
+        horario.setIdHorario(chave);
+        horariosRef.child(chave).setValue(horario).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(App.context,
                         "Registro Horario Salvo !",
                         Toast.LENGTH_LONG).show();
+                App.horarioDTO.setIdHorario(chave);
                 gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_HORARIO, null);
 
             }
@@ -67,8 +70,24 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
 
     @Override
     public Horario update(Horario horario) {
-        DatabaseReference horariosRef = em.child("medicamentos").child(horario.getNomeTabela()).child(horario.getIdHorario());
-        horariosRef.setValue(horario);
+        DatabaseReference horariosRef = em.child(horario.getNomeTabela()).child(horario.getIdHorario());
+        horariosRef.setValue(horario).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(App.context,
+                        "Registro Horario Salvo !",
+                        Toast.LENGTH_LONG).show();
+                gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_HORARIO, null);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(App.context,
+                        "Falha ao Registrar.Detalhes " + e.getMessage(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
 
         return horario;
     }

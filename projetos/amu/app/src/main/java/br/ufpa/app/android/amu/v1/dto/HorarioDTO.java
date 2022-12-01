@@ -4,7 +4,7 @@ public class HorarioDTO {
     private String idHorario;
     private String idMedicamento;
     private String idUsuario;
-    private double qtdePorDose;
+    private int qtdePorDose;
     private String dataInicial;
     private String horarioInicial;
     private String intervalo;
@@ -35,11 +35,11 @@ public class HorarioDTO {
         this.idUsuario = idUsuario;
     }
 
-    public double getQtdePorDose() {
+    public int getQtdePorDose() {
         return qtdePorDose;
     }
 
-    public void setQtdePorDose(double qtdePorDose) {
+    public void setQtdePorDose(int qtdePorDose) {
         this.qtdePorDose = qtdePorDose;
     }
 

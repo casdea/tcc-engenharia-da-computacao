@@ -133,4 +133,9 @@ public class GerenteServicos {
         factoryDAO.getHorarioDao().findAllByUsuarioIdMedicamento(idUsuario,idMedicamento);
     }
 
+    public void alterarMedicamento(MedicamentoDTO medicamentoDTO) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        Medicamento medicamento = new Medicamento(medicamentoDTO);
+        factoryDAO.getMedicamentosDao().update(medicamento);
+    }
 }

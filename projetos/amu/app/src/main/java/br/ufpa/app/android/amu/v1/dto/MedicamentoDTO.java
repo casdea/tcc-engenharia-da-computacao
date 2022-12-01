@@ -67,6 +67,11 @@ public class MedicamentoDTO {
 
     private List<UtilizacaoDTO> utilizacoes;
 
+    public boolean isCorValida()
+    {
+        return this.cor != null && !this.cor.isEmpty();
+    }
+
     public MedicamentoDTO() {
         this.estoques = new ArrayList<>();
         this.utilizacoes = new ArrayList<>();
@@ -97,6 +102,8 @@ public class MedicamentoDTO {
     }
 
     public String getCor() {
+        if (cor == null) return "";
+
         return cor;
     }
 

@@ -47,6 +47,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
+                        prepararLista();
                     }
                 }
             });
