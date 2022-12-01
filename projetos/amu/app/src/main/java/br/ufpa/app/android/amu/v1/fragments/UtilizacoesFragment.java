@@ -29,20 +29,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
-import br.ufpa.app.android.amu.v1.activity.HorarioActivity;
-import br.ufpa.app.android.amu.v1.adapter.HorariosRecyclerViewAdapter;
+import br.ufpa.app.android.amu.v1.adapter.UtilizacoesRecyclerViewAdapter;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
-import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
-import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
+import br.ufpa.app.android.amu.v1.dao.modelo.Utilizacao;
+import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
 import br.ufpa.app.android.amu.v1.util.App;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HorariosFragment#newInstance} factory method to
+ * Use the {@link UtilizacoesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HorariosFragment extends Fragment {
+public class UtilizacoesFragment extends Fragment {
     private RecyclerView recyclerView;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -54,7 +53,7 @@ public class HorariosFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public HorariosFragment() {
+    public UtilizacoesFragment() {
         // Required empty public constructor
     }
 
@@ -67,8 +66,8 @@ public class HorariosFragment extends Fragment {
      * @return A new instance of fragment BlankFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HorariosFragment newInstance(String param1, String param2) {
-        HorariosFragment fragment = new HorariosFragment();
+    public static UtilizacoesFragment newInstance(String param1, String param2) {
+        UtilizacoesFragment fragment = new UtilizacoesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -101,7 +100,7 @@ public class HorariosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_horario_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_utilizacao_list, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
@@ -110,9 +109,6 @@ public class HorariosFragment extends Fragment {
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        App.horarioDTO = App.listaHorarios.get(position);
-                        Intent intent = new Intent(view.getContext(), HorarioActivity.class);
-                        mnutencaoHorarioActivityResultLauncher.launch(intent);
                     }
 
                     @Override
@@ -130,9 +126,6 @@ public class HorariosFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                App.horarioDTO = null;
-                Intent intent = new Intent(view.getContext(), HorarioActivity.class);
-                mnutencaoHorarioActivityResultLauncher.launch(intent);
             }
         });
 
@@ -144,35 +137,34 @@ public class HorariosFragment extends Fragment {
         super.onStart();
         atualizarLista(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
     }
-
     private void atualizarLista(String idUsuario, String idMedicamento) {
-        App.listaHorarios = new ArrayList<>();
+        App.listaUtilizacoes = new ArrayList<>();
         DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
 
-        Query horariosQuery = em.child("horarios").orderByChild("idUsuario").equalTo(idUsuario);
+        Query utilizacoesQuery = em.child("utilizacoes").orderByChild("idUsuario").equalTo(idUsuario);
 
         ValueEventListener evento = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                App.listaHorarios = new ArrayList<>();
+                App.listaUtilizacoes = new ArrayList<>();
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    HorarioDTO horarioDTO = getHorarioDTO(postSnapshot);
+                    UtilizacaoDTO utilizacaoDTO = getUtilizacaoDTO(postSnapshot);
 
                     Log.i("Lendo dados ", postSnapshot.toString());
 
-                    if (horarioDTO.getIdMedicamento().equals(idMedicamento)) {
-                        App.listaHorarios.add(horarioDTO);
+                    if (utilizacaoDTO.getIdMedicamento().equals(idMedicamento)) {
+                        App.listaUtilizacoes.add(utilizacaoDTO);
                     }
                     // TODO: handle the post
                 }
 
-                HorariosRecyclerViewAdapter horariosRecyclerViewAdapter = new HorariosRecyclerViewAdapter((List<HorarioDTO>) App.listaHorarios);
+                UtilizacoesRecyclerViewAdapter utilizacoesRecyclerViewAdapter = new UtilizacoesRecyclerViewAdapter((List<UtilizacaoDTO>) App.listaUtilizacoes);
 
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getView().getContext());
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(horariosRecyclerViewAdapter);
+                recyclerView.setAdapter(utilizacoesRecyclerViewAdapter);
             }
 
             @Override
@@ -181,25 +173,20 @@ public class HorariosFragment extends Fragment {
             }
         };
 
-        horariosQuery.addListenerForSingleValueEvent(evento);
+        utilizacoesQuery.addListenerForSingleValueEvent(evento);
 
     }
 
-    private HorarioDTO getHorarioDTO(DataSnapshot postSnapshot) {
-        Horario horario = postSnapshot.getValue(Horario.class);
+    @NonNull
+    private UtilizacaoDTO getUtilizacaoDTO(DataSnapshot postSnapshot) {
+        Utilizacao utilizacao = postSnapshot.getValue(Utilizacao.class);
 
-        HorarioDTO horarioDTO = new HorarioDTO();
-        horarioDTO.setIdHorario(horario.getIdHorario());
-        horarioDTO.setIdMedicamento(horario.getIdMedicamento());
-        horarioDTO.setIdUsuario(horario.getIdUsuario());
-        horarioDTO.setDataInicial(horario.getDataInicial());
-        horarioDTO.setHorarioInicial(horario.getHorarioInicial());
-        horarioDTO.setIntervalo(horario.getIntervalo());
-        horarioDTO.setNrDoses(horario.getNrDoses());
-        horarioDTO.setQtdePorDose(horario.getQtdePorDose());
-        horarioDTO.setAtivo(horario.getAtivo());
+        UtilizacaoDTO utilizacaoDTO = new UtilizacaoDTO();
+        utilizacaoDTO.setIdUtilizacao(utilizacao.getIdUtilizacao());
+        utilizacaoDTO.setIdMedicamento(utilizacao.getIdMedicamento());
+        utilizacaoDTO.setIdUsuario(utilizacao.getIdUsuario());
+        utilizacaoDTO.setDataHora(utilizacao.getDataHora());
 
-        return horarioDTO;
+        return utilizacaoDTO;
     }
-
 }

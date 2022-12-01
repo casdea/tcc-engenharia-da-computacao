@@ -7,9 +7,11 @@ import com.google.firebase.database.DatabaseReference;
 import br.ufpa.app.android.amu.v1.dao.idao.IHorarioDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IMedicamentoDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IUsuarioDao;
+import br.ufpa.app.android.amu.v1.dao.idao.IUtilizacaoDao;
 import br.ufpa.app.android.amu.v1.dao.impl.HorarioDao;
 import br.ufpa.app.android.amu.v1.dao.impl.MedicamentoDao;
 import br.ufpa.app.android.amu.v1.dao.impl.UsuarioDao;
+import br.ufpa.app.android.amu.v1.dao.impl.UtilizacaoDao;
 
 public class FactoryDAO {
 
@@ -55,4 +57,15 @@ public class FactoryDAO {
         return horarioDao;
     }
 
+
+    private IUtilizacaoDao utilizacaoDao;
+
+    public IUtilizacaoDao getUtilizacaoDao()
+    {
+        if (utilizacaoDao == null)
+        {
+            utilizacaoDao = new UtilizacaoDao(em, atividade);
+        }
+        return utilizacaoDao;
+    }
 }

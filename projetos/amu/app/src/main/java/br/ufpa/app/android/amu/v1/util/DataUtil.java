@@ -50,6 +50,12 @@ public class DataUtil {
         return sdf.format(date);
     }
 
+    public static final String convertDateTimeToString(java.util.Date date)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return sdf.format(date);
+    }
+
     public static final String convertTimeToString(java.util.Date date)
     {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");

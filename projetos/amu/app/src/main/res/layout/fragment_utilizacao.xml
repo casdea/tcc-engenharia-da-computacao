@@ -3,110 +3,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp">
 
     <TextView
-        android:id="@+id/itemNumber"
-        android:layout_width="wrap_content"
+        android:id="@+id/textView40"
+        android:layout_width="784dp"
         android:layout_height="wrap_content"
-        android:text="@string/exemplo_inicio_adm"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="117dp" />
-
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:background="#D1CA48"
-        android:text="@string/horarios"
+        android:text="Registro de Utilização"
+        android:textAlignment="viewStart"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp" />
 
     <TextView
         android:id="@+id/textView36"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/inicio_administracao"
+        android:text="Data Hora Utilização"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txvDataHora"
         app:layout_constraintEnd_toStartOf="@+id/textView38"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView40" />
 
     <TextView
+        android:id="@+id/txvDataHora"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="05/12/2022 08:00"
+        app:layout_constraintEnd_toStartOf="@+id/txvHorarioInicio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+    <TextView
+        android:id="@+id/txvHorarioInicio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txvDataHora"
+        app:layout_constraintTop_toBottomOf="@+id/textView38" />
+
+    <TextView
         android:id="@+id/textView38"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/horario_primeira_dose"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txvHorarioInicio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView36"
         app:layout_constraintTop_toBottomOf="@+id/textView40" />
-
-    <TextView
-        android:id="@+id/textView39"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/exemplo_hora_inicio"
-        tools:layout_editor_absoluteX="276dp"
-        tools:layout_editor_absoluteY="98dp" />
-
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Switch"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="321dp" />
-
-    <TextView
-        android:id="@+id/textView42"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="166dp" />
-
-    <TextView
-        android:id="@+id/textView43"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="15dp"
-        tools:layout_editor_absoluteY="206dp" />
-
-    <TextView
-        android:id="@+id/textView44"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="266dp"
-        tools:layout_editor_absoluteY="199dp" />
-
-    <TextView
-        android:id="@+id/textView45"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="242dp" />
-
-    <TextView
-        android:id="@+id/textView46"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="266dp"
-        tools:layout_editor_absoluteY="242dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

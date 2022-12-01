@@ -20,9 +20,11 @@ import br.ufpa.app.android.amu.v1.dao.helper.Base64Custom;
 import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
 import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
+import br.ufpa.app.android.amu.v1.dao.modelo.Utilizacao;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
+import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.util.App;
@@ -138,4 +140,11 @@ public class GerenteServicos {
         Medicamento medicamento = new Medicamento(medicamentoDTO);
         factoryDAO.getMedicamentosDao().update(medicamento);
     }
+
+    public void incluirUtilizacao(UtilizacaoDTO utilizacaoDTO) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        Utilizacao utilizacao = new Utilizacao(utilizacaoDTO);
+        factoryDAO.getUtilizacaoDao().create(utilizacao);
+    }
+
 }

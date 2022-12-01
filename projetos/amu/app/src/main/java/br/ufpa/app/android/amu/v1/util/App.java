@@ -8,6 +8,7 @@ import java.util.List;
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
+import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.FontesConsulta;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
@@ -29,5 +30,7 @@ public class App extends Application {
     public static Usuario usuario;
     public static MedicamentoDTO medicamentoDTO;
     public static HorarioDTO horarioDTO;
+    public static UtilizacaoDTO utilizacaoDTO;
     public static List<HorarioDTO> listaHorarios;
+    public static List<UtilizacaoDTO> listaUtilizacoes;
 }

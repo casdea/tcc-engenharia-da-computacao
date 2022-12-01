@@ -1,23 +1,24 @@
 package br.ufpa.app.android.amu.v1.dao.modelo;
 
-import java.util.Date;
-
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
+import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 
 public class Utilizacao  extends AbstractEntity  {
     private String idUtilizacao;
     private String idMedicamento;
     private String idUsuario;
-    private Date dataHora;
+    private String dataHora;
 
     public Utilizacao() {
+        nomeTabela = "utilizacoes";
     }
 
-    public Utilizacao(String idUtilizacao, String idMedicamento, String idUsuario, Date dataHora) {
-        this.idUtilizacao = idUtilizacao;
-        this.idMedicamento = idMedicamento;
-        this.idUsuario = idUsuario;
-        this.dataHora = dataHora;
+    public Utilizacao(UtilizacaoDTO utilizacaoDTO) {
+        nomeTabela = "utilizacoes";
+        this.idUtilizacao = utilizacaoDTO.getIdUtilizacao();
+        this.idMedicamento = utilizacaoDTO.getIdMedicamento();
+        this.idUsuario = utilizacaoDTO.getIdUsuario();
+        this.dataHora = utilizacaoDTO.getDataHora();
     }
 
     public String getIdUtilizacao() {
@@ -44,11 +45,11 @@ public class Utilizacao  extends AbstractEntity  {
         this.idUsuario = idUsuario;
     }
 
-    public Date getDataHora() {
+    public String getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(Date dataHora) {
+    public void setDataHora(String dataHora) {
         this.dataHora = dataHora;
     }
 }
