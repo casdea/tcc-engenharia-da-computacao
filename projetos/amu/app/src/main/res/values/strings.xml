@@ -69,4 +69,12 @@
     <string name="alterar">Alterar</string>
     <string name="utilizar">Utilizar</string>
     <string name="alarmes">Alarmes</string>
+    <string name="data_hora">Data/Hora</string>
+    <string name="entrada">Entrada</string>
+    <string name="saida">Saida</string>
+    <string name="saldo">Saldo</string>
+    <string name="exemplo_data_hora">01/12/2022</string>
+    <string name="exemplo_entrada">80</string>
+    <string name="exemplo_saida">0</string>
+    <string name="exemplo_saldo">80</string>
 </resources>

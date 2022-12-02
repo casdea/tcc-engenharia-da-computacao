@@ -1,29 +1,30 @@
 package br.ufpa.app.android.amu.v1.dao.modelo;
 
-import java.util.Date;
-
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
+import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 
 public class Estoque  extends AbstractEntity {
     private String idEstoque;
     private String idMedicamento;
     private String idUsuario;
-    private Date data;
-    private double entrada;
-    private double saida;
-    private double saldo;
+    private String data;
+    private int entrada;
+    private int saida;
+    private int saldo;
 
     public Estoque() {
+        nomeTabela = "estoques";
     }
 
-    public Estoque(String idEstoque, String idMedicamento, String idUsuario, Date data, double entrada, double saida, double saldo) {
-        this.idEstoque = idEstoque;
-        this.idMedicamento = idMedicamento;
-        this.idUsuario = idUsuario;
-        this.data = data;
-        this.entrada = entrada;
-        this.saida = saida;
-        this.saldo = saldo;
+    public Estoque(EstoqueDTO estoqueDTO) {
+        nomeTabela = "estoques";
+        this.idEstoque = estoqueDTO.getIdEstoque();
+        this.idMedicamento = estoqueDTO.getIdMedicamento();
+        this.idUsuario = estoqueDTO.getIdUsuario();
+        this.data = estoqueDTO.getData();
+        this.entrada = estoqueDTO.getEntrada();
+        this.saida = estoqueDTO.getSaida();
+        this.saldo = estoqueDTO.getSaldo();
     }
 
     public String getIdEstoque() {
@@ -50,35 +51,35 @@ public class Estoque  extends AbstractEntity {
         this.idUsuario = idUsuario;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public double getEntrada() {
+    public int getEntrada() {
         return entrada;
     }
 
-    public void setEntrada(double entrada) {
+    public void setEntrada(int entrada) {
         this.entrada = entrada;
     }
 
-    public double getSaida() {
+    public int getSaida() {
         return saida;
     }
 
-    public void setSaida(double saida) {
+    public void setSaida(int saida) {
         this.saida = saida;
     }
 
-    public double getSaldo() {
+    public int getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
+    public void setSaldo(int saldo) {
         this.saldo = saldo;
     }
 }

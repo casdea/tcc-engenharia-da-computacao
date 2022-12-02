@@ -106,17 +106,13 @@
             android:id="@+id/textView22"
             android:layout_width="784dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:text="@string/detalhes"
             android:textAlignment="center"
             android:textColor="@color/design_default_color_secondary_variant"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInpLayQtdeEmbalagem" />
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="252dp" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -191,16 +187,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInpLayQtdeEmbalagem"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView22"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento">
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="188dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInpTextQtdeEmbalagem"
@@ -208,6 +198,18 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/qtde_embalagem"
                 android:text="@string/exemplo_qtde_medicamento" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="734dp"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="65dp"
+            tools:layout_editor_absoluteY="200dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="hint" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

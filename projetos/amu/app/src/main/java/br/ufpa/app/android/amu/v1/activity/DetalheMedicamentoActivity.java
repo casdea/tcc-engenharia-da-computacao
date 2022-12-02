@@ -33,6 +33,7 @@ import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
+import br.ufpa.app.android.amu.v1.fragments.EstoquesFragment;
 import br.ufpa.app.android.amu.v1.fragments.HorariosFragment;
 import br.ufpa.app.android.amu.v1.fragments.UtilizacoesFragment;
 import br.ufpa.app.android.amu.v1.helper.PaletaCoresActivity;
@@ -103,6 +104,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
                 .add("Horários", HorariosFragment.class)
                 .add("Utilizações", UtilizacoesFragment.class)
+                .add("Estoque", EstoquesFragment.class)
                 .create());
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -159,6 +161,17 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             selecionarCor();
         } else if (view.getId() == R.id.btnAlterar) {
             alterarMedicamento();
+  /*
+            HorariosFragment horariosFragment = (HorariosFragment) adapter.getItem(0);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.remove(horariosFragment);
+
+            //transaction.replace(R.id.idFragmentoHorario, horariosFragment);
+            transaction.addToBackStack(null);
+
+            transaction.commit();
+*/
         } else if (view.getId() == R.id.btnUtilizar) {
             abrirDialog(view);
         }

@@ -6,6 +6,7 @@ import android.content.Context;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
+import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
@@ -33,4 +34,6 @@ public class App extends Application {
     public static UtilizacaoDTO utilizacaoDTO;
     public static List<HorarioDTO> listaHorarios;
     public static List<UtilizacaoDTO> listaUtilizacoes;
+    public static EstoqueDTO estoqueDTO;
+    public static List<EstoqueDTO> listaEstoques;
 }

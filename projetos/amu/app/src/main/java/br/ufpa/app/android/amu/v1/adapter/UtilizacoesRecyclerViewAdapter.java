@@ -14,6 +14,7 @@ import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 
 /**
+ * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class UtilizacoesRecyclerViewAdapter extends RecyclerView.Adapter<UtilizacoesRecyclerViewAdapter.HorarioViewHolder> {

@@ -7,8 +7,11 @@ public class Constantes {
     public static final int ACAO_REGISTRAR_HORARIO = 4;
     public static final int ACAO_ALTERAR_MEDICAMENTO = 5;
     public static final int ACAO_ALTERAR_HORARIO = 6;
+    public static final int ACAO_REGISTRAR_ESTOQUE = 7;
+    public static final int ACAO_ALTERAR_ESTOQUE = 8;
     public static final int ACAO_RECEBER_TEXTO_BULA = 100;
     public static final int ACAO_FECHAR_TELA = 101;
+
 
     public static String[] intervalos = new String[] {
             "6 horas", "8 horas", "12 horas", "24 horas",

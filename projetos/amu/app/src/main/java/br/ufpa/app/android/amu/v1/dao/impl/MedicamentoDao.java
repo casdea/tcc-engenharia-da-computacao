@@ -20,13 +20,16 @@ import java.util.List;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IMedicamentoDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
+import br.ufpa.app.android.amu.v1.dao.modelo.Estoque;
 import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
 import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
+import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
+import br.ufpa.app.android.amu.v1.util.DataUtil;
 
 public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IMedicamentoDao {
 
@@ -51,9 +54,6 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
         medicamentosRef.child(chave).setValue(medicamento).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(App.context,
-                        "Registro Salvo !",
-                        Toast.LENGTH_LONG).show();
 
                 App.medicamentoDTO.setIdMedicamento(medicamento.getIdMedicamento());
 
@@ -64,7 +64,44 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
                 horariosRef.child(chaveHorario).setValue(horario).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_MEDICAMENTO, null);
+                        App.estoqueDTO = new EstoqueDTO();
+                        App.estoqueDTO.setIdUsuario(medicamento.getIdUsuario());
+                        App.estoqueDTO.setIdEstoque("0");
+                        App.estoqueDTO.setIdMedicamento(medicamento.getIdMedicamento());
+                        App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
+                        App.estoqueDTO.setEntrada(medicamento.getQtdeEmbalagem());
+                        App.estoqueDTO.setSaida(0);
+                        App.estoqueDTO.setSaldo(medicamento.getQtdeEmbalagem());
+
+                        Estoque estoque = new Estoque(App.estoqueDTO);
+
+                        DatabaseReference estoqueRef = em.child(estoque.getNomeTabela());
+                        String chaveEstoque = estoqueRef.push().getKey();
+                        estoque.setIdEstoque(chaveEstoque);
+                        estoque.setIdMedicamento(medicamento.getIdMedicamento());
+                        estoqueRef.child(chaveEstoque).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(App.context,
+                                        "Registro de Estoque Salvo !",
+                                        Toast.LENGTH_LONG).show();
+                                gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_MEDICAMENTO, null);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(App.context,
+                                        "Falha ao Registrar Estoque.Detalhes " + e.getMessage(),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(App.context,
+                                "Falha ao Registrar Horario.Detalhes " + e.getMessage(),
+                                Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -72,7 +109,7 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(App.context,
-                        "Falha ao Registrar.Detalhes " + e.getMessage(),
+                        "Falha ao Registrar Medicamento.Detalhes " + e.getMessage(),
                         Toast.LENGTH_LONG).show();
             }
         });

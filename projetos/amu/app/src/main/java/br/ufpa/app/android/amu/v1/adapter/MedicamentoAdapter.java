@@ -1,5 +1,7 @@
 package br.ufpa.app.android.amu.v1.adapter;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +28,24 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
     public MedicamentoViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemlista = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_medicamento, parent, false);
+
+
         return new MedicamentoViewHoder(itemlista);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MedicamentoViewHoder holder, int position) {
+
+        if (listaMedicamentos.get(position).getCor() != null && !listaMedicamentos.get(position).getCor().equals(""))
+        {
+            try {
+                holder.fundo.setBackground(new ColorDrawable(Color.parseColor(listaMedicamentos.get(position).getCor())));
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
         holder.txvNomeMedicamento.setText(listaMedicamentos.get(position).getNomeComercial());
         holder.txvNomeFantasia.setText(listaMedicamentos.get(position).getNomeFantasia());
         holder.txtNomeFabricante.setText(listaMedicamentos.get(position).getFabricante());
@@ -43,12 +58,14 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
 
     public class MedicamentoViewHoder extends RecyclerView.ViewHolder {
 
+        androidx.constraintlayout.widget.ConstraintLayout fundo;
         TextView txvNomeMedicamento;
         TextView txvNomeFantasia;
         TextView txtNomeFabricante;
 
         public MedicamentoViewHoder(@NonNull View itemView) {
             super(itemView);
+            fundo = itemView.findViewById(R.id.fundo);
             txvNomeMedicamento = itemView.findViewById(R.id.txvNomeMedicamento);
             txvNomeFantasia = itemView.findViewById(R.id.txvNomeFantasia);
             txtNomeFabricante = itemView.findViewById(R.id.txtNomeFabricante);
