@@ -36,6 +36,7 @@ public class EstoquesRecyclerViewAdapter extends RecyclerView.Adapter<EstoquesRe
     @Override
     public void onBindViewHolder(final HorarioViewHolder holder, int position) {
         holder.saldoParte1.setVisibility(position == 0 ? View.VISIBLE : View.INVISIBLE);
+        holder.saldoParte2.setVisibility(position >= 1 ? View.VISIBLE : View.INVISIBLE);
 
         holder.txvDataHora.setText(lista.get(position).getData());
         holder.txvEntrada.setText(String.valueOf(lista.get(position).getEntrada()));

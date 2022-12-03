@@ -141,4 +141,6 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
 
         return estoqueDTO;
     }
+
+
 }

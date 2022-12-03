@@ -24,6 +24,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -32,6 +37,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
+import br.ufpa.app.android.amu.v1.dao.modelo.Estoque;
+import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.fragments.EstoquesFragment;
 import br.ufpa.app.android.amu.v1.fragments.HorariosFragment;
@@ -88,6 +96,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
         Button btnUtilizar = findViewById(R.id.btnUtilizar);
         btnUtilizar.setOnClickListener(this);
+
+        findViewById(R.id.imbAdicionar).setOnClickListener(this);
+        findViewById(R.id.imbRemover).setOnClickListener(this);
 
         cor = App.medicamentoDTO.getCor();
 
@@ -173,7 +184,13 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             transaction.commit();
 */
         } else if (view.getId() == R.id.btnUtilizar) {
-            abrirDialog(view);
+            abrirDialogAlteracao(view);
+        }
+        else if (view.getId() == R.id.imbAdicionar) {
+            abrirDialogEntradaEstoque(view);
+        }
+        else if (view.getId() == R.id.imbRemover) {
+            abrirDialogSaidaEstoque(view);
         }
     }
 
@@ -215,7 +232,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         gerenteServicos.alterarMedicamento(App.medicamentoDTO);
     }
 
-    public void abrirDialog(View view){
+    public void abrirDialogAlteracao(View view){
 
         //Instanciar AlertDialog
         AlertDialog.Builder dialog = new AlertDialog.Builder( this );
@@ -257,4 +274,183 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.create();
         dialog.show();
     }
+
+    public void abrirDialogEntradaEstoque(View view)
+    {
+
+        TextInputEditText textInpTextQtdeEstoque = findViewById(R.id.textInpTextQtdeEstoque);
+
+        if (textInpTextQtdeEstoque.getText().toString().isEmpty()) {
+            Toast.makeText(DetalheMedicamentoActivity.this,
+                    "Preencha a quantidade de compra do medicamento !",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (textInpTextQtdeEstoque.getText().toString().equals("0")) {
+            Toast.makeText(DetalheMedicamentoActivity.this,
+                    "Preencha a quantidade de compra do medicamento !",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //Instanciar AlertDialog
+        AlertDialog.Builder dialog = new AlertDialog.Builder( this );
+
+        //Configurar titulo e mensagem
+        dialog.setTitle("Compra de Medicamento");
+        dialog.setMessage("Confirme a Compra de Medicamento ?");
+
+        //Configurar cancelamento
+        dialog.setCancelable(false);
+
+        //Configurar icone
+        dialog.setIcon( android.R.drawable.ic_btn_speak_now );
+
+        //Configura acoes para sim e nao
+        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                App.estoqueDTO = new EstoqueDTO();
+                App.estoqueDTO.setIdEstoque("0");
+                App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
+                App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
+                App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
+                App.estoqueDTO.setEntrada(Integer.parseInt(textInpTextQtdeEstoque.getText().toString()));
+                App.estoqueDTO.setSaida(0);
+                App.estoqueDTO.setSaldo(0);
+
+                atualizarSaldoEstoque(App.usuario.getIdUsuario(),App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+            }
+        });
+
+        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                return;
+            }
+        });
+
+        //Criar e exibir AlertDialog
+        dialog.create();
+        dialog.show();
+    }
+
+
+    public void abrirDialogSaidaEstoque(View view){
+
+        TextInputEditText textInpTextQtdeEstoque = findViewById(R.id.textInpTextQtdeEstoque);
+
+        if (textInpTextQtdeEstoque.getText().toString().isEmpty()) {
+            Toast.makeText(DetalheMedicamentoActivity.this,
+                    "Preencha a quantidade de saída do medicamento !",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (textInpTextQtdeEstoque.getText().toString().equals("0")) {
+            Toast.makeText(DetalheMedicamentoActivity.this,
+                    "Preencha a quantidade de saída do medicamento !",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //Instanciar AlertDialog
+        AlertDialog.Builder dialog = new AlertDialog.Builder( this );
+
+        //Configurar titulo e mensagem
+        dialog.setTitle("Compra de Medicamento");
+        dialog.setMessage("Confirme a Sa´da de Medicamento ?");
+
+        //Configurar cancelamento
+        dialog.setCancelable(false);
+
+        //Configurar icone
+        dialog.setIcon( android.R.drawable.ic_btn_speak_now );
+
+        //Configura acoes para sim e nao
+        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                App.estoqueDTO = new EstoqueDTO();
+                App.estoqueDTO.setIdEstoque("0");
+                App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
+                App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
+                App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
+                App.estoqueDTO.setEntrada(0);
+                App.estoqueDTO.setSaida(Integer.parseInt(textInpTextQtdeEstoque.getText().toString()));
+                App.estoqueDTO.setSaldo(0);
+
+                atualizarSaldoEstoque(App.usuario.getIdUsuario(),App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+            }
+        });
+
+        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                return;
+            }
+        });
+
+        //Criar e exibir AlertDialog
+        dialog.create();
+        dialog.show();
+    }
+
+    public void atualizarSaldoEstoque(String idUsuario, String idMedicamento, EstoqueDTO movtoEstoqueDTO) {
+        List<EstoqueDTO> listaEstoques = new ArrayList<>();
+        DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+
+        Query estoquesQuery = em.child("estoques").orderByChild("idUsuario").equalTo(idUsuario);
+
+        ValueEventListener evento = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                EstoqueDTO estoqueDTO = null;
+
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    estoqueDTO = getEstoqueDTO(postSnapshot);
+
+                    Log.i("Lendo dados ", postSnapshot.toString());
+
+                    // TODO: handle the post
+                }
+
+                if (estoqueDTO != null) {
+                    estoqueDTO.setSaldo(estoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
+
+                    GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+                    gerenteServicos.incluirEstoque(estoqueDTO);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        estoquesQuery.addListenerForSingleValueEvent(evento);
+
+    }
+
+    @NonNull
+    private EstoqueDTO getEstoqueDTO(DataSnapshot postSnapshot) {
+        Estoque estoque = postSnapshot.getValue(Estoque.class);
+
+        EstoqueDTO estoqueDTO = new EstoqueDTO();
+        estoqueDTO.setIdEstoque(estoque.getIdEstoque());
+        estoqueDTO.setIdMedicamento(estoque.getIdMedicamento());
+        estoqueDTO.setIdUsuario(estoque.getIdUsuario());
+        estoqueDTO.setData(estoque.getData());
+        estoqueDTO.setEntrada(estoque.getEntrada());
+        estoqueDTO.setSaida(estoque.getSaida());
+        estoqueDTO.setSaldo(estoque.getSaldo());
+
+        return estoqueDTO;
+    }
+
 }

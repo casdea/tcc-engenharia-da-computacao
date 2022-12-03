@@ -9,6 +9,7 @@ public class Constantes {
     public static final int ACAO_ALTERAR_HORARIO = 6;
     public static final int ACAO_REGISTRAR_ESTOQUE = 7;
     public static final int ACAO_ALTERAR_ESTOQUE = 8;
+    public static final int ACAO_OBTER_ULTIMO_ESTOQUE_POR_USUARIO_PRODUTO = 9;
     public static final int ACAO_RECEBER_TEXTO_BULA = 100;
     public static final int ACAO_FECHAR_TELA = 101;
 

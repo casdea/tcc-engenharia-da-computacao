@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 
+import br.ufpa.app.android.amu.v1.dao.idao.IEstoqueDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IHorarioDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IMedicamentoDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IUsuarioDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IUtilizacaoDao;
+import br.ufpa.app.android.amu.v1.dao.impl.EstoqueDao;
 import br.ufpa.app.android.amu.v1.dao.impl.HorarioDao;
 import br.ufpa.app.android.amu.v1.dao.impl.MedicamentoDao;
 import br.ufpa.app.android.amu.v1.dao.impl.UsuarioDao;
@@ -67,5 +69,16 @@ public class FactoryDAO {
             utilizacaoDao = new UtilizacaoDao(em, atividade);
         }
         return utilizacaoDao;
+    }
+
+    private IEstoqueDao estoqueDao;
+
+    public IEstoqueDao getEstoqueDao()
+    {
+        if (estoqueDao == null)
+        {
+            estoqueDao = new EstoqueDao(em, atividade);
+        }
+        return estoqueDao;
     }
 }

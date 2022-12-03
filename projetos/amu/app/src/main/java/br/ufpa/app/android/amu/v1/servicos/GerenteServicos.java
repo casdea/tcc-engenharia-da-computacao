@@ -17,10 +17,12 @@ import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.factoryDao.FactoryDAO;
 import br.ufpa.app.android.amu.v1.dao.helper.Base64Custom;
+import br.ufpa.app.android.amu.v1.dao.modelo.Estoque;
 import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
 import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
 import br.ufpa.app.android.amu.v1.dao.modelo.Utilizacao;
+import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
@@ -145,6 +147,12 @@ public class GerenteServicos {
         FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
         Utilizacao utilizacao = new Utilizacao(utilizacaoDTO);
         factoryDAO.getUtilizacaoDao().create(utilizacao);
+    }
+
+    public void incluirEstoque(EstoqueDTO estoqueDTO) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        Estoque estoque = new Estoque(estoqueDTO);
+        factoryDAO.getEstoqueDao().create(estoque);
     }
 
 }
