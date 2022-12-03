@@ -1,5 +1,6 @@
 package br.ufpa.app.android.amu.v1.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.adapter.EstoquesRecyclerViewAdapter;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.modelo.Estoque;
@@ -35,7 +37,7 @@ import br.ufpa.app.android.amu.v1.util.App;
  * Use the {@link EstoquesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EstoquesFragment extends Fragment {
+public class EstoquesFragment extends Fragment implements DetalheMedicamentoActivity.OnEstoquesListener {
     private RecyclerView recyclerView;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -47,8 +49,10 @@ public class EstoquesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public EstoquesFragment() {
-        // Required empty public constructor
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
     }
 
     /**
@@ -118,10 +122,10 @@ public class EstoquesFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        atualizarLista(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
+        atualizarLista(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), getView().getContext());
     }
 
-    private void atualizarLista(String idUsuario, String idMedicamento) {
+    private void atualizarLista(String idUsuario, String idMedicamento, Context context) {
         App.listaEstoques = new ArrayList<>();
         DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
 
@@ -145,10 +149,15 @@ public class EstoquesFragment extends Fragment {
 
                 EstoquesRecyclerViewAdapter estoquesRecyclerViewAdapter = new EstoquesRecyclerViewAdapter((List<EstoqueDTO>) App.listaEstoques);
 
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getView().getContext());
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context); //getView().getContext()
+                if (recyclerView == null) recyclerView = App.viewEstoque.findViewById(R.id.recyclerView);
+
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setAdapter(estoquesRecyclerViewAdapter);
+
+                App.viewEstoque = getView();
+
             }
 
             @Override
@@ -178,4 +187,8 @@ public class EstoquesFragment extends Fragment {
         return estoqueDTO;
     }
 
+    @Override
+    public void atualizarLista(Context context) {
+        atualizarLista(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), context);
+    }
 }

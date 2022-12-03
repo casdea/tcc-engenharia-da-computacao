@@ -35,17 +35,10 @@ public class EstoquesRecyclerViewAdapter extends RecyclerView.Adapter<EstoquesRe
 
     @Override
     public void onBindViewHolder(final HorarioViewHolder holder, int position) {
-        holder.saldoParte1.setVisibility(position == 0 ? View.VISIBLE : View.INVISIBLE);
-        holder.saldoParte2.setVisibility(position >= 1 ? View.VISIBLE : View.INVISIBLE);
-
         holder.txvDataHora.setText(lista.get(position).getData());
         holder.txvEntrada.setText(String.valueOf(lista.get(position).getEntrada()));
         holder.txvSaida.setText(String.valueOf(lista.get(position).getSaida()));
         holder.txvSaldo.setText(String.valueOf(lista.get(position).getSaldo()));
-        holder.txvDataHora2.setText(lista.get(position).getData());
-        holder.txvEntrada2.setText(String.valueOf(lista.get(position).getEntrada()));
-        holder.txvSaida2.setText(String.valueOf(lista.get(position).getSaida()));
-        holder.txvSaldo2.setText(String.valueOf(lista.get(position).getSaldo()));
     }
 
     @Override
@@ -61,23 +54,13 @@ public class EstoquesRecyclerViewAdapter extends RecyclerView.Adapter<EstoquesRe
         public final TextView txvEntrada;
         public final TextView txvSaida;
         public final TextView txvSaldo;
-        public final TextView txvDataHora2;
-        public final TextView txvEntrada2;
-        public final TextView txvSaida2;
-        public final TextView txvSaldo2;
 
         public HorarioViewHolder(@NonNull View itemView) {
             super(itemView);
-            saldoParte1 = itemView.findViewById(R.id.saldoParte1);
-            saldoParte2 = itemView.findViewById(R.id.saldoParte2);
             txvDataHora = itemView.findViewById(R.id.txvDataHora);
             txvEntrada = itemView.findViewById(R.id.txvEntrada);
             txvSaida = itemView.findViewById(R.id.txvSaida);
             txvSaldo = itemView.findViewById(R.id.txvSaldo);
-            txvDataHora2 = itemView.findViewById(R.id.txvDataHora2);
-            txvEntrada2 = itemView.findViewById(R.id.txvEntrada2);
-            txvSaida2 = itemView.findViewById(R.id.txvSaida2);
-            txvSaldo2 = itemView.findViewById(R.id.txvSaldo2);
         }
     }
 }

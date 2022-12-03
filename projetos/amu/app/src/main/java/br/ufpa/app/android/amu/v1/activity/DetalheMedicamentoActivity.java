@@ -1,6 +1,7 @@
 package br.ufpa.app.android.amu.v1.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -57,6 +59,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
     private TextInputEditText textInpTextQtdeEmbalagem;
     private TextView txvCorSelecionada;
     private String cor;
+    private FragmentPagerItemAdapter adapter;
 
     private ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -75,6 +78,11 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
                 }
             });
 
+    private OnEstoquesListener onEstoqueListener;
+
+    public interface OnEstoquesListener {
+        public void atualizarLista(Context context);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +119,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
         findViewById(R.id.txvCorSelecionada).setOnClickListener(this);
 
-        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+        adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
                 .add("Horários", HorariosFragment.class)
                 .add("Utilizações", UtilizacoesFragment.class)
@@ -123,6 +131,8 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
         SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
         viewPagerTab.setViewPager(viewPager);
+
+        this.onEstoqueListener = (OnEstoquesListener) adapter.getItem(2);
     }
 
     @NonNull
@@ -171,7 +181,19 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         if (view.getId() == R.id.txvCorSelecionada) {
             selecionarCor();
         } else if (view.getId() == R.id.btnAlterar) {
-            alterarMedicamento();
+            //alterarMedicamento();
+
+            //EstoquesFragment estoquesFragment = (EstoquesFragment) getSupportFragmentManager().findFragmentById(R.id.idFragmentoEstoque);
+
+            //estoquesFragment.teste(estoquesFragment.getContext());
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            EstoquesFragment estoquesFragment = (EstoquesFragment) adapter.getItem(2);
+            estoquesFragment.atualizarLista(DetalheMedicamentoActivity.this); //App.viewEstoque
+            transaction.addToBackStack(null);
+
+            transaction.commit();
+
   /*
             HorariosFragment horariosFragment = (HorariosFragment) adapter.getItem(0);
 
@@ -185,11 +207,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 */
         } else if (view.getId() == R.id.btnUtilizar) {
             abrirDialogAlteracao(view);
-        }
-        else if (view.getId() == R.id.imbAdicionar) {
+        } else if (view.getId() == R.id.imbAdicionar) {
             abrirDialogEntradaEstoque(view);
-        }
-        else if (view.getId() == R.id.imbRemover) {
+        } else if (view.getId() == R.id.imbRemover) {
             abrirDialogSaidaEstoque(view);
         }
     }
@@ -232,10 +252,10 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         gerenteServicos.alterarMedicamento(App.medicamentoDTO);
     }
 
-    public void abrirDialogAlteracao(View view){
+    public void abrirDialogAlteracao(View view) {
 
         //Instanciar AlertDialog
-        AlertDialog.Builder dialog = new AlertDialog.Builder( this );
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
         //Configurar titulo e mensagem
         dialog.setTitle("Utilização de Medicamento");
@@ -245,7 +265,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.setCancelable(false);
 
         //Configurar icone
-        dialog.setIcon( android.R.drawable.ic_btn_speak_now );
+        dialog.setIcon(android.R.drawable.ic_btn_speak_now);
 
         //Configura acoes para sim e nao
         dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
@@ -266,7 +286,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                    return;
+                return;
             }
         });
 
@@ -275,8 +295,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.show();
     }
 
-    public void abrirDialogEntradaEstoque(View view)
-    {
+    public void abrirDialogEntradaEstoque(View view) {
 
         TextInputEditText textInpTextQtdeEstoque = findViewById(R.id.textInpTextQtdeEstoque);
 
@@ -295,7 +314,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         }
 
         //Instanciar AlertDialog
-        AlertDialog.Builder dialog = new AlertDialog.Builder( this );
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
         //Configurar titulo e mensagem
         dialog.setTitle("Compra de Medicamento");
@@ -305,7 +324,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.setCancelable(false);
 
         //Configurar icone
-        dialog.setIcon( android.R.drawable.ic_btn_speak_now );
+        dialog.setIcon(android.R.drawable.ic_btn_speak_now);
 
         //Configura acoes para sim e nao
         dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
@@ -320,7 +339,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
                 App.estoqueDTO.setSaida(0);
                 App.estoqueDTO.setSaldo(0);
 
-                atualizarSaldoEstoque(App.usuario.getIdUsuario(),App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+                atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
             }
         });
 
@@ -338,7 +357,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
     }
 
 
-    public void abrirDialogSaidaEstoque(View view){
+    public void abrirDialogSaidaEstoque(View view) {
 
         TextInputEditText textInpTextQtdeEstoque = findViewById(R.id.textInpTextQtdeEstoque);
 
@@ -357,7 +376,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         }
 
         //Instanciar AlertDialog
-        AlertDialog.Builder dialog = new AlertDialog.Builder( this );
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
         //Configurar titulo e mensagem
         dialog.setTitle("Compra de Medicamento");
@@ -367,7 +386,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.setCancelable(false);
 
         //Configurar icone
-        dialog.setIcon( android.R.drawable.ic_btn_speak_now );
+        dialog.setIcon(android.R.drawable.ic_btn_speak_now);
 
         //Configura acoes para sim e nao
         dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
@@ -382,7 +401,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
                 App.estoqueDTO.setSaida(Integer.parseInt(textInpTextQtdeEstoque.getText().toString()));
                 App.estoqueDTO.setSaldo(0);
 
-                atualizarSaldoEstoque(App.usuario.getIdUsuario(),App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+                atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
             }
         });
 
@@ -419,11 +438,22 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
                 }
 
                 if (estoqueDTO != null) {
-                    estoqueDTO.setSaldo(estoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
-
-                    GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-                    gerenteServicos.incluirEstoque(estoqueDTO);
+                    movtoEstoqueDTO.setSaldo(estoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
                 }
+                else {
+                    movtoEstoqueDTO.setSaldo(movtoEstoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
+                }
+
+                if (movtoEstoqueDTO.getSaldo() < 0) {
+                    Toast.makeText(DetalheMedicamentoActivity.this,
+                            "Saldo negativo saida negada !",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+                gerenteServicos.incluirEstoque(movtoEstoqueDTO);
+
 
             }
 

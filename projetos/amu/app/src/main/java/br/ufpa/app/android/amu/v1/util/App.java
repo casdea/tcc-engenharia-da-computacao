@@ -2,6 +2,7 @@ package br.ufpa.app.android.amu.v1.util;
 
 import android.app.Application;
 import android.content.Context;
+import android.view.View;
 
 import java.util.List;
 
@@ -36,4 +37,5 @@ public class App extends Application {
     public static List<UtilizacaoDTO> listaUtilizacoes;
     public static EstoqueDTO estoqueDTO;
     public static List<EstoqueDTO> listaEstoques;
+    public static View viewEstoque;
 }
