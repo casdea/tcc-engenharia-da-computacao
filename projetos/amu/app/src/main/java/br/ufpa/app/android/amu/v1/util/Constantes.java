@@ -9,7 +9,13 @@ public class Constantes {
     public static final int ACAO_ALTERAR_HORARIO = 6;
     public static final int ACAO_REGISTRAR_ESTOQUE = 7;
     public static final int ACAO_ALTERAR_ESTOQUE = 8;
-    public static final int ACAO_OBTER_ULTIMO_ESTOQUE_POR_USUARIO_PRODUTO = 9;
+    public static final int ACAO_REGISTRAR_UTILIZACAO = 9;
+    public static final int ACAO_ALTERAR_UTILIZACAO = 10;
+    public static final int ACAO_OBTER_ULTIMO_ESTOQUE_POR_USUARIO_PRODUTO = 11;
+    public static final int ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO = 12;
+    public static final int ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO = 13;
+    public static final int ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO = 14;
+
     public static final int ACAO_RECEBER_TEXTO_BULA = 100;
     public static final int ACAO_FECHAR_TELA = 101;
 

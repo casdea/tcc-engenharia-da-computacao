@@ -53,7 +53,7 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
                         "Registro Utilizacao Salvo !",
                         Toast.LENGTH_LONG).show();
                 App.utilizacaoDTO.setIdUtilizacao(chave);
-                gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_HORARIO, null);
+                gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_UTILIZACAO, null);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -77,7 +77,7 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
                 Toast.makeText(App.context,
                         "Registro utilizacao Salvo !",
                         Toast.LENGTH_LONG).show();
-                gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_HORARIO, null);
+                gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_UTILIZACAO, null);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -94,10 +94,10 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
 
     @Override
     public void findAllByUsuarioIdMedicamento(String idUsuario, String idMedicamento) {
-        List<UtilizacaoDTO> listaUtilizacoes = new ArrayList<>();
+        App.listaUtilizacoes = new ArrayList<>();
         DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
 
-        Query horariosQuery = em.child("horarios").orderByChild("idUsuario").equalTo(idUsuario);
+        Query utilizacoesQuery = em.child("utilizacoes").orderByChild("idUsuario").equalTo(idUsuario);
 
         ValueEventListener evento = new ValueEventListener() {
             @Override
@@ -108,11 +108,11 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
                     Log.i("Lendo dados ", postSnapshot.toString());
 
                     if (utilizacaoDTO.getIdMedicamento().equals(idMedicamento)) {
-                        listaUtilizacoes.add(utilizacaoDTO);
+                        App.listaUtilizacoes.add(utilizacaoDTO);
                     }
                     // TODO: handle the post
                 }
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_MEDICAMENTO_POR_USUARIO_PRODUTO, listaUtilizacoes);
+                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO,  App.listaUtilizacoes);
 
             }
 
@@ -122,7 +122,7 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
             }
         };
 
-        horariosQuery.addListenerForSingleValueEvent(evento);
+        utilizacoesQuery.addListenerForSingleValueEvent(evento);
 
     }
 

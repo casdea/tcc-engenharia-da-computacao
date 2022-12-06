@@ -155,4 +155,9 @@ public class GerenteServicos {
         factoryDAO.getEstoqueDao().create(estoque);
     }
 
+    public void obterListaUtilizacoesByUsuarioMedicamento(String idUsuario, String idMedicamento) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        factoryDAO.getUtilizacaoDao().findAllByUsuarioIdMedicamento(idUsuario,idMedicamento);
+    }
+
 }

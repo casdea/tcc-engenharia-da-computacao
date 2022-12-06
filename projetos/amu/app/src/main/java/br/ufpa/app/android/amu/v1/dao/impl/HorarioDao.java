@@ -94,7 +94,7 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
 
     @Override
     public void findAllByUsuarioIdMedicamento(String idUsuario, String idMedicamento) {
-        List<HorarioDTO> listaHorarios = new ArrayList<>();
+        App.listaHorarios = new ArrayList<>();
         DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
 
         Query horariosQuery = em.child("horarios").orderByChild("idUsuario").equalTo(idUsuario);
@@ -108,11 +108,11 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
                     Log.i("Lendo dados ", postSnapshot.toString());
 
                     if (horarioDTO.getIdMedicamento().equals(idMedicamento)) {
-                        listaHorarios.add(horarioDTO);
+                        App.listaHorarios.add(horarioDTO);
                     }
                     // TODO: handle the post
                 }
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_MEDICAMENTO_POR_USUARIO_PRODUTO, listaHorarios);
+                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO, App.listaHorarios);
 
             }
 

@@ -78,10 +78,22 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
                 }
             });
 
+    private OnHorariosListener onHorariosListener;
+
+    public interface OnHorariosListener {
+        public void atualizarLista(View view);
+    }
+
     private OnEstoquesListener onEstoqueListener;
 
     public interface OnEstoquesListener {
         public void atualizarLista(Context context);
+    }
+
+    private OnUtilizacoesListener onUtilizacoesListener;
+
+    public interface OnUtilizacoesListener {
+        public void atualizarLista(View view);
     }
 
     @Override
@@ -132,6 +144,8 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
         viewPagerTab.setViewPager(viewPager);
 
+        this.onHorariosListener = (OnHorariosListener) adapter.getItem(0);
+        this.onUtilizacoesListener = (OnUtilizacoesListener) adapter.getItem(1);
         this.onEstoqueListener = (OnEstoquesListener) adapter.getItem(2);
     }
 
@@ -165,7 +179,23 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     @Override
     public void carregarLista(int numeroAcao, List<?> lista) {
-
+        if (numeroAcao == Constantes.ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            HorariosFragment horariosFragment = (HorariosFragment) adapter.getItem(0);
+            View view = findViewById(R.id.idFragmentoHorario);
+            horariosFragment.atualizarLista(view);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else
+        if (numeroAcao == Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            UtilizacoesFragment utilizacoesFragment = (UtilizacoesFragment) adapter.getItem(1);
+            View view = findViewById(R.id.idFragmentoUtilizacao);
+            utilizacoesFragment.atualizarLista(view);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
     }
 
     @Override
@@ -174,6 +204,21 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             setResult(Activity.RESULT_OK, null);
             finish();
         }
+        else
+        if (numeroAcao == Constantes.ACAO_REGISTRAR_HORARIO) {
+            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+            gerenteServicos.obterListaHorariosByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
+        }
+        else
+        if (numeroAcao == Constantes.ACAO_REGISTRAR_UTILIZACAO)
+        {
+            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+            gerenteServicos.obterListaUtilizacoesByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
+        }
+        else
+        if (numeroAcao == Constantes.ACAO_REGISTRAR_ESTOQUE) {
+
+        }
     }
 
     @Override
@@ -181,32 +226,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         if (view.getId() == R.id.txvCorSelecionada) {
             selecionarCor();
         } else if (view.getId() == R.id.btnAlterar) {
-            //alterarMedicamento();
-
-            //EstoquesFragment estoquesFragment = (EstoquesFragment) getSupportFragmentManager().findFragmentById(R.id.idFragmentoEstoque);
-
-            //estoquesFragment.teste(estoquesFragment.getContext());
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            EstoquesFragment estoquesFragment = (EstoquesFragment) adapter.getItem(2);
-            estoquesFragment.atualizarLista(DetalheMedicamentoActivity.this); //App.viewEstoque
-            transaction.addToBackStack(null);
-
-            transaction.commit();
-
-  /*
-            HorariosFragment horariosFragment = (HorariosFragment) adapter.getItem(0);
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.remove(horariosFragment);
-
-            //transaction.replace(R.id.idFragmentoHorario, horariosFragment);
-            transaction.addToBackStack(null);
-
-            transaction.commit();
-*/
+            alterarMedicamento();
         } else if (view.getId() == R.id.btnUtilizar) {
-            abrirDialogAlteracao(view);
+            abrirDialogUtilizacao(view);
         } else if (view.getId() == R.id.imbAdicionar) {
             abrirDialogEntradaEstoque(view);
         } else if (view.getId() == R.id.imbRemover) {
@@ -252,7 +274,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         gerenteServicos.alterarMedicamento(App.medicamentoDTO);
     }
 
-    public void abrirDialogAlteracao(View view) {
+    public void abrirDialogUtilizacao(View view) {
 
         //Instanciar AlertDialog
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);

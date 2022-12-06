@@ -29,12 +29,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.activity.HorarioActivity;
 import br.ufpa.app.android.amu.v1.adapter.HorariosRecyclerViewAdapter;
+import br.ufpa.app.android.amu.v1.adapter.UtilizacoesRecyclerViewAdapter;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
+import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
+import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 
 /**
@@ -42,7 +46,7 @@ import br.ufpa.app.android.amu.v1.util.App;
  * Use the {@link HorariosFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HorariosFragment extends Fragment {
+public class HorariosFragment extends Fragment implements DetalheMedicamentoActivity.OnHorariosListener {
     private RecyclerView recyclerView;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -142,64 +146,19 @@ public class HorariosFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        atualizarLista(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
+        GerenteServicos gerenteServicos = new GerenteServicos((DetalheMedicamentoActivity) getActivity());
+        gerenteServicos.obterListaHorariosByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
     }
 
-    private void atualizarLista(String idUsuario, String idMedicamento) {
-        App.listaHorarios = new ArrayList<>();
-        DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+    @Override
+    public void atualizarLista(View view) {
+        HorariosRecyclerViewAdapter horariosRecyclerViewAdapter = new HorariosRecyclerViewAdapter((List<HorarioDTO>) App.listaHorarios);
 
-        Query horariosQuery = em.child("horarios").orderByChild("idUsuario").equalTo(idUsuario);
-
-        ValueEventListener evento = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                App.listaHorarios = new ArrayList<>();
-
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    HorarioDTO horarioDTO = getHorarioDTO(postSnapshot);
-
-                    Log.i("Lendo dados ", postSnapshot.toString());
-
-                    if (horarioDTO.getIdMedicamento().equals(idMedicamento)) {
-                        App.listaHorarios.add(horarioDTO);
-                    }
-                    // TODO: handle the post
-                }
-
-                HorariosRecyclerViewAdapter horariosRecyclerViewAdapter = new HorariosRecyclerViewAdapter((List<HorarioDTO>) App.listaHorarios);
-
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getView().getContext());
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(horariosRecyclerViewAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
-        horariosQuery.addListenerForSingleValueEvent(evento);
-
-    }
-
-    private HorarioDTO getHorarioDTO(DataSnapshot postSnapshot) {
-        Horario horario = postSnapshot.getValue(Horario.class);
-
-        HorarioDTO horarioDTO = new HorarioDTO();
-        horarioDTO.setIdHorario(horario.getIdHorario());
-        horarioDTO.setIdMedicamento(horario.getIdMedicamento());
-        horarioDTO.setIdUsuario(horario.getIdUsuario());
-        horarioDTO.setDataInicial(horario.getDataInicial());
-        horarioDTO.setHorarioInicial(horario.getHorarioInicial());
-        horarioDTO.setIntervalo(horario.getIntervalo());
-        horarioDTO.setNrDoses(horario.getNrDoses());
-        horarioDTO.setQtdePorDose(horario.getQtdePorDose());
-        horarioDTO.setAtivo(horario.getAtivo());
-
-        return horarioDTO;
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        if (recyclerView == null) recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(horariosRecyclerViewAdapter);
     }
 
 }
