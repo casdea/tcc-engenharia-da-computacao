@@ -1,7 +1,6 @@
 package br.ufpa.app.android.amu.v1.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -26,11 +25,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -39,8 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
-import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
-import br.ufpa.app.android.amu.v1.dao.modelo.Estoque;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.fragments.EstoquesFragment;
@@ -87,7 +79,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
     private OnEstoquesListener onEstoqueListener;
 
     public interface OnEstoquesListener {
-        public void atualizarLista(Context context);
+        public void atualizarLista(View view);
     }
 
     private OnUtilizacoesListener onUtilizacoesListener;
@@ -186,13 +178,18 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             horariosFragment.atualizarLista(view);
             transaction.addToBackStack(null);
             transaction.commit();
-        }
-        else
-        if (numeroAcao == Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO) {
+        } else if (numeroAcao == Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             UtilizacoesFragment utilizacoesFragment = (UtilizacoesFragment) adapter.getItem(1);
             View view = findViewById(R.id.idFragmentoUtilizacao);
             utilizacoesFragment.atualizarLista(view);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else if (numeroAcao == Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            EstoquesFragment estoquesFragment = (EstoquesFragment) adapter.getItem(2);
+            View view = findViewById(R.id.idFragmentoEstoque);
+            estoquesFragment.atualizarLista(view);
             transaction.addToBackStack(null);
             transaction.commit();
         }
@@ -203,21 +200,30 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         if (numeroAcao == Constantes.ACAO_ALTERAR_MEDICAMENTO) {
             setResult(Activity.RESULT_OK, null);
             finish();
-        }
-        else
-        if (numeroAcao == Constantes.ACAO_REGISTRAR_HORARIO) {
+        } else if (numeroAcao == Constantes.ACAO_REGISTRAR_HORARIO) {
             GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
             gerenteServicos.obterListaHorariosByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
-        }
-        else
-        if (numeroAcao == Constantes.ACAO_REGISTRAR_UTILIZACAO)
-        {
+        } else if (numeroAcao == Constantes.ACAO_REGISTRAR_UTILIZACAO) {
             GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
             gerenteServicos.obterListaUtilizacoesByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
+        } else if (numeroAcao == Constantes.ACAO_REGISTRAR_ESTOQUE) {
+            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+            gerenteServicos.obterListaEstoquesByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
+        }
+    }
+
+    @Override
+    public void executarAcao(int numeroAcao, Object parametro) {
+        if (numeroAcao == Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE) {
+            Toast.makeText(DetalheMedicamentoActivity.this,
+                    "Saldo negativo saida negada !",
+                    Toast.LENGTH_LONG).show();
+            return;
         }
         else
-        if (numeroAcao == Constantes.ACAO_REGISTRAR_ESTOQUE) {
-
+        if (numeroAcao == Constantes.ACAO_ATUALIZAR_SALDO_ESTOQUE) {
+            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+            gerenteServicos.incluirEstoque((EstoqueDTO) parametro);
         }
     }
 
@@ -361,7 +367,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
                 App.estoqueDTO.setSaida(0);
                 App.estoqueDTO.setSaldo(0);
 
-                atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+                GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+                gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+
             }
         });
 
@@ -423,7 +431,8 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
                 App.estoqueDTO.setSaida(Integer.parseInt(textInpTextQtdeEstoque.getText().toString()));
                 App.estoqueDTO.setSaldo(0);
 
-                atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+                GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+                gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
             }
         });
 
@@ -439,70 +448,4 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.create();
         dialog.show();
     }
-
-    public void atualizarSaldoEstoque(String idUsuario, String idMedicamento, EstoqueDTO movtoEstoqueDTO) {
-        List<EstoqueDTO> listaEstoques = new ArrayList<>();
-        DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
-
-        Query estoquesQuery = em.child("estoques").orderByChild("idUsuario").equalTo(idUsuario);
-
-        ValueEventListener evento = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                EstoqueDTO estoqueDTO = null;
-
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    estoqueDTO = getEstoqueDTO(postSnapshot);
-
-                    Log.i("Lendo dados ", postSnapshot.toString());
-
-                    // TODO: handle the post
-                }
-
-                if (estoqueDTO != null) {
-                    movtoEstoqueDTO.setSaldo(estoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
-                }
-                else {
-                    movtoEstoqueDTO.setSaldo(movtoEstoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
-                }
-
-                if (movtoEstoqueDTO.getSaldo() < 0) {
-                    Toast.makeText(DetalheMedicamentoActivity.this,
-                            "Saldo negativo saida negada !",
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-                gerenteServicos.incluirEstoque(movtoEstoqueDTO);
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
-        estoquesQuery.addListenerForSingleValueEvent(evento);
-
-    }
-
-    @NonNull
-    private EstoqueDTO getEstoqueDTO(DataSnapshot postSnapshot) {
-        Estoque estoque = postSnapshot.getValue(Estoque.class);
-
-        EstoqueDTO estoqueDTO = new EstoqueDTO();
-        estoqueDTO.setIdEstoque(estoque.getIdEstoque());
-        estoqueDTO.setIdMedicamento(estoque.getIdMedicamento());
-        estoqueDTO.setIdUsuario(estoque.getIdUsuario());
-        estoqueDTO.setData(estoque.getData());
-        estoqueDTO.setEntrada(estoque.getEntrada());
-        estoqueDTO.setSaida(estoque.getSaida());
-        estoqueDTO.setSaldo(estoque.getSaldo());
-
-        return estoqueDTO;
-    }
-
 }

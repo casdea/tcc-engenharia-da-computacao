@@ -37,5 +37,4 @@ public class App extends Application {
     public static List<UtilizacaoDTO> listaUtilizacoes;
     public static EstoqueDTO estoqueDTO;
     public static List<EstoqueDTO> listaEstoques;
-    public static View viewEstoque;
 }

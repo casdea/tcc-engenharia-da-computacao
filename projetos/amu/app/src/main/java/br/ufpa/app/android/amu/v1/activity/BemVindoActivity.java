@@ -86,4 +86,9 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
     public void executarAcao(int numeroAcao, String[] parametros) {
 
     }
+
+    @Override
+    public void executarAcao(int numeroAcao, Object parametro) {
+
+    }
 }

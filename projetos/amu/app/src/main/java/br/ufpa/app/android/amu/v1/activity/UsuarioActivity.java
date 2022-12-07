@@ -193,4 +193,9 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
     public void executarAcao(int numeroAcao, String[] parametros) {
 
     }
+
+    @Override
+    public void executarAcao(int numeroAcao, Object parametro) {
+
+    }
 }

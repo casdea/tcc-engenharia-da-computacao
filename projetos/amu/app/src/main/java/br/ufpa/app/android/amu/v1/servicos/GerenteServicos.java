@@ -160,4 +160,15 @@ public class GerenteServicos {
         factoryDAO.getUtilizacaoDao().findAllByUsuarioIdMedicamento(idUsuario,idMedicamento);
     }
 
+    public void atualizarSaldoEstoque(String idUsuario, String idMedicamento, EstoqueDTO estoqueDTO) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        Estoque estoque = new Estoque(estoqueDTO);
+        factoryDAO.getEstoqueDao().atualizarSaldoEstoque(idUsuario,idMedicamento,estoqueDTO);
+    }
+
+    public void obterListaEstoquesByUsuarioMedicamento(String idUsuario, String idMedicamento) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        factoryDAO.getEstoqueDao().findAllByUsuarioIdMedicamento(idUsuario,idMedicamento);
+    }
+
 }

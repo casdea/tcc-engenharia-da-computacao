@@ -150,4 +150,9 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
     public void executarAcao(int numeroAcao, String[] parametros) {
 
     }
+
+    @Override
+    public void executarAcao(int numeroAcao, Object parametro) {
+
+    }
 }

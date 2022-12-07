@@ -17,12 +17,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IEstoqueDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
 import br.ufpa.app.android.amu.v1.dao.modelo.Estoque;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
+import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
 
@@ -94,7 +96,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
 
     @Override
     public void findAllByUsuarioIdMedicamento(String idUsuario, String idMedicamento) {
-        List<EstoqueDTO> listaEstoques = new ArrayList<>();
+            App.listaEstoques = new ArrayList<>();
         DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
 
         Query estoquesQuery = em.child("estoques").orderByChild("idUsuario").equalTo(idUsuario);
@@ -108,12 +110,55 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                     Log.i("Lendo dados ", postSnapshot.toString());
 
                     if (estoqueDTO.getIdMedicamento().equals(idMedicamento)) {
-                        listaEstoques.add(estoqueDTO);
+                        App.listaEstoques.add(estoqueDTO);
                     }
                     // TODO: handle the post
                 }
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_MEDICAMENTO_POR_USUARIO_PRODUTO, listaEstoques);
+                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO, App.listaEstoques);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        estoquesQuery.addListenerForSingleValueEvent(evento);
+
+    }
+
+    public void atualizarSaldoEstoque(String idUsuario, String idMedicamento, EstoqueDTO movtoEstoqueDTO) {
+        List<EstoqueDTO> listaEstoques = new ArrayList<>();
+        DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+
+        Query estoquesQuery = em.child("estoques").orderByChild("idUsuario").equalTo(idUsuario);
+
+        ValueEventListener evento = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                EstoqueDTO estoqueDTO = null;
+
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    estoqueDTO = getEstoqueDTO(postSnapshot);
+
+                    Log.i("Lendo dados ", postSnapshot.toString());
+
+                    // TODO: handle the post
+                }
+
+                if (estoqueDTO != null) {
+                    movtoEstoqueDTO.setSaldo(estoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
+                }
+                else {
+                    movtoEstoqueDTO.setSaldo(movtoEstoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
+                }
+
+                if (movtoEstoqueDTO.getSaldo() < 0) {
+                    gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE,movtoEstoqueDTO);
+                }
+                else {
+                    gerenteServicosListener.executarAcao(Constantes.ACAO_ATUALIZAR_SALDO_ESTOQUE,movtoEstoqueDTO);
+                }
             }
 
             @Override
@@ -141,6 +186,4 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
 
         return estoqueDTO;
     }
-
-
 }

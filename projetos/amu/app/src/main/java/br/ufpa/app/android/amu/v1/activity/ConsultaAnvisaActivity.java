@@ -258,4 +258,9 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
         }
 
     }
+
+    @Override
+    public void executarAcao(int numeroAcao, Object parametro) {
+
+    }
 }

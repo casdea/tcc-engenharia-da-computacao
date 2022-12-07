@@ -211,6 +211,11 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
     }
 
     @Override
+    public void executarAcao(int numeroAcao, Object parametro) {
+
+    }
+
+    @Override
     public void atualizarHoraListener(int hourOfDay, int minute) {
         Date hora = DataUtil.encodeTimeByHoraMinuto(hourOfDay, minute);
 

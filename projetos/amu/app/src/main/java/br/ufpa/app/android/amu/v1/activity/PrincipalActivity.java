@@ -150,4 +150,9 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     public void executarAcao(int numeroAcao, String[] parametros) {
 
     }
+
+    @Override
+    public void executarAcao(int numeroAcao, Object parametro) {
+
+    }
 }

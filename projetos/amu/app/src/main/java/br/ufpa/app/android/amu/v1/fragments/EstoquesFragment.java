@@ -30,6 +30,7 @@ import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.modelo.Estoque;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
+import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 
 /**
@@ -122,73 +123,19 @@ public class EstoquesFragment extends Fragment implements DetalheMedicamentoActi
     @Override
     public void onStart() {
         super.onStart();
-        atualizarLista(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), getView().getContext());
-    }
-
-    private void atualizarLista(String idUsuario, String idMedicamento, Context context) {
-        App.listaEstoques = new ArrayList<>();
-        DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
-
-        Query estoquesQuery = em.child("estoques").orderByChild("idUsuario").equalTo(idUsuario);
-
-        ValueEventListener evento = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                App.listaEstoques = new ArrayList<>();
-
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    EstoqueDTO estoqueDTO = getEstoqueDTO(postSnapshot);
-
-                    Log.i("Lendo dados ", postSnapshot.toString());
-
-                    if (estoqueDTO.getIdMedicamento().equals(idMedicamento)) {
-                        App.listaEstoques.add(estoqueDTO);
-                    }
-                    // TODO: handle the post
-                }
-
-                EstoquesRecyclerViewAdapter estoquesRecyclerViewAdapter = new EstoquesRecyclerViewAdapter((List<EstoqueDTO>) App.listaEstoques);
-
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context); //getView().getContext()
-                if (recyclerView == null) recyclerView = App.viewEstoque.findViewById(R.id.recyclerView);
-
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(estoquesRecyclerViewAdapter);
-
-                App.viewEstoque = getView();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
-        estoquesQuery.addListenerForSingleValueEvent(evento);
-
-    }
-
-
-    @NonNull
-    private EstoqueDTO getEstoqueDTO(DataSnapshot postSnapshot) {
-        Estoque estoque = postSnapshot.getValue(Estoque.class);
-
-        EstoqueDTO estoqueDTO = new EstoqueDTO();
-        estoqueDTO.setIdEstoque(estoque.getIdEstoque());
-        estoqueDTO.setIdMedicamento(estoque.getIdMedicamento());
-        estoqueDTO.setIdUsuario(estoque.getIdUsuario());
-        estoqueDTO.setData(estoque.getData());
-        estoqueDTO.setEntrada(estoque.getEntrada());
-        estoqueDTO.setSaida(estoque.getSaida());
-        estoqueDTO.setSaldo(estoque.getSaldo());
-
-        return estoqueDTO;
+        GerenteServicos gerenteServicos = new GerenteServicos((DetalheMedicamentoActivity) getActivity());
+        gerenteServicos.obterListaEstoquesByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
     }
 
     @Override
-    public void atualizarLista(Context context) {
-        atualizarLista(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), context);
+    public void atualizarLista(View view) {
+        EstoquesRecyclerViewAdapter estoquesRecyclerViewAdapter = new EstoquesRecyclerViewAdapter((List<EstoqueDTO>) App.listaEstoques);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        if (recyclerView == null) recyclerView = view.findViewById(R.id.recyclerView);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(estoquesRecyclerViewAdapter);
     }
 }

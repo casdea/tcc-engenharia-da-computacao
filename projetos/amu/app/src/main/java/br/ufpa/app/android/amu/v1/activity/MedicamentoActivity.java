@@ -254,5 +254,10 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
       setResult(Activity.RESULT_OK, null);
       finish();
     }
+
+    @Override
+    public void executarAcao(int numeroAcao, Object parametro) {
+
+    }
 }
 

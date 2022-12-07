@@ -18,7 +18,8 @@ public class Constantes {
 
     public static final int ACAO_RECEBER_TEXTO_BULA = 100;
     public static final int ACAO_FECHAR_TELA = 101;
-
+    public static final int ACAO_ERRO_SEM_SALDO_ESTOQUE = 102;
+    public static final int ACAO_ATUALIZAR_SALDO_ESTOQUE = 103;
 
     public static String[] intervalos = new String[] {
             "6 horas", "8 horas", "12 horas", "24 horas",
