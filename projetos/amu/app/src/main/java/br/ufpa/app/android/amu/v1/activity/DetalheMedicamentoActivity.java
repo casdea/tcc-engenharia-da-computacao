@@ -34,6 +34,7 @@ import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
+import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.fragments.EstoquesFragment;
 import br.ufpa.app.android.amu.v1.fragments.HorariosFragment;
@@ -219,12 +220,28 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
                     "Saldo negativo saida negada !",
                     Toast.LENGTH_LONG).show();
             return;
-        }
-        else
-        if (numeroAcao == Constantes.ACAO_ATUALIZAR_SALDO_ESTOQUE) {
+        } else if (numeroAcao == Constantes.ACAO_ATUALIZAR_SALDO_ESTOQUE) {
             GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
             gerenteServicos.incluirEstoque((EstoqueDTO) parametro);
+        } else if (numeroAcao == Constantes.ACAO_REGISTRAR_UTILIZACAO) {
+
+            if (App.listaHorarios.get(App.listaHorarios.size() - 1).getAtivo().equals("SIM")) {
+                HorarioDTO horarioDTO = App.listaHorarios.get(App.listaHorarios.size() - 1);
+
+                App.estoqueDTO = new EstoqueDTO();
+                App.estoqueDTO.setIdEstoque("0");
+                App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
+                App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
+                App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
+                App.estoqueDTO.setEntrada(0);
+                App.estoqueDTO.setSaida(horarioDTO.getQtdePorDose());
+                App.estoqueDTO.setSaldo(0);
+
+                GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+                gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+            }
         }
+
     }
 
     @Override
@@ -281,6 +298,20 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
     }
 
     public void abrirDialogUtilizacao(View view) {
+
+        if (App.listaHorarios == null || App.listaHorarios.size() <= 0) {
+            Toast.makeText(DetalheMedicamentoActivity.this,
+                    "Cadastre um horário para o medicamento e o ative !",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (App.listaHorarios.get(App.listaHorarios.size() - 1).getAtivo().equals("SIM") == false) {
+            Toast.makeText(DetalheMedicamentoActivity.this,
+                    "O ultimo horário deve está ativo !",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
         //Instanciar AlertDialog
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);

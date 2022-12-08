@@ -3,10 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menuPerfil"
+        android:orderInCategory="100"
+        android:title="Perfil de Usuário"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
         android:id="@+id/menuSair"
         android:orderInCategory="100"
         android:title="Sair"
-        app:showAsAction="never"
+        app:showAsAction="ifRoom"
         />
 
 </menu>

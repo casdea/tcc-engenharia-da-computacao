@@ -2,8 +2,10 @@ package br.ufpa.app.android.amu.v1.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 
@@ -14,6 +16,7 @@ import br.ufpa.app.android.amu.v1.integracao.classes.FontesConsulta;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class BemVindoActivity extends IntroActivity implements View.OnClickListener, GerenteServicosListener {
 
@@ -26,9 +29,6 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
 
         setButtonBackVisible(false);
         setButtonNextVisible(false);
-
-        //findViewById(R.id.btnCadastrar).setOnClickListener(this);
-        //findViewById(R.id.txvEntrar).setOnClickListener(this);
 
         addSlide( new FragmentSlide.Builder()
                 .background(android.R.color.white)
@@ -55,7 +55,6 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
                 .fragment(R.layout.intro_cadastro)
                 .build());
     }
-
 
     @Override
     protected void onStart() {
@@ -89,6 +88,8 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
 
     @Override
     public void executarAcao(int numeroAcao, Object parametro) {
-
+        if (numeroAcao == Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL) {
+            startActivity(new Intent(BemVindoActivity.this, PrincipalActivity.class));
+        }
     }
 }

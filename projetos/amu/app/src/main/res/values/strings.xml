@@ -77,4 +77,5 @@
     <string name="exemplo_entrada">80</string>
     <string name="exemplo_saida">0</string>
     <string name="exemplo_saldo">80</string>
+    <string name="lista_vazia">A lista de medicamentos está vazia aproveite para incluir o primeiro</string>
 </resources>

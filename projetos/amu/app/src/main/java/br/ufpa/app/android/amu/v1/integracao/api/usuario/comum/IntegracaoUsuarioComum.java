@@ -48,4 +48,15 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
     public void exibirMedicamentosEncontrados(TextToSpeech textoLido, List<MedicamentoRetDTO> medicamentos, String argumento) {
 
     }
+
+    @Override
+    public void avisarListaVazia() {
+
+    }
+
+    @Override
+    public boolean lerTexto() {
+        return false;
+    }
+
 }

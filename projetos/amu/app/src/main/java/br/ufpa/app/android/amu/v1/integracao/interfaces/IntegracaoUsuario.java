@@ -18,4 +18,8 @@ public interface IntegracaoUsuario {
     void instrucaoParaUsuario(int idSom);
 
     void exibirMedicamentosEncontrados(TextToSpeech textoLido, List<MedicamentoRetDTO> medicamentos, String argumento);
+
+    void avisarListaVazia();
+
+    boolean lerTexto();
 }

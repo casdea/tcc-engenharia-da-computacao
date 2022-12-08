@@ -29,15 +29,19 @@ import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class GerenteServicos {
 
     private DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
     private AppCompatActivity atividade;
+    private GerenteServicosListener gerenteServicosListener;
 
     public GerenteServicos(AppCompatActivity atividade) {
         this.atividade = atividade;
+        this.gerenteServicosListener = (GerenteServicosListener) atividade;
     }
 
     public Usuario incluirUsuario(UsuarioDTO usuarioDTO) {
@@ -69,13 +73,17 @@ public class GerenteServicos {
                     if (App.usuario != null) {
                         App.usuario.setIdUsuario(idUsuario);
                         App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
-                        abrirTelaPrincipal(atividadeLocal);
+
+                        //abrirTelaPrincipal(atividadeLocal);
+                        gerenteServicosListener.executarAcao(Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL,autenticacao);
                     } else {
                         Toast.makeText(App.context,
                                 "Usuário não tem mais um cadastrado válido !",
                                 Toast.LENGTH_LONG).show();
 
-                        abrirTelaBoasVindas(autenticacao, atividadeLocal);
+                        gerenteServicosListener.executarAcao(Constantes.ACAO_APRESENTAR_TELA_BOAS_VINDAS,autenticacao);
+
+                        //abrirTelaBoasVindas(autenticacao, atividadeLocal);
                     }
                 }
 

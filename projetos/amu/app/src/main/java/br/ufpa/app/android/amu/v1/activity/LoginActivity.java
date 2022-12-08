@@ -1,5 +1,6 @@
 package br.ufpa.app.android.amu.v1.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,8 @@ import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
+import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class LoginActivity extends AppCompatActivity implements GerenteServicosListener {
 
@@ -144,15 +147,24 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
     }
 
     @Override
-    public void carregarLista(int numeroAcao, List<?> lista) {}
+    public void carregarLista(int numeroAcao, List<?> lista) {
+    }
 
     @Override
     public void executarAcao(int numeroAcao, String[] parametros) {
-
     }
 
     @Override
     public void executarAcao(int numeroAcao, Object parametro) {
-
+        if (numeroAcao == Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL) {
+            startActivity(new Intent(LoginActivity.this, PrincipalActivity.class));
+        }
+        else
+        if (numeroAcao == Constantes.ACAO_APRESENTAR_TELA_BOAS_VINDAS) {
+            autenticacao = (FirebaseAuth) parametro;
+            autenticacao.signOut();
+            startActivity(new Intent(LoginActivity.this, BemVindoActivity.class));
+            finish();
+        }
     }
 }

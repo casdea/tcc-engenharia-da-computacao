@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
 
 import java.util.List;
+import java.util.Locale;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
@@ -16,8 +17,19 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
     private MediaPlayer mediaPlayer;
     private Comando comando;
+    private TextToSpeech textoLido;
 
     public IntegracaoUsuarioVisaoReduzida() {
+        textoLido = new TextToSpeech(App.context, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if (i != TextToSpeech.ERROR) {
+                    textoLido.setLanguage(Locale.getDefault());
+                }
+            }
+        });
+
+        textoLido.setSpeechRate(0.75f);
     }
 
     private String[] NUMERO_UM = {
@@ -121,7 +133,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         int idBemVindoFuncao = 0;
 
         switch (tipoFuncao) {
-            case CADASTRO_MEDICAMENTOS:
+            case PESQUISA_MEDICAMENTOS:
                 idBemVindoFuncao = R.raw.cadastromedicamento;
                 break;
             case CONSULTA_MEDICAMENTOS:
@@ -180,17 +192,42 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             return;
         }
 
-        textoLido.speak("Foram encontrados " +medicamentos.size()+" medicamentos com o argumento informado "+argumento, TextToSpeech.QUEUE_ADD, null);
+        textoLido.speak("Foram encontrados " + medicamentos.size() + " medicamentos com o argumento informado " + argumento, TextToSpeech.QUEUE_ADD, null);
 
         int item = 1;
 
-        for (MedicamentoRetDTO medicamentoRetDTO : medicamentos)
-        {
-            textoLido.speak("Item " +item+" "+medicamentoRetDTO.getNomeComercial()+medicamentoRetDTO.getNomeLaboratorio(), TextToSpeech.QUEUE_ADD, null);
+        for (MedicamentoRetDTO medicamentoRetDTO : medicamentos) {
+            textoLido.speak("Item " + item + " " + medicamentoRetDTO.getNomeComercial(), TextToSpeech.QUEUE_ADD, null);
             item++;
             ThreadUtil.esperar(ThreadUtil.HUM_SEGUNDO);
         }
 
+    }
+
+    private void falar(String texto) {
+        textoLido = new TextToSpeech(App.context, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if (i != TextToSpeech.ERROR) {
+                    textoLido.setLanguage(Locale.getDefault());
+                }
+                if (i == TextToSpeech.SUCCESS) {
+                    textoLido.speak(texto, TextToSpeech.QUEUE_FLUSH, null);
+                }
+            }
+        });
+
+        textoLido.setSpeechRate(0.75f);
+    }
+
+    @Override
+    public void avisarListaVazia() {
+        falar("A lista de medicamentos está vazia. Aproveite para começar a cadastrar. Toque na tela e fale o comando incluir medicamento.");
+    }
+
+    @Override
+    public boolean lerTexto() {
+        return true;
     }
 
 }
