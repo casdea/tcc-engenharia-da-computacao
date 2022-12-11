@@ -4,6 +4,7 @@ import android.speech.tts.TextToSpeech;
 
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 
@@ -22,4 +23,8 @@ public interface IntegracaoUsuario {
     void avisarListaVazia();
 
     boolean lerTexto();
+
+    void comandoNaoReconhecido(String comandoInformado);
+
+    void listarMedicamentos(List<MedicamentoDTO> medicamentos);
 }

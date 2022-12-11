@@ -4,6 +4,7 @@ import android.speech.tts.TextToSpeech;
 
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoUsuario;
@@ -57,6 +58,16 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
     @Override
     public boolean lerTexto() {
         return false;
+    }
+
+    @Override
+    public void comandoNaoReconhecido(String comandoInformado) {
+
+    }
+
+    @Override
+    public void listarMedicamentos(List<MedicamentoDTO> medicamentos) {
+
     }
 
 }

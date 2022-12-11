@@ -152,31 +152,6 @@ public abstract class StringUtil {
 		return false;
 	}
 
-	/**
-	 * Retorna uma string sem acentos
-	 * 
-	 * @param str
-	 * @return java.lang.String
-	 */
-	public static final String removerAcentos(String str) {
-		if (str == null) {
-			return "";
-		}
-		str = str.replaceAll("[����]", "a");
-		str = str.replaceAll("[����]", "A");
-		str = str.replaceAll("[���]", "e");
-		str = str.replaceAll("[���]", "E");
-		str = str.replaceAll("[���]", "i");
-		str = str.replaceAll("[���]", "I");
-		str = str.replaceAll("[������]", "o");
-		str = str.replaceAll("[����]", "O");
-		str = str.replaceAll("[���]", "u");
-		str = str.replaceAll("[���]", "U");
-		str = str.replaceAll("[��]", "c");
-		str = str.replaceAll("[��]", "C");
-		return str;
-	}
-
 	public static final String quebraLinha() {
 		return "\r\n";
 	}
@@ -726,5 +701,24 @@ public abstract class StringUtil {
 		}
 
 		return -1;
+	}
+
+	public static final String removerAcentos(String str) {
+		if (str == null) {
+			return "";
+		}
+		str = str.replaceAll("[áàâãª]", "a");
+		str = str.replaceAll("[ÁÀÂÃ]", "A");
+		str = str.replaceAll("[éèê]", "e");
+		str = str.replaceAll("[ÉÈÊ]", "E");
+		str = str.replaceAll("[íìî]", "i");
+		str = str.replaceAll("[ÍÌÎ]", "I");
+		str = str.replaceAll("[óòôõº°]", "o");
+		str = str.replaceAll("[ÓÒÔÕ]", "O");
+		str = str.replaceAll("[úùû]", "u");
+		str = str.replaceAll("[ÚÙÛ]", "U");
+		str = str.replaceAll("[çý]", "c");
+		str = str.replaceAll("[ÇÝ]", "C");
+		return str;
 	}
 }

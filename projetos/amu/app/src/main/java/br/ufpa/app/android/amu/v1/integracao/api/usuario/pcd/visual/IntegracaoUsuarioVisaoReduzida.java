@@ -7,16 +7,18 @@ import java.util.List;
 import java.util.Locale;
 
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
+import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoUsuario;
 import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.StringUtil;
 import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
 public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
     private MediaPlayer mediaPlayer;
-    private Comando comando;
     private TextToSpeech textoLido;
 
     public IntegracaoUsuarioVisaoReduzida() {
@@ -48,9 +50,6 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     private String[] NUMERO_TRES = {
             "3",
             "TRES",
-            "TRÊS",
-            "HORÁRIO DE MEDICAMENTO",
-            "HORÁRIOS DE MEDICAMENTO",
             "HORARIO DE MEDICAMENTO",
             "HORARIOS DE MEDICAMENTO"
     };
@@ -58,8 +57,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     private String[] NUMERO_QUATRO = {
             "4",
             "QUATRO",
-            "USO DE MEDICAMENTO",
-            "UZO DE MEDICAMENTO"
+            "USO DE MEDICAMENTO"
     };
 
     private String[] NUMERO_CINCO = {
@@ -71,19 +69,58 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     private String[] NUMERO_SEIS = {
             "6",
             "SEIS",
-            "CEIS",
-            "PERFIL DE USUARIO",
-            "PERFIL DE USUÁRIO"
+            "PERFIL DE USUARIO"
     };
 
-    private boolean findTexto(String[] palavras, String palavra) {
+    private String[] COMANDO_VOZ_LISTA_MEDICAMENTO = {
+            "LISTA DE MEDICAMENTO",
+            "LISTAGEM DE MEDICAMENTO",
+            "QUAIS MEDICAMENTOS TENHO",
+            "LISTE MINHA FARMARCIA",
+            "MINHA FARMACIA",
+            "O QUE TENHO NA MINHA FARMACIA",
+            "O QUE TENHO NA FARMACIA"
+    };
+
+    private static String[] COMANDO_VOZ_DESCREVE_MEDICAMENTO = {
+            "DESCRICAO DO MEDICAMENTO",
+            "DESCRICAO DO ITEM",
+            "DESCREVA O MEDICAMENTO",
+            "DESCREVA O ITEM",
+            "EXPLIQUE O MEDICAMENTO",
+            "EXPLIQUE O ITEM",
+            "DETALHE O MEDICAMENTO",
+            "DETALHE O ITEM",
+            "QUERO SABER TUDO SOBRE O MEDICAMENTO",
+            "QUERO SABER TUDO SOBRE O ITEM",
+            "QUERO SABER DETALHES DO MEDICAMENTO",
+            "QUERO SABER DETALHES DO ITEM"
+    };
+
+    private static boolean findTexto(String[] palavras, String palavra) {
         for (int i = 0; i < palavras.length; i++) {
-            if (palavras[i].equals(palavra.toUpperCase()) || palavra.toUpperCase().contains(palavras[i])) {
+            String palavraSemAcento = StringUtil.removerAcentos(palavra);
+
+            if (palavras[i].equals(palavraSemAcento.toUpperCase()) || palavraSemAcento.toUpperCase().contains(palavras[i])) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    public static void main(String[] args) {
+        String texto = "DESCREVA O ITEM 1";
+
+        if (findTexto(COMANDO_VOZ_DESCREVE_MEDICAMENTO, texto)) {
+            System.out.println("achou");
+        }
+        else {
+            System.out.println("nao tem correspondencia");
+        }
+
+        ;
+
     }
 
     @Override
@@ -116,6 +153,10 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             return R.id.btnEstoqueMedicamento;
         } else if (findTexto(NUMERO_SEIS, texto)) {
             return R.id.btnPerfilUsuario;
+        } else if (findTexto(COMANDO_VOZ_LISTA_MEDICAMENTO, texto)) {
+            return ComandosVoz.LISTA_MEDICAMENTOS;
+        } else if (findTexto(COMANDO_VOZ_DESCREVE_MEDICAMENTO, texto)) {
+            return ComandosVoz.DESCREVA_MEDICAMENTO;
         }
 
         return -1;
@@ -134,7 +175,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
         switch (tipoFuncao) {
             case PESQUISA_MEDICAMENTOS:
-                idBemVindoFuncao = R.raw.cadastromedicamento;
+                idBemVindoFuncao = R.raw.pesquisamedicamentosfalecomando;
                 break;
             case CONSULTA_MEDICAMENTOS:
                 idBemVindoFuncao = R.raw.telaconsultamedicamentoeinstrucao;
@@ -228,6 +269,24 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     @Override
     public boolean lerTexto() {
         return true;
+    }
+
+    @Override
+    public void comandoNaoReconhecido(String comandoInformado) {
+        falar("Comando. "+comandoInformado+". não reconhecido. Toque na tela e fale o comando novamente.");
+    }
+
+    @Override
+    public void listarMedicamentos(List<MedicamentoDTO> medicamentos) {
+        textoLido.speak("Há " + medicamentos.size() + " medicamentos cadastrados", TextToSpeech.QUEUE_ADD, null);
+
+        int item = 1;
+
+        for (MedicamentoDTO medicamentoDTO : medicamentos) {
+            textoLido.speak("Item . " + item + ". " + medicamentoDTO.getNomeFantasia(), TextToSpeech.QUEUE_ADD, null);
+            item++;
+            ThreadUtil.esperar(ThreadUtil.HUM_SEGUNDO);
+        }
     }
 
 }

@@ -9,6 +9,7 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -35,6 +36,7 @@ import br.ufpa.app.android.amu.v1.adapter.MedicamentoAdapter;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
+import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoBularioEletronico;
@@ -45,13 +47,14 @@ import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
 import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
-public class PrincipalActivity extends AppCompatActivity implements GerenteServicosListener, View.OnClickListener {
+public class PrincipalActivity extends AppCompatActivity implements GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
 
     private RecyclerView recyclerView;
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private List<MedicamentoDTO> listaMedicamentos = new ArrayList<>();
     private TextView txvListaVazia;
     private TextToSpeech textoLido;
+    private boolean escutandoComando;
 
     private ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -81,6 +84,12 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
+                        escutandoComando = false;
+
+                        App.integracaoUsuario.capturarComandoEncerrado();
+
+                        ThreadUtil.esperar(ThreadUtil.CINCO_SEGUNDOS);
+
                         // There are no request codes
                         Intent data = result.getData();
                         ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
@@ -90,22 +99,20 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                             return;
                         }
 
-                        if (App.comandoAtualVoz.equals(TipoFuncao.CHAMADA_TELA)) {
-                            int idView = App.integracaoUsuario.findComando(text.get(0));
+                        int nrComandoVoz = App.integracaoUsuario.findComando(text.get(0));
 
-                            if (idView == -1) {
-                                //txvStatusComando.setText("Comando não foi reconhecido");
-                                return;
-                            }
+                        if (nrComandoVoz == -1)
+                            App.integracaoUsuario.comandoNaoReconhecido(text.get(0));
+                        else {
+                            if (nrComandoVoz == ComandosVoz.LISTA_MEDICAMENTOS)
+                                App.integracaoUsuario.listarMedicamentos(listaMedicamentos);
+                            else
+                            if (nrComandoVoz == ComandosVoz.DESCREVA_MEDICAMENTO)
+                                App.integracaoUsuario.listarMedicamentos(listaMedicamentos);
 
-                            if (idView == R.id.btnConsultaMedicamento) {
-                                Intent intent = new Intent();
-                                intent.setClass(App.context, ConsultaAnvisaActivity.class);
-                                App.context.startActivity(intent);
-                            }
-                        } else if (App.comandoAtualVoz.equals(TipoFuncao.CADASTRO_MEDICAMENTOS)) {
-                           incluirMedicamento();
                         }
+
+
                     }
                 }
             });
@@ -117,13 +124,20 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
         App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
         App.integracaoBularioEletronico = new FactoryIntegracaoBularioEletronico().createIntegracaoBularioEletronico(App.fontesConsulta);
+        this.escutandoComando = false;
+
+        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+            getSupportActionBar().hide();
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setOnClickListener(this);
+        recyclerView.setOnTouchListener(this);
 
         txvListaVazia = findViewById(R.id.txvListaVazia);
         txvListaVazia.setVisibility(View.INVISIBLE);
         findViewById(R.id.floatingActionButton).setOnClickListener(this);
+        findViewById(R.id.fundo).setOnClickListener(this);
+        findViewById(R.id.cabecalho).setOnClickListener(this);
 
         App.integracaoUsuario.bemVindoFuncao(TipoFuncao.PESQUISA_MEDICAMENTOS);
 
@@ -131,12 +145,14 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return super.onTouchEvent(event);
+    }
+
+    @Override
     public void onClick(View v) {
         if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
-            App.integracaoUsuario.instrucaoParaUsuario(R.raw.falecomando);
-            ThreadUtil.esperar(ThreadUtil.QUATRO_SEGUNDOS);
             chamarItenteReconechimentoVoz();
-
         } else {
             if (v.getId() == R.id.floatingActionButton) {
                 incluirMedicamento();
@@ -150,6 +166,12 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     }
 
     private void chamarItenteReconechimentoVoz() {
+        if (escutandoComando) return;
+
+        this.escutandoComando = true;
+
+        App.integracaoUsuario.instrucaoParaUsuario(R.raw.falecomando);
+        ThreadUtil.esperar(ThreadUtil.QUATRO_SEGUNDOS);
         App.integracaoUsuario.pararMensagem();
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -207,7 +229,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
             txvListaVazia.setVisibility(View.INVISIBLE);
 
-            if (this.listaMedicamentos.size()==0) {
+            if (this.listaMedicamentos.size() == 0) {
 
                 if (App.integracaoUsuario.lerTexto())
                     App.integracaoUsuario.avisarListaVazia();
@@ -228,10 +250,13 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                     new RecyclerItemClickListener.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
-                            App.medicamentoDTO = (MedicamentoDTO) listaMedicamentos.get(position);
-                            Intent intent = new Intent(PrincipalActivity.this, DetalheMedicamentoActivity.class);
-                            detalheMedicamentoActivityResultLauncher.launch(intent);
-
+                            if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+                                chamarItenteReconechimentoVoz();
+                            } else {
+                                App.medicamentoDTO = (MedicamentoDTO) listaMedicamentos.get(position);
+                                Intent intent = new Intent(PrincipalActivity.this, DetalheMedicamentoActivity.class);
+                                detalheMedicamentoActivityResultLauncher.launch(intent);
+                            }
                         }
 
                         @Override
@@ -255,5 +280,15 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     @Override
     public void executarAcao(int numeroAcao, Object parametro) {
 
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+            chamarItenteReconechimentoVoz();
+        }
+
+        return false;
     }
 }
