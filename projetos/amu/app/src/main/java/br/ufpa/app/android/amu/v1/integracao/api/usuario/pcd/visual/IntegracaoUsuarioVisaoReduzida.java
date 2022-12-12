@@ -2,11 +2,16 @@ package br.ufpa.app.android.amu.v1.integracao.api.usuario.pcd.visual;
 
 import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
+import android.widget.Toast;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
+import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
@@ -34,44 +39,6 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         textoLido.setSpeechRate(0.75f);
     }
 
-    private String[] NUMERO_UM = {
-            "1",
-            "HUM",
-            "UM",
-            "CADASTRO DE MEDICAMENTO"
-    };
-
-    private String[] NUMERO_DOIS = {
-            "2",
-            "DOIS",
-            "CONSULTA DE MEDICAMENTO"
-    };
-
-    private String[] NUMERO_TRES = {
-            "3",
-            "TRES",
-            "HORARIO DE MEDICAMENTO",
-            "HORARIOS DE MEDICAMENTO"
-    };
-
-    private String[] NUMERO_QUATRO = {
-            "4",
-            "QUATRO",
-            "USO DE MEDICAMENTO"
-    };
-
-    private String[] NUMERO_CINCO = {
-            "5",
-            "CINCO",
-            "ESTOQUE DE MEDICAMENTO"
-    };
-
-    private String[] NUMERO_SEIS = {
-            "6",
-            "SEIS",
-            "PERFIL DE USUARIO"
-    };
-
     private String[] COMANDO_VOZ_LISTA_MEDICAMENTO = {
             "LISTA DE MEDICAMENTO",
             "LISTAGEM DE MEDICAMENTO",
@@ -82,7 +49,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "O QUE TENHO NA FARMACIA"
     };
 
-    private static String[] COMANDO_VOZ_DESCREVE_MEDICAMENTO = {
+    private String[] COMANDO_VOZ_DESCREVE_MEDICAMENTO = {
             "DESCRICAO DO MEDICAMENTO",
             "DESCRICAO DO ITEM",
             "DESCREVA O MEDICAMENTO",
@@ -97,10 +64,43 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "QUERO SABER DETALHES DO ITEM"
     };
 
-    private static boolean findTexto(String[] palavras, String palavra) {
-        for (int i = 0; i < palavras.length; i++) {
-            String palavraSemAcento = StringUtil.removerAcentos(palavra);
+    private String[] COMANDO_VOZ_HORARIO_MEDICAMENTO = {
+            "HORARIO DO MEDICAMENTO",
+            "HORARIO DO ITEM",
+            "QUERO SABER HORARIO DO MEDICAMENTO",
+            "QUERO SABER HORARIO DO ITEM",
+            "DEVO TOMAR QUE HORAS O MEDICAMENTO",
+            "DEVO TOMAR QUE HORAS O REMEDIO",
+            "DEVO TOMAR QUE HORAS O ITEM",
+    };
 
+    private String[] NUMEROS_EM_VOZ = {
+            "UM",
+            "DOIS",
+            "TRES",
+            "QUATRO",
+            "CINCO",
+            "SEIS",
+            "SETE",
+            "OITO",
+            "NOVE",
+            "DEZ",
+            "ONZE",
+            "DOZE",
+            "TREZE",
+            "QUARTOZE",
+            "QUINZE",
+            "DEZESSEIS",
+            "DEZESSETE",
+            "DEZOITO",
+            "DEZENOVE",
+            "VINTE"
+    };
+
+    private boolean findTexto(String[] palavras, String palavra) {
+        String palavraSemAcento = StringUtil.removerAcentos(palavra);
+
+        for (int i = 0; i < palavras.length; i++) {
             if (palavras[i].equals(palavraSemAcento.toUpperCase()) || palavraSemAcento.toUpperCase().contains(palavras[i])) {
                 return true;
             }
@@ -109,18 +109,16 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         return false;
     }
 
-    public static void main(String[] args) {
-        String texto = "DESCREVA O ITEM 1";
+    private String findCorrespondencia(String[] palavras, String palavra) {
+        String palavraSemAcento = StringUtil.removerAcentos(palavra);
 
-        if (findTexto(COMANDO_VOZ_DESCREVE_MEDICAMENTO, texto)) {
-            System.out.println("achou");
+        for (int i = 0; i < palavras.length; i++) {
+            if (palavras[i].equals(palavraSemAcento.toUpperCase()) || palavraSemAcento.toUpperCase().contains(palavras[i])) {
+                return palavras[i];
+            }
         }
-        else {
-            System.out.println("nao tem correspondencia");
-        }
 
-        ;
-
+        return "";
     }
 
     @Override
@@ -140,20 +138,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
     @Override
     public int findComando(String texto) {
-
-        if (findTexto(NUMERO_UM, texto)) {
-            return R.id.btnCadastroMedicamento;
-        } else if (findTexto(NUMERO_DOIS, texto)) {
-            return R.id.btnConsultaMedicamento;
-        } else if (findTexto(NUMERO_TRES, texto)) {
-            return R.id.btnHorarioMedicamento;
-        } else if (findTexto(NUMERO_QUATRO, texto)) {
-            return R.id.btnUsoMedicamento;
-        } else if (findTexto(NUMERO_CINCO, texto)) {
-            return R.id.btnEstoqueMedicamento;
-        } else if (findTexto(NUMERO_SEIS, texto)) {
-            return R.id.btnPerfilUsuario;
-        } else if (findTexto(COMANDO_VOZ_LISTA_MEDICAMENTO, texto)) {
+        if (findTexto(COMANDO_VOZ_LISTA_MEDICAMENTO, texto)) {
             return ComandosVoz.LISTA_MEDICAMENTOS;
         } else if (findTexto(COMANDO_VOZ_DESCREVE_MEDICAMENTO, texto)) {
             return ComandosVoz.DESCREVA_MEDICAMENTO;
@@ -179,6 +164,9 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
                 break;
             case CONSULTA_MEDICAMENTOS:
                 idBemVindoFuncao = R.raw.telaconsultamedicamentoeinstrucao;
+                break;
+            case DETALHES_MEDICAMENTO:
+                idBemVindoFuncao = R.raw.detalhesmedicamentofalecomando;
                 break;
             case HORARIO_MEDICAMENTOS:
                 idBemVindoFuncao = R.raw.horariomedicamento;
@@ -273,7 +261,8 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
     @Override
     public void comandoNaoReconhecido(String comandoInformado) {
-        falar("Comando. "+comandoInformado+". não reconhecido. Toque na tela e fale o comando novamente.");
+        Log.i("Comando nao reconhecido", comandoInformado);
+        falar("Comando. " + comandoInformado + ". não reconhecido. Toque na tela e fale o comando novamente.");
     }
 
     @Override
@@ -287,6 +276,79 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             item++;
             ThreadUtil.esperar(ThreadUtil.HUM_SEGUNDO);
         }
+    }
+
+    @Override
+    public MedicamentoDTO descrerverMedicamento(List<MedicamentoDTO> medicamentos, String s) {
+        s = s.toUpperCase();
+
+        String textoCorrespondente = findCorrespondencia(COMANDO_VOZ_DESCREVE_MEDICAMENTO, s);
+
+        MedicamentoDTO medicamentoDTO = findMedicamentoByVoz(medicamentos, s, textoCorrespondente);
+
+        if (medicamentoDTO == null) return null;
+
+        String texto = "Item . " + medicamentoDTO.getNomeFantasia() +" . "+
+                       "Quantidade da Embalagem . " + medicamentoDTO.getQtdeEmbalagem()+" . "+
+                       "Composição . " + medicamentoDTO.getComposicao()+" . "+
+                       "Principio Ativo . " + medicamentoDTO.getPrincipioAtivo();
+
+        textoLido.speak(texto, TextToSpeech.QUEUE_ADD, null);
+
+        return medicamentoDTO;
+    }
+
+    @Override
+    public void descrerverHorario(List<MedicamentoDTO> medicamentos, List<HorarioDTO> horarios, String s) {
+
+        if (horarios == null || horarios.size() == 0) {
+            textoLido.speak(" Item selecionado " + s + " não tem horário cadastrado. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+            return;
+        }
+
+        s = s.toUpperCase();
+
+        String textoCorrespondente = findCorrespondencia(COMANDO_VOZ_HORARIO_MEDICAMENTO, s);
+
+        MedicamentoDTO medicamentoDTO = findMedicamentoByVoz(medicamentos, s, textoCorrespondente);
+
+        if (medicamentoDTO == null) return;
+
+        HorarioDTO horarioDTO = horarios.get(horarios.size() - 1);
+
+        String texto = "O ultimo horário cadastradado para o ." + medicamentoDTO.getNomeFantasia()+" . "+
+                       "Data Inicial de Administracao " + horarioDTO.getDataInicial()+" . "+
+                       "Horario Inicial " + horarioDTO.getHorarioInicial()+" . "+
+                       "Intervalo entre as doses " + horarioDTO.getIntervalo()+" . "+
+                       "Numero de Doses " + horarioDTO.getNrDoses()+" . "+
+                       "Quantidade de Doses " + horarioDTO.getQtdePorDose();
+
+        textoLido.speak(texto, TextToSpeech.QUEUE_ADD, null);
+    }
+
+    private MedicamentoDTO findMedicamentoByVoz(List<MedicamentoDTO> medicamentos, String s, String textoCorrespondente) {
+        if (textoCorrespondente.equals("")) {
+            textoLido.speak(" Item selecionado " + s + " não existe na lista. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+            return null;
+        }
+
+        String restoTexto = StringUtil.removerAcentos(s.replace(textoCorrespondente, "").trim());
+
+        int item = 0;
+
+        for (MedicamentoDTO medicamentoDTO : medicamentos) {
+            String numeroTexto = item <= NUMEROS_EM_VOZ.length ? NUMEROS_EM_VOZ[item] : "";
+            String nomeFantasia = medicamentoDTO.getNomeFantasiaSemAssento().trim().toUpperCase();
+
+            if (nomeFantasia.equals(restoTexto) || numeroTexto.equals(restoTexto)) {
+                return medicamentoDTO;
+            }
+            item++;
+        }
+
+        textoLido.speak(" Item selecionado " + restoTexto + " não existe na lista. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+
+        return null;
     }
 
 }

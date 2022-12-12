@@ -40,6 +40,7 @@ import br.ufpa.app.android.amu.v1.fragments.EstoquesFragment;
 import br.ufpa.app.android.amu.v1.fragments.HorariosFragment;
 import br.ufpa.app.android.amu.v1.fragments.UtilizacoesFragment;
 import br.ufpa.app.android.amu.v1.helper.PaletaCoresActivity;
+import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
@@ -140,6 +141,8 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         this.onHorariosListener = (OnHorariosListener) adapter.getItem(0);
         this.onUtilizacoesListener = (OnUtilizacoesListener) adapter.getItem(1);
         this.onEstoqueListener = (OnEstoquesListener) adapter.getItem(2);
+
+        App.integracaoUsuario.bemVindoFuncao(TipoFuncao.DETALHES_MEDICAMENTO);
     }
 
     @NonNull

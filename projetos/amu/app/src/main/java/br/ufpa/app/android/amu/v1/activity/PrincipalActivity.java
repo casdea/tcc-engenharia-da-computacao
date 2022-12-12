@@ -107,9 +107,18 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                             if (nrComandoVoz == ComandosVoz.LISTA_MEDICAMENTOS)
                                 App.integracaoUsuario.listarMedicamentos(listaMedicamentos);
                             else
-                            if (nrComandoVoz == ComandosVoz.DESCREVA_MEDICAMENTO)
-                                App.integracaoUsuario.listarMedicamentos(listaMedicamentos);
+                            if (nrComandoVoz == ComandosVoz.DESCREVA_MEDICAMENTO) {
+                                App.medicamentoDTO = App.integracaoUsuario.descrerverMedicamento(listaMedicamentos, text.get(0));
 
+                                if (App.medicamentoDTO != null) {
+                                    Intent intent = new Intent(PrincipalActivity.this, DetalheMedicamentoActivity.class);
+                                    detalheMedicamentoActivityResultLauncher.launch(intent);
+                                }
+                            }
+                            else
+                            if (nrComandoVoz == ComandosVoz.DESCREVA_HORARIO) {
+                                App.integracaoUsuario.descrerverHorario(listaMedicamentos, App.listaHorarios, text.get(0));
+                            }
                         }
 
 

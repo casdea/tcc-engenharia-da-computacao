@@ -4,6 +4,7 @@ import android.speech.tts.TextToSpeech;
 
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
@@ -27,4 +28,8 @@ public interface IntegracaoUsuario {
     void comandoNaoReconhecido(String comandoInformado);
 
     void listarMedicamentos(List<MedicamentoDTO> medicamentos);
+
+    MedicamentoDTO descrerverMedicamento(List<MedicamentoDTO> medicamentos, String s);
+
+    public void descrerverHorario(List<MedicamentoDTO> medicamentos, List<HorarioDTO> horarios, String s);
 }

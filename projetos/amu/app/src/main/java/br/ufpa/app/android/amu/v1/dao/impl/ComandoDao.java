@@ -15,45 +15,47 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
-import br.ufpa.app.android.amu.v1.dao.idao.IHorarioDao;
+import br.ufpa.app.android.amu.v1.dao.idao.IComandoDao;
+import br.ufpa.app.android.amu.v1.dao.idao.IUtilizacaoDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
-import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
-import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
+import br.ufpa.app.android.amu.v1.dao.modelo.Comando;
+import br.ufpa.app.android.amu.v1.dao.modelo.Utilizacao;
+import br.ufpa.app.android.amu.v1.dto.ComandoDTO;
+import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
 
-public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDao {
+public class ComandoDao extends AbstractEntityDao<Comando> implements IComandoDao {
 
     private GerenteServicosListener gerenteServicosListener;
     private AppCompatActivity atividade;
 
-    public HorarioDao(DatabaseReference em, AppCompatActivity atividade) {
+    public ComandoDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
         this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
     }
 
-    public Class<Horario> getClassImplement() {
-        return Horario.class;
+    public Class<Comando> getClassImplement() {
+        return Comando.class;
     }
 
     @Override
-    public Horario create(Horario horario) {
-        DatabaseReference horariosRef = em.child(horario.getNomeTabela());
-        String chave = horariosRef.push().getKey();
-        horario.setIdHorario(chave);
-        horariosRef.child(chave).setValue(horario).addOnSuccessListener(new OnSuccessListener<Void>() {
+    public Comando create(Comando comando) {
+        DatabaseReference comandosRef = em.child(comando.getNomeTabela());
+        String chave = comandosRef.push().getKey();
+        comando.setIdComando(chave);
+        comandosRef.child(chave).setValue(comando).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(App.context,
-                        "Registro Horario Salvo !",
+                        "Registro Comando Salvo !",
                         Toast.LENGTH_LONG).show();
-                App.horarioDTO.setIdHorario(chave);
-                gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_HORARIO, null);
+                App.comandoDTO.setIdComando(chave);
+                gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_COMANDO, null);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -65,19 +67,19 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
             }
         });
 
-        return horario;
+        return comando;
     }
 
     @Override
-    public Horario update(Horario horario) {
-        DatabaseReference horariosRef = em.child(horario.getNomeTabela()).child(horario.getIdHorario());
-        horariosRef.setValue(horario).addOnSuccessListener(new OnSuccessListener<Void>() {
+    public Comando update(Comando comando) {
+        DatabaseReference comandosRef = em.child(comando.getNomeTabela()).child(comando.getIdComando());
+        comandosRef.setValue(comando).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(App.context,
-                        "Registro Horario Salvo !",
+                        "Registro comando Salvo !",
                         Toast.LENGTH_LONG).show();
-                gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_HORARIO, null);
+                gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_COMANDO, null);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -89,30 +91,29 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
             }
         });
 
-        return horario;
+        return comando;
     }
 
     @Override
-    public void findAllByUsuarioIdMedicamento(String idUsuario, String idMedicamento) {
-        App.listaHorarios = new ArrayList<>();
+    public void findAllByUsuario(String idUsuario) {
+        App.listaComandos = new ArrayList<>();
         DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
 
-        Query horariosQuery = em.child("horarios").orderByChild("idUsuario").equalTo(idUsuario);
+        Query comandosQuery = em.child("comandos").orderByChild("idUsuario").equalTo(idUsuario);
 
         ValueEventListener evento = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    HorarioDTO horarioDTO = getHorarioDTO(postSnapshot);
+                    ComandoDTO comandoDTO = getComandoDTO(postSnapshot);
 
                     Log.i("Lendo dados ", postSnapshot.toString());
 
-                    if (horarioDTO.getIdMedicamento().equals(idMedicamento)) {
-                        App.listaHorarios.add(horarioDTO);
-                    }
+                    App.listaComandos.add(comandoDTO);
                     // TODO: handle the post
                 }
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO, App.listaHorarios);
+
+                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_COMANDO_POR_USUARIO,  App.listaComandos);
 
             }
 
@@ -122,25 +123,20 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
             }
         };
 
-        horariosQuery.addListenerForSingleValueEvent(evento);
+        comandosQuery.addListenerForSingleValueEvent(evento);
 
     }
 
     @NonNull
-    private HorarioDTO getHorarioDTO(DataSnapshot postSnapshot) {
-        Horario horario = postSnapshot.getValue(Horario.class);
+    private ComandoDTO getComandoDTO(DataSnapshot postSnapshot) {
+        Comando comando = postSnapshot.getValue(Comando.class);
 
-        HorarioDTO horarioDTO = new HorarioDTO();
-        horarioDTO.setIdHorario(horario.getIdHorario());
-        horarioDTO.setIdMedicamento(horario.getIdMedicamento());
-        horarioDTO.setIdUsuario(horario.getIdUsuario());
-        horarioDTO.setDataInicial(horario.getDataInicial());
-        horarioDTO.setHorarioInicial(horario.getHorarioInicial());
-        horarioDTO.setIntervalo(horario.getIntervalo());
-        horarioDTO.setNrDoses(horario.getNrDoses());
-        horarioDTO.setQtdePorDose(horario.getQtdePorDose());
-        horarioDTO.setAtivo(horario.getAtivo());
+        ComandoDTO comandoDTO = new ComandoDTO();
+        comandoDTO.setIdComando(comando.getIdComando());
+        comandoDTO.setNrComando(comando.getNrComando());
+        comandoDTO.setIdUsuario(comando.getIdUsuario());
+        comandoDTO.setNomeComando(comando.getNomeComando());
 
-        return horarioDTO;
+        return comandoDTO;
     }
 }

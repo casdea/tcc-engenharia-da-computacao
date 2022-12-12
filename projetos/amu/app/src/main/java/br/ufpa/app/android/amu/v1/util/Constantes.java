@@ -17,6 +17,12 @@ public class Constantes {
     public static final int ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO = 14;
     public static final int ACAO_APRESENTAR_TELA_PRINCIPAL = 15;
     public static final int ACAO_APRESENTAR_TELA_BOAS_VINDAS = 16;
+    public static final int ACAO_REGISTRAR_COMANDO = 17;
+    public static final int ACAO_REGISTRAR_VARIACAO_COMANDO = 18;
+    public static final int ACAO_ALTERAR_COMANDO = 19;
+    public static final int ACAO_ALTERAR_VARIACAO_COMANDO = 20;
+    public static final int ACAO_OBTER_LISTA_COMANDO_POR_USUARIO = 21;
+    public static final int ACAO_OBTER_LISTA_VARIACAO_POR_USUARIO_COMANDO = 22;
 
     public static final int ACAO_RECEBER_TEXTO_BULA = 100;
     public static final int ACAO_FECHAR_TELA = 101;

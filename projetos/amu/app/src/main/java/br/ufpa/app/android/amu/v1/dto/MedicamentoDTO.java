@@ -3,6 +3,8 @@ package br.ufpa.app.android.amu.v1.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.util.StringUtil;
+
 public class MedicamentoDTO {
     //automatico
     //nao aparece
@@ -66,6 +68,10 @@ public class MedicamentoDTO {
     private List<EstoqueDTO> estoques;
 
     private List<UtilizacaoDTO> utilizacoes;
+
+    public String getNomeFantasiaSemAssento() {
+        return StringUtil.removerAcentos(nomeFantasia);
+    }
 
     public boolean isCorValida()
     {

@@ -4,6 +4,7 @@ import android.speech.tts.TextToSpeech;
 
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
@@ -67,6 +68,17 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
 
     @Override
     public void listarMedicamentos(List<MedicamentoDTO> medicamentos) {
+
+    }
+
+    @Override
+    public MedicamentoDTO descrerverMedicamento(List<MedicamentoDTO> medicamentos, String s) {
+        return null;
+
+    }
+
+    @Override
+    public void descrerverHorario(List<MedicamentoDTO> medicamentos, List<HorarioDTO> horarios, String s) {
 
     }
 

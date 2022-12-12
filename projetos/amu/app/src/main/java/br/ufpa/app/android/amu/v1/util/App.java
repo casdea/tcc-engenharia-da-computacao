@@ -7,10 +7,12 @@ import android.view.View;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
+import br.ufpa.app.android.amu.v1.dto.ComandoDTO;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
+import br.ufpa.app.android.amu.v1.dto.VariacoesComandoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.FontesConsulta;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
@@ -37,4 +39,8 @@ public class App extends Application {
     public static List<UtilizacaoDTO> listaUtilizacoes;
     public static EstoqueDTO estoqueDTO;
     public static List<EstoqueDTO> listaEstoques;
+    public static ComandoDTO comandoDTO;
+    public static VariacoesComandoDTO variacoesComandoDTO;
+    public static List<ComandoDTO> listaComandos;
+    public static List<VariacoesComandoDTO> listaVariacoesComandos;
 }
