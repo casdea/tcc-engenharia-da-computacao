@@ -2,6 +2,7 @@ package br.ufpa.app.android.amu.v1.activity;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.speech.RecognizerIntent;
@@ -12,22 +13,28 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.ActivityResultRegistry;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 import java.util.ArrayList;
 
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
-public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
+public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver  {
     private final ActivityResultRegistry mRegistry;
     private ActivityResultLauncher<Intent> mGetRecursoVoz;
+    private GerenteServicosListener gerenteServicosListener;
 
-    RecursoVozLifeCyCleObserver(@NonNull ActivityResultRegistry registry) {
+    RecursoVozLifeCyCleObserver(@NonNull ActivityResultRegistry registry, AppCompatActivity atividade)
+    {
         mRegistry = registry;
+        this.gerenteServicosListener = (GerenteServicosListener) atividade;
     }
 
     public void onCreate(@NonNull LifecycleOwner owner) {
@@ -51,22 +58,14 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
                                 return;
                             }
 
-                            if (App.comandoAtualVoz.equals(TipoFuncao.CHAMADA_TELA)) {
-                                int idView = App.integracaoUsuario.findComando(text.get(0));
+                            int nrComandoVoz = App.integracaoUsuario.findComando(text.get(0));
 
-                                if (idView == -1) {
-                                    //txvStatusComando.setText("Comando não foi reconhecido");
-                                    return;
+                            if (nrComandoVoz == -1)
+                                App.integracaoUsuario.comandoNaoReconhecido(text.get(0));
+                            else {
+                                if (nrComandoVoz == ComandosVoz.DESCREVA_HORARIO) {
+                                    gerenteServicosListener.executarAcao(1,text.get(0));
                                 }
-
-                                if (idView == R.id.btnConsultaMedicamento) {
-                                    Intent intent = new Intent();
-                                    intent.setClass(App.context, ConsultaAnvisaActivity.class);
-                                    App.context.startActivity(intent);
-                                }
-                            }
-                            else
-                            if (App.comandoAtualVoz.equals(TipoFuncao.PESQUISA_MEDICAMENTOS)) {
                             }
 
                             //onClick(view);

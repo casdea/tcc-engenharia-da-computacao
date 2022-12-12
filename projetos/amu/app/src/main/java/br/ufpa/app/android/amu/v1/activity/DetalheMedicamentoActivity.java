@@ -41,6 +41,7 @@ import br.ufpa.app.android.amu.v1.fragments.HorariosFragment;
 import br.ufpa.app.android.amu.v1.fragments.UtilizacoesFragment;
 import br.ufpa.app.android.amu.v1.helper.PaletaCoresActivity;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
+import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
@@ -54,6 +55,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
     private TextView txvCorSelecionada;
     private String cor;
     private FragmentPagerItemAdapter adapter;
+    private RecursoVozLifeCyCleObserver mRecursoVozObserver;
 
     private ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -104,6 +106,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         textInpTextApelido.setText(App.medicamentoDTO.getNomeFantasia());
         textInpTextQtdeEmbalagem.setText(String.valueOf(App.medicamentoDTO.getQtdeEmbalagem()));
 
+        mRecursoVozObserver = new RecursoVozLifeCyCleObserver(getActivityResultRegistry(), DetalheMedicamentoActivity.this);
+        getLifecycle().addObserver(mRecursoVozObserver);
+
         Button btnAlterar = findViewById(R.id.btnAlterar);
         btnAlterar.setEnabled(false);
         btnAlterar.setOnClickListener(this);
@@ -141,6 +146,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         this.onHorariosListener = (OnHorariosListener) adapter.getItem(0);
         this.onUtilizacoesListener = (OnUtilizacoesListener) adapter.getItem(1);
         this.onEstoqueListener = (OnEstoquesListener) adapter.getItem(2);
+
+        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+            getSupportActionBar().hide();
 
         App.integracaoUsuario.bemVindoFuncao(TipoFuncao.DETALHES_MEDICAMENTO);
     }
@@ -249,16 +257,21 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.txvCorSelecionada) {
-            selecionarCor();
-        } else if (view.getId() == R.id.btnAlterar) {
-            alterarMedicamento();
-        } else if (view.getId() == R.id.btnUtilizar) {
-            abrirDialogUtilizacao(view);
-        } else if (view.getId() == R.id.imbAdicionar) {
-            abrirDialogEntradaEstoque(view);
-        } else if (view.getId() == R.id.imbRemover) {
-            abrirDialogSaidaEstoque(view);
+        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+            mRecursoVozObserver.chamarItenteReconechimentoVoz();
+        }
+        else {
+            if (view.getId() == R.id.txvCorSelecionada) {
+                selecionarCor();
+            } else if (view.getId() == R.id.btnAlterar) {
+                alterarMedicamento();
+            } else if (view.getId() == R.id.btnUtilizar) {
+                abrirDialogUtilizacao(view);
+            } else if (view.getId() == R.id.imbAdicionar) {
+                abrirDialogEntradaEstoque(view);
+            } else if (view.getId() == R.id.imbRemover) {
+                abrirDialogSaidaEstoque(view);
+            }
         }
     }
 

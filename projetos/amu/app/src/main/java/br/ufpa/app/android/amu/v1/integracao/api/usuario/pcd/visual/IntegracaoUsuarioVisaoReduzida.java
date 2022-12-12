@@ -57,6 +57,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "EXPLIQUE O MEDICAMENTO",
             "EXPLIQUE O ITEM",
             "DETALHE O MEDICAMENTO",
+            "DETALHE MEDICAMENTO",
             "DETALHE O ITEM",
             "QUERO SABER TUDO SOBRE O MEDICAMENTO",
             "QUERO SABER TUDO SOBRE O ITEM",
@@ -142,6 +143,8 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             return ComandosVoz.LISTA_MEDICAMENTOS;
         } else if (findTexto(COMANDO_VOZ_DESCREVE_MEDICAMENTO, texto)) {
             return ComandosVoz.DESCREVA_MEDICAMENTO;
+        } else if (findTexto(COMANDO_VOZ_HORARIO_MEDICAMENTO, texto)) {
+            return ComandosVoz.DESCREVA_HORARIO;
         }
 
         return -1;
@@ -288,10 +291,10 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
         if (medicamentoDTO == null) return null;
 
-        String texto = "Item . " + medicamentoDTO.getNomeFantasia() +" . "+
-                       "Quantidade da Embalagem . " + medicamentoDTO.getQtdeEmbalagem()+" . "+
-                       "Composição . " + medicamentoDTO.getComposicao()+" . "+
-                       "Principio Ativo . " + medicamentoDTO.getPrincipioAtivo();
+        String texto = "Item . " + medicamentoDTO.getNomeFantasia() + " . " +
+                "Quantidade da Embalagem . " + medicamentoDTO.getQtdeEmbalagem();
+        //"Composição . " + medicamentoDTO.getComposicao()+" . "+
+        //"Principio Ativo . " + medicamentoDTO.getPrincipioAtivo();
 
         textoLido.speak(texto, TextToSpeech.QUEUE_ADD, null);
 
@@ -316,12 +319,12 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
         HorarioDTO horarioDTO = horarios.get(horarios.size() - 1);
 
-        String texto = "O ultimo horário cadastradado para o ." + medicamentoDTO.getNomeFantasia()+" . "+
-                       "Data Inicial de Administracao " + horarioDTO.getDataInicial()+" . "+
-                       "Horario Inicial " + horarioDTO.getHorarioInicial()+" . "+
-                       "Intervalo entre as doses " + horarioDTO.getIntervalo()+" . "+
-                       "Numero de Doses " + horarioDTO.getNrDoses()+" . "+
-                       "Quantidade de Doses " + horarioDTO.getQtdePorDose();
+        String texto = "O ultimo horário cadastradado para o ." + medicamentoDTO.getNomeFantasia() + " . " +
+                "Data Inicial de Administracao " + horarioDTO.getDataInicial() + " . " +
+                "Horario Inicial " + horarioDTO.getHorarioInicial() + " . " +
+                "Intervalo entre as doses " + horarioDTO.getIntervalo() + " . " +
+                "Numero de Doses " + horarioDTO.getNrDoses() + " . " +
+                "Quantidade de Doses " + horarioDTO.getQtdePorDose();
 
         textoLido.speak(texto, TextToSpeech.QUEUE_ADD, null);
     }

@@ -115,10 +115,6 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                                     detalheMedicamentoActivityResultLauncher.launch(intent);
                                 }
                             }
-                            else
-                            if (nrComandoVoz == ComandosVoz.DESCREVA_HORARIO) {
-                                App.integracaoUsuario.descrerverHorario(listaMedicamentos, App.listaHorarios, text.get(0));
-                            }
                         }
 
 

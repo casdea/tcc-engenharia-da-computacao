@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         App.integracaoUsuario.bemVindo();
 
-        mRecursoVozObserver = new RecursoVozLifeCyCleObserver(getActivityResultRegistry());
+        mRecursoVozObserver = new RecursoVozLifeCyCleObserver(getActivityResultRegistry(), MainActivity.this);
         getLifecycle().addObserver(mRecursoVozObserver);
 
         findViewById(R.id.btnCadastroMedicamento).setOnClickListener(this);
