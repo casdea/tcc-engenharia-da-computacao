@@ -31,5 +31,15 @@ public interface IntegracaoUsuario {
 
     MedicamentoDTO descrerverMedicamento(List<MedicamentoDTO> medicamentos, String s);
 
-    public void descrerverHorario(List<MedicamentoDTO> medicamentos, List<HorarioDTO> horarios, String s);
+    public void descrerverHorario(MedicamentoDTO medicamentoDTO, List<HorarioDTO> horarios);
+
+    void tenteNovamenteComandoVoz();
+
+    public void falar(String texto);
+
+    public MedicamentoDTO findMedicamentoByAcaoVoz(List<MedicamentoDTO> medicamentos, String s, int acao);
+
+    boolean validarUtilizacaoMedicamento(List<HorarioDTO> horarios);
+
+    void saidaNegadaSemSaldo();
 }

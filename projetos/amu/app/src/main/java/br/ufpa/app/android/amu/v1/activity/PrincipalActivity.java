@@ -34,6 +34,7 @@ import java.util.Locale;
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.adapter.MedicamentoAdapter;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
+import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
 import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
@@ -53,8 +54,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private List<MedicamentoDTO> listaMedicamentos = new ArrayList<>();
     private TextView txvListaVazia;
-    private TextToSpeech textoLido;
-    private boolean escutandoComando;
+    private RecursoVozLifeCyCleObserver mRecursoVozObserver;
 
     private ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -78,58 +78,15 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                 }
             });
 
-    private ActivityResultLauncher<Intent> reconheceVozActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        escutandoComando = false;
-
-                        App.integracaoUsuario.capturarComandoEncerrado();
-
-                        ThreadUtil.esperar(ThreadUtil.CINCO_SEGUNDOS);
-
-                        // There are no request codes
-                        Intent data = result.getData();
-                        ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
-                        if (text == null || text.size() == 0) {
-                            //txvStatusComando.setText("Texto de Voz inválido");
-                            return;
-                        }
-
-                        int nrComandoVoz = App.integracaoUsuario.findComando(text.get(0));
-
-                        if (nrComandoVoz == -1)
-                            App.integracaoUsuario.comandoNaoReconhecido(text.get(0));
-                        else {
-                            if (nrComandoVoz == ComandosVoz.LISTA_MEDICAMENTOS)
-                                App.integracaoUsuario.listarMedicamentos(listaMedicamentos);
-                            else
-                            if (nrComandoVoz == ComandosVoz.DESCREVA_MEDICAMENTO) {
-                                App.medicamentoDTO = App.integracaoUsuario.descrerverMedicamento(listaMedicamentos, text.get(0));
-
-                                if (App.medicamentoDTO != null) {
-                                    Intent intent = new Intent(PrincipalActivity.this, DetalheMedicamentoActivity.class);
-                                    detalheMedicamentoActivityResultLauncher.launch(intent);
-                                }
-                            }
-                        }
-
-
-                    }
-                }
-            });
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
+        App.escutandoComando = false;
 
         App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
         App.integracaoBularioEletronico = new FactoryIntegracaoBularioEletronico().createIntegracaoBularioEletronico(App.fontesConsulta);
-        this.escutandoComando = false;
+
 
         if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
             getSupportActionBar().hide();
@@ -137,6 +94,9 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setOnClickListener(this);
         recyclerView.setOnTouchListener(this);
+
+        mRecursoVozObserver = new RecursoVozLifeCyCleObserver(getActivityResultRegistry(), PrincipalActivity.this);
+        getLifecycle().addObserver(mRecursoVozObserver);
 
         txvListaVazia = findViewById(R.id.txvListaVazia);
         txvListaVazia.setVisibility(View.INVISIBLE);
@@ -157,7 +117,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     @Override
     public void onClick(View v) {
         if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
-            chamarItenteReconechimentoVoz();
+            mRecursoVozObserver.chamarItenteReconechimentoVoz();
         } else {
             if (v.getId() == R.id.floatingActionButton) {
                 incluirMedicamento();
@@ -168,34 +128,6 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     private void incluirMedicamento() {
         Intent intent = new Intent(PrincipalActivity.this, ConsultaAnvisaActivity.class);
         consultarAvisaActivityResultLauncher.launch(intent);
-    }
-
-    private void chamarItenteReconechimentoVoz() {
-        if (escutandoComando) return;
-
-        this.escutandoComando = true;
-
-        App.integracaoUsuario.instrucaoParaUsuario(R.raw.falecomando);
-        ThreadUtil.esperar(ThreadUtil.QUATRO_SEGUNDOS);
-        App.integracaoUsuario.pararMensagem();
-
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-BR");
-        try {
-            reconheceVozActivityResultLauncher.launch(intent);
-            //tvText.setText("");
-        } catch (ActivityNotFoundException e) {
-            String appPackageName = "com.google.android.googlequicksearchbox";
-            try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-            } catch (android.content.ActivityNotFoundException anfe) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-            }
-
-            //Toast.makeText(getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_LONG).show();
-            //e.printStackTrace();
-        }
     }
 
     @Override
@@ -256,7 +188,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                         @Override
                         public void onItemClick(View view, int position) {
                             if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
-                                chamarItenteReconechimentoVoz();
+                                mRecursoVozObserver.chamarItenteReconechimentoVoz();
                             } else {
                                 App.medicamentoDTO = (MedicamentoDTO) listaMedicamentos.get(position);
                                 Intent intent = new Intent(PrincipalActivity.this, DetalheMedicamentoActivity.class);
@@ -278,20 +210,24 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     }
 
     @Override
-    public void executarAcao(int numeroAcao, String[] parametros) {
-
-    }
-
-    @Override
     public void executarAcao(int numeroAcao, Object parametro) {
+        if (numeroAcao == Constantes.ACAO_VOZ_LISTA_MEDICAMENTOS) {
+            App.integracaoUsuario.listarMedicamentos(listaMedicamentos);
+        } else if (numeroAcao == Constantes.ACAO_VOZ_DESCREVA_MEDICAMENTO) {
+            App.medicamentoDTO = App.integracaoUsuario.descrerverMedicamento(listaMedicamentos, (String) parametro);
 
+            if (App.medicamentoDTO != null) {
+                Intent intent = new Intent(PrincipalActivity.this, DetalheMedicamentoActivity.class);
+                detalheMedicamentoActivityResultLauncher.launch(intent);
+            }
+        }
     }
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
         if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
-            chamarItenteReconechimentoVoz();
+            mRecursoVozObserver.chamarItenteReconechimentoVoz();
         }
 
         return false;

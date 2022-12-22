@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,6 +32,7 @@ import java.util.List;
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.activity.HorarioActivity;
+import br.ufpa.app.android.amu.v1.activity.RecursoVozLifeCyCleObserver;
 import br.ufpa.app.android.amu.v1.adapter.HorariosRecyclerViewAdapter;
 import br.ufpa.app.android.amu.v1.adapter.UtilizacoesRecyclerViewAdapter;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
@@ -38,25 +40,37 @@ import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
+import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
+import br.ufpa.app.android.amu.v1.interfaces.PickDateListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.Constantes;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HorariosFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HorariosFragment extends Fragment implements DetalheMedicamentoActivity.OnHorariosListener {
+public class HorariosFragment extends Fragment implements DetalheMedicamentoActivity.OnHorariosListener, GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
     private RecyclerView recyclerView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private GerenteServicosListener gerenteServicosListener;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+
+        gerenteServicosListener = (GerenteServicosListener) activity;
+    }
 
     public HorariosFragment() {
         // Required empty public constructor
@@ -108,25 +122,35 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
         View view = inflater.inflate(R.layout.fragment_horario_list, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setOnClickListener(this);
+        recyclerView.setOnTouchListener(this);
+
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
                 getContext(),
                 recyclerView,
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        App.horarioDTO = App.listaHorarios.get(position);
-                        Intent intent = new Intent(view.getContext(), HorarioActivity.class);
-                        mnutencaoHorarioActivityResultLauncher.launch(intent);
+                        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+                            gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, position);
+                        else {
+                            App.horarioDTO = App.listaHorarios.get(position);
+                            Intent intent = new Intent(view.getContext(), HorarioActivity.class);
+                            mnutencaoHorarioActivityResultLauncher.launch(intent);
+                        }
                     }
 
                     @Override
                     public void onLongItemClick(View view, int position) {
+                        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+                            gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, position);
 
                     }
 
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+                            gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, i);
                     }
                 }));
 
@@ -161,4 +185,27 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
         recyclerView.setAdapter(horariosRecyclerViewAdapter);
     }
 
+    @Override
+    public void carregarLista(int numeroAcao, List<?> lista) {
+
+    }
+
+    @Override
+    public void executarAcao(int numeroAcao, Object parametro) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+     public boolean onTouch(View view, MotionEvent motionEvent) {
+        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+            gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, 0);
+        }
+
+        return false;
+    }
 }

@@ -67,6 +67,7 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicamento);
+        App.escutandoComando = false;
 
         TextView txvNomeComercial = findViewById(R.id.txvNomeComercial);
         TextView txvNomeFabricante = findViewById(R.id.txvNomeFabricante);
@@ -250,14 +251,9 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
     public void carregarLista(int numeroAcao, List<?> lista) {}
 
     @Override
-    public void executarAcao(int numeroAcao, String[] parametros) {
-      setResult(Activity.RESULT_OK, null);
-      finish();
-    }
-
-    @Override
     public void executarAcao(int numeroAcao, Object parametro) {
-
+        setResult(Activity.RESULT_OK, null);
+        finish();
     }
 }
 

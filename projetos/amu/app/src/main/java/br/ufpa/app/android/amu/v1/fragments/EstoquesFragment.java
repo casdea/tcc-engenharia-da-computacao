@@ -1,9 +1,11 @@
 package br.ufpa.app.android.amu.v1.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,25 +32,36 @@ import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.modelo.Estoque;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
+import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.Constantes;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link EstoquesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EstoquesFragment extends Fragment implements DetalheMedicamentoActivity.OnEstoquesListener {
+public class EstoquesFragment extends Fragment implements DetalheMedicamentoActivity.OnEstoquesListener, GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
     private RecyclerView recyclerView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private GerenteServicosListener gerenteServicosListener;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+
+        gerenteServicosListener = (GerenteServicosListener) activity;
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -97,16 +110,20 @@ public class EstoquesFragment extends Fragment implements DetalheMedicamentoActi
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+                            gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, position);
                     }
 
                     @Override
                     public void onLongItemClick(View view, int position) {
-
+                        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+                            gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, position);
                     }
 
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+                            gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, i);
                     }
                 }));
 
@@ -137,5 +154,29 @@ public class EstoquesFragment extends Fragment implements DetalheMedicamentoActi
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(estoquesRecyclerViewAdapter);
+    }
+
+    @Override
+    public void carregarLista(int numeroAcao, List<?> lista) {
+
+    }
+
+    @Override
+    public void executarAcao(int numeroAcao, Object parametro) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+            gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, 0);
+        }
+
+        return false;
     }
 }

@@ -248,7 +248,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
     }
 
     @Override
-    public void executarAcao(int numeroAcao, String[] parametros) {
+    public void executarAcao(int numeroAcao,  Object parametro) {
         if (numeroAcao == Constantes.ACAO_RECEBER_TEXTO_BULA) {
             Intent intent = new Intent(ConsultaAnvisaActivity.this, DetalheAnvisaActivity.class);
             consultarMedicamentoActivityResultLauncher.launch(intent);
@@ -256,11 +256,6 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
             setResult(Activity.RESULT_OK, null);
             finish();
         }
-
-    }
-
-    @Override
-    public void executarAcao(int numeroAcao, Object parametro) {
 
     }
 }

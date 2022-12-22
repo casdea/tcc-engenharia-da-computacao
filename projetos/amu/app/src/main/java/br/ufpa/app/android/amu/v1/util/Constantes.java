@@ -1,5 +1,11 @@
 package br.ufpa.app.android.amu.v1.util;
 
+import android.content.Intent;
+
+import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
+import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
+import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
+
 public class Constantes {
     public static final int ACAO_REGISTRAR_MEDICAMENTO = 1;
     public static final int ACAO_OBTER_LISTA_MEDICAMENTO_POR_USUARIO = 2;
@@ -23,6 +29,13 @@ public class Constantes {
     public static final int ACAO_ALTERAR_VARIACAO_COMANDO = 20;
     public static final int ACAO_OBTER_LISTA_COMANDO_POR_USUARIO = 21;
     public static final int ACAO_OBTER_LISTA_VARIACAO_POR_USUARIO_COMANDO = 22;
+
+    public static final int ACAO_VOZ_LISTA_MEDICAMENTOS = 23;
+    public static final int ACAO_VOZ_DESCREVA_MEDICAMENTO = 24;
+    public static final int ACAO_VOZ_DESCREVA_HORARIO = 25;
+    public static final int ACAO_VOZ_TELA_ANTERIOR = 26;
+    public static final int ACAO_CHAMAR_COMANDO_VOZ = 27;
+    public static final int ACAO_VOZ_DOSE_REALIZADA = 28;
 
     public static final int ACAO_RECEBER_TEXTO_BULA = 100;
     public static final int ACAO_FECHAR_TELA = 101;

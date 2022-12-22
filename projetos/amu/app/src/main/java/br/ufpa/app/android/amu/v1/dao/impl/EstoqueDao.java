@@ -157,7 +157,51 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                     gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE,movtoEstoqueDTO);
                 }
                 else {
-                    gerenteServicosListener.executarAcao(Constantes.ACAO_ATUALIZAR_SALDO_ESTOQUE,movtoEstoqueDTO);
+                    gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_UTILIZACAO,movtoEstoqueDTO);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        estoquesQuery.addListenerForSingleValueEvent(evento);
+
+    }
+
+    public void sinalizarDoseRealizada(String idUsuario, String idMedicamento, EstoqueDTO movtoEstoqueDTO) {
+        List<EstoqueDTO> listaEstoques = new ArrayList<>();
+        DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+
+        Query estoquesQuery = em.child("estoques").orderByChild("idUsuario").equalTo(idUsuario);
+
+        ValueEventListener evento = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                EstoqueDTO estoqueDTO = null;
+
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    estoqueDTO = getEstoqueDTO(postSnapshot);
+
+                    Log.i("Lendo dados ", postSnapshot.toString());
+
+                    // TODO: handle the post
+                }
+
+                if (estoqueDTO != null) {
+                    movtoEstoqueDTO.setSaldo(estoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
+                }
+                else {
+                    movtoEstoqueDTO.setSaldo(movtoEstoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
+                }
+
+                if (movtoEstoqueDTO.getSaldo() < 0) {
+                    gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE,movtoEstoqueDTO);
+                }
+                else {
+                    gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_UTILIZACAO,movtoEstoqueDTO);
                 }
             }
 

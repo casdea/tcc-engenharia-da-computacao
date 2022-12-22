@@ -198,7 +198,7 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
     }
 
     @Override
-    public void executarAcao(int numeroAcao, String[] parametros) {
+    public void executarAcao(int numeroAcao, Object parametro) {
         if (numeroAcao == Constantes.ACAO_REGISTRAR_HORARIO) {
             setResult(Activity.RESULT_OK, null);
             finish();
@@ -208,11 +208,6 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
             setResult(Activity.RESULT_OK, null);
             finish();
         }
-    }
-
-    @Override
-    public void executarAcao(int numeroAcao, Object parametro) {
-
     }
 
     @Override

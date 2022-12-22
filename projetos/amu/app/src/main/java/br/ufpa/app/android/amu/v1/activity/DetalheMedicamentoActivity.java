@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -48,10 +49,11 @@ import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
 import br.ufpa.app.android.amu.v1.util.DataUtil;
 
-public class DetalheMedicamentoActivity extends AppCompatActivity implements GerenteServicosListener, View.OnClickListener {
+public class DetalheMedicamentoActivity extends AppCompatActivity implements GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
 
     private TextInputEditText textInpTextApelido;
     private TextInputEditText textInpTextQtdeEmbalagem;
+    private TextInputEditText textInpTextQtdeEstoque;
     private TextView txvCorSelecionada;
     private String cor;
     private FragmentPagerItemAdapter adapter;
@@ -96,11 +98,23 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhe_medicamento);
+        App.escutandoComando = false;
+
+        findViewById(R.id.fundo).setOnClickListener(this);
+        findViewById(R.id.layoutConfirmar).setOnClickListener(this);
+        findViewById(R.id.textInpLayApelidoMedicamento).setOnClickListener(this);
+        findViewById(R.id.textInpLayQtdeEmbalagem).setOnClickListener(this);
+        findViewById(R.id.textInputLayoutEstoque).setOnClickListener(this);
 
         TextView txvNomeComercial = findViewById(R.id.txvNomeComercial);
         txvCorSelecionada = findViewById(R.id.txvCorSelecionada);
         textInpTextApelido = findViewById(R.id.textInpTextApelido);
         textInpTextQtdeEmbalagem = findViewById(R.id.textInpTextQtdeEmbalagem);
+        textInpTextQtdeEstoque = findViewById(R.id.textInpTextQtdeEstoque);
+
+        textInpTextApelido.setOnClickListener(this);
+        textInpTextQtdeEmbalagem.setOnClickListener(this);
+        textInpTextQtdeEstoque.setOnClickListener(this);
 
         txvNomeComercial.setText(App.medicamentoDTO.getNomeComercial());
         textInpTextApelido.setText(App.medicamentoDTO.getNomeFantasia());
@@ -139,18 +153,35 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
+        viewPager.setOnClickListener(this);
 
         SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
         viewPagerTab.setViewPager(viewPager);
+        viewPagerTab.setOnClickListener(this);
+        viewPagerTab.setOnTabClickListener(new SmartTabLayout.OnTabClickListener() {
+            @Override
+            public void onTabClicked(int position) {
+                if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+                    mRecursoVozObserver.chamarItenteReconechimentoVoz();
+            }
+        });
 
         this.onHorariosListener = (OnHorariosListener) adapter.getItem(0);
         this.onUtilizacoesListener = (OnUtilizacoesListener) adapter.getItem(1);
         this.onEstoqueListener = (OnEstoquesListener) adapter.getItem(2);
 
-        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+        //App.tipoPerfil =  TipoPerfil.PCD_VISAO_REDUZIDA; // TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+
+        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
             getSupportActionBar().hide();
+            textInpTextApelido.setFocusable(false);
+            textInpTextQtdeEmbalagem.setFocusable(false);
+            textInpTextQtdeEstoque.setFocusable(false);
+            btnAlterar.setEnabled(true);
+        }
 
         App.integracaoUsuario.bemVindoFuncao(TipoFuncao.DETALHES_MEDICAMENTO);
+
     }
 
     @NonNull
@@ -182,85 +213,10 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
     }
 
     @Override
-    public void carregarLista(int numeroAcao, List<?> lista) {
-        if (numeroAcao == Constantes.ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            HorariosFragment horariosFragment = (HorariosFragment) adapter.getItem(0);
-            View view = findViewById(R.id.idFragmentoHorario);
-            horariosFragment.atualizarLista(view);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } else if (numeroAcao == Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            UtilizacoesFragment utilizacoesFragment = (UtilizacoesFragment) adapter.getItem(1);
-            View view = findViewById(R.id.idFragmentoUtilizacao);
-            utilizacoesFragment.atualizarLista(view);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } else if (numeroAcao == Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            EstoquesFragment estoquesFragment = (EstoquesFragment) adapter.getItem(2);
-            View view = findViewById(R.id.idFragmentoEstoque);
-            estoquesFragment.atualizarLista(view);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }
-    }
-
-    @Override
-    public void executarAcao(int numeroAcao, String[] parametros) {
-        if (numeroAcao == Constantes.ACAO_ALTERAR_MEDICAMENTO) {
-            setResult(Activity.RESULT_OK, null);
-            finish();
-        } else if (numeroAcao == Constantes.ACAO_REGISTRAR_HORARIO) {
-            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-            gerenteServicos.obterListaHorariosByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
-        } else if (numeroAcao == Constantes.ACAO_REGISTRAR_UTILIZACAO) {
-            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-            gerenteServicos.obterListaUtilizacoesByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
-        } else if (numeroAcao == Constantes.ACAO_REGISTRAR_ESTOQUE) {
-            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-            gerenteServicos.obterListaEstoquesByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
-        }
-    }
-
-    @Override
-    public void executarAcao(int numeroAcao, Object parametro) {
-        if (numeroAcao == Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE) {
-            Toast.makeText(DetalheMedicamentoActivity.this,
-                    "Saldo negativo saida negada !",
-                    Toast.LENGTH_LONG).show();
-            return;
-        } else if (numeroAcao == Constantes.ACAO_ATUALIZAR_SALDO_ESTOQUE) {
-            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-            gerenteServicos.incluirEstoque((EstoqueDTO) parametro);
-        } else if (numeroAcao == Constantes.ACAO_REGISTRAR_UTILIZACAO) {
-
-            if (App.listaHorarios.get(App.listaHorarios.size() - 1).getAtivo().equals("SIM")) {
-                HorarioDTO horarioDTO = App.listaHorarios.get(App.listaHorarios.size() - 1);
-
-                App.estoqueDTO = new EstoqueDTO();
-                App.estoqueDTO.setIdEstoque("0");
-                App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
-                App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
-                App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
-                App.estoqueDTO.setEntrada(0);
-                App.estoqueDTO.setSaida(horarioDTO.getQtdePorDose());
-                App.estoqueDTO.setSaldo(0);
-
-                GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-                gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
-            }
-        }
-
-    }
-
-    @Override
     public void onClick(View view) {
         if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
             mRecursoVozObserver.chamarItenteReconechimentoVoz();
-        }
-        else {
+        } else {
             if (view.getId() == R.id.txvCorSelecionada) {
                 selecionarCor();
             } else if (view.getId() == R.id.btnAlterar) {
@@ -315,19 +271,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     public void abrirDialogUtilizacao(View view) {
 
-        if (App.listaHorarios == null || App.listaHorarios.size() <= 0) {
-            Toast.makeText(DetalheMedicamentoActivity.this,
-                    "Cadastre um horário para o medicamento e o ative !",
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (App.listaHorarios.get(App.listaHorarios.size() - 1).getAtivo().equals("SIM") == false) {
-            Toast.makeText(DetalheMedicamentoActivity.this,
-                    "O ultimo horário deve está ativo !",
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
+        if (App.integracaoUsuario.validarUtilizacaoMedicamento(App.listaHorarios) == false) return;
 
         //Instanciar AlertDialog
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -346,14 +290,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                App.utilizacaoDTO = new UtilizacaoDTO();
-                App.utilizacaoDTO.setIdUtilizacao("0");
-                App.utilizacaoDTO.setIdUsuario(App.usuario.getIdUsuario());
-                App.utilizacaoDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
-                App.utilizacaoDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
-
-                GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-                gerenteServicos.incluirUtilizacao(App.utilizacaoDTO);
+                sinalizarDoseRealizada();
             }
         });
 
@@ -368,6 +305,22 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         //Criar e exibir AlertDialog
         dialog.create();
         dialog.show();
+    }
+
+    private void sinalizarDoseRealizada() {
+        HorarioDTO horarioDTO = App.listaHorarios.get(App.listaHorarios.size() - 1);
+
+        App.estoqueDTO = new EstoqueDTO();
+        App.estoqueDTO.setIdEstoque("0");
+        App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
+        App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
+        App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
+        App.estoqueDTO.setEntrada(0);
+        App.estoqueDTO.setSaida(horarioDTO.getQtdePorDose());
+        App.estoqueDTO.setSaldo(0);
+
+        GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+        gerenteServicos.sinalizarDoseRealizada(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
     }
 
     public void abrirDialogEntradaEstoque(View view) {
@@ -457,7 +410,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
         //Configurar titulo e mensagem
         dialog.setTitle("Compra de Medicamento");
-        dialog.setMessage("Confirme a Sa´da de Medicamento ?");
+        dialog.setMessage("Confirme a Saída de Medicamento ?");
 
         //Configurar cancelamento
         dialog.setCancelable(false);
@@ -495,4 +448,85 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.create();
         dialog.show();
     }
+
+    @Override
+    public void carregarLista(int numeroAcao, List<?> lista) {
+        if (numeroAcao == Constantes.ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            HorariosFragment horariosFragment = (HorariosFragment) adapter.getItem(0);
+            View view = findViewById(R.id.idFragmentoHorario);
+            horariosFragment.atualizarLista(view);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else if (numeroAcao == Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            UtilizacoesFragment utilizacoesFragment = (UtilizacoesFragment) adapter.getItem(1);
+            View view = findViewById(R.id.idFragmentoUtilizacao);
+            utilizacoesFragment.atualizarLista(view);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else if (numeroAcao == Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            EstoquesFragment estoquesFragment = (EstoquesFragment) adapter.getItem(2);
+            View view = findViewById(R.id.idFragmentoEstoque);
+            estoquesFragment.atualizarLista(view);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public void executarAcao(int numeroAcao, Object parametro) {
+        if (numeroAcao == Constantes.ACAO_ALTERAR_MEDICAMENTO) {
+            setResult(Activity.RESULT_OK, null);
+            finish();
+        } else if (numeroAcao == Constantes.ACAO_REGISTRAR_HORARIO) {
+            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+            gerenteServicos.obterListaHorariosByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
+        } else if (numeroAcao == Constantes.ACAO_REGISTRAR_ESTOQUE) {
+            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+            gerenteServicos.obterListaEstoquesByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
+        } else if (numeroAcao == Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE) {
+            App.integracaoUsuario.saidaNegadaSemSaldo();
+            return;
+        } else if (numeroAcao == Constantes.ACAO_ATUALIZAR_SALDO_ESTOQUE) {
+            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+            gerenteServicos.incluirEstoque((EstoqueDTO) parametro);
+        } else if (numeroAcao == Constantes.ACAO_REGISTRAR_UTILIZACAO) {
+
+            App.utilizacaoDTO = new UtilizacaoDTO();
+            App.utilizacaoDTO.setIdUtilizacao("0");
+            App.utilizacaoDTO.setIdUsuario(App.usuario.getIdUsuario());
+            App.utilizacaoDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
+            App.utilizacaoDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
+
+            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+            gerenteServicos.incluirUtilizacao(App.utilizacaoDTO);
+
+        } else if (numeroAcao == Constantes.ACAO_VOZ_TELA_ANTERIOR) {
+            setResult(Activity.RESULT_OK, null);
+            finish();
+        } else if (numeroAcao == Constantes.ACAO_VOZ_DESCREVA_HORARIO) {
+            App.integracaoUsuario.descrerverHorario(App.medicamentoDTO, App.listaHorarios);
+        } else if (numeroAcao == Constantes.ACAO_CHAMAR_COMANDO_VOZ) {
+            mRecursoVozObserver.chamarItenteReconechimentoVoz();
+        } else if (numeroAcao == Constantes.ACAO_VOZ_DOSE_REALIZADA) {
+            if (App.integracaoUsuario.validarUtilizacaoMedicamento(App.listaHorarios) == false)
+                return;
+
+            sinalizarDoseRealizada();
+        }
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+            mRecursoVozObserver.chamarItenteReconechimentoVoz();
+        }
+
+        return false;
+    }
+
+
 }

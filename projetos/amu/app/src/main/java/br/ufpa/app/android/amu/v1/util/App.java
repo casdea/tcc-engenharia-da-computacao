@@ -43,4 +43,6 @@ public class App extends Application {
     public static VariacoesComandoDTO variacoesComandoDTO;
     public static List<ComandoDTO> listaComandos;
     public static List<VariacoesComandoDTO> listaVariacoesComandos;
+    public static boolean escutandoComando;
+
 }

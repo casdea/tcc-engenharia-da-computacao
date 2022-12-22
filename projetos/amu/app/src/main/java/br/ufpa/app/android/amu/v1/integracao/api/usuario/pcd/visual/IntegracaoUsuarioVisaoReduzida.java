@@ -39,7 +39,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         textoLido.setSpeechRate(0.75f);
     }
 
-    private String[] COMANDO_VOZ_LISTA_MEDICAMENTO = {
+    private String[] TEXTOS_VOZ_LISTA_MEDICAMENTO = {
             "LISTA DE MEDICAMENTO",
             "LISTAGEM DE MEDICAMENTO",
             "QUAIS MEDICAMENTOS TENHO",
@@ -49,7 +49,8 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "O QUE TENHO NA FARMACIA"
     };
 
-    private String[] COMANDO_VOZ_DESCREVE_MEDICAMENTO = {
+    private String[] TEXTOS_VOZ_DESCREVE_MEDICAMENTO = {
+            "DETALHE",
             "DESCRICAO DO MEDICAMENTO",
             "DESCRICAO DO ITEM",
             "DESCREVA O MEDICAMENTO",
@@ -65,8 +66,9 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "QUERO SABER DETALHES DO ITEM"
     };
 
-    private String[] COMANDO_VOZ_HORARIO_MEDICAMENTO = {
+    private String[] TEXTOS_VOZ_HORARIO_MEDICAMENTO = {
             "HORARIO DO MEDICAMENTO",
+            "HORARIO",
             "HORARIO DO ITEM",
             "QUERO SABER HORARIO DO MEDICAMENTO",
             "QUERO SABER HORARIO DO ITEM",
@@ -75,7 +77,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "DEVO TOMAR QUE HORAS O ITEM",
     };
 
-    private String[] NUMEROS_EM_VOZ = {
+    private String[] TEXTOS_VOZ_NUMEROS = {
             "UM",
             "DOIS",
             "TRES",
@@ -97,6 +99,31 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "DEZENOVE",
             "VINTE"
     };
+
+    private String[] TEXTOS_VOZ_TELA_ANTERIOR = {
+            "TELA ANTERIOR",
+            "VOLTAR"
+    };
+
+    private String[] TEXTOS_VOZ_UTILIZACAO = {
+            "TOMEI REMEDIO",
+            "REMEDIO UTILIZADO",
+            "TOMEI A DOSE",
+            "UTILIZAR REMEDIO"
+    };
+
+    private String[] getArrayVoz(int acao) {
+        switch (acao) {
+            case ComandosVoz.LISTA_MEDICAMENTOS:
+                return TEXTOS_VOZ_LISTA_MEDICAMENTO;
+            case ComandosVoz.DESCREVA_MEDICAMENTO:
+                return TEXTOS_VOZ_DESCREVE_MEDICAMENTO;
+            case ComandosVoz.DESCREVA_HORARIO:
+                return TEXTOS_VOZ_HORARIO_MEDICAMENTO;
+            default:
+                throw new IllegalStateException("Unexpected value: " + acao);
+        }
+    }
 
     private boolean findTexto(String[] palavras, String palavra) {
         String palavraSemAcento = StringUtil.removerAcentos(palavra);
@@ -139,12 +166,14 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
     @Override
     public int findComando(String texto) {
-        if (findTexto(COMANDO_VOZ_LISTA_MEDICAMENTO, texto)) {
+        if (findTexto(TEXTOS_VOZ_LISTA_MEDICAMENTO, texto)) {
             return ComandosVoz.LISTA_MEDICAMENTOS;
-        } else if (findTexto(COMANDO_VOZ_DESCREVE_MEDICAMENTO, texto)) {
+        } else if (findTexto(TEXTOS_VOZ_DESCREVE_MEDICAMENTO, texto)) {
             return ComandosVoz.DESCREVA_MEDICAMENTO;
-        } else if (findTexto(COMANDO_VOZ_HORARIO_MEDICAMENTO, texto)) {
+        } else if (findTexto(TEXTOS_VOZ_HORARIO_MEDICAMENTO, texto)) {
             return ComandosVoz.DESCREVA_HORARIO;
+        } else if (findTexto(TEXTOS_VOZ_TELA_ANTERIOR, texto)) {
+            return ComandosVoz.TELA_ANTERIOR;
         }
 
         return -1;
@@ -236,7 +265,8 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
     }
 
-    private void falar(String texto) {
+    @Override
+    public void falar(String texto) {
         textoLido = new TextToSpeech(App.context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
@@ -285,7 +315,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     public MedicamentoDTO descrerverMedicamento(List<MedicamentoDTO> medicamentos, String s) {
         s = s.toUpperCase();
 
-        String textoCorrespondente = findCorrespondencia(COMANDO_VOZ_DESCREVE_MEDICAMENTO, s);
+        String textoCorrespondente = findCorrespondencia(TEXTOS_VOZ_DESCREVE_MEDICAMENTO, s);
 
         MedicamentoDTO medicamentoDTO = findMedicamentoByVoz(medicamentos, s, textoCorrespondente);
 
@@ -302,31 +332,33 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     }
 
     @Override
-    public void descrerverHorario(List<MedicamentoDTO> medicamentos, List<HorarioDTO> horarios, String s) {
+    public void descrerverHorario(MedicamentoDTO medicamentoDTO, List<HorarioDTO> horarios) {
 
         if (horarios == null || horarios.size() == 0) {
-            textoLido.speak(" Item selecionado " + s + " não tem horário cadastrado. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+            textoLido.speak(" O medicamento " + medicamentoDTO.getNomeFantasia() + " não tem horário cadastrado. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
             return;
         }
 
-        s = s.toUpperCase();
-
-        String textoCorrespondente = findCorrespondencia(COMANDO_VOZ_HORARIO_MEDICAMENTO, s);
-
-        MedicamentoDTO medicamentoDTO = findMedicamentoByVoz(medicamentos, s, textoCorrespondente);
-
-        if (medicamentoDTO == null) return;
+        if (horarios.get(horarios.size() - 1).getAtivo().equals("SIM") == false) {
+            App.integracaoUsuario.falar("O ultimo horário deve está ativo !");
+            return;
+        }
 
         HorarioDTO horarioDTO = horarios.get(horarios.size() - 1);
 
-        String texto = "O ultimo horário cadastradado para o ." + medicamentoDTO.getNomeFantasia() + " . " +
-                "Data Inicial de Administracao " + horarioDTO.getDataInicial() + " . " +
-                "Horario Inicial " + horarioDTO.getHorarioInicial() + " . " +
-                "Intervalo entre as doses " + horarioDTO.getIntervalo() + " . " +
-                "Numero de Doses " + horarioDTO.getNrDoses() + " . " +
-                "Quantidade de Doses " + horarioDTO.getQtdePorDose();
+        String texto = "O ultimo horário cadastrado para o :" + medicamentoDTO.getNomeFantasia() + " . " +
+                "Data Inicial de Administração: " + horarioDTO.getDataInicial() + " . " +
+                "Horário Inicial: " + horarioDTO.getHorarioInicial() + " . " +
+                "Intervalo entre as doses: " + horarioDTO.getIntervalo() + " . " +
+                "Número de Doses: " + horarioDTO.getNrDoses() + " . " +
+                "Quantidade de Doses: " + horarioDTO.getQtdePorDose();
 
         textoLido.speak(texto, TextToSpeech.QUEUE_ADD, null);
+    }
+
+    @Override
+    public void tenteNovamenteComandoVoz() {
+        textoLido.speak(" Você não falou nenhum comando ou demorou muito a falar. Toque na tela e fale novamente", TextToSpeech.QUEUE_ADD, null);
     }
 
     private MedicamentoDTO findMedicamentoByVoz(List<MedicamentoDTO> medicamentos, String s, String textoCorrespondente) {
@@ -340,7 +372,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         int item = 0;
 
         for (MedicamentoDTO medicamentoDTO : medicamentos) {
-            String numeroTexto = item <= NUMEROS_EM_VOZ.length ? NUMEROS_EM_VOZ[item] : "";
+            String numeroTexto = item <= TEXTOS_VOZ_NUMEROS.length ? TEXTOS_VOZ_NUMEROS[item] : "";
             String nomeFantasia = medicamentoDTO.getNomeFantasiaSemAssento().trim().toUpperCase();
 
             if (nomeFantasia.equals(restoTexto) || numeroTexto.equals(restoTexto)) {
@@ -352,6 +384,33 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         textoLido.speak(" Item selecionado " + restoTexto + " não existe na lista. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
 
         return null;
+    }
+
+    @Override
+    public MedicamentoDTO findMedicamentoByAcaoVoz(List<MedicamentoDTO> medicamentos, String s, int acao) {
+        s = s.toUpperCase();
+
+        String textoCorrespondente = findCorrespondencia(getArrayVoz(acao), s);
+
+        return findMedicamentoByVoz(medicamentos, s, textoCorrespondente);
+    }
+
+    @Override
+    public boolean validarUtilizacaoMedicamento(List<HorarioDTO> horarios) {
+        if (horarios == null || horarios.size() <= 0) {
+            falar("Cadastre um horário para o medicamento e o ative !");
+            return false;
+        }
+
+        if (horarios.get(horarios.size() - 1).getAtivo().equals("SIM") == false) {
+            falar("O ultimo horário deve está ativo !");
+            return false;
+        }
+        return false;
+    }
+
+    public void saidaNegadaSemSaldo() {
+        falar("Saldo negativo saida negada !");
     }
 
 }

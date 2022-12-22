@@ -72,7 +72,7 @@ public class GerenteServicos {
 
                     if (App.usuario != null) {
                         App.usuario.setIdUsuario(idUsuario);
-                        App.tipoPerfil =  TipoPerfil.PCD_VISAO_REDUZIDA; // TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+                        App.tipoPerfil =  TipoPerfil.COMUM; // TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
                         //abrirTelaPrincipal(atividadeLocal);
                         gerenteServicosListener.executarAcao(Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL,autenticacao);
@@ -177,6 +177,12 @@ public class GerenteServicos {
     public void obterListaEstoquesByUsuarioMedicamento(String idUsuario, String idMedicamento) {
         FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
         factoryDAO.getEstoqueDao().findAllByUsuarioIdMedicamento(idUsuario,idMedicamento);
+    }
+
+    public void sinalizarDoseRealizada(String idUsuario, String idMedicamento, EstoqueDTO estoqueDTO) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        Estoque estoque = new Estoque(estoqueDTO);
+        factoryDAO.getEstoqueDao().sinalizarDoseRealizada(idUsuario,idMedicamento,estoqueDTO);
     }
 
 }

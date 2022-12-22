@@ -1,6 +1,7 @@
 package br.ufpa.app.android.amu.v1.integracao.api.usuario.comum;
 
 import android.speech.tts.TextToSpeech;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoUsuario;
+import br.ufpa.app.android.amu.v1.util.App;
 
 public class IntegracaoUsuarioComum implements IntegracaoUsuario {
     @Override
@@ -78,8 +80,52 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
     }
 
     @Override
-    public void descrerverHorario(List<MedicamentoDTO> medicamentos, List<HorarioDTO> horarios, String s) {
+    public void descrerverHorario(MedicamentoDTO medicamentoDTO, List<HorarioDTO> horarios) {
 
     }
+
+    @Override
+    public void tenteNovamenteComandoVoz() {
+
+    }
+
+    @Override
+    public void falar(String texto) {
+
+    }
+
+    @Override
+    public MedicamentoDTO findMedicamentoByAcaoVoz(List<MedicamentoDTO> medicamentos, String s, int acao)
+    {
+        return null;
+    }
+
+    @Override
+    public boolean validarUtilizacaoMedicamento(List<HorarioDTO> horarios) {
+        if (horarios == null || horarios.size() <= 0) {
+            Toast.makeText(App.context,
+                    "Cadastre um horário para o medicamento e o ative !",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (horarios.get(horarios.size() - 1).getAtivo().equals("SIM") == false) {
+            Toast.makeText(App.context,
+                    "O ultimo horário deve está ativo !",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void saidaNegadaSemSaldo() {
+        Toast.makeText(App.context,
+                "Saldo negativo saida negada !",
+                Toast.LENGTH_LONG).show();
+    }
+
+
+
 
 }

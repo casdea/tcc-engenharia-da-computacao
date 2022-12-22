@@ -82,11 +82,6 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
     }
 
     @Override
-    public void executarAcao(int numeroAcao, String[] parametros) {
-
-    }
-
-    @Override
     public void executarAcao(int numeroAcao, Object parametro) {
         if (numeroAcao == Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL) {
             startActivity(new Intent(BemVindoActivity.this, PrincipalActivity.class));

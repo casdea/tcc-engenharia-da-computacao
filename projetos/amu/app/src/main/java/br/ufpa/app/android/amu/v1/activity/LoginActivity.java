@@ -151,10 +151,6 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
     }
 
     @Override
-    public void executarAcao(int numeroAcao, String[] parametros) {
-    }
-
-    @Override
     public void executarAcao(int numeroAcao, Object parametro) {
         if (numeroAcao == Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL) {
             startActivity(new Intent(LoginActivity.this, PrincipalActivity.class));

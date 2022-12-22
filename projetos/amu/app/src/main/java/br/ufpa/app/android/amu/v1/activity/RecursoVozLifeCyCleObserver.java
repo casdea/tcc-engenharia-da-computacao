@@ -24,15 +24,15 @@ import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
+import br.ufpa.app.android.amu.v1.util.Constantes;
 import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
-public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver  {
+public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
     private final ActivityResultRegistry mRegistry;
     private ActivityResultLauncher<Intent> mGetRecursoVoz;
     private GerenteServicosListener gerenteServicosListener;
 
-    RecursoVozLifeCyCleObserver(@NonNull ActivityResultRegistry registry, AppCompatActivity atividade)
-    {
+    RecursoVozLifeCyCleObserver(@NonNull ActivityResultRegistry registry, AppCompatActivity atividade) {
         mRegistry = registry;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
     }
@@ -45,6 +45,8 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver  {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == Activity.RESULT_OK) {
+                            App.escutandoComando = false;
+
                             App.integracaoUsuario.capturarComandoEncerrado();
 
                             ThreadUtil.esperar(ThreadUtil.CINCO_SEGUNDOS);
@@ -53,36 +55,67 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver  {
                             Intent data = result.getData();
                             ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-                            if (text == null || text.size()==0) {
+                            if (text == null || text.size() == 0) {
                                 //txvStatusComando.setText("Texto de Voz inválido");
                                 return;
                             }
 
                             int nrComandoVoz = App.integracaoUsuario.findComando(text.get(0));
 
-                            if (nrComandoVoz == -1)
-                                App.integracaoUsuario.comandoNaoReconhecido(text.get(0));
-                            else {
-                                if (nrComandoVoz == ComandosVoz.DESCREVA_HORARIO) {
-                                    gerenteServicosListener.executarAcao(1,text.get(0));
+                            switch (nrComandoVoz) {
+                                case ComandosVoz.COMANDO_NAO_RECONHECIDO: {
+                                    App.integracaoUsuario.comandoNaoReconhecido(text.get(0));
+                                    break;
                                 }
-                            }
 
-                            //onClick(view);
+                                case ComandosVoz.TELA_ANTERIOR: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_TELA_ANTERIOR, text.get(0));
+                                    break;
+                                }
+
+                                case ComandosVoz.LISTA_MEDICAMENTOS: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_LISTA_MEDICAMENTOS, text.get(0));
+                                    break;
+                                }
+
+                                case ComandosVoz.DESCREVA_MEDICAMENTO: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_DESCREVA_MEDICAMENTO, text.get(0));
+                                    break;
+                                }
+
+                                case ComandosVoz.DESCREVA_HORARIO: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_DESCREVA_HORARIO, text.get(0));
+                                    break;
+                                }
+
+                                case ComandosVoz.DOSE_REALIZADA: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_DOSE_REALIZADA, text.get(0));
+                                    break;
+                                }
+
+                            }
+                        } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
+                            App.escutandoComando = false;
+                            App.integracaoUsuario.tenteNovamenteComandoVoz();
                         }
+
 
                     }
                 });
     }
 
-    public void chamarItenteReconechimentoVoz()
-    {
+    public void chamarItenteReconechimentoVoz() {
+        if (App.escutandoComando) return;
+
+        App.escutandoComando = true;
+
         App.integracaoUsuario.capturarComandoIniciado();
         ThreadUtil.esperar(ThreadUtil.QUATRO_SEGUNDOS);
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-BR");
+        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, "10000");
         //intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
         try {
             mGetRecursoVoz.launch(intent);
