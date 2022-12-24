@@ -36,11 +36,18 @@ public class Constantes {
     public static final int ACAO_VOZ_TELA_ANTERIOR = 26;
     public static final int ACAO_CHAMAR_COMANDO_VOZ = 27;
     public static final int ACAO_VOZ_DOSE_REALIZADA = 28;
-
-    public static final int ACAO_RECEBER_TEXTO_BULA = 100;
-    public static final int ACAO_FECHAR_TELA = 101;
-    public static final int ACAO_ERRO_SEM_SALDO_ESTOQUE = 102;
-    public static final int ACAO_ATUALIZAR_SALDO_ESTOQUE = 103;
+    public static final int ACAO_ERRO_AO_ATUALIZAR_SALDO_ESTOQUE = 29;
+    public static final int ACAO_RECEBER_TEXTO_BULA = 30;
+    public static final int ACAO_FECHAR_TELA = 31;
+    public static final int ACAO_ERRO_SEM_SALDO_ESTOQUE = 32;
+    public static final int ACAO_ATUALIZAR_SALDO_ESTOQUE = 33;
+    public static final int ACAO_UTLIZACAO_REMEDIO_CONCLUIDA = 34;
+    public static final int ACAO_VOZ_ESTOQUE_ATUAL = 35;
+    public static final int ACAO_VOZ_ENTRADA_ESTOQUE = 36;
+    public static final int ACAO_VOZ_SAIDA_ESTOQUE = 37;
+    public static final int ACAO_AVISAR_SALDO_ATUALIZADO = 38;
+    public static final int ACAO_VOZ_ALTERNAR_PERFIL = 39;
+    public static final int ACAO_VOZ_FECHAR_APP = 40;
 
     public static String[] intervalos = new String[] {
             "6 horas", "8 horas", "12 horas", "24 horas",

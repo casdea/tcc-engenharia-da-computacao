@@ -5,12 +5,12 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
+import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
@@ -40,6 +40,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     }
 
     private String[] TEXTOS_VOZ_LISTA_MEDICAMENTO = {
+            "LISTA",
             "LISTA DE MEDICAMENTO",
             "LISTAGEM DE MEDICAMENTO",
             "QUAIS MEDICAMENTOS TENHO",
@@ -97,7 +98,17 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "DEZESSETE",
             "DEZOITO",
             "DEZENOVE",
-            "VINTE"
+            "VINTE",
+            "VINTE E UM",
+            "VINTE E DOIS",
+            "VINTE E TRES",
+            "VINTE E QUATRO",
+            "VINTE E CINCO",
+            "VINTE E SEIS",
+            "VINTE E SETE",
+            "VINTE E OITO",
+            "VINTE E NOVE",
+            "TRINTA",
     };
 
     private String[] TEXTOS_VOZ_TELA_ANTERIOR = {
@@ -106,10 +117,40 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     };
 
     private String[] TEXTOS_VOZ_UTILIZACAO = {
+            "TOMEI",
             "TOMEI REMEDIO",
             "REMEDIO UTILIZADO",
             "TOMEI A DOSE",
             "UTILIZAR REMEDIO"
+    };
+
+    private String[] TEXTOS_VOZ_ESTOQUE_ATUAL = {
+            "ESTOQUE",
+            "QUANTOS REMEDIOS TEM",
+            "QUANTOS FALTA PRA ACABAR"
+    };
+
+    private String[] TEXTOS_VOZ_ENTRADA_ESTOQUE = {
+            "ENTRADA"
+    };
+
+    private String[] TEXTOS_VOZ_SAIDA_ESTOQUE = {
+            "SAIDA"
+    };
+
+    private String[] TEXTOS_VOZ_ALTERNAR_PERFIL = {
+            "ALTERAR PERFIL",
+            "ADMINISTRAR",
+            "MUDAR PERFIL",
+            "GERENCIAR",
+            "USO ADMINISTRADOR",
+            "CONFIGURAR"
+    };
+
+    private String[] TEXTOS_VOZ_FECHAR_APP = {
+            "SAIR",
+            "FECHAR APLICATIVO",
+            "SAIR DO APLICATIVO"
     };
 
     private String[] getArrayVoz(int acao) {
@@ -120,6 +161,16 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
                 return TEXTOS_VOZ_DESCREVE_MEDICAMENTO;
             case ComandosVoz.DESCREVA_HORARIO:
                 return TEXTOS_VOZ_HORARIO_MEDICAMENTO;
+            case ComandosVoz.ESTOQUE_ATUAL:
+                return TEXTOS_VOZ_ESTOQUE_ATUAL;
+            case ComandosVoz.ENTRADA_ESTOQUE:
+                return TEXTOS_VOZ_ENTRADA_ESTOQUE;
+            case ComandosVoz.SAIDA_ESTOQUE:
+                return TEXTOS_VOZ_SAIDA_ESTOQUE;
+            case ComandosVoz.ALTERNAR_PERFIL:
+                return TEXTOS_VOZ_ALTERNAR_PERFIL;
+            case ComandosVoz.SAIR:
+                return TEXTOS_VOZ_FECHAR_APP;
             default:
                 throw new IllegalStateException("Unexpected value: " + acao);
         }
@@ -149,6 +200,18 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         return "";
     }
 
+    private int findNumero(String texto) {
+        String textoSemAcento = StringUtil.removerAcentos(texto);
+
+        for (int i = 0; i < TEXTOS_VOZ_NUMEROS.length; i++) {
+            if (TEXTOS_VOZ_NUMEROS[i].equals(textoSemAcento.toUpperCase())) {
+                return i + 1;
+            }
+        }
+
+        return 0;
+    }
+
     @Override
     public void bemVindo() {
         mediaPlayer = MediaPlayer.create(App.context, R.raw.bemvindo);
@@ -174,6 +237,18 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             return ComandosVoz.DESCREVA_HORARIO;
         } else if (findTexto(TEXTOS_VOZ_TELA_ANTERIOR, texto)) {
             return ComandosVoz.TELA_ANTERIOR;
+        } else if (findTexto(TEXTOS_VOZ_UTILIZACAO, texto)) {
+            return ComandosVoz.DOSE_REALIZADA;
+        } else if (findTexto(TEXTOS_VOZ_ESTOQUE_ATUAL, texto)) {
+            return ComandosVoz.ESTOQUE_ATUAL;
+        } else if (findTexto(TEXTOS_VOZ_ENTRADA_ESTOQUE, texto)) {
+            return ComandosVoz.ENTRADA_ESTOQUE;
+        } else if (findTexto(TEXTOS_VOZ_SAIDA_ESTOQUE, texto)) {
+            return ComandosVoz.SAIDA_ESTOQUE;
+        } else if (findTexto(TEXTOS_VOZ_ALTERNAR_PERFIL, texto)) {
+            return ComandosVoz.ALTERNAR_PERFIL;
+        } else if (findTexto(TEXTOS_VOZ_FECHAR_APP, texto)) {
+            return ComandosVoz.SAIR;
         }
 
         return -1;
@@ -198,7 +273,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
                 idBemVindoFuncao = R.raw.telaconsultamedicamentoeinstrucao;
                 break;
             case DETALHES_MEDICAMENTO:
-                idBemVindoFuncao = R.raw.detalhesmedicamentofalecomando;
+                idBemVindoFuncao = R.raw.bemvindodetalhemedicamentosjojo;
                 break;
             case HORARIO_MEDICAMENTOS:
                 idBemVindoFuncao = R.raw.horariomedicamento;
@@ -340,7 +415,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         }
 
         if (horarios.get(horarios.size() - 1).getAtivo().equals("SIM") == false) {
-            App.integracaoUsuario.falar("O ultimo horário deve está ativo !");
+            falar("O ultimo horário deve está ativo !");
             return;
         }
 
@@ -406,11 +481,116 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             falar("O ultimo horário deve está ativo !");
             return false;
         }
-        return false;
+        return true;
     }
 
     public void saidaNegadaSemSaldo() {
         falar("Saldo negativo saida negada !");
     }
 
+    @Override
+    public void informarErro(String parametro) {
+        falar(parametro);
+    }
+
+    @Override
+    public void utilizacaoRemedioConcluida(MedicamentoDTO medicamentoDTO) {
+        falar("Utilização de Remédio " + medicamentoDTO.getNomeFantasia() + " registrada com sucesso !");
+    }
+
+    @Override
+    public boolean validarEntradaEstoque(String qtde) {
+        if (qtde.isEmpty()) {
+            falar("Preencha a quantidade de compra do medicamento !");
+            return false;
+        }
+
+        if (qtde.equals("0")) {
+            falar("Preencha a quantidade de compra do medicamento !");
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean validarSaidaEstoque(String qtde) {
+        if (qtde.isEmpty()) {
+            falar("Preencha a quantidade de saída do medicamento !");
+            return false;
+        }
+
+        if (qtde.equals("0")) {
+            falar("Preencha a quantidade de saída do medicamento !");
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int obterQtde(String s, int acao) {
+        s = StringUtil.removerAcentos(s.toUpperCase());
+
+        String textoCorrespondente = findCorrespondencia(getArrayVoz(acao), s);
+
+        if (textoCorrespondente.equals("")) {
+            textoLido.speak(" quantidade inválida. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+            return 0;
+        }
+
+        String restoTexto = StringUtil.removerAcentos(s.replace(textoCorrespondente, "").trim());
+
+        int i = 0;
+
+        try {
+            i = Integer.valueOf(restoTexto);
+        } catch (Exception e) {
+            try {
+                i = Integer.valueOf(findNumero(restoTexto));
+            } catch (Exception e1) {
+                i = 0;
+                textoLido.speak(" quantidade inválida. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+            }
+
+        }
+
+        if (i <= 0)
+            textoLido.speak(" quantidade inválida. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+
+        return i;
+    }
+
+    @Override
+    public void informarSaldoEstoque() {
+        if (App.listaEstoques == null || App.listaEstoques.size() == 0) {
+            falar("Você não comprou ainda o medicamento " + App.medicamentoDTO.getNomeFantasia());
+            return;
+        }
+
+        EstoqueDTO estoqueDTO = App.listaEstoques.get(App.listaEstoques.size() - 1);
+
+        falar("Estoque atual: " + estoqueDTO.getSaldo() + " do Medicamento: " + App.medicamentoDTO.getNomeFantasia());
+    }
+
+    @Override
+    public void avisarSaldoAtualizadoComSucesso(int novoSaldo) {
+        falar("Saldo atualizado com sucesso. Estoque atual: " + String.valueOf(novoSaldo));
+    }
+
+    @Override
+    public void avisoEntradaPerfilAdmin() {
+        falar("O aplicativo mudou para o perfil de administrador. Para voltar ao perfil padrão clique no botão restaurar perfil ou feche o aplicativo e abra novamente");
+    }
+
+    @Override
+    public void avisoSaidaPerfilAdmin() {
+        falar("O aplicativo voltou para o perfil padrão do usuário. Toque na tela e fale um comando");
+    }
+
+    @Override
+    public void avisarSaidaApp() {
+        mediaPlayer = MediaPlayer.create(App.context, R.raw.fecharaplicativojojo);
+        mediaPlayer.start(); // no need to call prepare(); create() does that for you
+    }
 }

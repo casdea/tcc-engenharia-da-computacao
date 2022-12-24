@@ -1,7 +1,9 @@
 package br.ufpa.app.android.amu.v1.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -139,6 +141,17 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.restaurarPerfil:
+                App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+                App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
+                App.integracaoUsuario.avisoSaidaPerfilAdmin();
+
+                if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+                    getSupportActionBar().hide();
+
+                break;
+        }
+        switch (item.getItemId()) {
             case R.id.menuPerfil:
                 startActivity(new Intent(this, UsuarioActivity.class));
                 break;
@@ -215,11 +228,21 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
             App.integracaoUsuario.listarMedicamentos(listaMedicamentos);
         } else if (numeroAcao == Constantes.ACAO_VOZ_DESCREVA_MEDICAMENTO) {
             App.medicamentoDTO = App.integracaoUsuario.descrerverMedicamento(listaMedicamentos, (String) parametro);
+            ThreadUtil.esperar(ThreadUtil.QUATRO_SEGUNDOS);
 
             if (App.medicamentoDTO != null) {
                 Intent intent = new Intent(PrincipalActivity.this, DetalheMedicamentoActivity.class);
                 detalheMedicamentoActivityResultLauncher.launch(intent);
             }
+        } else if (numeroAcao == Constantes.ACAO_VOZ_ALTERNAR_PERFIL) {
+            App.integracaoUsuario.avisoEntradaPerfilAdmin();
+            App.tipoPerfil = TipoPerfil.COMUM;
+            App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
+
+            getSupportActionBar().show();
+        }
+        else if (numeroAcao == Constantes.ACAO_VOZ_FECHAR_APP) {
+            finish();
         }
     }
 
@@ -232,4 +255,32 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (!App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+            AlertDialog alert_back = new AlertDialog.Builder(this).create();
+            alert_back.setMessage("Deseja sair?");
+
+            alert_back.setButton("Não", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            alert_back.setButton2("Sim", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+
+            alert_back.show();
+        }
+
+    }
+
 }

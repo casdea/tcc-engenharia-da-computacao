@@ -42,4 +42,24 @@ public interface IntegracaoUsuario {
     boolean validarUtilizacaoMedicamento(List<HorarioDTO> horarios);
 
     void saidaNegadaSemSaldo();
+
+    void informarErro(String parametro);
+
+    void utilizacaoRemedioConcluida(MedicamentoDTO medicamentoDTO);
+
+    boolean validarEntradaEstoque(String qtde);
+
+    boolean validarSaidaEstoque(String qtde);
+
+    int obterQtde(String s, int acao);
+
+    public void informarSaldoEstoque();
+
+    void avisarSaldoAtualizadoComSucesso(int novoSaldo);
+
+    void avisoEntradaPerfilAdmin();
+
+    void avisoSaidaPerfilAdmin();
+
+    void avisarSaidaApp();
 }

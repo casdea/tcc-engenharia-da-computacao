@@ -3,7 +3,6 @@ package br.ufpa.app.android.amu.v1.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,50 +19,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.activity.HorarioActivity;
-import br.ufpa.app.android.amu.v1.activity.RecursoVozLifeCyCleObserver;
 import br.ufpa.app.android.amu.v1.adapter.HorariosRecyclerViewAdapter;
-import br.ufpa.app.android.amu.v1.adapter.UtilizacoesRecyclerViewAdapter;
-import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
-import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
-import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
-import br.ufpa.app.android.amu.v1.interfaces.PickDateListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HorariosFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HorariosFragment extends Fragment implements DetalheMedicamentoActivity.OnHorariosListener, GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
     private RecyclerView recyclerView;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private GerenteServicosListener gerenteServicosListener;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     @Override
     public void onAttach(@NonNull Activity activity) {
@@ -74,34 +48,6 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
 
     public HorariosFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BlankFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HorariosFragment newInstance(String param1, String param2) {
-        HorariosFragment fragment = new HorariosFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     private ActivityResultLauncher<Intent> mnutencaoHorarioActivityResultLauncher = registerForActivityResult(
@@ -158,9 +104,14 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                App.horarioDTO = null;
-                Intent intent = new Intent(view.getContext(), HorarioActivity.class);
-                mnutencaoHorarioActivityResultLauncher.launch(intent);
+                if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+                    gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, 0);
+                }
+                else {
+                    App.horarioDTO = null;
+                    Intent intent = new Intent(view.getContext(), HorarioActivity.class);
+                    mnutencaoHorarioActivityResultLauncher.launch(intent);
+                }
             }
         });
 

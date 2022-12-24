@@ -125,7 +125,82 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
                 Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void informarErro(String parametro) {
+        Toast.makeText(App.context,parametro, Toast.LENGTH_LONG).show();
 
+    }
 
+    @Override
+    public void utilizacaoRemedioConcluida(MedicamentoDTO medicamentoDTO) {
+        Toast.makeText(App.context,"Utilização de Remédio "+medicamentoDTO.getNomeFantasia()+" registrada com sucesso !", Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public boolean validarEntradaEstoque(String qtde) {
+        if (qtde.isEmpty()) {
+            Toast.makeText(App.context,
+                    "Preencha a quantidade de compra do medicamento !",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (qtde.equals("0")) {
+            Toast.makeText(App.context,
+                    "Preencha a quantidade de compra do medicamento !",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean validarSaidaEstoque(String qtde) {
+        if (qtde.isEmpty()) {
+            Toast.makeText(App.context,
+                    "Preencha a quantidade de saída do medicamento !",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (qtde.equals("0")) {
+            Toast.makeText(App.context,
+                    "Preencha a quantidade de saída do medicamento !",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
+    }
+    @Override
+    public int obterQtde(String s, int acao) {
+        return 0;
+    }
+
+    @Override
+    public void informarSaldoEstoque() {
+
+    }
+
+    @Override
+    public void avisarSaldoAtualizadoComSucesso(int novoSaldo) {
+        Toast.makeText(App.context,
+                "Saldo atualizado com sucesso. Estoque atual: " + String.valueOf(novoSaldo),
+                Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void avisoEntradaPerfilAdmin() {
+
+    }
+
+    @Override
+    public void avisoSaidaPerfilAdmin() {
+
+    }
+
+    @Override
+    public void avisarSaidaApp() {
+
+    }
 }

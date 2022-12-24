@@ -92,6 +92,34 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
                                     gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_DOSE_REALIZADA, text.get(0));
                                     break;
                                 }
+                                case ComandosVoz.ESTOQUE_ATUAL: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_ESTOQUE_ATUAL, text.get(0));
+                                    break;
+                                }
+
+                                case ComandosVoz.ENTRADA_ESTOQUE: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_ENTRADA_ESTOQUE, text.get(0));
+                                    break;
+                                }
+
+                                case ComandosVoz.SAIDA_ESTOQUE: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_SAIDA_ESTOQUE, text.get(0));
+                                    break;
+                                }
+
+                                case ComandosVoz.ALTERNAR_PERFIL: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_ALTERNAR_PERFIL, text.get(0));
+                                    break;
+                                }
+
+                                case ComandosVoz.SAIR: {
+                                    App.integracaoUsuario.avisarSaidaApp();
+
+                                    ThreadUtil.esperar(ThreadUtil.CINCO_SEGUNDOS);
+
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_FECHAR_APP, text.get(0));
+                                    break;
+                                }
 
                             }
                         } else if (result.getResultCode() == Activity.RESULT_CANCELED) {

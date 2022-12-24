@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/restaurarPerfil"
+        android:orderInCategory="100"
+        android:title="Restaurar Perfil"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
         android:id="@+id/menuPerfil"
         android:orderInCategory="100"
         android:title="Perfil de Usuário"

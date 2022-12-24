@@ -68,11 +68,13 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
         if (view.getId() == R.id.txvEntrar)
         {
             startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
         else if (view.getId() == R.id.btnCadastrar)
         {
             App.usuario = null;
             startActivity(new Intent(this, UsuarioActivity.class));
+            finish();
         }
     }
 
@@ -85,6 +87,7 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
     public void executarAcao(int numeroAcao, Object parametro) {
         if (numeroAcao == Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL) {
             startActivity(new Intent(BemVindoActivity.this, PrincipalActivity.class));
+            finish();
         }
     }
 }

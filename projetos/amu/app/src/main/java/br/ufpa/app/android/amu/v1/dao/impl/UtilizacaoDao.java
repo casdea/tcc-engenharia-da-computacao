@@ -53,7 +53,8 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
                         "Registro Utilizacao Salvo !",
                         Toast.LENGTH_LONG).show();
                 App.utilizacaoDTO.setIdUtilizacao(chave);
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO, null);
+                App.listaUtilizacoes.add(App.utilizacaoDTO);
+                gerenteServicosListener.carregarLista(Constantes.ACAO_UTLIZACAO_REMEDIO_CONCLUIDA, null);
 
             }
         }).addOnFailureListener(new OnFailureListener() {

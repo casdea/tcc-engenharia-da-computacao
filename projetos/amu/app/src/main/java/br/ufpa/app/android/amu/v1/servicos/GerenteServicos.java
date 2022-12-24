@@ -39,6 +39,8 @@ public class GerenteServicos {
     private AppCompatActivity atividade;
     private GerenteServicosListener gerenteServicosListener;
 
+    private static GerenteServicos gerenteServicos;
+
     public GerenteServicos(AppCompatActivity atividade) {
         this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
@@ -72,7 +74,7 @@ public class GerenteServicos {
 
                     if (App.usuario != null) {
                         App.usuario.setIdUsuario(idUsuario);
-                        App.tipoPerfil =  TipoPerfil.COMUM; // TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+                        App.tipoPerfil =  TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
                         //abrirTelaPrincipal(atividadeLocal);
                         gerenteServicosListener.executarAcao(Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL,autenticacao);

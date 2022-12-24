@@ -96,7 +96,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
 
     @Override
     public void findAllByUsuarioIdMedicamento(String idUsuario, String idMedicamento) {
-            App.listaEstoques = new ArrayList<>();
+        App.listaEstoques = new ArrayList<>();
         DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
 
         Query estoquesQuery = em.child("estoques").orderByChild("idUsuario").equalTo(idUsuario);
@@ -148,16 +148,35 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
 
                 if (estoqueDTO != null) {
                     movtoEstoqueDTO.setSaldo(estoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
-                }
-                else {
+                } else {
                     movtoEstoqueDTO.setSaldo(movtoEstoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
                 }
 
                 if (movtoEstoqueDTO.getSaldo() < 0) {
-                    gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE,movtoEstoqueDTO);
-                }
-                else {
-                    gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_UTILIZACAO,movtoEstoqueDTO);
+                    gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE, movtoEstoqueDTO);
+                } else {
+                    Estoque estoque = new Estoque(movtoEstoqueDTO);
+
+                    DatabaseReference estoquesRef = em.child("estoques");
+                    String chave = estoquesRef.push().getKey();
+                    estoque.setIdEstoque(chave);
+                    estoquesRef.child(chave).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            movtoEstoqueDTO.setIdEstoque(chave);
+                            App.listaEstoques.add(movtoEstoqueDTO);
+
+                            gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO, App.listaEstoques);
+                            gerenteServicosListener.executarAcao(Constantes.ACAO_AVISAR_SALDO_ATUALIZADO, movtoEstoqueDTO);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_AO_ATUALIZAR_SALDO_ESTOQUE, "Não foi possivel atualizar o estoque.");
+                        }
+                    });
+
+
                 }
             }
 
@@ -192,17 +211,33 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
 
                 if (estoqueDTO != null) {
                     movtoEstoqueDTO.setSaldo(estoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
-                }
-                else {
+                } else {
                     movtoEstoqueDTO.setSaldo(movtoEstoqueDTO.getSaldo() + movtoEstoqueDTO.getEntrada() - movtoEstoqueDTO.getSaida());
                 }
 
                 if (movtoEstoqueDTO.getSaldo() < 0) {
-                    gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE,movtoEstoqueDTO);
+                    gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE, movtoEstoqueDTO);
+                } else {
+                    Estoque estoque = new Estoque(movtoEstoqueDTO);
+
+                    DatabaseReference estoquesRef = em.child("estoques");
+                    String chave = estoquesRef.push().getKey();
+                    estoque.setIdEstoque(chave);
+                    estoquesRef.child(chave).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            movtoEstoqueDTO.setIdEstoque(chave);
+                            App.listaEstoques.add(movtoEstoqueDTO);
+                            gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_UTILIZACAO, movtoEstoqueDTO);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_AO_ATUALIZAR_SALDO_ESTOQUE, "Não foi possivel atualizar o estoque.");
+                        }
+                    });
                 }
-                else {
-                    gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_UTILIZACAO,movtoEstoqueDTO);
-                }
+
             }
 
             @Override

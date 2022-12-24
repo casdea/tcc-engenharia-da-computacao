@@ -41,8 +41,11 @@ import br.ufpa.app.android.amu.v1.fragments.EstoquesFragment;
 import br.ufpa.app.android.amu.v1.fragments.HorariosFragment;
 import br.ufpa.app.android.amu.v1.fragments.UtilizacoesFragment;
 import br.ufpa.app.android.amu.v1.helper.PaletaCoresActivity;
+import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
+import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoBularioEletronico;
+import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoUsuario;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
@@ -147,8 +150,8 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
                 .add("Horários", HorariosFragment.class)
-                .add("Utilizações", UtilizacoesFragment.class)
                 .add("Estoque", EstoquesFragment.class)
+                .add("Utilizações", UtilizacoesFragment.class)
                 .create());
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -167,10 +170,8 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         });
 
         this.onHorariosListener = (OnHorariosListener) adapter.getItem(0);
-        this.onUtilizacoesListener = (OnUtilizacoesListener) adapter.getItem(1);
-        this.onEstoqueListener = (OnEstoquesListener) adapter.getItem(2);
-
-        //App.tipoPerfil =  TipoPerfil.PCD_VISAO_REDUZIDA; // TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+        this.onEstoqueListener = (OnEstoquesListener) adapter.getItem(1);
+        this.onUtilizacoesListener = (OnUtilizacoesListener) adapter.getItem(2);
 
         if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
             getSupportActionBar().hide();
@@ -181,7 +182,13 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         }
 
         App.integracaoUsuario.bemVindoFuncao(TipoFuncao.DETALHES_MEDICAMENTO);
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(Activity.RESULT_OK, null);
+        finish();
     }
 
     @NonNull
@@ -325,21 +332,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     public void abrirDialogEntradaEstoque(View view) {
 
-        TextInputEditText textInpTextQtdeEstoque = findViewById(R.id.textInpTextQtdeEstoque);
-
-        if (textInpTextQtdeEstoque.getText().toString().isEmpty()) {
-            Toast.makeText(DetalheMedicamentoActivity.this,
-                    "Preencha a quantidade de compra do medicamento !",
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (textInpTextQtdeEstoque.getText().toString().equals("0")) {
-            Toast.makeText(DetalheMedicamentoActivity.this,
-                    "Preencha a quantidade de compra do medicamento !",
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
+        if (App.integracaoUsuario.validarEntradaEstoque(textInpTextQtdeEstoque.getText().toString()) == false) return;
 
         //Instanciar AlertDialog
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -358,17 +351,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                App.estoqueDTO = new EstoqueDTO();
-                App.estoqueDTO.setIdEstoque("0");
-                App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
-                App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
-                App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
-                App.estoqueDTO.setEntrada(Integer.parseInt(textInpTextQtdeEstoque.getText().toString()));
-                App.estoqueDTO.setSaida(0);
-                App.estoqueDTO.setSaldo(0);
-
-                GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-                gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+                efetuarEntradaEstoque();
 
             }
         });
@@ -386,24 +369,23 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.show();
     }
 
+    private void efetuarEntradaEstoque() {
+        App.estoqueDTO = new EstoqueDTO();
+        App.estoqueDTO.setIdEstoque("0");
+        App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
+        App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
+        App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
+        App.estoqueDTO.setEntrada(Integer.parseInt(textInpTextQtdeEstoque.getText().toString()));
+        App.estoqueDTO.setSaida(0);
+        App.estoqueDTO.setSaldo(0);
+
+        GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+        gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+    }
 
     public void abrirDialogSaidaEstoque(View view) {
 
-        TextInputEditText textInpTextQtdeEstoque = findViewById(R.id.textInpTextQtdeEstoque);
-
-        if (textInpTextQtdeEstoque.getText().toString().isEmpty()) {
-            Toast.makeText(DetalheMedicamentoActivity.this,
-                    "Preencha a quantidade de saída do medicamento !",
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (textInpTextQtdeEstoque.getText().toString().equals("0")) {
-            Toast.makeText(DetalheMedicamentoActivity.this,
-                    "Preencha a quantidade de saída do medicamento !",
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
+        if (App.integracaoUsuario.validarSaidaEstoque(textInpTextQtdeEstoque.getText().toString()) == false) return;
 
         //Instanciar AlertDialog
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -422,17 +404,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                App.estoqueDTO = new EstoqueDTO();
-                App.estoqueDTO.setIdEstoque("0");
-                App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
-                App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
-                App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
-                App.estoqueDTO.setEntrada(0);
-                App.estoqueDTO.setSaida(Integer.parseInt(textInpTextQtdeEstoque.getText().toString()));
-                App.estoqueDTO.setSaldo(0);
-
-                GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-                gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+                efetuarSaidaEstoque();
             }
         });
 
@@ -449,30 +421,65 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.show();
     }
 
+    private void efetuarSaidaEstoque() {
+        App.estoqueDTO = new EstoqueDTO();
+        App.estoqueDTO.setIdEstoque("0");
+        App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
+        App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
+        App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
+        App.estoqueDTO.setEntrada(0);
+        App.estoqueDTO.setSaida(Integer.parseInt(textInpTextQtdeEstoque.getText().toString()));
+        App.estoqueDTO.setSaldo(0);
+
+        GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
+        gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+    }
+
     @Override
     public void carregarLista(int numeroAcao, List<?> lista) {
         if (numeroAcao == Constantes.ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            HorariosFragment horariosFragment = (HorariosFragment) adapter.getItem(0);
-            View view = findViewById(R.id.idFragmentoHorario);
-            horariosFragment.atualizarLista(view);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            atualizarListaHorario();
         } else if (numeroAcao == Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            UtilizacoesFragment utilizacoesFragment = (UtilizacoesFragment) adapter.getItem(1);
-            View view = findViewById(R.id.idFragmentoUtilizacao);
-            utilizacoesFragment.atualizarLista(view);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            atualizarListaUtilizacao();
+            atualizarListaEstoque();
         } else if (numeroAcao == Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            EstoquesFragment estoquesFragment = (EstoquesFragment) adapter.getItem(2);
-            View view = findViewById(R.id.idFragmentoEstoque);
-            estoquesFragment.atualizarLista(view);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            atualizarListaEstoque();
+
+        } else if (numeroAcao == Constantes.ACAO_UTLIZACAO_REMEDIO_CONCLUIDA) {
+            atualizarListaUtilizacao();
+            atualizarListaEstoque();
+            App.integracaoUsuario.utilizacaoRemedioConcluida(App.medicamentoDTO);
         }
+    }
+
+    private void atualizarListaHorario() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        HorariosFragment horariosFragment = (HorariosFragment) adapter.getItem(0);
+        View view = findViewById(R.id.idFragmentoHorario);
+        if (view == null) return;
+        horariosFragment.atualizarLista(view);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void atualizarListaEstoque() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        EstoquesFragment estoquesFragment = (EstoquesFragment) adapter.getItem(1);
+        View view = findViewById(R.id.idFragmentoEstoque);
+        if (view == null) return;
+        estoquesFragment.atualizarLista(view);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void atualizarListaUtilizacao() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        UtilizacoesFragment utilizacoesFragment = (UtilizacoesFragment) adapter.getItem(2);
+        View view = findViewById(R.id.idFragmentoUtilizacao);
+        if (view == null) return;
+        utilizacoesFragment.atualizarLista(view);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
@@ -488,6 +495,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             gerenteServicos.obterListaEstoquesByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
         } else if (numeroAcao == Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE) {
             App.integracaoUsuario.saidaNegadaSemSaldo();
+            return;
+        } else if (numeroAcao == Constantes.ACAO_ERRO_AO_ATUALIZAR_SALDO_ESTOQUE) {
+            App.integracaoUsuario.informarErro((String) parametro);
             return;
         } else if (numeroAcao == Constantes.ACAO_ATUALIZAR_SALDO_ESTOQUE) {
             GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
@@ -515,6 +525,30 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
                 return;
 
             sinalizarDoseRealizada();
+        } else if (numeroAcao == Constantes.ACAO_VOZ_ESTOQUE_ATUAL) {
+            App.integracaoUsuario.informarSaldoEstoque();
+        } else if (numeroAcao == Constantes.ACAO_VOZ_ENTRADA_ESTOQUE) {
+            int qtde = App.integracaoUsuario.obterQtde((String) parametro, ComandosVoz.ENTRADA_ESTOQUE);
+
+            if (qtde == 0) return;
+
+            textInpTextQtdeEstoque.setText(String.valueOf(qtde));
+
+            if (App.integracaoUsuario.validarEntradaEstoque(textInpTextQtdeEstoque.getText().toString()) == false)
+                return;
+            efetuarEntradaEstoque();
+        } else if (numeroAcao == Constantes.ACAO_VOZ_SAIDA_ESTOQUE) {
+            int qtde = App.integracaoUsuario.obterQtde((String) parametro, ComandosVoz.SAIDA_ESTOQUE);
+
+            if (qtde == 0) return;
+
+            textInpTextQtdeEstoque.setText(String.valueOf(qtde));
+
+            if (App.integracaoUsuario.validarSaidaEstoque(textInpTextQtdeEstoque.getText().toString()) == false)
+                return;
+            efetuarSaidaEstoque();
+        } else if (numeroAcao == Constantes.ACAO_AVISAR_SALDO_ATUALIZADO) {
+            App.integracaoUsuario.avisarSaldoAtualizadoComSucesso(((EstoqueDTO) parametro).getSaldo());
         }
     }
 
