@@ -127,6 +127,39 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
 
     }
 
+    @Override
+    public void findAllByUsuario(String idUsuario) {
+        App.listaUtilizacoes = new ArrayList<>();
+        DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+
+        Query utilizacoesQuery = em.child("utilizacoes").orderByChild("idUsuario").equalTo(idUsuario);
+
+        ValueEventListener evento = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    UtilizacaoDTO utilizacaoDTO = getUtilizacaoDTO(postSnapshot);
+
+                    Log.i("Lendo dados ", postSnapshot.toString());
+
+                    App.listaUtilizacoes.add(utilizacaoDTO);
+
+                    // TODO: handle the post
+                }
+                //gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO,  App.listaUtilizacoes);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        utilizacoesQuery.addListenerForSingleValueEvent(evento);
+
+    }
+
     @NonNull
     private UtilizacaoDTO getUtilizacaoDTO(DataSnapshot postSnapshot) {
         Utilizacao utilizacao = postSnapshot.getValue(Utilizacao.class);

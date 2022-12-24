@@ -127,6 +127,37 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
 
     }
 
+    @Override
+    public void findAllByUsuario(String idUsuario) {
+        App.listaEstoques = new ArrayList<>();
+        DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+
+        Query estoquesQuery = em.child("estoques").orderByChild("idUsuario").equalTo(idUsuario);
+
+        ValueEventListener evento = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    EstoqueDTO estoqueDTO = getEstoqueDTO(postSnapshot);
+
+                    Log.i("Lendo dados ", postSnapshot.toString());
+
+                    App.listaEstoques.add(estoqueDTO);
+                    // TODO: handle the post
+                }
+                //gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO, App.listaEstoques);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        estoquesQuery.addListenerForSingleValueEvent(evento);
+
+    }
+
     public void atualizarSaldoEstoque(String idUsuario, String idMedicamento, EstoqueDTO movtoEstoqueDTO) {
         List<EstoqueDTO> listaEstoques = new ArrayList<>();
         DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();

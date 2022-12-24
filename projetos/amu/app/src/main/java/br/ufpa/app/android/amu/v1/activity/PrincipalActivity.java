@@ -2,13 +2,21 @@ package br.ufpa.app.android.amu.v1.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -22,6 +30,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +39,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,6 +58,7 @@ import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
+import br.ufpa.app.android.amu.v1.util.DataUtil;
 import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
 public class PrincipalActivity extends AppCompatActivity implements GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
@@ -57,6 +68,25 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     private List<MedicamentoDTO> listaMedicamentos = new ArrayList<>();
     private TextView txvListaVazia;
     private RecursoVozLifeCyCleObserver mRecursoVozObserver;
+/*
+    Handler timerHandler = new Handler();
+    Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            new GerenteServico(getApplicationContext()).atualizarLogMobile();
+
+            if (App.tempoRestanteManutencao > 0)
+                txvDadosOrdemServico.setText("Dados da Ordem de Serviço. Tempo Restante Manutenção: " + String.valueOf(App.tempoRestanteManutencao) + " minuto(s) ");
+            else
+                txvDadosOrdemServico.setText("Dados da Ordem de Serviço");
+
+            txvDebug.setText(App.textoTempoRestanteManutencao);
+
+            timerHandler.postDelayed(this, 500);
+        }
+    };
+*/
 
     private ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -122,9 +152,43 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
             mRecursoVozObserver.chamarItenteReconechimentoVoz();
         } else {
             if (v.getId() == R.id.floatingActionButton) {
-                incluirMedicamento();
+                new TaskVerificarHorarioDose().execute();
+                //enviarNotificacao("Horário de Médicamento","Tome o remédio DORFLEX");
+                //incluirMedicamento();
             }
         }
+    }
+
+
+    private void enviarNotificacao(String titulo, String corpo){
+
+        //Configuraçõe para notificação
+        String canal = getString(R.string.default_notification_channel_id);
+        Uri uriSom = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
+        //Intent intent = new Intent(this, NotificacoesActivity.class);
+        //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        //Criar notificação
+        NotificationCompat.Builder notificacao = new NotificationCompat.Builder(this, canal)
+                .setContentTitle( titulo )
+                .setContentText( corpo )
+                .setSmallIcon( R.drawable.ic_baseline_notifications_active_24 )
+                .setSound( uriSom )
+                .setAutoCancel( true );
+                //.setContentIntent( pendingIntent );
+
+        //Recupera notificationManager
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        //Verifica versão do Android a partir do Oreo para configurar canal de notificação
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ){
+            NotificationChannel channel = new NotificationChannel(canal, "canal", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel( channel );
+        }
+
+        //Envia notificação
+        notificationManager.notify(0, notificacao.build() );
+
     }
 
     private void incluirMedicamento() {
@@ -283,4 +347,66 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
     }
 
+    public class TaskVerificarHorarioDose extends AsyncTask<Void,Void,List<HorarioDTO>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected List<HorarioDTO> doInBackground(Void... voids) {
+
+            GerenteServicos gerenteServicos = new GerenteServicos(PrincipalActivity.this);
+            gerenteServicos.obterListaHorariosByUsuario(App.usuario.getIdUsuario());
+            gerenteServicos.obterListaEstoquesByUsuario(App.usuario.getIdUsuario());
+            gerenteServicos.obterListaUtilizacoesByUsuario(App.usuario.getIdUsuario());
+
+            return App.listaHorarios;
+        }
+
+        @Override
+        protected void onPostExecute(List<HorarioDTO> horarioDTOS) {
+            super.onPostExecute(horarioDTOS);
+
+            for (MedicamentoDTO medicamentoDTO : listaMedicamentos) {
+
+                HorarioDTO horarioDTO = obterHorario(medicamentoDTO);
+
+                if (horarioDTO == null) continue;
+
+                Date dataHora = DataUtil.converteStringToTime(horarioDTO.getHorarioInicial());
+
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onCancelled(List<HorarioDTO> horarioDTOS) {
+            super.onCancelled(horarioDTOS);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        private HorarioDTO obterHorario(MedicamentoDTO medicamentoDTO) {
+            for (HorarioDTO horarioDTO : App.listaHorarios) {
+                if (horarioDTO.getIdMedicamento().equals(medicamentoDTO.getIdMedicamento())==false) continue;
+
+                if (horarioDTO.getAtivo().equals("NÃO")) continue;
+                if (DataUtil.convertStringToDate(horarioDTO.getDataInicial()).before(new java.util.Date())) continue;
+
+                return horarioDTO;
+            }
+
+            return null;
+        }
+
+    }
 }

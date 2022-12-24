@@ -126,6 +126,39 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
 
     }
 
+    @Override
+    public void findAllByUsuario(String idUsuario) {
+        App.listaHorarios = new ArrayList<>();
+        DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+
+        Query horariosQuery = em.child("horarios").orderByChild("idUsuario").equalTo(idUsuario);
+
+        ValueEventListener evento = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    HorarioDTO horarioDTO = getHorarioDTO(postSnapshot);
+
+                    Log.i("Lendo dados ", postSnapshot.toString());
+
+                    App.listaHorarios.add(horarioDTO);
+                    // TODO: handle the post
+                }
+
+                //gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO, App.listaHorarios);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        horariosQuery.addListenerForSingleValueEvent(evento);
+
+    }
+
     @NonNull
     private HorarioDTO getHorarioDTO(DataSnapshot postSnapshot) {
         Horario horario = postSnapshot.getValue(Horario.class);

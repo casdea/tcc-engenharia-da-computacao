@@ -152,4 +152,9 @@ public class DataUtil {
             }
         };
     }
+
+    public static Date dataAtual()
+    {
+        return new java.util.Date();
+    }
 }

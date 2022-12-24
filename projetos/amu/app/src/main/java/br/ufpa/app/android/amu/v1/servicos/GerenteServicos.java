@@ -74,7 +74,7 @@ public class GerenteServicos {
 
                     if (App.usuario != null) {
                         App.usuario.setIdUsuario(idUsuario);
-                        App.tipoPerfil =  TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+                        App.tipoPerfil = TipoPerfil.COMUM; //TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
                         //abrirTelaPrincipal(atividadeLocal);
                         gerenteServicosListener.executarAcao(Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL,autenticacao);
@@ -185,6 +185,21 @@ public class GerenteServicos {
         FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
         Estoque estoque = new Estoque(estoqueDTO);
         factoryDAO.getEstoqueDao().sinalizarDoseRealizada(idUsuario,idMedicamento,estoqueDTO);
+    }
+
+    public void obterListaHorariosByUsuario(String idUsuario) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        factoryDAO.getHorarioDao().findAllByUsuario(idUsuario);
+    }
+
+    public void obterListaUtilizacoesByUsuario(String idUsuario) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        factoryDAO.getUtilizacaoDao().findAllByUsuario(idUsuario);
+    }
+
+    public void obterListaEstoquesByUsuario(String idUsuario) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        factoryDAO.getEstoqueDao().findAllByUsuario(idUsuario);
     }
 
 }
