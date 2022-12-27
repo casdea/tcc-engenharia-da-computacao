@@ -62,4 +62,6 @@ public interface IntegracaoUsuario {
     void avisoSaidaPerfilAdmin();
 
     void avisarSaidaApp();
+
+    void dispararAlarme(String descricao);
 }

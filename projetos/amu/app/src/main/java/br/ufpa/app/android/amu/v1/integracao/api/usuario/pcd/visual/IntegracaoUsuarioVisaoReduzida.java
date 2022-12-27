@@ -593,4 +593,9 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         mediaPlayer = MediaPlayer.create(App.context, R.raw.fecharaplicativojojo);
         mediaPlayer.start(); // no need to call prepare(); create() does that for you
     }
+
+    @Override
+    public void dispararAlarme(String descricao) {
+        falar(descricao);
+    }
 }

@@ -203,4 +203,9 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
     public void avisarSaidaApp() {
 
     }
+
+    @Override
+    public void dispararAlarme(String descricao) {
+
+    }
 }

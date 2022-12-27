@@ -14,6 +14,7 @@ import java.util.Locale;
 
 public class DataUtil {
 
+
     public static Date encodeDateByDiaMesAno(int day, int month, int year)  {
         Date data = null;
         try {
@@ -153,8 +154,67 @@ public class DataUtil {
         };
     }
 
-    public static Date dataAtual()
+    public static Date getDataAtual()
     {
         return new java.util.Date();
     }
+
+    public static final Date convertStringToDate(String str, String formato) throws Exception
+    {
+        try
+        {
+            if (StringUtil.isVazioOrNull(str))
+            {
+                throw new Exception("Data não pode ser nula ou vazia");
+            }
+            SimpleDateFormat sdf = new SimpleDateFormat(formato);
+            Date data = new Date(sdf.parse(str).getTime());
+            return data;
+        }
+        catch (ParseException e)
+        {
+            throw new Exception("Não foi possível converter a data");
+        }
+    }
+
+    public static final Date somaHoras(Date dataInicial, int horas) throws Exception
+    {
+        if (dataInicial == null)
+        {
+            throw new Exception("Data inicial não pode ser nula");
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dataInicial);
+        cal.add(Calendar.HOUR, horas);
+        return new Date(cal.getTimeInMillis());
+    }
+
+    public static final Date somaMinutos(Date dataInicial, int minutos)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dataInicial);
+        cal.add(Calendar.MINUTE, minutos);
+        return new Date(cal.getTimeInMillis());
+    }
+
+    public static final int getDiferencaEmMinutos(Date dataInicio, Date dataFim)
+    {
+        Calendar calInicio = Calendar.getInstance();
+        Calendar calFim = Calendar.getInstance();
+        calInicio.setTime(dataInicio);
+        calFim.setTime(dataFim);
+        long m1 = calInicio.getTimeInMillis();
+        long m2 = calFim.getTimeInMillis();
+        return (int) ((m2 - m1) / (60 * 1000));
+    }
+
+    public static Date convertStringToDateTime(String str) {
+        try {
+            return convertStringToDate(str, "dd/MM/yyyy HH:mm");
+        } catch (Exception e)
+        {
+            return null;
+        }
+    }
+
 }

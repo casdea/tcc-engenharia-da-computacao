@@ -27,6 +27,7 @@ import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
+import br.ufpa.app.android.amu.v1.util.DataUtil;
 
 public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDao {
 
@@ -141,7 +142,6 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                     EstoqueDTO estoqueDTO = getEstoqueDTO(postSnapshot);
 
                     Log.i("Lendo dados ", postSnapshot.toString());
-
                     App.listaEstoques.add(estoqueDTO);
                     // TODO: handle the post
                 }

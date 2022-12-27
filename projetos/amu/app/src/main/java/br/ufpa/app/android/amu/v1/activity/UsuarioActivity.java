@@ -40,6 +40,7 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario);
+        App.context = this;
 
         campoNome = findViewById(R.id.editNome);
         campoEmail = findViewById(R.id.editEmail);

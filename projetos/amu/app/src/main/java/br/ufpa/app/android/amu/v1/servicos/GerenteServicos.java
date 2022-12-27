@@ -17,11 +17,13 @@ import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.factoryDao.FactoryDAO;
 import br.ufpa.app.android.amu.v1.dao.helper.Base64Custom;
+import br.ufpa.app.android.amu.v1.dao.modelo.Alarme;
 import br.ufpa.app.android.amu.v1.dao.modelo.Estoque;
 import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
 import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
 import br.ufpa.app.android.amu.v1.dao.modelo.Utilizacao;
+import br.ufpa.app.android.amu.v1.dto.AlarmeDTO;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
@@ -74,7 +76,7 @@ public class GerenteServicos {
 
                     if (App.usuario != null) {
                         App.usuario.setIdUsuario(idUsuario);
-                        App.tipoPerfil = TipoPerfil.COMUM; //TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+                        App.tipoPerfil = TipoPerfil.PCD_VISAO_REDUZIDA; //TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
                         //abrirTelaPrincipal(atividadeLocal);
                         gerenteServicosListener.executarAcao(Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL,autenticacao);
@@ -200,6 +202,17 @@ public class GerenteServicos {
     public void obterListaEstoquesByUsuario(String idUsuario) {
         FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
         factoryDAO.getEstoqueDao().findAllByUsuario(idUsuario);
+    }
+
+    public void obterListaAlarmesByUsuario(String idUsuario) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        factoryDAO.getAlarmeDao().findAllByUsuario(idUsuario);
+    }
+
+    public void incluirAlarme(AlarmeDTO alarmeDTO) {
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        Alarme alarme = new Alarme(alarmeDTO);
+        factoryDAO.getAlarmeDao().create(alarme);
     }
 
 }

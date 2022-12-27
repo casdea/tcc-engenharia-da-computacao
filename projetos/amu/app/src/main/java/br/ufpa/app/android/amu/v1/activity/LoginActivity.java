@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        App.context = this;
 
         campoEmail = findViewById(R.id.editEmail);
         campoSenha = findViewById(R.id.editSenha);

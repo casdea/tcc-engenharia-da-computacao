@@ -6,7 +6,9 @@ import android.view.View;
 
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.dao.modelo.Alarme;
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
+import br.ufpa.app.android.amu.v1.dto.AlarmeDTO;
 import br.ufpa.app.android.amu.v1.dto.ComandoDTO;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
@@ -44,5 +46,7 @@ public class App extends Application {
     public static List<ComandoDTO> listaComandos;
     public static List<VariacoesComandoDTO> listaVariacoesComandos;
     public static boolean escutandoComando;
+    public static AlarmeDTO alarmeDTO;
+    public static List<AlarmeDTO> listaAlarmes;
 
 }

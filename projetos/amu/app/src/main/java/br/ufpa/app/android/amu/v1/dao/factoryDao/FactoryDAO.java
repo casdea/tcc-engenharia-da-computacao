@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 
+import br.ufpa.app.android.amu.v1.dao.idao.IAlarmeDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IEstoqueDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IHorarioDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IMedicamentoDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IUsuarioDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IUtilizacaoDao;
+import br.ufpa.app.android.amu.v1.dao.impl.AlarmeDao;
 import br.ufpa.app.android.amu.v1.dao.impl.EstoqueDao;
 import br.ufpa.app.android.amu.v1.dao.impl.HorarioDao;
 import br.ufpa.app.android.amu.v1.dao.impl.MedicamentoDao;
@@ -81,4 +83,16 @@ public class FactoryDAO {
         }
         return estoqueDao;
     }
+
+    private IAlarmeDao alarmeDao;
+
+    public IAlarmeDao getAlarmeDao()
+    {
+        if (alarmeDao == null)
+        {
+            alarmeDao = new AlarmeDao(em, atividade);
+        }
+        return alarmeDao;
+    }
+
 }

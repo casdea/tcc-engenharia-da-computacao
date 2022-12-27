@@ -25,6 +25,7 @@ import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
+import br.ufpa.app.android.amu.v1.util.DataUtil;
 
 public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUtilizacaoDao {
 
@@ -142,12 +143,11 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
 
                     Log.i("Lendo dados ", postSnapshot.toString());
 
-                    App.listaUtilizacoes.add(utilizacaoDTO);
-
-                    // TODO: handle the post
+                    if (DataUtil.convertStringToDateTime(utilizacaoDTO.getDataHora()).before(DataUtil.getDataAtual())==false)
+                        App.listaUtilizacoes.add(utilizacaoDTO);
                 }
-                //gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO,  App.listaUtilizacoes);
 
+                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_UTILIZACAO_HOJE, App.listaHorarios);
             }
 
             @Override
