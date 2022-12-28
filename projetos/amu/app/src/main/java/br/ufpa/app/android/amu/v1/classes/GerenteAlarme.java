@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -40,6 +41,7 @@ public class GerenteAlarme {
     private List<MedicamentoDTO> medicamentos;
     private List<UtilizacaoDTO> utilizacoes;
     private List<AlarmeDTO> alarmes;
+    private List<MapaHorarioDTO> vMapa = new ArrayList<>();
 
     public GerenteAlarme(AppCompatActivity atividade, List<MedicamentoDTO> medicamentos, List<UtilizacaoDTO> utilizacoes, List<AlarmeDTO> alarmes) {
         this.atividade = atividade;
@@ -48,12 +50,19 @@ public class GerenteAlarme {
         this.alarmes = alarmes;
     }
 
-    public void verificar() {
+    public void verificar(TextView txvCadastrados, TextView txvNaoAdministrado) {
+
+
+        int cadastradosHorarioAtivo = 0;
+        int naoAdministrados = 0;
+
         for (MedicamentoDTO medicamentoDTO : medicamentos) {
 
             HorarioDTO horarioDTO = obterHorario(medicamentoDTO);
 
             if (horarioDTO == null) continue;
+
+            cadastradosHorarioAtivo++;
 
             List<AlarmeDTO> vAlarmes = verificarCriarAlarme(App.listaUtilizacoes, horarioDTO, medicamentoDTO);
 
@@ -66,11 +75,17 @@ public class GerenteAlarme {
             }
 
             for (AlarmeDTO alarmeDTO : vAlarmes) {
-                //GerenteServicos gerenteServicos = new GerenteServicos(atividade);
-                //gerenteServicos.incluirAlarme(alarmeDTO);
+                GerenteServicos gerenteServicos = new GerenteServicos(atividade);
+                App.alarmeDTO = alarmeDTO;
+                gerenteServicos.incluirAlarme(alarmeDTO);
             }
 
+            int horariosPrescritos = contarDosesPrescritas();
+            if (horariosPrescritos > utilizacoes.size()) naoAdministrados++;
         }
+
+        txvCadastrados.setText("Cadastrados/Horário "+String.valueOf(cadastradosHorarioAtivo));
+        txvNaoAdministrado.setText("Dose não adminstradas "+String.valueOf(naoAdministrados));
     }
 
     private List<AlarmeDTO> verificarCriarAlarme(List<UtilizacaoDTO> utilizacoes, HorarioDTO
@@ -82,7 +97,7 @@ public class GerenteAlarme {
         //
 
         try {
-            List<MapaHorarioDTO> vMapa = criarMapaHorario(DataUtil.convertDateToString(DataUtil.getDataAtual()), horarioDTO.getHorarioInicial(), Integer.parseInt(horarioDTO.getIntervalo().substring(0, 2).trim()), horarioDTO.getNrDoses(), utilizacoes);
+            this.vMapa = criarMapaHorario(DataUtil.convertDateToString(DataUtil.getDataAtual()), horarioDTO.getHorarioInicial(), Integer.parseInt(horarioDTO.getIntervalo().substring(0, 2).trim()), horarioDTO.getNrDoses(), utilizacoes);
 
             if (utilizacoes.size() <= horarioDTO.getNrDoses())
                 verificarCriarAlarmeDose(vAlarmes, vMapa, medicamentoDTO);
@@ -103,56 +118,29 @@ public class GerenteAlarme {
             if (mapaHorarioDTO.getHoraPrescrita() != null && mapaHorarioDTO.getHoraAdministrada() == null) {
                 int minutos = DataUtil.getDiferencaEmMinutos(DataUtil.getDataAtual(), mapaHorarioDTO.getHoraPrescrita());
 
-                if (gerarAlarme(medicamentoDTO.getIdMedicamento(),
-                        AlarmeDTO.TIPO_ALARME_PROXIMA_DOSE,
-                        mapaHorarioDTO,
-                        -5,
-                        0)) {
+                if (gerarAlarme(medicamentoDTO.getIdMedicamento(), AlarmeDTO.TIPO_ALARME_PROXIMA_DOSE, mapaHorarioDTO,-5,0))
+                {
+                    vAlarmes.add(new AlarmeDTO("0", medicamentoDTO, AlarmeDTO.TIPO_ALARME_PROXIMA_DOSE, minutos));
+                };
 
-                    vAlarmes.add(new AlarmeDTO(
-                            "0",
-                            medicamentoDTO.getIdMedicamento(),
-                            medicamentoDTO.getIdUsuario(),
-                            DataUtil.convertDateToString(DataUtil.getDataAtual()),
-                            AlarmeDTO.TIPO_ALARME_PROXIMA_DOSE, "Proxima dose de " + medicamentoDTO.getNomeFantasia(),
-                            "Faltam " + minutos + " minutos para tomar o remédio " + medicamentoDTO.getNomeFantasia()));
-                }
+                if (gerarAlarme(medicamentoDTO.getIdMedicamento(), AlarmeDTO.TIPO_ALARME_HORA_DOSE, mapaHorarioDTO,0,0))
+                {
+                    vAlarmes.add(new AlarmeDTO("0", medicamentoDTO, AlarmeDTO.TIPO_ALARME_HORA_DOSE, minutos));
+                };
 
-                if (gerarAlarme(
-                        medicamentoDTO.getIdMedicamento(),
-                        AlarmeDTO.TIPO_ALARME_DOSE_ATRASADA,
-                        mapaHorarioDTO,
-                        1,
-                        5)) {
-                    vAlarmes.add(new AlarmeDTO(
-                            "0",
-                            medicamentoDTO.getIdMedicamento(),
-                            medicamentoDTO.getIdUsuario(),
-                            DataUtil.convertDateToString(DataUtil.getDataAtual()),
-                            AlarmeDTO.TIPO_ALARME_DOSE_ATRASADA, "Dose atrasda de " + medicamentoDTO.getNomeFantasia(),
-                            "Passou " + minutos + " minutos de tomar o remédio " + medicamentoDTO.getNomeFantasia()));
+                if (gerarAlarme(medicamentoDTO.getIdMedicamento(),AlarmeDTO.TIPO_ALARME_DOSE_ATRASADA, mapaHorarioDTO,1,5))
+                {
+                    vAlarmes.add(new AlarmeDTO("0", medicamentoDTO, AlarmeDTO.TIPO_ALARME_DOSE_ATRASADA, minutos));
                 }
             }
         }
     }
 
-    private void verificarCriarAlarmeSuperDose
-            (List<AlarmeDTO> vAlarmes, List<UtilizacaoDTO> utilizacoes, HorarioDTO
-                    horarioDTO, MapaHorarioDTO mapaHorarioDTO, MedicamentoDTO medicamentoDTO) {
-
-        if (gerarAlarme(medicamentoDTO.getIdMedicamento(),
-                AlarmeDTO.TIPO_ALARME_PROXIMA_DOSE,
-                mapaHorarioDTO,
-                1,
-                5)) {
-            vAlarmes.add(new AlarmeDTO(
-                    "0",
-                    medicamentoDTO.getIdMedicamento(),
-                    medicamentoDTO.getIdUsuario(),
-                    DataUtil.convertDateToString(DataUtil.getDataAtual()),
-                    AlarmeDTO.TIPO_ALARME_DOSE_EXCEDIDA,
-                    "Doses Excedidas do Remédio " + medicamentoDTO.getNomeFantasia(),
-                    "Estava prescrita " + horarioDTO.getNrDoses() + " doses para o remédio " + medicamentoDTO.getNomeFantasia() + ", porem foram administradas " + utilizacoes.size()));
+    private void verificarCriarAlarmeSuperDose(List<AlarmeDTO> vAlarmes, List<UtilizacaoDTO> utilizacoes, HorarioDTO horarioDTO, MapaHorarioDTO mapaHorarioDTO, MedicamentoDTO medicamentoDTO)
+    {
+        if (gerarAlarme(medicamentoDTO.getIdMedicamento(), AlarmeDTO.TIPO_ALARME_PROXIMA_DOSE, mapaHorarioDTO, 1,5))
+        {
+            vAlarmes.add(new AlarmeDTO("0", medicamentoDTO, AlarmeDTO.TIPO_ALARME_DOSE_EXCEDIDA, horarioDTO.getNrDoses(),utilizacoes.size()));
         }
     }
 
@@ -274,5 +262,16 @@ public class GerenteAlarme {
         }
 
         return mapaHorarioUltimoDTO;
+    }
+
+    private int contarDosesPrescritas() {
+        int contador = 0;
+        for (MapaHorarioDTO mapaHorarioDTO : this.vMapa) {
+            if (mapaHorarioDTO.getHoraPrescrita() != null && mapaHorarioDTO.getHoraAdministrada() == null) {
+                contador++;
+            }
+        }
+
+        return contador;
     }
 }

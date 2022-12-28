@@ -62,6 +62,8 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private List<MedicamentoDTO> listaMedicamentos = new ArrayList<>();
     private TextView txvListaVazia;
+    private TextView txvCadastrados;
+    private TextView txvNaoAdministrado;
     private RecursoVozLifeCyCleObserver mRecursoVozObserver;
 
     Handler timerHandler = new Handler();
@@ -109,6 +111,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
         App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
         App.integracaoBularioEletronico = new FactoryIntegracaoBularioEletronico().createIntegracaoBularioEletronico(App.fontesConsulta);
+        App.listaAlarmes = new ArrayList<>();
 
         if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
             getSupportActionBar().hide();
@@ -125,6 +128,9 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         findViewById(R.id.floatingActionButton).setOnClickListener(this);
         findViewById(R.id.fundo).setOnClickListener(this);
         findViewById(R.id.cabecalho).setOnClickListener(this);
+
+        txvCadastrados = findViewById(R.id.txvCadastrados);
+        txvNaoAdministrado = findViewById(R.id.txvNaoAdministrado);
 
         App.integracaoUsuario.bemVindoFuncao(TipoFuncao.PESQUISA_MEDICAMENTOS);
 
@@ -265,7 +271,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         else
         if (numeroAcao == Constantes.ACAO_OBTER_LISTA_ALARME_HOJE) {
             GerenteAlarme gerenteAlarme = new GerenteAlarme(PrincipalActivity.this, listaMedicamentos, App.listaUtilizacoes, App.listaAlarmes);
-            gerenteAlarme.verificar();
+            gerenteAlarme.verificar(txvCadastrados, txvNaoAdministrado);
         }
     }
 

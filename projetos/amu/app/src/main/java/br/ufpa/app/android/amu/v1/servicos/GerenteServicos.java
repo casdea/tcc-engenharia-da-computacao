@@ -76,7 +76,7 @@ public class GerenteServicos {
 
                     if (App.usuario != null) {
                         App.usuario.setIdUsuario(idUsuario);
-                        App.tipoPerfil = TipoPerfil.PCD_VISAO_REDUZIDA; //TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+                        App.tipoPerfil = TipoPerfil.COMUM; //TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
                         //abrirTelaPrincipal(atividadeLocal);
                         gerenteServicosListener.executarAcao(Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL,autenticacao);

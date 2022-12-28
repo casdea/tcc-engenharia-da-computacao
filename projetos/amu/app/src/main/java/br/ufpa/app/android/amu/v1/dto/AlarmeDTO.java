@@ -1,12 +1,16 @@
 package br.ufpa.app.android.amu.v1.dto;
 
+import br.ufpa.app.android.amu.v1.util.DataUtil;
+
 public class AlarmeDTO
 {
 	public static final int TIPO_ALARME_PROXIMA_DOSE = 1;
 
-	public static final int TIPO_ALARME_DOSE_ATRASADA = 2;
+	public static final int TIPO_ALARME_HORA_DOSE = 2;
 
-	public static final int TIPO_ALARME_DOSE_EXCEDIDA = 3;
+	public static final int TIPO_ALARME_DOSE_ATRASADA = 3;
+
+	public static final int TIPO_ALARME_DOSE_EXCEDIDA = 4;
 
 	private String idAlarme;
 	private String idMedicamento;
@@ -19,14 +23,50 @@ public class AlarmeDTO
 	public AlarmeDTO() {
 	}
 
-	public AlarmeDTO(String idAlarme, String idMedicamento, String idUsuario, String dataHora, int tipoAlarme, String titulo, String descricao) {
+	public AlarmeDTO(String idAlarme, MedicamentoDTO medicamentoDTO, int tipoAlarme, int minutos) {
 		this.idAlarme = idAlarme;
-		this.idMedicamento = idMedicamento;
-		this.idUsuario = idUsuario;
-		this.dataHora = dataHora;
+		this.idMedicamento = medicamentoDTO.getIdMedicamento();
+		this.idUsuario = medicamentoDTO.getIdUsuario();
+		this.dataHora = DataUtil.convertDateTimeToString(DataUtil.getDataAtual());
 		this.tipoAlarme = tipoAlarme;
-		this.titulo = titulo;
-		this.descricao = descricao;
+
+		switch (tipoAlarme) {
+			case AlarmeDTO.TIPO_ALARME_PROXIMA_DOSE:
+			{
+				this.titulo = "Proxima dose de " + medicamentoDTO.getNomeFantasia();
+				this.descricao = "Faltam " + minutos + " minutos para tomar o remédio " + medicamentoDTO.getNomeFantasia();
+				break;
+			}
+
+			case AlarmeDTO.TIPO_ALARME_HORA_DOSE:
+			{
+				this.titulo = "Hora de Tomar " + medicamentoDTO.getNomeFantasia();
+				this.descricao = "Não esqueça de tomar o remédio " + medicamentoDTO.getNomeFantasia();
+				break;
+			}
+
+			case AlarmeDTO.TIPO_ALARME_DOSE_ATRASADA:
+			{
+				this.titulo = "Dose atrasada de " + medicamentoDTO.getNomeFantasia();
+				this.descricao = "Passou " + (minutos)*-1 + " minutos de tomar o remédio " + medicamentoDTO.getNomeFantasia();
+			}
+		}
+	}
+
+	public AlarmeDTO(String idAlarme, MedicamentoDTO medicamentoDTO, int tipoAlarme, int nrDoses, int nrUtilizacoes) {
+		this.idAlarme = idAlarme;
+		this.idMedicamento = medicamentoDTO.getIdMedicamento();
+		this.idUsuario = medicamentoDTO.getIdUsuario();
+		this.dataHora = DataUtil.convertDateTimeToString(DataUtil.getDataAtual());
+		this.tipoAlarme = tipoAlarme;
+
+		switch (tipoAlarme) {
+			case AlarmeDTO.TIPO_ALARME_DOSE_EXCEDIDA:
+			{
+				this.titulo = "Doses Excedidas do Remédio " + medicamentoDTO.getNomeFantasia();
+				this.descricao = "Estava prescrita " + nrDoses + " doses para o remédio " + medicamentoDTO.getNomeFantasia() + ", porem foram administradas " + nrUtilizacoes;
+			}
+		}
 	}
 
 	public String getIdAlarme() {
