@@ -1,18 +1,9 @@
 package br.ufpa.app.android.amu.v1.activity;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -28,7 +19,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,10 +30,9 @@ import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.adapter.MedicamentoAdapter;
-import br.ufpa.app.android.amu.v1.classes.GerenteAlarme;
+import br.ufpa.app.android.amu.v1.classes.TransacaoVerificarAlarme;
+import br.ufpa.app.android.amu.v1.classes.ProxyAssincronoAlarme;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
-import br.ufpa.app.android.amu.v1.dto.AlarmeDTO;
-import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
@@ -138,6 +127,8 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
         if (timerHandler != null && timerRunnable != null)
             timerHandler.postDelayed(timerRunnable, 0);
+
+
     }
 
     @Override
@@ -145,6 +136,8 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         super.onPause();
         if (timerHandler != null && timerRunnable != null)
             timerHandler.removeCallbacks(timerRunnable);
+
+
     }
 
     @Override
@@ -258,21 +251,6 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                         }
                     }));
         }
-        else
-        if (numeroAcao == Constantes.ACAO_OBTER_LISTA_HORARIO_ATIVO) {
-            GerenteServicos gerenteServicos = new GerenteServicos(PrincipalActivity.this);
-            gerenteServicos.obterListaUtilizacoesByUsuario(App.usuario.getIdUsuario());
-        }
-        else
-        if (numeroAcao == Constantes.ACAO_OBTER_LISTA_UTILIZACAO_HOJE) {
-            GerenteServicos gerenteServicos = new GerenteServicos(PrincipalActivity.this);
-            gerenteServicos.obterListaAlarmesByUsuario(App.usuario.getIdUsuario());
-        }
-        else
-        if (numeroAcao == Constantes.ACAO_OBTER_LISTA_ALARME_HOJE) {
-            GerenteAlarme gerenteAlarme = new GerenteAlarme(PrincipalActivity.this, listaMedicamentos, App.listaUtilizacoes, App.listaAlarmes);
-            gerenteAlarme.verificar(txvCadastrados, txvNaoAdministrado);
-        }
     }
 
     @Override
@@ -336,8 +314,9 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     }
 
     public void verificarAlarme() {
-        GerenteServicos gerenteServicos = new GerenteServicos(PrincipalActivity.this);
-        gerenteServicos.obterListaHorariosByUsuario(App.usuario.getIdUsuario());
+        ProxyAssincronoAlarme proxyAssincronoAlarme = new ProxyAssincronoAlarme(
+                new TransacaoVerificarAlarme(PrincipalActivity.this, this.listaMedicamentos, this.txvCadastrados, this.txvNaoAdministrado));
+        proxyAssincronoAlarme.executar();
     }
 
     @Override
@@ -345,5 +324,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         super.onStart();
         if (timerHandler != null && timerRunnable != null)
             timerHandler.postDelayed(timerRunnable, 0);
+
+
     }
 }

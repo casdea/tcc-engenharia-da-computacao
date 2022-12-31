@@ -240,7 +240,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
                 GerenteServicos gerenteServicos = new GerenteServicos(ConsultaAnvisaActivity.this);
                 gerenteServicos.obterTextoBula(medicamentoRetDTO);
             } else {
-                MedicamentoDTO medicamentoDTO = (MedicamentoDTO) lista.get(0);
+                App.medicamentoDTO = (MedicamentoDTO) lista.get(0);
                 Intent intent = new Intent(ConsultaAnvisaActivity.this, DetalheMedicamentoActivity.class);
                 detalheMedicamentoActivityResultLauncher.launch(intent);
             }

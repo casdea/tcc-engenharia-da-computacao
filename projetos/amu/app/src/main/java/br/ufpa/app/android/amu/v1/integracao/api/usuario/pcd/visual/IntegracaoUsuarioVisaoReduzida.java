@@ -349,7 +349,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
                     textoLido.setLanguage(Locale.getDefault());
                 }
                 if (i == TextToSpeech.SUCCESS) {
-                    textoLido.speak(texto, TextToSpeech.QUEUE_FLUSH, null);
+                    textoLido.speak(texto, TextToSpeech.QUEUE_ADD, null);
                 }
             }
         });

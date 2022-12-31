@@ -68,6 +68,11 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
                                     break;
                                 }
 
+                                case ComandosVoz.DOSE_REALIZADA: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_DOSE_REALIZADA, text.get(0));
+                                    break;
+                                }
+
                                 case ComandosVoz.TELA_ANTERIOR: {
                                     gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_TELA_ANTERIOR, text.get(0));
                                     break;
@@ -88,10 +93,6 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
                                     break;
                                 }
 
-                                case ComandosVoz.DOSE_REALIZADA: {
-                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_DOSE_REALIZADA, text.get(0));
-                                    break;
-                                }
                                 case ComandosVoz.ESTOQUE_ATUAL: {
                                     gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_ESTOQUE_ATUAL, text.get(0));
                                     break;
@@ -109,6 +110,16 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
 
                                 case ComandosVoz.ALTERNAR_PERFIL: {
                                     gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_ALTERNAR_PERFIL, text.get(0));
+                                    break;
+                                }
+
+                                case ComandosVoz.COMANDOS_DISPONIVEL_TELA_PRINCIPAL: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_COMANDOS_TELA_PRINCIPAL, text.get(0));
+                                    break;
+                                }
+
+                                case ComandosVoz.COMANDOS_DISPONIVEL_DETALHE_MEDICAMENTO: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_COMANDOS_DETALHE_MEDICAMENTO, text.get(0));
                                     break;
                                 }
 

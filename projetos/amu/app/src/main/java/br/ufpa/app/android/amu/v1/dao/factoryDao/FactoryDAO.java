@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.concurrent.Callable;
+
 import br.ufpa.app.android.amu.v1.dao.idao.IAlarmeDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IEstoqueDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IHorarioDao;
@@ -21,11 +23,19 @@ public class FactoryDAO {
 
     private DatabaseReference em;
     private AppCompatActivity atividade;
+    private Callable proximoComando;
 
     public FactoryDAO(DatabaseReference em, AppCompatActivity atividade)
     {
         this.em = em;
         this.atividade = atividade;
+    }
+
+    public FactoryDAO(DatabaseReference em, AppCompatActivity atividade, Callable proximoComando)
+    {
+        this.em = em;
+        this.atividade = atividade;
+        this.proximoComando = proximoComando;
     }
 
     private IUsuarioDao usuarioDao;
@@ -56,7 +66,7 @@ public class FactoryDAO {
     {
         if (horarioDao == null)
         {
-            horarioDao = new HorarioDao(em, atividade);
+            horarioDao = new HorarioDao(em, atividade, proximoComando);
         }
         return horarioDao;
     }
@@ -68,7 +78,7 @@ public class FactoryDAO {
     {
         if (utilizacaoDao == null)
         {
-            utilizacaoDao = new UtilizacaoDao(em, atividade);
+            utilizacaoDao = new UtilizacaoDao(em, atividade, proximoComando);
         }
         return utilizacaoDao;
     }
@@ -79,7 +89,7 @@ public class FactoryDAO {
     {
         if (estoqueDao == null)
         {
-            estoqueDao = new EstoqueDao(em, atividade);
+            estoqueDao = new EstoqueDao(em, atividade, proximoComando);
         }
         return estoqueDao;
     }
@@ -90,7 +100,7 @@ public class FactoryDAO {
     {
         if (alarmeDao == null)
         {
-            alarmeDao = new AlarmeDao(em, atividade);
+            alarmeDao = new AlarmeDao(em, atividade, proximoComando);
         }
         return alarmeDao;
     }

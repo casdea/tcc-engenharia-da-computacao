@@ -53,6 +53,8 @@ public class Constantes {
     public static final int ACAO_REGISTRO_ALARME_CONCLUIDO = 43;
     public static final int ACAO_ALTERAR_ALARME_CONCLUIDO = 44;
     public static final int ACAO_OBTER_LISTA_ALARME_HOJE = 45;
+    public static final int ACAO_VOZ_COMANDOS_TELA_PRINCIPAL = 46;
+    public static final int ACAO_VOZ_COMANDOS_DETALHE_MEDICAMENTO = 47;
 
     public static String[] intervalos = new String[] {
             "6 horas", "8 horas", "12 horas", "24 horas",

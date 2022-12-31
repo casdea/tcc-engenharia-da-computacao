@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IUtilizacaoDao;
@@ -31,11 +32,19 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
 
     private GerenteServicosListener gerenteServicosListener;
     private AppCompatActivity atividade;
+    private Callable callable;
 
     public UtilizacaoDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
         this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
+    }
+
+    public UtilizacaoDao(DatabaseReference em, AppCompatActivity atividade, Callable callable) {
+        super(em);
+        this.atividade = atividade;
+        this.gerenteServicosListener = (GerenteServicosListener) atividade;
+        this.callable = callable;
     }
 
     public Class<Utilizacao> getClassImplement() {
@@ -147,7 +156,11 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
                         App.listaUtilizacoes.add(utilizacaoDTO);
                 }
 
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_UTILIZACAO_HOJE, App.listaHorarios);
+                try {
+                    callable.call();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

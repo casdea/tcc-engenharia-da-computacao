@@ -12,4 +12,7 @@ public class ComandosVoz {
     public static final int SAIDA_ESTOQUE = 8;
     public static final int ALTERNAR_PERFIL = 9;
     public static final int SAIR = 10;
+    public static final int COMANDOS_DISPONIVEL_TELA_PRINCIPAL = 11;
+    public static final int COMANDOS_DISPONIVEL_DETALHE_MEDICAMENTO = 12;
 }
+

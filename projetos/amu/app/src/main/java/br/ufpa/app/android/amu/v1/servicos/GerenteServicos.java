@@ -12,6 +12,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.concurrent.Callable;
+
 import br.ufpa.app.android.amu.v1.activity.BemVindoActivity;
 import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
@@ -35,11 +37,12 @@ import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
 
-public class GerenteServicos {
+public class GerenteServicos  {
 
     private DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
     private AppCompatActivity atividade;
     private GerenteServicosListener gerenteServicosListener;
+    private Callable proximoComando;
 
     private static GerenteServicos gerenteServicos;
 
@@ -48,6 +51,11 @@ public class GerenteServicos {
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
     }
 
+    public GerenteServicos(AppCompatActivity atividade, Callable proximoComando) {
+        this.atividade = atividade;
+        this.gerenteServicosListener = (GerenteServicosListener) atividade;
+        this.proximoComando = (Callable) proximoComando;
+    }
     public Usuario incluirUsuario(UsuarioDTO usuarioDTO) {
         FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
         Usuario usuario = new Usuario(usuarioDTO);
@@ -190,22 +198,22 @@ public class GerenteServicos {
     }
 
     public void obterListaHorariosByUsuario(String idUsuario) {
-        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade, proximoComando);
         factoryDAO.getHorarioDao().findAllByUsuario(idUsuario);
     }
 
     public void obterListaUtilizacoesByUsuario(String idUsuario) {
-        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade, proximoComando);
         factoryDAO.getUtilizacaoDao().findAllByUsuario(idUsuario);
     }
 
     public void obterListaEstoquesByUsuario(String idUsuario) {
-        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade, proximoComando);
         factoryDAO.getEstoqueDao().findAllByUsuario(idUsuario);
     }
 
     public void obterListaAlarmesByUsuario(String idUsuario) {
-        FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
+        FactoryDAO factoryDAO = new FactoryDAO(em, atividade, proximoComando);
         factoryDAO.getAlarmeDao().findAllByUsuario(idUsuario);
     }
 

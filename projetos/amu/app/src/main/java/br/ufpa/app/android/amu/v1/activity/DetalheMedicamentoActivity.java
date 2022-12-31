@@ -332,7 +332,8 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     public void abrirDialogEntradaEstoque(View view) {
 
-        if (App.integracaoUsuario.validarEntradaEstoque(textInpTextQtdeEstoque.getText().toString()) == false) return;
+        if (App.integracaoUsuario.validarEntradaEstoque(textInpTextQtdeEstoque.getText().toString()) == false)
+            return;
 
         //Instanciar AlertDialog
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -385,7 +386,8 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     public void abrirDialogSaidaEstoque(View view) {
 
-        if (App.integracaoUsuario.validarSaidaEstoque(textInpTextQtdeEstoque.getText().toString()) == false) return;
+        if (App.integracaoUsuario.validarSaidaEstoque(textInpTextQtdeEstoque.getText().toString()) == false)
+            return;
 
         //Instanciar AlertDialog
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -484,7 +486,12 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     @Override
     public void executarAcao(int numeroAcao, Object parametro) {
-        if (numeroAcao == Constantes.ACAO_ALTERAR_MEDICAMENTO) {
+        if (numeroAcao == Constantes.ACAO_VOZ_DOSE_REALIZADA) {
+            if (App.integracaoUsuario.validarUtilizacaoMedicamento(App.listaHorarios) == false)
+                return;
+
+            sinalizarDoseRealizada();
+        } else if (numeroAcao == Constantes.ACAO_ALTERAR_MEDICAMENTO) {
             setResult(Activity.RESULT_OK, null);
             finish();
         } else if (numeroAcao == Constantes.ACAO_REGISTRAR_HORARIO) {

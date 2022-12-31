@@ -1,5 +1,6 @@
 package br.ufpa.app.android.amu.v1.dao.impl;
 
+import android.telecom.Call;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IHorarioDao;
@@ -30,11 +32,19 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
 
     private GerenteServicosListener gerenteServicosListener;
     private AppCompatActivity atividade;
+    private Callable proximoComando;
 
     public HorarioDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
         this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
+    }
+
+    public HorarioDao(DatabaseReference em, AppCompatActivity atividade, Callable proximoComando) {
+        super(em);
+        this.atividade = atividade;
+        this.gerenteServicosListener = (GerenteServicosListener) atividade;
+        this.proximoComando = proximoComando;
     }
 
     public Class<Horario> getClassImplement() {
@@ -146,7 +156,12 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
                     // TODO: handle the post
                 }
 
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_HORARIO_ATIVO, App.listaHorarios);
+                //gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_HORARIO_ATIVO, App.listaHorarios);
+                try {
+                    proximoComando.call();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
 

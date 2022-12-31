@@ -34,6 +34,7 @@ import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoUsuario;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.DataUtil;
+import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
 public class GerenteAlarme {
 
@@ -72,6 +73,7 @@ public class GerenteAlarme {
 
             for (AlarmeDTO alarmeDTO : vAlarmes) {
                 App.integracaoUsuario.dispararAlarme(alarmeDTO.getDescricao());
+                ThreadUtil.esperar(ThreadUtil.CINCO_SEGUNDOS);
             }
 
             for (AlarmeDTO alarmeDTO : vAlarmes) {

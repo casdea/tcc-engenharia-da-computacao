@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
@@ -33,11 +34,19 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
 
     private GerenteServicosListener gerenteServicosListener;
     private AppCompatActivity atividade;
+    private Callable proximoComando;
 
     public EstoqueDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
         this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
+    }
+
+    public EstoqueDao(DatabaseReference em, AppCompatActivity atividade, Callable proximoComando) {
+        super(em);
+        this.atividade = atividade;
+        this.gerenteServicosListener = (GerenteServicosListener) atividade;
+        this.proximoComando = proximoComando;
     }
 
     public Class<Estoque> getClassImplement() {

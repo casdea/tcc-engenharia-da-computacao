@@ -15,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IAlarmeDao;
@@ -33,11 +34,19 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
 
     private GerenteServicosListener gerenteServicosListener;
     private AppCompatActivity atividade;
+    private Callable proximoComando;
 
     public AlarmeDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
         this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
+    }
+
+    public AlarmeDao(DatabaseReference em, AppCompatActivity atividade, Callable proximoComando) {
+        super(em);
+        this.atividade = atividade;
+        this.gerenteServicosListener = (GerenteServicosListener) atividade;
+        this.proximoComando = proximoComando;
     }
 
     public Class<Alarme> getClassImplement() {
@@ -57,7 +66,6 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
                         Toast.LENGTH_LONG).show();
                 App.alarmeDTO.setIdAlarme(chave);
                 App.listaAlarmes.add(App.alarmeDTO);
-                gerenteServicosListener.carregarLista(Constantes.ACAO_REGISTRO_ALARME_CONCLUIDO, null);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -115,7 +123,12 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
                         App.listaAlarmes.add(alarmeDTO);
                 }
 
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ALARME_HOJE, App.listaAlarmes);
+              //  gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ALARME_HOJE, App.listaAlarmes);
+                try {
+                    proximoComando.call();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
