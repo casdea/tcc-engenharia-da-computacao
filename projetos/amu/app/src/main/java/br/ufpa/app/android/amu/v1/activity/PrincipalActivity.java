@@ -30,8 +30,6 @@ import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.adapter.MedicamentoAdapter;
-import br.ufpa.app.android.amu.v1.classes.TransacaoVerificarAlarme;
-import br.ufpa.app.android.amu.v1.classes.ProxyAssincronoAlarme;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
@@ -202,7 +200,6 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         gerenteServicos.obterListaMedicamentosByUsuario(App.usuario.getIdUsuario());
     }
 
-
     @Override
     public void carregarLista(int numeroAcao, List<?> lista) {
         if (numeroAcao == Constantes.ACAO_OBTER_LISTA_MEDICAMENTO_POR_USUARIO) {
@@ -314,9 +311,8 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     }
 
     public void verificarAlarme() {
-        ProxyAssincronoAlarme proxyAssincronoAlarme = new ProxyAssincronoAlarme(
-                new TransacaoVerificarAlarme(PrincipalActivity.this, this.listaMedicamentos, this.txvCadastrados, this.txvNaoAdministrado));
-        proxyAssincronoAlarme.executar();
+        GerenteServicos gerenteServicos = new GerenteServicos(PrincipalActivity.this);
+        gerenteServicos.verificarAlarme( this.listaMedicamentos, this.txvCadastrados, this.txvNaoAdministrado);
     }
 
     @Override

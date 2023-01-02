@@ -51,11 +51,12 @@ public class GerenteAlarme {
         this.alarmes = alarmes;
     }
 
-    public void verificar(TextView txvCadastrados, TextView txvNaoAdministrado) {
+    public void verificar(TextView txvCadastrados, TextView txvNaoAdministrado) throws InterruptedException {
 
 
         int cadastradosHorarioAtivo = 0;
         int naoAdministrados = 0;
+        List<AlarmeDTO> vAlarmesTodos = new ArrayList<>();
 
         for (MedicamentoDTO medicamentoDTO : medicamentos) {
 
@@ -68,22 +69,24 @@ public class GerenteAlarme {
             List<AlarmeDTO> vAlarmes = verificarCriarAlarme(App.listaUtilizacoes, horarioDTO, medicamentoDTO);
 
             for (AlarmeDTO alarmeDTO : vAlarmes) {
-                enviarNotificacao(alarmeDTO.getTitulo(), alarmeDTO.getDescricao());
-            }
-
-            for (AlarmeDTO alarmeDTO : vAlarmes) {
-                App.integracaoUsuario.dispararAlarme(alarmeDTO.getDescricao());
-                ThreadUtil.esperar(ThreadUtil.CINCO_SEGUNDOS);
-            }
-
-            for (AlarmeDTO alarmeDTO : vAlarmes) {
                 GerenteServicos gerenteServicos = new GerenteServicos(atividade);
                 App.alarmeDTO = alarmeDTO;
                 gerenteServicos.incluirAlarme(alarmeDTO);
             }
 
+            vAlarmesTodos.addAll(vAlarmes);
+
             int horariosPrescritos = contarDosesPrescritas();
             if (horariosPrescritos > utilizacoes.size()) naoAdministrados++;
+        }
+
+        for (AlarmeDTO alarmeDTO : vAlarmesTodos) {
+            enviarNotificacao(alarmeDTO.getIdMedicamento(), alarmeDTO.getTitulo(), alarmeDTO.getDescricao());
+        }
+
+        for (AlarmeDTO alarmeDTO : vAlarmesTodos) {
+            App.integracaoUsuario.dispararAlarme(alarmeDTO.getDescricao());
+            //ThreadUtil.esperar(ThreadUtil.CINCO_SEGUNDOS);
         }
 
         txvCadastrados.setText("Cadastrados/Horário "+String.valueOf(cadastradosHorarioAtivo));
@@ -197,35 +200,8 @@ public class GerenteAlarme {
         });
     }
 
-    private void enviarNotificacao(String titulo, String corpo) {
-
-        //Configuraçõe para notificação
-        String canal = atividade.getString(R.string.default_notification_channel_id);
-        Uri uriSom = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Intent intent = new Intent(atividade, PrincipalActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(atividade, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-
-        //Criar notificação
-        NotificationCompat.Builder notificacao = new NotificationCompat.Builder(atividade, canal)
-                .setContentTitle(titulo)
-                .setContentText(corpo)
-                .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
-                .setSound(uriSom)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent);
-
-        //Recupera notificationManager
-        NotificationManager notificationManager = (NotificationManager) atividade.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        //Verifica versão do Android a partir do Oreo para configurar canal de notificação
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(canal, "canal", NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        //Envia notificação
-        notificationManager.notify(0, notificacao.build());
-
+    private void enviarNotificacao(String idMedicamento, String titulo, String corpo) throws InterruptedException {
+        new TransacaoEnviarNotificacao(atividade,idMedicamento, titulo,corpo).executar();
     }
 
     //26/12/2022 19:55

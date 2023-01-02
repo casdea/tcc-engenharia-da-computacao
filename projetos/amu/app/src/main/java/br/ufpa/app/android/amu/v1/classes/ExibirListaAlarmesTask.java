@@ -26,8 +26,7 @@ public class ExibirListaAlarmesTask implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() {
-        GerenteServicos gerenteServicos = new GerenteServicos(atividade);
+    public Integer call() throws InterruptedException {
         GerenteAlarme gerenteAlarme = new GerenteAlarme(atividade, medicamentos, App.listaUtilizacoes, App.listaAlarmes);
         gerenteAlarme.verificar(txvCadastrados, txvNaoAdministrado);
         return 0;

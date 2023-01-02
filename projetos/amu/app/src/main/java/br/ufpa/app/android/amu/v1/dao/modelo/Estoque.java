@@ -7,7 +7,7 @@ public class Estoque  extends AbstractEntity {
     private String idEstoque;
     private String idMedicamento;
     private String idUsuario;
-    private String data;
+    private String dataHora;
     private int entrada;
     private int saida;
     private int saldo;
@@ -21,7 +21,7 @@ public class Estoque  extends AbstractEntity {
         this.idEstoque = estoqueDTO.getIdEstoque();
         this.idMedicamento = estoqueDTO.getIdMedicamento();
         this.idUsuario = estoqueDTO.getIdUsuario();
-        this.data = estoqueDTO.getData();
+        this.dataHora = estoqueDTO.getDataHora();
         this.entrada = estoqueDTO.getEntrada();
         this.saida = estoqueDTO.getSaida();
         this.saldo = estoqueDTO.getSaldo();
@@ -51,12 +51,12 @@ public class Estoque  extends AbstractEntity {
         this.idUsuario = idUsuario;
     }
 
-    public String getData() {
-        return data;
+    public String getDataHora() {
+        return dataHora;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDataHora(String dataHora) {
+        this.dataHora = dataHora;
     }
 
     public int getEntrada() {

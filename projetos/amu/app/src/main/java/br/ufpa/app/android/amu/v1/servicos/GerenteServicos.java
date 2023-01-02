@@ -1,6 +1,7 @@
 package br.ufpa.app.android.amu.v1.servicos;
 
 import android.content.Intent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,10 +13,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.activity.BemVindoActivity;
 import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
+import br.ufpa.app.android.amu.v1.classes.ProxyAssincronoServico;
+import br.ufpa.app.android.amu.v1.classes.TransacaoVerificarAlarme;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.factoryDao.FactoryDAO;
 import br.ufpa.app.android.amu.v1.dao.helper.Base64Custom;
@@ -197,30 +201,15 @@ public class GerenteServicos  {
         factoryDAO.getEstoqueDao().sinalizarDoseRealizada(idUsuario,idMedicamento,estoqueDTO);
     }
 
-    public void obterListaHorariosByUsuario(String idUsuario) {
-        FactoryDAO factoryDAO = new FactoryDAO(em, atividade, proximoComando);
-        factoryDAO.getHorarioDao().findAllByUsuario(idUsuario);
-    }
-
-    public void obterListaUtilizacoesByUsuario(String idUsuario) {
-        FactoryDAO factoryDAO = new FactoryDAO(em, atividade, proximoComando);
-        factoryDAO.getUtilizacaoDao().findAllByUsuario(idUsuario);
-    }
-
-    public void obterListaEstoquesByUsuario(String idUsuario) {
-        FactoryDAO factoryDAO = new FactoryDAO(em, atividade, proximoComando);
-        factoryDAO.getEstoqueDao().findAllByUsuario(idUsuario);
-    }
-
-    public void obterListaAlarmesByUsuario(String idUsuario) {
-        FactoryDAO factoryDAO = new FactoryDAO(em, atividade, proximoComando);
-        factoryDAO.getAlarmeDao().findAllByUsuario(idUsuario);
-    }
-
     public void incluirAlarme(AlarmeDTO alarmeDTO) {
         FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
         Alarme alarme = new Alarme(alarmeDTO);
         factoryDAO.getAlarmeDao().create(alarme);
     }
 
+    public void verificarAlarme(List<MedicamentoDTO> medicamentos, TextView txvCadastrados, TextView txvNaoAdministrado) {
+        ProxyAssincronoServico proxyAssincronoAlarme = new ProxyAssincronoServico(
+                new TransacaoVerificarAlarme(atividade, medicamentos, txvCadastrados, txvNaoAdministrado));
+        proxyAssincronoAlarme.executar();
+    }
 }

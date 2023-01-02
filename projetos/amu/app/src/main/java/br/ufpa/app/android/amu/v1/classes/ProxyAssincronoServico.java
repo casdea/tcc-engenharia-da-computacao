@@ -2,10 +2,10 @@ package br.ufpa.app.android.amu.v1.classes;
 
 import br.ufpa.app.android.amu.v1.interfaces.Transacao;
 
-public class ProxyAssincronoAlarme implements Transacao {
+public class ProxyAssincronoServico implements Transacao {
     private Transacao transacao;
 
-    public ProxyAssincronoAlarme(Transacao transacao) {
+    public ProxyAssincronoServico(Transacao transacao) {
         this.transacao = transacao;
     }
 

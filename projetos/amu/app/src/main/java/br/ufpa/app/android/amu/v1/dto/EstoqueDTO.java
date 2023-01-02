@@ -4,7 +4,7 @@ public class EstoqueDTO {
     private String idEstoque;
     private String idMedicamento;
     private String idUsuario;
-    private String data;
+    private String dataHora;
     private int entrada;
     private int saida;
     private int saldo;
@@ -33,12 +33,12 @@ public class EstoqueDTO {
         this.idUsuario = idUsuario;
     }
 
-    public String getData() {
-        return data;
+    public String getDataHora() {
+        return dataHora;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDataHora(String dataHora) {
+        this.dataHora = dataHora;
     }
 
     public int getEntrada() {
