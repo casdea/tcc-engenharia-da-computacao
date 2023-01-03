@@ -9,7 +9,6 @@ import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.factoryDao.FactoryDAO;
-import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 
 public class ObterListaUtilizacoesTask implements Callable<Integer> {

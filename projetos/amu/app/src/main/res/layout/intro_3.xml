@@ -17,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/tres" />
+        app:srcCompat="@drawable/tres"
+        android:contentDescription="Bem vindo Imagem 3" />
 
     <TextView
         android:id="@+id/textView"

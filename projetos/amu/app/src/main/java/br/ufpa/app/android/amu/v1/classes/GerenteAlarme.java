@@ -1,19 +1,9 @@
 package br.ufpa.app.android.amu.v1.classes;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,20 +11,14 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import br.ufpa.app.android.amu.v1.R;
-import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
 import br.ufpa.app.android.amu.v1.dto.AlarmeDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MapaHorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
-import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
-import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoUsuario;
-import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoUsuario;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.DataUtil;
-import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
 public class GerenteAlarme {
 

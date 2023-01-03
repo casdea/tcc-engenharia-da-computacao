@@ -2,7 +2,6 @@ package br.ufpa.app.android.amu.v1.dao.modelo;
 
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
 import br.ufpa.app.android.amu.v1.dto.AlarmeDTO;
-import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 
 public class Alarme extends AbstractEntity {
 

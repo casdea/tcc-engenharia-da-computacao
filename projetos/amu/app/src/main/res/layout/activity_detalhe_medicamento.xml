@@ -82,7 +82,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Trok N"
+            android:text="@string/exemplo_nome_comercial"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -139,6 +139,7 @@
                 android:id="@+id/viewpagertab"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:contentDescription="Abas do Detalhe"
                 app:stl_clickable="true"
                 app:stl_defaultTabBackground="?attr/selectableItemBackground"
                 app:stl_defaultTabTextAllCaps="true"
@@ -169,7 +170,8 @@
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/viewpagertab" />
+                android:layout_below="@id/viewpagertab"
+                android:contentDescription="Abas da Visualizacao Página" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -243,6 +245,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
+            android:contentDescription="Entrada no Estoque"
+            android:minHeight="48dp"
             app:layout_constraintEnd_toStartOf="@+id/imbRemover"
             app:layout_constraintStart_toEndOf="@+id/textInputLayoutEstoque"
             app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento"
@@ -255,6 +259,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
+            android:contentDescription="Saída do Estoque"
+            android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imbAdicionar"
             app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento"

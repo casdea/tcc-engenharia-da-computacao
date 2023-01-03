@@ -8,16 +8,12 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-import java.util.List;
-
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
-import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.interfaces.Transacao;
 
 public class TransacaoEnviarNotificacao implements Transacao {

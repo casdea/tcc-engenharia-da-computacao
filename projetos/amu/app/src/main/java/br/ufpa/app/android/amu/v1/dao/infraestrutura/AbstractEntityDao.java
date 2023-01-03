@@ -1,7 +1,6 @@
 package br.ufpa.app.android.amu.v1.dao.infraestrutura;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 

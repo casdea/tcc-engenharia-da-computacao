@@ -18,12 +18,9 @@ import java.util.ArrayList;
 
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IComandoDao;
-import br.ufpa.app.android.amu.v1.dao.idao.IUtilizacaoDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
 import br.ufpa.app.android.amu.v1.dao.modelo.Comando;
-import br.ufpa.app.android.amu.v1.dao.modelo.Utilizacao;
 import br.ufpa.app.android.amu.v1.dto.ComandoDTO;
-import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;

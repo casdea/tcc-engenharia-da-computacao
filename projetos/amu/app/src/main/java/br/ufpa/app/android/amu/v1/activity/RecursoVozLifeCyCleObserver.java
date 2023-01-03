@@ -2,7 +2,6 @@ package br.ufpa.app.android.amu.v1.activity;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.speech.RecognizerIntent;
@@ -19,9 +18,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 import java.util.ArrayList;
 
-import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
-import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;

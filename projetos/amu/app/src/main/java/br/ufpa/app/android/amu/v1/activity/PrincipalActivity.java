@@ -105,7 +105,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setOnClickListener(this);
-        recyclerView.setOnTouchListener(this);
+        //recyclerView.setOnTouchListener(this);
 
         mRecursoVozObserver = new RecursoVozLifeCyCleObserver(getActivityResultRegistry(), PrincipalActivity.this);
         getLifecycle().addObserver(mRecursoVozObserver);
@@ -275,11 +275,18 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-
-        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
-            mRecursoVozObserver.chamarItenteReconechimentoVoz();
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+                    mRecursoVozObserver.chamarItenteReconechimentoVoz();
+                }
+                return true;
+            case MotionEvent.ACTION_UP:
+                view.performClick();
+                return true;
+            default:
+                break;
         }
-
         return false;
     }
 
@@ -312,7 +319,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
     public void verificarAlarme() {
         GerenteServicos gerenteServicos = new GerenteServicos(PrincipalActivity.this);
-        gerenteServicos.verificarAlarme( this.listaMedicamentos, this.txvCadastrados, this.txvNaoAdministrado);
+        gerenteServicos.verificarAlarme(this.listaMedicamentos, this.txvCadastrados, this.txvNaoAdministrado);
     }
 
     @Override

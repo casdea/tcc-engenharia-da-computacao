@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
-import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 
 public class ExibirListaAlarmesTask implements Callable<Integer> {

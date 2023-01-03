@@ -1,7 +1,5 @@
 package br.ufpa.app.android.amu.v1.dto;
 
-import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
-
 public class ComandoDTO {
     private String idComando;
     private String idUsuario;

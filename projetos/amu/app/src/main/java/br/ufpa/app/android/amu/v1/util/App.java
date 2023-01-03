@@ -2,11 +2,9 @@ package br.ufpa.app.android.amu.v1.util;
 
 import android.app.Application;
 import android.content.Context;
-import android.view.View;
 
 import java.util.List;
 
-import br.ufpa.app.android.amu.v1.dao.modelo.Alarme;
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
 import br.ufpa.app.android.amu.v1.dto.AlarmeDTO;
 import br.ufpa.app.android.amu.v1.dto.ComandoDTO;

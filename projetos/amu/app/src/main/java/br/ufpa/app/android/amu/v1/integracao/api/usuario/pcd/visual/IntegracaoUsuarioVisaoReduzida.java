@@ -3,13 +3,11 @@ package br.ufpa.app.android.amu.v1.integracao.api.usuario.pcd.visual;
 import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Locale;
 
 import br.ufpa.app.android.amu.v1.R;
-import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
@@ -263,7 +261,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     }
 
     public void bemVindoFuncao(TipoFuncao tipoFuncao) {
-        int idBemVindoFuncao = 0;
+        int idBemVindoFuncao;
 
         switch (tipoFuncao) {
             case PESQUISA_MEDICAMENTOS:
@@ -541,7 +539,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
         String restoTexto = StringUtil.removerAcentos(s.replace(textoCorrespondente, "").trim());
 
-        int i = 0;
+        int i;
 
         try {
             i = Integer.valueOf(restoTexto);

@@ -17,12 +17,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
-import br.ufpa.app.android.amu.v1.dao.idao.IUtilizacaoDao;
 import br.ufpa.app.android.amu.v1.dao.idao.IVariacoesComandoDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
-import br.ufpa.app.android.amu.v1.dao.modelo.Utilizacao;
 import br.ufpa.app.android.amu.v1.dao.modelo.VariacoesComando;
-import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.dto.VariacoesComandoDTO;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;

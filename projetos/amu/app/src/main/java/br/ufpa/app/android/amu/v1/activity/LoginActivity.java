@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
 
                 } else {
 
-                    String excecao = "";
+                    String excecao;
                     try {
                         throw task.getException();
                     } catch (FirebaseAuthInvalidUserException e) {

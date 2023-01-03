@@ -1,7 +1,5 @@
 package br.ufpa.app.android.amu.v1.dto;
 
-import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntity;
-
 public class VariacoesComandoDTO {
     private String idVariacaoComando;
     private String idComando;

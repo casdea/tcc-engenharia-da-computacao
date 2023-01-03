@@ -1,11 +1,5 @@
 package br.ufpa.app.android.amu.v1.util;
 
-import android.content.Intent;
-
-import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
-import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
-import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
-
 public class Constantes {
     public static final int ACAO_REGISTRAR_MEDICAMENTO = 1;
     public static final int ACAO_OBTER_LISTA_MEDICAMENTO_POR_USUARIO = 2;

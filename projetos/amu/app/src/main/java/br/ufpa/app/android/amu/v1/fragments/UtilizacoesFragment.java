@@ -66,7 +66,7 @@ public class UtilizacoesFragment extends Fragment implements DetalheMedicamentoA
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setOnClickListener(this);
-        recyclerView.setOnTouchListener(this);
+        //recyclerView.setOnTouchListener(this);
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
                 getContext(),
@@ -130,10 +130,18 @@ public class UtilizacoesFragment extends Fragment implements DetalheMedicamentoA
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
-            gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, 0);
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+                    gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, 0);
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                view.performClick();
+                break;
+            default:
+                break;
         }
-
-        return false;
+        return true;
     }
 }

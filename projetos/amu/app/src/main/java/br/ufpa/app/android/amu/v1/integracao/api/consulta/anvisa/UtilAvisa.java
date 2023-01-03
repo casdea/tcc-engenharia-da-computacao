@@ -168,7 +168,7 @@ public class UtilAvisa {
     }
 
     private static String findParteByChave(String[] partes, String chaveParte) {
-        String parte = "";
+        String parte;
 
         for (int i = 0; i < partes.length; i++) {
             parte = partes[i].trim();

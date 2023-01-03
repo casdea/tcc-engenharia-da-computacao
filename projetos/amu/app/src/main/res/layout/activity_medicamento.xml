@@ -216,7 +216,8 @@
                 android:inputType="date"
                 android:hint="@string/inicio_administracao"
                 android:text="@string/exemplo_inicio_adm"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:focusable="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

@@ -44,8 +44,6 @@ import br.ufpa.app.android.amu.v1.helper.PaletaCoresActivity;
 import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
-import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoBularioEletronico;
-import br.ufpa.app.android.amu.v1.integracao.factory.FactoryIntegracaoUsuario;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
@@ -321,7 +319,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         App.estoqueDTO.setIdEstoque("0");
         App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
         App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
-        App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
+        App.estoqueDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
         App.estoqueDTO.setEntrada(0);
         App.estoqueDTO.setSaida(horarioDTO.getQtdePorDose());
         App.estoqueDTO.setSaldo(0);
@@ -375,7 +373,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         App.estoqueDTO.setIdEstoque("0");
         App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
         App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
-        App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
+        App.estoqueDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
         App.estoqueDTO.setEntrada(Integer.parseInt(textInpTextQtdeEstoque.getText().toString()));
         App.estoqueDTO.setSaida(0);
         App.estoqueDTO.setSaldo(0);
@@ -428,7 +426,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         App.estoqueDTO.setIdEstoque("0");
         App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
         App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
-        App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
+        App.estoqueDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
         App.estoqueDTO.setEntrada(0);
         App.estoqueDTO.setSaida(Integer.parseInt(textInpTextQtdeEstoque.getText().toString()));
         App.estoqueDTO.setSaldo(0);
@@ -561,13 +559,18 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-
-        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
-            mRecursoVozObserver.chamarItenteReconechimentoVoz();
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+                    mRecursoVozObserver.chamarItenteReconechimentoVoz();
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                view.performClick();
+                break;
+            default:
+                break;
         }
-
-        return false;
+        return true;
     }
-
-
 }

@@ -19,12 +19,9 @@ import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IAlarmeDao;
-import br.ufpa.app.android.amu.v1.dao.idao.IUtilizacaoDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
 import br.ufpa.app.android.amu.v1.dao.modelo.Alarme;
-import br.ufpa.app.android.amu.v1.dao.modelo.Utilizacao;
 import br.ufpa.app.android.amu.v1.dto.AlarmeDTO;
-import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;

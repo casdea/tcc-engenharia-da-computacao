@@ -2,6 +2,7 @@ package br.ufpa.app.android.amu.v1.adapter;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
             }
             catch (Exception e)
             {
-
+                Log.e("Erro ao Definir cor",e.getMessage());
             }
         }
         holder.txvNomeMedicamento.setText(listaMedicamentos.get(position).getNomeComercial());

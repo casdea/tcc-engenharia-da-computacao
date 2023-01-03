@@ -20,7 +20,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
-import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.R;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

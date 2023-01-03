@@ -68,7 +68,7 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
                         App.estoqueDTO.setIdUsuario(medicamento.getIdUsuario());
                         App.estoqueDTO.setIdEstoque("0");
                         App.estoqueDTO.setIdMedicamento(medicamento.getIdMedicamento());
-                        App.estoqueDTO.setData(DataUtil.convertDateTimeToString(new java.util.Date()));
+                        App.estoqueDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
                         App.estoqueDTO.setEntrada(medicamento.getQtdeEmbalagem());
                         App.estoqueDTO.setSaida(0);
                         App.estoqueDTO.setSaldo(medicamento.getQtdeEmbalagem());

@@ -18,17 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IEstoqueDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
 import br.ufpa.app.android.amu.v1.dao.modelo.Estoque;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
-import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
-import br.ufpa.app.android.amu.v1.util.DataUtil;
 
 public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDao {
 
@@ -298,7 +295,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
         estoqueDTO.setIdEstoque(estoque.getIdEstoque());
         estoqueDTO.setIdMedicamento(estoque.getIdMedicamento());
         estoqueDTO.setIdUsuario(estoque.getIdUsuario());
-        estoqueDTO.setData(estoque.getData());
+        estoqueDTO.setDataHora(estoque.getDataHora());
         estoqueDTO.setEntrada(estoque.getEntrada());
         estoqueDTO.setSaida(estoque.getSaida());
         estoqueDTO.setSaldo(estoque.getSaldo());

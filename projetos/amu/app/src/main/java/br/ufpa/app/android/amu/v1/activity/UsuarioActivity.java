@@ -155,7 +155,7 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
 
                     } else {
 
-                        String excecao = "";
+                        String excecao;
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthWeakPasswordException e) {
