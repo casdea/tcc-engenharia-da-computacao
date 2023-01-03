@@ -36,7 +36,7 @@ public class TransacaoEnviarNotificacao implements Transacao {
         String canal = idMedicamento; //atividade.getString(R.string.default_notification_channel_id);
         Uri uriSom = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Intent intent = new Intent(atividade, PrincipalActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(atividade, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(atividade, 0, intent, PendingIntent.FLAG_MUTABLE);
 
         //Criar notificação
         NotificationCompat.Builder notificacao = new NotificationCompat.Builder(atividade, canal)

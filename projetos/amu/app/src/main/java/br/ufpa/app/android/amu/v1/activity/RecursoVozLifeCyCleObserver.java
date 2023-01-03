@@ -25,9 +25,9 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
 public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
-    private final ActivityResultRegistry mRegistry;
-    private ActivityResultLauncher<Intent> mGetRecursoVoz;
-    private GerenteServicosListener gerenteServicosListener;
+    final ActivityResultRegistry mRegistry;
+    ActivityResultLauncher<Intent> mGetRecursoVoz;
+    GerenteServicosListener gerenteServicosListener;
 
     RecursoVozLifeCyCleObserver(@NonNull ActivityResultRegistry registry, AppCompatActivity atividade) {
         mRegistry = registry;
@@ -117,6 +117,11 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
 
                                 case ComandosVoz.COMANDOS_DISPONIVEL_DETALHE_MEDICAMENTO: {
                                     gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_COMANDOS_DETALHE_MEDICAMENTO, text.get(0));
+                                    break;
+                                }
+
+                                case ComandosVoz.PESQUISAR_MEDICAMENTOS_ANVISA: {
+                                    gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_MONTAR_LISTA_ANVISA, text.get(0));
                                     break;
                                 }
 

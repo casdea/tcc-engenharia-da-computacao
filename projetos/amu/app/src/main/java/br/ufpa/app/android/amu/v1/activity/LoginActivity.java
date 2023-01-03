@@ -31,11 +31,11 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class LoginActivity extends AppCompatActivity implements GerenteServicosListener {
 
-    private EditText campoEmail, campoSenha;
-    private TextView txvEsqueciMinhaSenha;
-    private Button botaoEntrar;
-    private UsuarioDTO usuarioDTO;
-    private FirebaseAuth autenticacao;
+    EditText campoEmail, campoSenha;
+    TextView txvEsqueciMinhaSenha;
+    Button botaoEntrar;
+    UsuarioDTO usuarioDTO;
+    FirebaseAuth autenticacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

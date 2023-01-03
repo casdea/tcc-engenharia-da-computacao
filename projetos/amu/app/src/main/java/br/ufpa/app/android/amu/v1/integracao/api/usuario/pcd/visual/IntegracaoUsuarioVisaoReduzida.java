@@ -21,8 +21,8 @@ import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
 public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
-    private MediaPlayer mediaPlayer;
-    private TextToSpeech textoLido;
+    MediaPlayer mediaPlayer;
+    TextToSpeech textoLido;
 
     public IntegracaoUsuarioVisaoReduzida() {
         textoLido = new TextToSpeech(App.context, new TextToSpeech.OnInitListener() {
@@ -151,6 +151,11 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "SAIR DO APLICATIVO"
     };
 
+    private String[] TEXTOS_VOZ_PESQUISAR_ANVISA = {
+            "PESQUISAR",
+            "PESQUISAR MEDICAMENTO"
+    };
+
     private String[] getArrayVoz(int acao) {
         switch (acao) {
             case ComandosVoz.LISTA_MEDICAMENTOS:
@@ -169,6 +174,8 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
                 return TEXTOS_VOZ_ALTERNAR_PERFIL;
             case ComandosVoz.SAIR:
                 return TEXTOS_VOZ_FECHAR_APP;
+            case ComandosVoz.PESQUISAR_MEDICAMENTOS_ANVISA:
+                return TEXTOS_VOZ_PESQUISAR_ANVISA;
             default:
                 throw new IllegalStateException("Unexpected value: " + acao);
         }
@@ -247,6 +254,8 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             return ComandosVoz.ALTERNAR_PERFIL;
         } else if (findTexto(TEXTOS_VOZ_FECHAR_APP, texto)) {
             return ComandosVoz.SAIR;
+        } else if (findTexto(TEXTOS_VOZ_PESQUISAR_ANVISA, texto)) {
+            return ComandosVoz.PESQUISAR_MEDICAMENTOS_ANVISA;
         }
 
         return -1;

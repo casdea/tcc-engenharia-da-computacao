@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IComandoDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
@@ -27,8 +28,8 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class ComandoDao extends AbstractEntityDao<Comando> implements IComandoDao {
 
-    private GerenteServicosListener gerenteServicosListener;
-    private AppCompatActivity atividade;
+    GerenteServicosListener gerenteServicosListener;
+    AppCompatActivity atividade;
 
     public ComandoDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
@@ -104,7 +105,8 @@ public class ComandoDao extends AbstractEntityDao<Comando> implements IComandoDa
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     ComandoDTO comandoDTO = getComandoDTO(postSnapshot);
 
-                    Log.i("Lendo dados ", postSnapshot.toString());
+                    if (BuildConfig.DEBUG)
+                       Log.i("Lendo dados ", postSnapshot.toString());
 
                     App.listaComandos.add(comandoDTO);
                     // TODO: handle the post
@@ -125,7 +127,7 @@ public class ComandoDao extends AbstractEntityDao<Comando> implements IComandoDa
     }
 
     @NonNull
-    private ComandoDTO getComandoDTO(DataSnapshot postSnapshot) {
+    ComandoDTO getComandoDTO(DataSnapshot postSnapshot) {
         Comando comando = postSnapshot.getValue(Comando.class);
 
         ComandoDTO comandoDTO = new ComandoDTO();

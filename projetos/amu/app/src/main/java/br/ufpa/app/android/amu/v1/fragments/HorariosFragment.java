@@ -37,7 +37,7 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 public class HorariosFragment extends Fragment implements DetalheMedicamentoActivity.OnHorariosListener, GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
     private RecyclerView recyclerView;
 
-    private GerenteServicosListener gerenteServicosListener;
+    GerenteServicosListener gerenteServicosListener;
 
     @Override
     public void onAttach(@NonNull Activity activity) {
@@ -50,7 +50,7 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
         // Required empty public constructor
     }
 
-    private ActivityResultLauncher<Intent> mnutencaoHorarioActivityResultLauncher = registerForActivityResult(
+    ActivityResultLauncher<Intent> mnutencaoHorarioActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override

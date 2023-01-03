@@ -14,5 +14,6 @@ public class ComandosVoz {
     public static final int SAIR = 10;
     public static final int COMANDOS_DISPONIVEL_TELA_PRINCIPAL = 11;
     public static final int COMANDOS_DISPONIVEL_DETALHE_MEDICAMENTO = 12;
+    public static final int PESQUISAR_MEDICAMENTOS_ANVISA = 13;
 }
 

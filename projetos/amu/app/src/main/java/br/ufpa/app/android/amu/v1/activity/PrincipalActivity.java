@@ -45,13 +45,13 @@ import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
 public class PrincipalActivity extends AppCompatActivity implements GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
 
-    private RecyclerView recyclerView;
-    private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-    private List<MedicamentoDTO> listaMedicamentos = new ArrayList<>();
-    private TextView txvListaVazia;
-    private TextView txvCadastrados;
-    private TextView txvNaoAdministrado;
-    private RecursoVozLifeCyCleObserver mRecursoVozObserver;
+    RecyclerView recyclerView;
+    FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+    List<MedicamentoDTO> listaMedicamentos = new ArrayList<>();
+    TextView txvListaVazia;
+    TextView txvCadastrados;
+    TextView txvNaoAdministrado;
+    RecursoVozLifeCyCleObserver mRecursoVozObserver;
 
     Handler timerHandler = new Handler();
     Runnable timerRunnable = new Runnable() {
@@ -66,7 +66,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         }
     };
 
-    private ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
+    ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -77,7 +77,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                 }
             });
 
-    private ActivityResultLauncher<Intent> consultarAvisaActivityResultLauncher = registerForActivityResult(
+    ActivityResultLauncher<Intent> consultarAvisaActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -195,7 +195,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         return super.onOptionsItemSelected(item);
     }
 
-    private void prepararLista() {
+    void prepararLista() {
         GerenteServicos gerenteServicos = new GerenteServicos(PrincipalActivity.this);
         gerenteServicos.obterListaMedicamentosByUsuario(App.usuario.getIdUsuario());
     }

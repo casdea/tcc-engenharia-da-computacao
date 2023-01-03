@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IMedicamentoDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
@@ -33,8 +34,8 @@ import br.ufpa.app.android.amu.v1.util.DataUtil;
 
 public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IMedicamentoDao {
 
-    private GerenteServicosListener gerenteServicosListener;
-    private AppCompatActivity atividade;
+    GerenteServicosListener gerenteServicosListener;
+    AppCompatActivity atividade;
 
     public MedicamentoDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
@@ -154,7 +155,8 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
                     MedicamentoDTO medicamentoDTO = getMedicamentoDTO(postSnapshot);
 
                     listaMedicamentos.add(medicamentoDTO);
-                    Log.i("Lendo dados ", postSnapshot.toString());
+                    if (BuildConfig.DEBUG)
+                        Log.i("Lendo dados ", postSnapshot.toString());
                     // TODO: handle the post
                 }
                 gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_MEDICAMENTO_POR_USUARIO, listaMedicamentos);
@@ -181,7 +183,8 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     MedicamentoDTO medicamentoDTO = getMedicamentoDTO(postSnapshot);
 
-                    Log.i("Lendo dados ", postSnapshot.toString());
+                    if (BuildConfig.DEBUG)
+                        Log.i("Lendo dados ", postSnapshot.toString());
 
                     if (medicamentoDTO.getIdProdutoAnvisa().equals(idProduto)) {
                         listaMedicamentos.add(medicamentoDTO);
@@ -204,7 +207,7 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
     }
 
     @NonNull
-    private MedicamentoDTO getMedicamentoDTO(DataSnapshot postSnapshot) {
+    MedicamentoDTO getMedicamentoDTO(DataSnapshot postSnapshot) {
         Medicamento medicamento = postSnapshot.getValue(Medicamento.class);
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
         medicamentoDTO.setNomeComercial(medicamento.getNomeComercial());

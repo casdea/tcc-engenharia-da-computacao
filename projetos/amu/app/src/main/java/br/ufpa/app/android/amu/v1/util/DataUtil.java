@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
+
 public class DataUtil {
 
 
@@ -24,7 +26,8 @@ public class DataUtil {
         }
         catch (ParseException e)
         {
-            Log.i("Erro ao converter data ",e.getMessage());
+            if (BuildConfig.DEBUG)
+                Log.i("Erro ao converter data ",e.getMessage());
         }
 
         return data;
@@ -39,7 +42,8 @@ public class DataUtil {
         }
         catch (ParseException e)
         {
-            Log.i("Erro ao converter hora ",e.getMessage());
+            if (BuildConfig.DEBUG)
+                Log.i("Erro ao converter hora ",e.getMessage());
         }
 
         return hora;

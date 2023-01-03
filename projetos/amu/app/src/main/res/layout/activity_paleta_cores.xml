@@ -18,7 +18,8 @@
         app:layout_constraintBottom_toTopOf="@+id/txvCor3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txvCor10"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/txvCor2"
@@ -30,7 +31,8 @@
         app:layout_constraintBottom_toTopOf="@+id/txvCor4"
         app:layout_constraintEnd_toStartOf="@+id/txvCor3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txvCor10" />
+        app:layout_constraintTop_toBottomOf="@+id/txvCor10"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/txvCor3"
@@ -42,7 +44,8 @@
         app:layout_constraintBottom_toTopOf="@+id/txvCor5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txvCor2"
-        app:layout_constraintTop_toBottomOf="@+id/txvCor1" />
+        app:layout_constraintTop_toBottomOf="@+id/txvCor1"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/txvCor4"
@@ -54,7 +57,8 @@
         app:layout_constraintBottom_toTopOf="@+id/txvCor6"
         app:layout_constraintEnd_toStartOf="@+id/txvCor5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txvCor2" />
+        app:layout_constraintTop_toBottomOf="@+id/txvCor2"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/txvCor5"
@@ -66,7 +70,8 @@
         app:layout_constraintBottom_toTopOf="@+id/txvCor7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txvCor4"
-        app:layout_constraintTop_toBottomOf="@+id/txvCor3" />
+        app:layout_constraintTop_toBottomOf="@+id/txvCor3"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/txvCor6"
@@ -78,7 +83,8 @@
         app:layout_constraintBottom_toTopOf="@+id/txvCor8"
         app:layout_constraintEnd_toStartOf="@+id/txvCor7"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txvCor4" />
+        app:layout_constraintTop_toBottomOf="@+id/txvCor4"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/txvCor7"
@@ -90,7 +96,8 @@
         app:layout_constraintBottom_toTopOf="@+id/txvCor9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txvCor6"
-        app:layout_constraintTop_toBottomOf="@+id/txvCor5" />
+        app:layout_constraintTop_toBottomOf="@+id/txvCor5"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/txvCor8"
@@ -102,7 +109,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txvCor9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txvCor6" />
+        app:layout_constraintTop_toBottomOf="@+id/txvCor6"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/txvCor9"
@@ -114,7 +122,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txvCor8"
-        app:layout_constraintTop_toBottomOf="@+id/txvCor7" />
+        app:layout_constraintTop_toBottomOf="@+id/txvCor7"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/txvCor10"
@@ -127,6 +136,7 @@
         app:layout_constraintEnd_toStartOf="@+id/txvCor1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread" />
+        app:layout_constraintVertical_chainStyle="spread"
+        android:textIsSelectable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -20,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.adapter.IntervaloAdapter;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
@@ -34,13 +36,13 @@ import br.ufpa.app.android.amu.v1.util.StringUtil;
 
 public class HorarioActivity extends AppCompatActivity implements PickTimeListener, GerenteServicosListener {
 
-    private TextInputEditText textInpTextInicioAdministracao;
-    private TextInputEditText textInpTextHorarioPrimeiraDose;
-    private Spinner spIntervalos;
-    private TextInputEditText textInpTextDosesDia;
-    private TextInputEditText textInpTextQtdeDose;
-    private Switch swAtivo;
-    private Calendar calendar;
+    TextInputEditText textInpTextInicioAdministracao;
+    TextInputEditText textInpTextHorarioPrimeiraDose;
+    Spinner spIntervalos;
+    TextInputEditText textInpTextDosesDia;
+    TextInputEditText textInpTextQtdeDose;
+    SwitchCompat swAtivo;
+    Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,13 +150,15 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
                     return;
                 }
 
-                Log.i("Dados Cadastrados ","Medicamentos");
-                Log.i("Data Inicio ",textInpTextInicioAdministracao.getText().toString());
-                Log.i("Hora Inicio ",textInpTextHorarioPrimeiraDose.getText().toString());
-                Log.i("Intervalo ",spIntervalos.getSelectedItem().toString());
-                Log.i("Dose/Dia ",textInpTextDosesDia.getText().toString());
-                Log.i("Qtde Dose ",textInpTextQtdeDose.getText().toString());
-                Log.i("Ativo ",swAtivo.isChecked() ? "SIM" : "NAO");
+                if (BuildConfig.DEBUG) {
+                    Log.i("Dados Cadastrados ", "Medicamentos");
+                    Log.i("Data Inicio ", textInpTextInicioAdministracao.getText().toString());
+                    Log.i("Hora Inicio ", textInpTextHorarioPrimeiraDose.getText().toString());
+                    Log.i("Intervalo ", spIntervalos.getSelectedItem().toString());
+                    Log.i("Dose/Dia ", textInpTextDosesDia.getText().toString());
+                    Log.i("Qtde Dose ", textInpTextQtdeDose.getText().toString());
+                    Log.i("Ativo ", swAtivo.isChecked() ? "SIM" : "NAO");
+                }
 
                 boolean inclusao = App.horarioDTO == null;
 
@@ -217,6 +221,7 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
         TextInputEditText textInpTextHorarioPrimeiraDose =  findViewById(R.id.textInpTextHorarioPrimeiraDose);
         textInpTextHorarioPrimeiraDose.setText(DataUtil.convertTimeToString(hora));
 
-        Log.i("Hora ",hora.toString());
+        if (BuildConfig.DEBUG)
+            Log.i("Hora ",hora.toString());
     }
 }

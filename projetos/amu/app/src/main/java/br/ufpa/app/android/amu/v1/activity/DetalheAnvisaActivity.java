@@ -30,7 +30,7 @@ public class DetalheAnvisaActivity extends AppCompatActivity {
             txvTextoComoDevoUsar,
             txvTextoQuandoEsquecer;
 
-    private ActivityResultLauncher<Intent> cadastrarMedicamentoActivityResultLauncher = registerForActivityResult(
+    ActivityResultLauncher<Intent> cadastrarMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override

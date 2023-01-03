@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IHorarioDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
@@ -28,9 +29,9 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDao {
 
-    private GerenteServicosListener gerenteServicosListener;
-    private AppCompatActivity atividade;
-    private Callable proximoComando;
+    GerenteServicosListener gerenteServicosListener;
+    AppCompatActivity atividade;
+    Callable proximoComando;
 
     public HorarioDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
@@ -113,7 +114,8 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     HorarioDTO horarioDTO = getHorarioDTO(postSnapshot);
 
-                    Log.i("Lendo dados ", postSnapshot.toString());
+                    if (BuildConfig.DEBUG)
+                        Log.i("Lendo dados ", postSnapshot.toString());
 
                     if (horarioDTO.getIdMedicamento().equals(idMedicamento)) {
                         App.listaHorarios.add(horarioDTO);
@@ -147,7 +149,8 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     HorarioDTO horarioDTO = getHorarioDTO(postSnapshot);
 
-                    Log.i("Lendo dados ", postSnapshot.toString());
+                    if (BuildConfig.DEBUG)
+                        Log.i("Lendo dados ", postSnapshot.toString());
 
                     if (horarioDTO.getAtivo().equals("SIM"))
                         App.listaHorarios.add(horarioDTO);
@@ -174,7 +177,7 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
     }
 
     @NonNull
-    private HorarioDTO getHorarioDTO(DataSnapshot postSnapshot) {
+    HorarioDTO getHorarioDTO(DataSnapshot postSnapshot) {
         Horario horario = postSnapshot.getValue(Horario.class);
 
         HorarioDTO horarioDTO = new HorarioDTO();

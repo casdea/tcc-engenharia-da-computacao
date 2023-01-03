@@ -45,7 +45,7 @@ public class GerenteServicos  {
 
     private DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
     private AppCompatActivity atividade;
-    private GerenteServicosListener gerenteServicosListener;
+    GerenteServicosListener gerenteServicosListener;
     private Callable proximoComando;
 
     private static GerenteServicos gerenteServicos;

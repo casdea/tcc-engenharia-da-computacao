@@ -7,6 +7,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -55,7 +56,7 @@ public class HorariosRecyclerViewAdapter extends RecyclerView.Adapter<HorariosRe
         public final TextView txvIntervalo;
         public final TextView txvDosesPorDia;
         public final TextView txvQtdePorDose;
-        public final Switch swAtivo;
+        public final SwitchCompat swAtivo;
 
         public HorarioViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -19,6 +19,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -29,6 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.adapter.IntervaloAdapter;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
@@ -44,10 +46,10 @@ import br.ufpa.app.android.amu.v1.util.StringUtil;
 
 public class MedicamentoActivity extends AppCompatActivity implements PickTimeListener, GerenteServicosListener {
 
-    private String cor;
-    private Calendar calendar;
+    String cor;
+    Calendar calendar;
 
-    private ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
+    ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -145,7 +147,7 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
                 Spinner spIntervalos = findViewById(R.id.spIntervalos);
                 TextInputEditText textInpTextDosesDia = findViewById(R.id.textInpTextDosesDia);
                 TextInputEditText textInpTextQtdeDose = findViewById(R.id.textInpTextQtdeDose);
-                Switch swAtivo = findViewById(R.id.swAtivo);
+                SwitchCompat swAtivo = findViewById(R.id.swAtivo);
 
                 if (textInpTextApelido.getText().toString().isEmpty()) {
                     Toast.makeText(MedicamentoActivity.this,
@@ -203,15 +205,17 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
                     return;
                 }
 
-                Log.i("Dados Cadastrados ","Medicamentos");
-                Log.i("Apelido do Medicamento ",textInpTextApelido.getText().toString());
-                Log.i("Qtde Embalagem ",textInpTextQtdeEmbalagem.getText().toString());
-                Log.i("Data Inicio ",textInpTextInicioAdministracao.getText().toString());
-                Log.i("Hora Inicio ",textInpTextHorarioPrimeiraDose.getText().toString());
-                Log.i("Intervalo ",spIntervalos.getSelectedItem().toString());
-                Log.i("Dose/Dia ",textInpTextDosesDia.getText().toString());
-                Log.i("Qtde Dose ",textInpTextQtdeDose.getText().toString());
-                Log.i("Ativo ",swAtivo.isChecked() ? "SIM" : "NAO");
+                if (BuildConfig.DEBUG) {
+                    Log.i("Dados Cadastrados ", "Medicamentos");
+                    Log.i("Apelido do Medicamento ", textInpTextApelido.getText().toString());
+                    Log.i("Qtde Embalagem ", textInpTextQtdeEmbalagem.getText().toString());
+                    Log.i("Data Inicio ", textInpTextInicioAdministracao.getText().toString());
+                    Log.i("Hora Inicio ", textInpTextHorarioPrimeiraDose.getText().toString());
+                    Log.i("Intervalo ", spIntervalos.getSelectedItem().toString());
+                    Log.i("Dose/Dia ", textInpTextDosesDia.getText().toString());
+                    Log.i("Qtde Dose ", textInpTextQtdeDose.getText().toString());
+                    Log.i("Ativo ", swAtivo.isChecked() ? "SIM" : "NAO");
+                }
 
                 App.medicamentoDTO.setNomeFantasia(textInpTextApelido.getText().toString());
                 App.medicamentoDTO.setCor(cor);
@@ -244,7 +248,8 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
         TextInputEditText textInpTextHorarioPrimeiraDose =  findViewById(R.id.textInpTextHorarioPrimeiraDose);
         textInpTextHorarioPrimeiraDose.setText(DataUtil.convertTimeToString(hora));
 
-        Log.i("Hora ",hora.toString());
+        if (BuildConfig.DEBUG)
+            Log.i("Hora ",hora.toString());
     }
 
     @Override

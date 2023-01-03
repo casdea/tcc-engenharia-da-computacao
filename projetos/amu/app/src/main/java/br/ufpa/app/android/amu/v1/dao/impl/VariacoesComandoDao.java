@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IVariacoesComandoDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
@@ -27,8 +28,8 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class VariacoesComandoDao extends AbstractEntityDao<VariacoesComando> implements IVariacoesComandoDao {
 
-    private GerenteServicosListener gerenteServicosListener;
-    private AppCompatActivity atividade;
+    GerenteServicosListener gerenteServicosListener;
+    AppCompatActivity atividade;
 
     public VariacoesComandoDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
@@ -104,7 +105,8 @@ public class VariacoesComandoDao extends AbstractEntityDao<VariacoesComando> imp
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     VariacoesComandoDTO variacoesComandoDTO = getVariacoesComandoDTO(postSnapshot);
 
-                    Log.i("Lendo dados ", postSnapshot.toString());
+                    if (BuildConfig.DEBUG)
+                        Log.i("Lendo dados ", postSnapshot.toString());
 
                     if (variacoesComandoDTO.getIdComando().equals(idComando)) {
                         App.listaVariacoesComandos.add(variacoesComandoDTO);
@@ -126,7 +128,7 @@ public class VariacoesComandoDao extends AbstractEntityDao<VariacoesComando> imp
     }
 
     @NonNull
-    private VariacoesComandoDTO getVariacoesComandoDTO(DataSnapshot postSnapshot) {
+    VariacoesComandoDTO getVariacoesComandoDTO(DataSnapshot postSnapshot) {
         VariacoesComando variacoesComando = postSnapshot.getValue(VariacoesComando.class);
 
         VariacoesComandoDTO variacoesComandoDTO = new VariacoesComandoDTO();

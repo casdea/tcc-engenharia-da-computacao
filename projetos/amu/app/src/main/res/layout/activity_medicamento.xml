@@ -211,7 +211,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:editable="false"
                 android:enabled="true"
                 android:inputType="date"
                 android:hint="@string/inicio_administracao"
@@ -235,7 +234,6 @@
                 android:id="@+id/textInpTextHorarioPrimeiraDose"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:editable="false"
                 android:enabled="true"
                 android:hint="@string/horario_primeira_dose"
                 android:inputType="time"
@@ -335,7 +333,7 @@
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/swAtivo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

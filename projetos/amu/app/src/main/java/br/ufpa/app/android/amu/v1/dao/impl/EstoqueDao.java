@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IEstoqueDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
@@ -29,9 +30,9 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDao {
 
-    private GerenteServicosListener gerenteServicosListener;
-    private AppCompatActivity atividade;
-    private Callable proximoComando;
+    GerenteServicosListener gerenteServicosListener;
+    AppCompatActivity atividade;
+    Callable proximoComando;
 
     public EstoqueDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
@@ -114,7 +115,8 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     EstoqueDTO estoqueDTO = getEstoqueDTO(postSnapshot);
 
-                    Log.i("Lendo dados ", postSnapshot.toString());
+                    if (BuildConfig.DEBUG)
+                       Log.i("Lendo dados ", postSnapshot.toString());
 
                     if (estoqueDTO.getIdMedicamento().equals(idMedicamento)) {
                         App.listaEstoques.add(estoqueDTO);
@@ -147,7 +149,9 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     EstoqueDTO estoqueDTO = getEstoqueDTO(postSnapshot);
 
-                    Log.i("Lendo dados ", postSnapshot.toString());
+                    if (BuildConfig.DEBUG)
+                        Log.i("Lendo dados ", postSnapshot.toString());
+
                     App.listaEstoques.add(estoqueDTO);
                     // TODO: handle the post
                 }
@@ -178,7 +182,8 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     estoqueDTO = getEstoqueDTO(postSnapshot);
 
-                    Log.i("Lendo dados ", postSnapshot.toString());
+                    if (BuildConfig.DEBUG)
+                        Log.i("Lendo dados ", postSnapshot.toString());
 
                     // TODO: handle the post
                 }
@@ -241,7 +246,8 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     estoqueDTO = getEstoqueDTO(postSnapshot);
 
-                    Log.i("Lendo dados ", postSnapshot.toString());
+                    if (BuildConfig.DEBUG)
+                        Log.i("Lendo dados ", postSnapshot.toString());
 
                     // TODO: handle the post
                 }
@@ -288,7 +294,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
     }
 
     @NonNull
-    private EstoqueDTO getEstoqueDTO(DataSnapshot postSnapshot) {
+    EstoqueDTO getEstoqueDTO(DataSnapshot postSnapshot) {
         Estoque estoque = postSnapshot.getValue(Estoque.class);
 
         EstoqueDTO estoqueDTO = new EstoqueDTO();

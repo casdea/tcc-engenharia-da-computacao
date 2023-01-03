@@ -33,6 +33,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
@@ -52,13 +53,13 @@ import br.ufpa.app.android.amu.v1.util.DataUtil;
 
 public class DetalheMedicamentoActivity extends AppCompatActivity implements GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
 
-    private TextInputEditText textInpTextApelido;
-    private TextInputEditText textInpTextQtdeEmbalagem;
-    private TextInputEditText textInpTextQtdeEstoque;
-    private TextView txvCorSelecionada;
-    private String cor;
-    private FragmentPagerItemAdapter adapter;
-    private RecursoVozLifeCyCleObserver mRecursoVozObserver;
+    TextInputEditText textInpTextApelido;
+    TextInputEditText textInpTextQtdeEmbalagem;
+    TextInputEditText textInpTextQtdeEstoque;
+    TextView txvCorSelecionada;
+    String cor;
+    FragmentPagerItemAdapter adapter;
+    RecursoVozLifeCyCleObserver mRecursoVozObserver;
 
     private ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -209,7 +210,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         };
     }
 
-    private boolean camposAlterados() {
+    boolean camposAlterados() {
         boolean a1 = !App.medicamentoDTO.getNomeFantasia().equals(textInpTextApelido.getText().toString());
         boolean a2 = !String.valueOf(App.medicamentoDTO.getQtdeEmbalagem()).equals(textInpTextQtdeEmbalagem.getText().toString());
         boolean a3 = (cor != null && App.medicamentoDTO.getCor() != null && !App.medicamentoDTO.getCor().equals(cor));
@@ -259,10 +260,11 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             return;
         }
 
-        Log.i("Dados Cadastrados ", "Medicamentos");
-        Log.i("Apelido do Medicamento ", textInpTextApelido.getText().toString());
-        Log.i("Qtde Embalagem ", textInpTextQtdeEmbalagem.getText().toString());
-
+        if (BuildConfig.DEBUG) {
+            Log.i("Dados Cadastrados ", "Medicamentos");
+            Log.i("Apelido do Medicamento ", textInpTextApelido.getText().toString());
+            Log.i("Qtde Embalagem ", textInpTextQtdeEmbalagem.getText().toString());
+        }
         App.medicamentoDTO.setNomeFantasia(textInpTextApelido.getText().toString());
         App.medicamentoDTO.setCor(cor);
         App.medicamentoDTO.setIdUsuario(App.usuario.getIdUsuario());
@@ -312,7 +314,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.show();
     }
 
-    private void sinalizarDoseRealizada() {
+    void sinalizarDoseRealizada() {
         HorarioDTO horarioDTO = App.listaHorarios.get(App.listaHorarios.size() - 1);
 
         App.estoqueDTO = new EstoqueDTO();
@@ -368,7 +370,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.show();
     }
 
-    private void efetuarEntradaEstoque() {
+    void efetuarEntradaEstoque() {
         App.estoqueDTO = new EstoqueDTO();
         App.estoqueDTO.setIdEstoque("0");
         App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
@@ -421,7 +423,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.show();
     }
 
-    private void efetuarSaidaEstoque() {
+    void efetuarSaidaEstoque() {
         App.estoqueDTO = new EstoqueDTO();
         App.estoqueDTO.setIdEstoque("0");
         App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());

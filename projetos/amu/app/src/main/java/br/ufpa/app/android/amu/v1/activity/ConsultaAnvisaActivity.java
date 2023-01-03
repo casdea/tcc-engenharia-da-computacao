@@ -42,7 +42,9 @@ import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
 public class ConsultaAnvisaActivity extends AppCompatActivity implements View.OnClickListener, GerenteServicosListener {
 
-    private MedicamentoRetDTO medicamentoRetDTO;
+    MedicamentoRetDTO medicamentoRetDTO;
+    TextToSpeech textoLido;
+    RecursoVozLifeCyCleObserver mRecursoVozObserver;
 
     private ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -67,42 +69,6 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
                 }
             });
 
-    private ActivityResultLauncher<Intent> reconheceVozActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Intent data = result.getData();
-                        ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
-                        if (text == null || text.size() == 0) {
-                            //txvStatusComando.setText("Texto de Voz inválido");
-                            return;
-                        }
-
-                        if (App.comandoAtualVoz.equals(TipoFuncao.CHAMADA_TELA)) {
-                            int idView = App.integracaoUsuario.findComando(text.get(0));
-
-                            if (idView == -1) {
-                                //txvStatusComando.setText("Comando não foi reconhecido");
-                                return;
-                            }
-
-                            if (idView == R.id.btnConsultaMedicamento) {
-                                Intent intent = new Intent();
-                                intent.setClass(App.context, ConsultaAnvisaActivity.class);
-                                App.context.startActivity(intent);
-                            }
-                        } else if (App.comandoAtualVoz.equals(TipoFuncao.PESQUISA_MEDICAMENTOS)) {
-                            montarLista(text.get(0));
-                        }
-                    }
-                }
-            });
-
-    private TextToSpeech textoLido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +77,9 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
 
         Button btnPesquisar = (Button) findViewById(R.id.btnPesquisar);
         btnPesquisar.setOnClickListener(this);
+
+        mRecursoVozObserver = new RecursoVozLifeCyCleObserver(getActivityResultRegistry(), ConsultaAnvisaActivity.this);
+        getLifecycle().addObserver(mRecursoVozObserver);
 
         App.integracaoUsuario.bemVindoFuncao(TipoFuncao.CONSULTA_MEDICAMENTOS);
 
@@ -129,39 +98,13 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
-            App.comandoAtualVoz = TipoFuncao.PESQUISA_MEDICAMENTOS;
-            App.integracaoUsuario.instrucaoParaUsuario(R.raw.falenomecomercialmedicamento);
-            ThreadUtil.esperar(ThreadUtil.QUATRO_SEGUNDOS);
-            chamarItenteReconechimentoVoz();
-
+            mRecursoVozObserver.chamarItenteReconechimentoVoz();
         } else {
             if (v.getId() == R.id.btnPesquisar) {
                 EditText edtNomeComercial = (EditText) findViewById(R.id.edtNomeComercial);
 
                 montarLista(edtNomeComercial.getText().toString());
             }
-        }
-    }
-
-    private void chamarItenteReconechimentoVoz() {
-        App.integracaoUsuario.pararMensagem();
-
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-BR");
-        try {
-            reconheceVozActivityResultLauncher.launch(intent);
-            //tvText.setText("");
-        } catch (ActivityNotFoundException e) {
-            String appPackageName = "com.google.android.googlequicksearchbox";
-            try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-            } catch (android.content.ActivityNotFoundException anfe) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-            }
-
-            //Toast.makeText(getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_LONG).show();
-            //e.printStackTrace();
         }
     }
 
@@ -256,6 +199,8 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
             setResult(Activity.RESULT_OK, null);
             finish();
         }
-
+        else if (numeroAcao == Constantes.ACAO_VOZ_MONTAR_LISTA_ANVISA) {
+            montarLista((String) parametro);
+        }
     }
 }

@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dao.idao.IAlarmeDao;
 import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
@@ -29,9 +30,9 @@ import br.ufpa.app.android.amu.v1.util.DataUtil;
 
 public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
 
-    private GerenteServicosListener gerenteServicosListener;
-    private AppCompatActivity atividade;
-    private Callable proximoComando;
+    GerenteServicosListener gerenteServicosListener;
+    AppCompatActivity atividade;
+    Callable proximoComando;
 
     public AlarmeDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
@@ -114,7 +115,8 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     AlarmeDTO alarmeDTO = getAlarmeDTO(postSnapshot);
 
-                    Log.i("Lendo dados ", postSnapshot.toString());
+                    if (BuildConfig.DEBUG)
+                        Log.i("Lendo dados ", postSnapshot.toString());
 
                     if (DataUtil.convertStringToDateTime(alarmeDTO.getDataHora()).before(DataUtil.getDataAtual())==false)
                         App.listaAlarmes.add(alarmeDTO);
@@ -139,7 +141,7 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
     }
 
     @NonNull
-    private AlarmeDTO getAlarmeDTO(DataSnapshot postSnapshot) {
+    AlarmeDTO getAlarmeDTO(DataSnapshot postSnapshot) {
         Alarme alarme = postSnapshot.getValue(Alarme.class);
 
         AlarmeDTO alarmeDTO = new AlarmeDTO();

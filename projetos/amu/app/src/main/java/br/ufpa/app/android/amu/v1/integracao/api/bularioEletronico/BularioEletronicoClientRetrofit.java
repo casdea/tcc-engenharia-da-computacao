@@ -30,7 +30,7 @@ public class BularioEletronicoClientRetrofit {
     private static final String DIRETORIO_PDF = "pdfs";
     private static final String DIRETORIO_TXT = "txts";
     private static final String URL_CONSULTAS_API_ANVISA = "https://consultas.anvisa.gov.br";
-    private int arquivosBaixados;
+    int arquivosBaixados;
 
     public String obter() {
 

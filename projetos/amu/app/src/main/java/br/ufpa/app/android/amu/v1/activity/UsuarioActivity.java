@@ -31,10 +31,10 @@ import br.ufpa.app.android.amu.v1.util.App;
 
 public class UsuarioActivity extends AppCompatActivity implements GerenteServicosListener {
 
-    private EditText campoNome, campoEmail, campoSenha;
-    private Button botaoCadastrar;
-    private UsuarioDTO usuarioDTO;
-    private RadioButton rbUsuarioComum, rbUsuarioIdoso, rbUsuarioSurdoMudo, rbUsuarioPerdaVisao, rbUsuarioTea;
+    EditText campoNome, campoEmail, campoSenha;
+    Button botaoCadastrar;
+    UsuarioDTO usuarioDTO;
+    RadioButton rbUsuarioComum, rbUsuarioIdoso, rbUsuarioSurdoMudo, rbUsuarioPerdaVisao, rbUsuarioTea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +106,7 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
         });
     }
 
-    private boolean validar(String textoNome, String textoEmail, String textoSenha, String tipoPerfil) {
+    boolean validar(String textoNome, String textoEmail, String textoSenha, String tipoPerfil) {
         if (textoNome.isEmpty()) {
             Toast.makeText(UsuarioActivity.this,
                     "Preencha o nome!",

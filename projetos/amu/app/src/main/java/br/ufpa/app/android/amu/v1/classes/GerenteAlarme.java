@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dto.AlarmeDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MapaHorarioDTO;
@@ -96,7 +97,8 @@ public class GerenteAlarme {
                 verificarCriarAlarmeSuperDose(vAlarmes, utilizacoes, horarioDTO, ultimoHorarioDTO, medicamentoDTO);
             }
         } catch (Exception e) {
-            Log.i("verificarCriarAlarme", e.getMessage());
+            if (BuildConfig.DEBUG)
+                Log.i("verificarCriarAlarme", e.getMessage());
             e.printStackTrace();
         }
         return vAlarmes;

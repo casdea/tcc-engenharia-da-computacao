@@ -29,7 +29,7 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 public class EstoquesFragment extends Fragment implements DetalheMedicamentoActivity.OnEstoquesListener, GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
     private RecyclerView recyclerView;
 
-    private GerenteServicosListener gerenteServicosListener;
+    GerenteServicosListener gerenteServicosListener;
 
     @Override
     public void onAttach(@NonNull Activity activity) {
