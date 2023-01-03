@@ -57,7 +57,7 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
             campoNome.setText(App.usuario.getNome());
             campoEmail.setText(App.usuario.getEmail());
             //Essa senha é apenas uma mascara
-            campoSenha.setText("nXha@89722");
+            campoSenha.setText(R.string.mascara_senha);
             campoNome.setText(App.usuario.getNome());
             rbUsuarioComum.setChecked(App.usuario.getTipoPerfil().equals(TipoPerfil.COMUM.name()));
             rbUsuarioIdoso.setChecked(App.usuario.getTipoPerfil().equals(TipoPerfil.IDOSO.name()));

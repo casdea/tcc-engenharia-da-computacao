@@ -43,10 +43,10 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class GerenteServicos  {
 
-    private DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
-    private AppCompatActivity atividade;
+    DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+    AppCompatActivity atividade;
     GerenteServicosListener gerenteServicosListener;
-    private Callable proximoComando;
+    Callable proximoComando;
 
     private static GerenteServicos gerenteServicos;
 
@@ -88,7 +88,7 @@ public class GerenteServicos  {
 
                     if (App.usuario != null) {
                         App.usuario.setIdUsuario(idUsuario);
-                        App.tipoPerfil = TipoPerfil.PCD_VISAO_REDUZIDA; //TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+                        App.tipoPerfil = TipoPerfil.COMUM; //TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
                         //abrirTelaPrincipal(atividadeLocal);
                         gerenteServicosListener.executarAcao(Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL,autenticacao);

@@ -62,9 +62,7 @@ public class IntegracaoBularioEletronicoAnvisa implements IntegracaoBularioEletr
 
         // do other stuff here while the request is in-flight
 
-        BularioEletronicoJson bularioEletronicoJson = response.get();
-
-        return bularioEletronicoJson;
+        return response.get();
     }
 
     @Override

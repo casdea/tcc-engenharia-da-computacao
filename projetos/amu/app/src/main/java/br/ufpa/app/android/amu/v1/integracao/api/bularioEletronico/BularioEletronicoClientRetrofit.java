@@ -105,9 +105,7 @@ public class BularioEletronicoClientRetrofit {
 
         // do other stuff here while the request is in-flight
 
-        BularioEletronicoJson bularioEletronicoJson = response.get();
-
-        return bularioEletronicoJson;
+        return response.get();
     }
 
     private void obterArquivoBula(Retrofit retrofit, String nomeArquivo, String chave)

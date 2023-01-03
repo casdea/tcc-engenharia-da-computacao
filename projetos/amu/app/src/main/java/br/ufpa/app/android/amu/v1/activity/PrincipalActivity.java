@@ -169,28 +169,21 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.restaurarPerfil:
-                App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
-                App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
-                App.integracaoUsuario.avisoSaidaPerfilAdmin();
+        if (item.getItemId() == R.id.restaurarPerfil) {
+            App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+            App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
+            App.integracaoUsuario.avisoSaidaPerfilAdmin();
 
-                if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
-                    getSupportActionBar().hide();
+            if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+                getSupportActionBar().hide();
 
-                break;
         }
-        switch (item.getItemId()) {
-            case R.id.menuPerfil:
-                startActivity(new Intent(this, UsuarioActivity.class));
-                break;
-        }
-        switch (item.getItemId()) {
-            case R.id.menuSair:
-                autenticacao.signOut();
-                startActivity(new Intent(this, BemVindoActivity.class));
-                finish();
-                break;
+        if (item.getItemId() == R.id.menuPerfil)
+            startActivity(new Intent(this, UsuarioActivity.class));
+        else if (item.getItemId() == R.id.menuSair) {
+            autenticacao.signOut();
+            startActivity(new Intent(this, BemVindoActivity.class));
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

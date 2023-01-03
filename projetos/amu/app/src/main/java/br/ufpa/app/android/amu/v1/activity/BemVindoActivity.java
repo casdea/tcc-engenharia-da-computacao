@@ -2,7 +2,10 @@ package br.ufpa.app.android.amu.v1.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+
+import androidx.fragment.app.FragmentTransaction;
 
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
@@ -10,6 +13,7 @@ import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.fragments.HorariosFragment;
 import br.ufpa.app.android.amu.v1.integracao.classes.FontesConsulta;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;

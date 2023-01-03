@@ -3,7 +3,7 @@
     <string name="perfil_usuario">Perfil de Usuário</string>
     <string name="pesquisar">Pesquisar</string>
     <string name="hint_pesquisar">Digite o argumento e pesquise</string>
-    <string name="crie_sua_conta_gr_tis">Crie sua conta grátis</string>
+    <string name="crie_sua_conta_gratis">Crie sua conta grátis</string>
     <string name="email">Email</string>
     <string name="nome">Nome</string>
     <string name="senha">Senha</string>
@@ -14,7 +14,6 @@
     <string name="usuario_idoso">Usuário Idoso</string>
     <string name="usuario_surdo_e_mudo">Usuário Surdo e Mudo</string>
     <string name="usuario_com_perda_de_visao_reduzida">Usuário com Perda de Visão/Reduzida</string>
-    <string name="crie_sua_conta_gratis">Crie sua conta grátis</string>
     <string name="junte_se_a_outros">Junte-se a milhares de pessoas \n de pessoas e comece já</string>
     <string name="cadastre_se">Cadastre-se</string>
     <string name="ja_tenho_conta">Já tenho conta</string>
@@ -45,7 +44,6 @@
     <string name="qtde_embalagem">Qtde Embalagem</string>
     <string name="exemplo_qtde_medicamento">30</string>
     <string name="exemplo_hora_inicio">08:00</string>
-    <string name="exemplo_inicio_adm">01/12/2022</string>
     <string name="Botao_Confirmar_Registro_Medicamento">Botão Confirmar Registro de Medicamento</string>
     <string name="confirmar">Confirmar</string>
     <string name="qtde_por_dose">Qtde Por Dose</string>
@@ -62,10 +60,11 @@
     <string name="saida">Saida</string>
     <string name="saldo">Saldo</string>
     <string name="exemplo_data_hora">01/12/2022</string>
-    <string name="exemplo_entrada">80</string>
+    <string name="exemplo_qtde">80</string>
     <string name="exemplo_saida">0</string>
-    <string name="exemplo_saldo">80</string>
     <string name="lista_vazia">A lista de medicamentos está vazia aproveite para incluir o primeiro</string>
     <string name="botao_inclusao_medicamento">Botão de Inclusão de Medicamento</string>
     <string name="incluir_horarios">Incluir Horários</string>
+    <string name="abas_visualizacao_pagina">Abas da Visualizacao Página</string>
+    <string name="mascara_senha">nXha@89722</string>
 </resources>

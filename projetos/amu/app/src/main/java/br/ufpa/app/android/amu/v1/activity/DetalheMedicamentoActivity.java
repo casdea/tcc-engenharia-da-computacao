@@ -60,6 +60,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
     String cor;
     FragmentPagerItemAdapter adapter;
     RecursoVozLifeCyCleObserver mRecursoVozObserver;
+    OnHorariosListener onHorariosListener;
+    OnEstoquesListener onEstoqueListener;
+    OnUtilizacoesListener onUtilizacoesListener;
 
     private ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -78,19 +81,13 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
                 }
             });
 
-    private OnHorariosListener onHorariosListener;
-
     public interface OnHorariosListener {
         public void atualizarLista(View view);
     }
 
-    private OnEstoquesListener onEstoqueListener;
-
     public interface OnEstoquesListener {
         public void atualizarLista(View view);
     }
-
-    private OnUtilizacoesListener onUtilizacoesListener;
 
     public interface OnUtilizacoesListener {
         public void atualizarLista(View view);
@@ -486,12 +483,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     @Override
     public void executarAcao(int numeroAcao, Object parametro) {
-        if (numeroAcao == Constantes.ACAO_VOZ_DOSE_REALIZADA) {
-            if (App.integracaoUsuario.validarUtilizacaoMedicamento(App.listaHorarios) == false)
-                return;
-
-            sinalizarDoseRealizada();
-        } else if (numeroAcao == Constantes.ACAO_ALTERAR_MEDICAMENTO) {
+        if (numeroAcao == Constantes.ACAO_ALTERAR_MEDICAMENTO) {
             setResult(Activity.RESULT_OK, null);
             finish();
         } else if (numeroAcao == Constantes.ACAO_REGISTRAR_HORARIO) {

@@ -17,23 +17,7 @@ import br.ufpa.app.android.amu.v1.BuildConfig;
 public class DataUtil {
 
 
-    public static Date encodeDateByDiaMesAno(int day, int month, int year)  {
-        Date data = null;
-        try {
-            Calendar cal = GregorianCalendar.getInstance();
-            cal.setTime(new Date());
-            data = (new SimpleDateFormat("dd/MM/yyyy")).parse(day + "/" + month + "/" + year);
-        }
-        catch (ParseException e)
-        {
-            if (BuildConfig.DEBUG)
-                Log.i("Erro ao converter data ",e.getMessage());
-        }
-
-        return data;
-    }
-
-    public static Date encodeTimeByHoraMinuto(int hourOfDay, int minute) {
+     public static Date encodeTimeByHoraMinuto(int hourOfDay, int minute) {
         Date hora = null;
         try {
             Calendar cal = GregorianCalendar.getInstance();
@@ -77,8 +61,7 @@ public class DataUtil {
                 return null;
             }
             SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy");
-            Date data = new Date(sdf.parse(str).getTime());
-            return data;
+            return new Date(sdf.parse(str).getTime());
         }
         catch (ParseException e)
         {
@@ -172,8 +155,7 @@ public class DataUtil {
                 throw new Exception("Data não pode ser nula ou vazia");
             }
             SimpleDateFormat sdf = new SimpleDateFormat(formato);
-            Date data = new Date(sdf.parse(str).getTime());
-            return data;
+            return new Date(sdf.parse(str).getTime());
         }
         catch (ParseException e)
         {

@@ -61,9 +61,8 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
 
                 // [START send_password_reset]
                 FirebaseAuth auth = FirebaseAuth.getInstance();
-                String emailAddress = textoEmail;
 
-                auth.sendPasswordResetEmail(emailAddress)
+                auth.sendPasswordResetEmail(textoEmail)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

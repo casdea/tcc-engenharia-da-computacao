@@ -3,6 +3,10 @@ package br.ufpa.app.android.amu.v1.util;
 import android.app.Application;
 import android.content.Context;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
@@ -20,7 +24,7 @@ import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoBularioEletron
 import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoUsuario;
 
 /**
- * Created by joao on 12/11/2022.
+ * Created by carlos andrade on 12/11/2022.
  */
 public class App extends Application {
 
@@ -46,5 +50,4 @@ public class App extends Application {
     public static boolean escutandoComando;
     public static AlarmeDTO alarmeDTO;
     public static List<AlarmeDTO> listaAlarmes;
-
 }

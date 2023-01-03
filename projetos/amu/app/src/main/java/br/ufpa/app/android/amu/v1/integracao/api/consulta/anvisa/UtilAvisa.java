@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.util.App;
@@ -74,18 +75,6 @@ public class UtilAvisa {
     public static final String IDENTIFICACAO_PUBLICO_ALVO = " USO ";
     public static final String CHAVE_QUEBRA = "X@@@X";
 
-    //0@®ANADOR  (dipirona monoidratada)    Sanofi Medley Farmacêutica Ltda.
-    // Comprimidos  500 mg®ANADOR dipirona monoidratada
-    // APRESENTAÇÕES
-    //    Comprimidos 500 mg: embalagem com 24, 128, 240 ou 512
-    // USO
-    //   ORAL.
-    // USO
-    //   ADULTO E PEDIÁTRICO ACIMA DE 15 ANOS.
-    // COMPOSIÇÃO
-    //    ANADOR 500 mg: Cada comprimido contém 500 mg de dipirona monoidratada.
-    //    Excipientes: estearato de magnésio, macrogol 4000.
-
     public static File criarDiretorio(String diretorio) {
 
         try {
@@ -138,9 +127,7 @@ public class UtilAvisa {
         try {
             File file = new File(diretorioRoot(), nomeArquivo);
 
-            boolean existe = file.exists() && file.length() > 0.00;
-
-            return existe;
+            return file.exists() && file.length() > 0.00;
 
         } catch (Exception ex) {
             System.out.println("Erro ao procurar arquivo " + ex.getMessage());
@@ -158,13 +145,9 @@ public class UtilAvisa {
 
     public static String diretorioRoot() {
         //Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
+        if (BuildConfig.DEBUG)
             Log.i("Nome do Arquivo 1", App.context.getExternalFilesDir(Environment.DIRECTORY_DCIM) + "");
-            return App.context.getExternalFilesDir(Environment.DIRECTORY_DCIM) + "";
-        } else {
-            Log.i("Nome do Arquivo 2", Environment.getExternalStorageDirectory().toString());
-            return Environment.getExternalStorageDirectory().toString();
-        }
+        return App.context.getExternalFilesDir(Environment.DIRECTORY_DCIM) + "";
     }
 
     private static String findParteByChave(String[] partes, String chaveParte) {
@@ -175,7 +158,8 @@ public class UtilAvisa {
 
             if (parte.equals("") || parte.length()<=5) continue;
 
-            Log.i("Decodificando a parte ",parte);
+            if (BuildConfig.DEBUG)
+                Log.i("Decodificando a parte ",parte);
             try {
                 if (parte.substring(0, chaveParte.length()).equals(chaveParte)) {
                     return parte.substring(chaveParte.length());

@@ -32,10 +32,8 @@ public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, Retorno
     private GerenteServicosListener gerenteServicosListener;
     protected ProgressDialog pDialog;
     private MedicamentoRetDTO medicamentoRetDTO;
-    private AppCompatActivity atividade;
 
     public DownloadBulaTask(AppCompatActivity atividade) {
-        this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
     }
 
