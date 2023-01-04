@@ -44,7 +44,7 @@ public class BularioEletronicoClientRetrofit {
 
             if (bularioEletronicoJson != null) {
 
-                System.out.println("Resultado da Consulta do Bulario: " + bularioEletronicoJson.toString());
+                System.out.println("Resultado da Consulta do Bulario: " + bularioEletronicoJson);
 
                 System.out.println("Conteudo: ");
 
@@ -53,9 +53,6 @@ public class BularioEletronicoClientRetrofit {
 
                     obterArquivoBula(retrofit, bularioEletronicoConteudoJson.getIdBulaPacienteProtegido(),
                             bularioEletronicoConteudoJson.getIdBulaPacienteProtegido());
-
-                    //obterArquivoBula(retrofit, bularioEletronicoConteudoJson.getIdBulaProfissionalProtegido(),
-                    //        bularioEletronicoConteudoJson.getIdBulaProfissionalProtegido());
                 }
 
                 System.out.println("Aguardando os arquivos serem baixados...");
@@ -79,8 +76,8 @@ public class BularioEletronicoClientRetrofit {
                     parsePdf(dirPdf+bularioEletronicoConteudoJson.getIdBulaPacienteProtegido()+".pdf", dirTxt+bularioEletronicoConteudoJson.getIdBulaPacienteProtegido()+".txt");
                     //parsePdf(dirPdf+bularioEletronicoConteudoJson.getIdBulaProfissionalProtegido()+".pdf", dirTxt+bularioEletronicoConteudoJson.getIdBulaProfissionalProtegido()+".txt");
 
-                    System.out.println("Arquivo: " + bularioEletronicoConteudoJson.toString());
-                    return "Arquivo: " + bularioEletronicoConteudoJson.toString();
+                    System.out.println("Arquivo: " + bularioEletronicoConteudoJson);
+                    return "Arquivo: " + bularioEletronicoConteudoJson;
                 }
 
             } else {

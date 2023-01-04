@@ -34,8 +34,8 @@ import br.ufpa.app.android.amu.v1.util.DataUtil;
 
 public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IMedicamentoDao {
 
-    GerenteServicosListener gerenteServicosListener;
-    AppCompatActivity atividade;
+    final GerenteServicosListener gerenteServicosListener;
+    final AppCompatActivity atividade;
 
     public MedicamentoDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
@@ -48,7 +48,7 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
     }
 
     @Override
-    public Medicamento create(Medicamento medicamento, Horario horario) {
+    public void create(Medicamento medicamento, Horario horario) {
         DatabaseReference medicamentosRef = em.child(medicamento.getNomeTabela());
         String chave = medicamentosRef.push().getKey();
         medicamento.setIdMedicamento(chave);
@@ -115,7 +115,6 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
             }
         });
 
-        return medicamento;
     }
 
     @Override
@@ -235,21 +234,6 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
         medicamentoDTO.setEstoques(new ArrayList<>());
         medicamentoDTO.setUtilizacoes(new ArrayList<>());
 
-/*        if (medicamento.getHorarios() == null) {
-            for (Horario horario : medicamento.getHorarios()) {
-                HorarioDTO horarioDTO = new HorarioDTO();
-                horarioDTO.setIdHorario(horario.getIdHorario());
-                horarioDTO.setIdMedicamento(horario.getIdMedicamento());
-                horarioDTO.setIdUsuario(horario.getIdUsuario());
-                horarioDTO.setDataInicial(horario.getDataInicial());
-                horarioDTO.setHorarioInicial(horario.getHorarioInicial());
-                horarioDTO.setNrDoses(horario.getNrDoses());
-                horarioDTO.setQtdePorDose(horario.getQtdePorDose());
-                horarioDTO.setAtivo(horario.getAtivo());
-                medicamentoDTO.getHorarios().add(horarioDTO);
-            }
-        }
-*/
         return medicamentoDTO;
     }
 }

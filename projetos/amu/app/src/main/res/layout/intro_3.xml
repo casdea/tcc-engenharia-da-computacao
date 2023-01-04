@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@drawable/tres"
-        android:contentDescription="Bem vindo Imagem 3" />
+        android:contentDescription="@string/bem_vindo_imagem3" />
 
     <TextView
         android:id="@+id/textView"
@@ -27,7 +27,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Nunca mais esqueça de \n tomar seu medicamento"
+        android:text="@string/texto_intro3"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="18sp"
@@ -44,7 +44,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:textColor="@android:color/darker_gray"
-        android:text="Receba alertas quando quiser"
+        android:text="@string/texto_intro3_parte2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@drawable/dois"
-        android:contentDescription="Bem vindo Imagem 2" />
+        android:contentDescription="@string/bem_vindo_imagem2" />
 
     <TextView
         android:id="@+id/textView"
@@ -27,7 +27,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Não perca o horário de tomar suas doses"
+        android:text="@string/texto_intro2"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="18sp"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Seja alertado do horário e \n do número de vezes"
+        android:text="@string/texto_intro2_parte2"
         android:textAlignment="center"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"

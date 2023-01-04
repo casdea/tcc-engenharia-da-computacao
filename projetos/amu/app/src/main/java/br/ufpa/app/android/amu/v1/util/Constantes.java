@@ -51,7 +51,7 @@ public class Constantes {
     public static final int ACAO_VOZ_COMANDOS_DETALHE_MEDICAMENTO = 47;
     public static final int ACAO_VOZ_MONTAR_LISTA_ANVISA = 48;
 
-    public static String[] intervalos = new String[] {
+    public static final String[] intervalos = new String[] {
             "6 horas", "8 horas", "12 horas", "24 horas",
             "1 horas", "2 horas", "3 horas", "4 horas", "5 horas", "6 horas",
             "7 horas", "8 horas", "9 horas", "10 horas", "11 horas", "12 horas",

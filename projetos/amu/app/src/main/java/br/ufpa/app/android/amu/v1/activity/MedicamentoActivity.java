@@ -49,7 +49,7 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
     String cor;
     Calendar calendar;
 
-    ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
+    final ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -113,10 +113,10 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
 
                 textInpTextInicioAdministracao.setText("");
 
-                String myFormat = "dd/MM/yyyy"; //In which you need put here
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy",
+                        java.util.Locale.getDefault());
 
-                textInpTextInicioAdministracao.setText(sdf.format(calendar.getTime()));
+                textInpTextInicioAdministracao.setText(format.format(calendar.getTime()));
             }
 
         };

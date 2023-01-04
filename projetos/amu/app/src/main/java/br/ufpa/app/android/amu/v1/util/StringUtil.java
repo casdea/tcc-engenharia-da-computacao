@@ -13,12 +13,8 @@ public abstract class StringUtil {
 	 */
 	private static final Charset UTF_16 = Charset.forName("UTF-16BE");
 
-	public static final boolean isVazioOrNull(String valor) {
-		if (valor != null && !valor.trim().equals("")) {
-			return false;
-		} else {
-			return true;
-		}
+	public static boolean isVazioOrNull(String valor) {
+		return valor == null || valor.trim().equals("");
 	}
 
 	/**
@@ -32,10 +28,7 @@ public abstract class StringUtil {
 	public static boolean equals(String valor1, String valor2) {
 		String aux1 = isVazioOrNull(valor1) ? "" : valor1;
 		String aux2 = isVazioOrNull(valor2) ? "" : valor2;
-		if (aux1.equals(aux2)) {
-			return true;
-		}
-		return false;
+		return aux1.equals(aux2);
 	}
 
 	/**
@@ -47,7 +40,7 @@ public abstract class StringUtil {
 	 * @param flag
 	 * @return java.lang.String
 	 */
-	public static final String padL(int tamanho, Object entrada, String flag) {
+	public static String padL(int tamanho, Object entrada, String flag) {
 		String textoEntrada;
 		if (entrada != null) {
 			textoEntrada = entrada.toString();
@@ -74,10 +67,10 @@ public abstract class StringUtil {
 	 * @param flag
 	 * @return java.lang.String
 	 */
-	public static final String padR(int tamanho, Object entrada, String flag) {
+	public static String padR(int tamanho, Object entrada, String flag) {
 		StringBuilder result = new StringBuilder();
 		if (entrada != null) {
-			result.append(entrada.toString());
+			result.append(entrada);
 		} else {
 			result.append("");
 		}
@@ -98,7 +91,7 @@ public abstract class StringUtil {
 	 * @return number of occurrences of given character in the String
 	 * @since 1.0
 	 */
-	public static final int count(final String str, final char countedChar) {
+	public static int count(final String str, final char countedChar) {
 		if (str == null) {
 			throw new NullPointerException();
 		}
@@ -126,7 +119,7 @@ public abstract class StringUtil {
 		return -1;
 	}
 
-	public static final String removerAcentos(String str) {
+	public static String removerAcentos(String str) {
 		if (str == null) {
 			return "";
 		}

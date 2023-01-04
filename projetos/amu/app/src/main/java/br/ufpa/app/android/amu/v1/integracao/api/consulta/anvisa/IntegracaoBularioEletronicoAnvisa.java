@@ -27,7 +27,7 @@ public class IntegracaoBularioEletronicoAnvisa implements IntegracaoBularioEletr
 
             if (bularioEletronicoJson != null) {
 
-                System.out.println("Resultado da Consulta do Bulario: " + bularioEletronicoJson.toString());
+                System.out.println("Resultado da Consulta do Bulario: " + bularioEletronicoJson);
 
                 System.out.println("Conteudo: ");
 

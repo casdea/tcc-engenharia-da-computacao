@@ -18,7 +18,7 @@ import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 
 public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.MedicamentoViewHoder> {
 
-    List<MedicamentoDTO> listaMedicamentos;
+    final List<MedicamentoDTO> listaMedicamentos;
 
     public MedicamentoAdapter(List<MedicamentoDTO> listaMedicamentos) {
         this.listaMedicamentos = listaMedicamentos;
@@ -59,10 +59,10 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
 
     public class MedicamentoViewHoder extends RecyclerView.ViewHolder {
 
-        androidx.constraintlayout.widget.ConstraintLayout fundo;
-        TextView txvNomeMedicamento;
-        TextView txvNomeFantasia;
-        TextView txtNomeFabricante;
+        final androidx.constraintlayout.widget.ConstraintLayout fundo;
+        final TextView txvNomeMedicamento;
+        final TextView txvNomeFantasia;
+        final TextView txtNomeFabricante;
 
         public MedicamentoViewHoder(@NonNull View itemView) {
             super(itemView);

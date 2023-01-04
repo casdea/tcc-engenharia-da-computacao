@@ -6,7 +6,7 @@ import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
 
 public interface IMedicamentoDao extends IDao<Medicamento>
 {
-    public Medicamento create(Medicamento medicamento, Horario horario);
+    void create(Medicamento medicamento, Horario horario);
     void findAllByUsuario(String idUsuario);
     void findByUsuarioIdProduto(String idUsuario, String idProduto);
 }

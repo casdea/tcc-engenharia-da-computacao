@@ -28,8 +28,8 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class VariacoesComandoDao extends AbstractEntityDao<VariacoesComando> implements IVariacoesComandoDao {
 
-    GerenteServicosListener gerenteServicosListener;
-    AppCompatActivity atividade;
+    final GerenteServicosListener gerenteServicosListener;
+    final AppCompatActivity atividade;
 
     public VariacoesComandoDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);

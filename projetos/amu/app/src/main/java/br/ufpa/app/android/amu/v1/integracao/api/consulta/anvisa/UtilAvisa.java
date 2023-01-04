@@ -161,7 +161,7 @@ public class UtilAvisa {
             if (BuildConfig.DEBUG)
                 Log.i("Decodificando a parte ",parte);
             try {
-                if (parte.substring(0, chaveParte.length()).equals(chaveParte)) {
+                if (parte.startsWith(chaveParte)) {
                     return parte.substring(chaveParte.length());
                 }
             } catch (Exception ex) {
@@ -192,7 +192,7 @@ public class UtilAvisa {
 
         for (int i = 0; i < partes.length - 1; i++) {
 
-            System.out.println("Parte " + String.valueOf(i + 1) + " " + partes[i]);
+            System.out.println("Parte " + (i + 1) + " " + partes[i]);
         }
 
         String identificacao = findParteByChave(partes, CODIGO_IDENTIFICACAO);

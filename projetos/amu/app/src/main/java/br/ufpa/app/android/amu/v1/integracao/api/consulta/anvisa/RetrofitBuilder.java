@@ -28,8 +28,6 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class RetrofitBuilder {
 
     private static Retrofit retrofit = null;
-    //private static final String BASE_URL = BuildConfig.BASE_URL;
-    //private static final String API_VERSION = BuildConfig.VERSION;
     private static final String URL_CONSULTAS_API_ANVISA = "https://consultas.anvisa.gov.br";
 
     private static OkHttpClient.Builder httpClientBuilder = null;
@@ -53,11 +51,7 @@ public class RetrofitBuilder {
         return retrofit;
     }
 
-
     private static void initHttpLogging() {
-        //HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        //logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        //if (BuildConfig.DEBUG) httpClientBuilder.addInterceptor(logging);
     }
 
     private static void initSSL(Context context) {

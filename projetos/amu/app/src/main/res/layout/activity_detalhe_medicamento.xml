@@ -141,7 +141,7 @@
                 android:id="@+id/viewpagertab"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:contentDescription="Abas do Detalhe"
+                android:contentDescription="@string/abas_detalhe"
                 app:stl_clickable="true"
                 app:stl_defaultTabBackground="?attr/selectableItemBackground"
                 app:stl_defaultTabTextAllCaps="true"
@@ -233,9 +233,9 @@
                 android:id="@+id/textInpTextQtdeEstoque"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Estoque"
+                android:hint="@string/estoque"
                 android:inputType="number"
-                android:text="0" />
+                android:text="@string/valor_zero" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -246,7 +246,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
-            android:contentDescription="Entrada no Estoque"
+            android:contentDescription="@string/entrada_no_estoque"
             android:minHeight="48dp"
             app:layout_constraintEnd_toStartOf="@+id/imbRemover"
             app:layout_constraintStart_toEndOf="@+id/textInputLayoutEstoque"
@@ -260,7 +260,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
-            android:contentDescription="Saída do Estoque"
+            android:contentDescription="@string/saida_do_estoque"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imbAdicionar"

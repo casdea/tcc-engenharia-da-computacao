@@ -43,9 +43,9 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class GerenteServicos  {
 
-    DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
-    AppCompatActivity atividade;
-    GerenteServicosListener gerenteServicosListener;
+    final DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+    final AppCompatActivity atividade;
+    final GerenteServicosListener gerenteServicosListener;
     Callable proximoComando;
 
     private static GerenteServicos gerenteServicos;
@@ -207,9 +207,9 @@ public class GerenteServicos  {
         factoryDAO.getAlarmeDao().create(alarme);
     }
 
-    public void verificarAlarme(List<MedicamentoDTO> medicamentos, TextView txvCadastrados, TextView txvNaoAdministrado) {
+    public void verificarAlarme(List<MedicamentoDTO> medicamentos, TextView txvQtdeCadastrados, TextView txvQtdeNaoAdministrado) {
         ProxyAssincronoServico proxyAssincronoAlarme = new ProxyAssincronoServico(
-                new TransacaoVerificarAlarme(atividade, medicamentos, txvCadastrados, txvNaoAdministrado));
+                new TransacaoVerificarAlarme(atividade, medicamentos, txvQtdeCadastrados, txvQtdeNaoAdministrado));
         proxyAssincronoAlarme.executar();
     }
 }

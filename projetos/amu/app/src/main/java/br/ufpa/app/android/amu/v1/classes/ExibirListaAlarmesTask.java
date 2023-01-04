@@ -12,22 +12,22 @@ import br.ufpa.app.android.amu.v1.util.App;
 
 public class ExibirListaAlarmesTask implements Callable<Integer> {
 
-    private AppCompatActivity atividade;
-    private List<MedicamentoDTO> medicamentos;
-    private TextView txvCadastrados;
-    private TextView txvNaoAdministrado;
+    private final AppCompatActivity atividade;
+    private final List<MedicamentoDTO> medicamentos;
+    private final TextView txvQtdeCadastrados;
+    private final TextView txvQtdeNaoAdministrado;
 
-    public ExibirListaAlarmesTask(AppCompatActivity atividade, List<MedicamentoDTO> medicamentos, TextView txvCadastrados, TextView txvNaoAdministrado) {
+    public ExibirListaAlarmesTask(AppCompatActivity atividade, List<MedicamentoDTO> medicamentos, TextView txvQtdeCadastrados, TextView txvQtdeNaoAdministrado) {
         this.atividade = atividade;
         this.medicamentos = medicamentos;
-        this.txvCadastrados = txvCadastrados;
-        this.txvNaoAdministrado = txvNaoAdministrado;
+        this.txvQtdeCadastrados = txvQtdeCadastrados;
+        this.txvQtdeNaoAdministrado = txvQtdeNaoAdministrado;
     }
 
     @Override
     public Integer call() throws InterruptedException {
         GerenteAlarme gerenteAlarme = new GerenteAlarme(atividade, medicamentos, App.listaUtilizacoes, App.listaAlarmes);
-        gerenteAlarme.verificar(txvCadastrados, txvNaoAdministrado);
+        gerenteAlarme.verificar(txvQtdeCadastrados, txvQtdeNaoAdministrado);
         return 0;
     }
 }

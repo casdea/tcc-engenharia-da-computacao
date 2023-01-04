@@ -17,7 +17,7 @@ import br.ufpa.app.android.amu.v1.util.App;
 
 public class DetalheAnvisaActivity extends AppCompatActivity {
 
-    ActivityResultLauncher<Intent> cadastrarMedicamentoActivityResultLauncher = registerForActivityResult(
+    final ActivityResultLauncher<Intent> cadastrarMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override

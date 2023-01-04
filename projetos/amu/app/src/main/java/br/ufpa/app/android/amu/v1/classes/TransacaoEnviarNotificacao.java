@@ -18,10 +18,10 @@ import br.ufpa.app.android.amu.v1.interfaces.Transacao;
 
 public class TransacaoEnviarNotificacao implements Transacao {
 
-    private AppCompatActivity atividade;
-    private String idMedicamento;
-    private String titulo;
-    private String corpo;
+    private final AppCompatActivity atividade;
+    private final String idMedicamento;
+    private final String titulo;
+    private final String corpo;
 
     public TransacaoEnviarNotificacao(AppCompatActivity atividade, String idMedicamento, String titulo, String corpo) {
         this.atividade = atividade;

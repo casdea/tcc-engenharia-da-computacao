@@ -50,7 +50,7 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
         // Required empty public constructor
     }
 
-    ActivityResultLauncher<Intent> mnutencaoHorarioActivityResultLauncher = registerForActivityResult(
+    final ActivityResultLauncher<Intent> mnutencaoHorarioActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override

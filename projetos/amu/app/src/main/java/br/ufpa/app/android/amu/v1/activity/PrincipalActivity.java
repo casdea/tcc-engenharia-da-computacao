@@ -46,15 +46,15 @@ import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 public class PrincipalActivity extends AppCompatActivity implements GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
 
     RecyclerView recyclerView;
-    FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+    final FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
     List<MedicamentoDTO> listaMedicamentos = new ArrayList<>();
     TextView txvListaVazia;
-    TextView txvCadastrados;
-    TextView txvNaoAdministrado;
+    TextView txvQtdeCadastrados;
+    TextView txvQtdeNaoAdministrado;
     RecursoVozLifeCyCleObserver mRecursoVozObserver;
 
-    Handler timerHandler = new Handler();
-    Runnable timerRunnable = new Runnable() {
+    final Handler timerHandler = new Handler();
+    final Runnable timerRunnable = new Runnable() {
 
         @Override
         public void run() {
@@ -66,7 +66,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         }
     };
 
-    ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
+    final ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -77,7 +77,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                 }
             });
 
-    ActivityResultLauncher<Intent> consultarAvisaActivityResultLauncher = registerForActivityResult(
+    final ActivityResultLauncher<Intent> consultarAvisaActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -116,8 +116,8 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         findViewById(R.id.fundo).setOnClickListener(this);
         findViewById(R.id.cabecalho).setOnClickListener(this);
 
-        txvCadastrados = findViewById(R.id.txvCadastrados);
-        txvNaoAdministrado = findViewById(R.id.txvNaoAdministrado);
+        txvQtdeCadastrados = findViewById(R.id.txvQtdeCadastrados);
+        txvQtdeNaoAdministrado = findViewById(R.id.txvQtdeNaoAdministrado);
 
         App.integracaoUsuario.bemVindoFuncao(TipoFuncao.PESQUISA_MEDICAMENTOS);
 
@@ -149,8 +149,6 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
             mRecursoVozObserver.chamarItenteReconechimentoVoz();
         } else {
             if (v.getId() == R.id.floatingActionButton) {
-                //verificarAlarme();
-                //enviarNotificacao("Horário de Médicamento","Tome o remédio DORFLEX");
                 incluirMedicamento();
             }
         }
@@ -312,7 +310,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
     public void verificarAlarme() {
         GerenteServicos gerenteServicos = new GerenteServicos(PrincipalActivity.this);
-        gerenteServicos.verificarAlarme(this.listaMedicamentos, this.txvCadastrados, this.txvNaoAdministrado);
+        gerenteServicos.verificarAlarme(this.listaMedicamentos, this.txvQtdeCadastrados, this.txvQtdeNaoAdministrado);
     }
 
     @Override

@@ -9,13 +9,13 @@
         android:id="@+id/txvNomeComercial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DORFLEX"
+        android:text="@string/exemplo_nome_comercial"
         android:textSize="30sp" />
 
     <TextView
         android:id="@+id/txvNomeLaboratorio"
         android:layout_width="wrap_content"
-        android:text="Medley Laboratorios S/A"
+        android:text="@string/exemplo_nome_fabricante"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

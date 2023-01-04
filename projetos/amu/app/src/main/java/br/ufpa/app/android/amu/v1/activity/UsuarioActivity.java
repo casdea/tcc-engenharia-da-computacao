@@ -93,7 +93,7 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
                     tipoPerfil = App.tipoPerfil.name();
 
                 //Validar se os campos foram preenchidos
-                if (validar(textoNome, textoEmail, textoSenha, tipoPerfil) == false) return;
+                if (!validar(textoNome, textoEmail, textoSenha, tipoPerfil)) return;
 
                 usuarioDTO = new UsuarioDTO();
                 usuarioDTO.setNome(textoNome);

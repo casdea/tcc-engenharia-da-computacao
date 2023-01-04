@@ -28,8 +28,8 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class ComandoDao extends AbstractEntityDao<Comando> implements IComandoDao {
 
-    GerenteServicosListener gerenteServicosListener;
-    AppCompatActivity atividade;
+    final GerenteServicosListener gerenteServicosListener;
+    final AppCompatActivity atividade;
 
     public ComandoDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);

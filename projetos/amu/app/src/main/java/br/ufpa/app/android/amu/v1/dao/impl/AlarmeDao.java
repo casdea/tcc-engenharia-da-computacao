@@ -30,8 +30,8 @@ import br.ufpa.app.android.amu.v1.util.DataUtil;
 
 public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
 
-    GerenteServicosListener gerenteServicosListener;
-    AppCompatActivity atividade;
+    final GerenteServicosListener gerenteServicosListener;
+    final AppCompatActivity atividade;
     Callable proximoComando;
 
     public AlarmeDao(DatabaseReference em, AppCompatActivity atividade) {
@@ -118,7 +118,7 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
                     if (BuildConfig.DEBUG)
                         Log.i("Lendo dados ", postSnapshot.toString());
 
-                    if (DataUtil.convertStringToDateTime(alarmeDTO.getDataHora()).before(DataUtil.getDataAtual())==false)
+                    if (!DataUtil.convertStringToDateTime(alarmeDTO.getDataHora()).before(DataUtil.getDataAtual()))
                         App.listaAlarmes.add(alarmeDTO);
                 }
 

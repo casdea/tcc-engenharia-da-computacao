@@ -3,7 +3,7 @@ package br.ufpa.app.android.amu.v1.classes;
 import br.ufpa.app.android.amu.v1.interfaces.Transacao;
 
 public class ProxyAssincronoServico implements Transacao {
-    Transacao transacao;
+    final Transacao transacao;
 
     public ProxyAssincronoServico(Transacao transacao) {
         this.transacao = transacao;

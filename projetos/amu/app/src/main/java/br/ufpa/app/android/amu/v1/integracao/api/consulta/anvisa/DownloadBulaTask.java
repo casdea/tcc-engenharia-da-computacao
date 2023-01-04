@@ -29,7 +29,7 @@ import retrofit2.Retrofit;
 
 public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, RetornoExecucaoDTO> {
 
-    private GerenteServicosListener gerenteServicosListener;
+    private final GerenteServicosListener gerenteServicosListener;
     protected ProgressDialog pDialog;
     private MedicamentoRetDTO medicamentoRetDTO;
 
@@ -51,7 +51,7 @@ public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, Retorno
 
             this.medicamentoRetDTO = medicamentos[0];
 
-            if (UtilAvisa.arquivoExiste(UtilAvisa.DIRETORIO_PDF + "/" + this.medicamentoRetDTO.getNomeArquivoPdf()) == false) {
+            if (!UtilAvisa.arquivoExiste(UtilAvisa.DIRETORIO_PDF + "/" + this.medicamentoRetDTO.getNomeArquivoPdf())) {
                 Retrofit retrofit = RetrofitBuilder.getInstance(App.context);
 
                 BularioEletronicoClient bularioEletronicoClient = retrofit.create(BularioEletronicoClient.class);
@@ -87,14 +87,14 @@ public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, Retorno
         super.onPostExecute(retornoExecucaoDTO);
         try {
             if (retornoExecucaoDTO != null) {
-                if (retornoExecucaoDTO.isOperacaoExecutada() == false) {
+                if (!retornoExecucaoDTO.isOperacaoExecutada()) {
                     Toast.makeText(App.context, "Consulta de Bula Falhou " + retornoExecucaoDTO.getMensagemExecucao(), Toast.LENGTH_LONG).show();
                 } else {
                     if (UtilAvisa.arquivoExiste(UtilAvisa.DIRETORIO_PDF + "/" + this.medicamentoRetDTO.getNomeArquivoPdf())) {
 
                         String texto = "";
                         boolean convertidoParaTexto = false;
-                        if (UtilAvisa.arquivoExiste(UtilAvisa.DIRETORIO_TXT + "/" + this.medicamentoRetDTO.getNomeArquivoTxt()) == false) {
+                        if (!UtilAvisa.arquivoExiste(UtilAvisa.DIRETORIO_TXT + "/" + this.medicamentoRetDTO.getNomeArquivoTxt())) {
                             if (parsePdf(UtilAvisa.obterDiretorioPdfs() + this.medicamentoRetDTO.getNomeArquivoPdf(),
                                     UtilAvisa.obterDiretorioTxts() + this.medicamentoRetDTO.getNomeArquivoTxt())) {
                                 convertidoParaTexto = true;
@@ -132,8 +132,6 @@ public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, Retorno
             PrintWriter out = new PrintWriter(new FileOutputStream(txt));
             TextExtractionStrategy strategy;
             for (int i = 1; i <= reader.getNumberOfPages(); i++) {
-                // strategy = parser.processContent(i, new SimpleTextExtractionStrategy());
-                //out.println(strategy.getResultantText());
                 out.println(PdfTextExtractor.getTextFromPage(reader, i).trim()+"\n"); //Extracting the content from the different pages
             }
             out.flush();

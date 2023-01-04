@@ -5,5 +5,5 @@ import br.ufpa.app.android.amu.v1.dao.modelo.Alarme;
 
 public interface IAlarmeDao extends IDao<Alarme>
 {
-    public void findAllByUsuario(String idUsuario);
+    void findAllByUsuario(String idUsuario);
 }

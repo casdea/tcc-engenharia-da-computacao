@@ -46,7 +46,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
     TextToSpeech textoLido;
     RecursoVozLifeCyCleObserver mRecursoVozObserver;
 
-    private ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -57,7 +57,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
                 }
             });
 
-    private ActivityResultLauncher<Intent> consultarMedicamentoActivityResultLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> consultarMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -114,7 +114,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
 
         ConsultarMedicamentoRetDTO consultarMedicamentoRetDTO = App.integracaoBularioEletronico.consultarDadosMedicamentos(this, argumento);
 
-        if (consultarMedicamentoRetDTO.isOperacaoExecutada() == false) {
+        if (!consultarMedicamentoRetDTO.isOperacaoExecutada()) {
             textoLido.speak("Consulta falhou", TextToSpeech.QUEUE_FLUSH, null);
             txvStatusConsulta.setText(consultarMedicamentoRetDTO.getMensagemExecucao());
         } else {

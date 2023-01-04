@@ -27,7 +27,7 @@ import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
     final ActivityResultRegistry mRegistry;
     ActivityResultLauncher<Intent> mGetRecursoVoz;
-    GerenteServicosListener gerenteServicosListener;
+    final GerenteServicosListener gerenteServicosListener;
 
     RecursoVozLifeCyCleObserver(@NonNull ActivityResultRegistry registry, AppCompatActivity atividade) {
         mRegistry = registry;
@@ -168,9 +168,6 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
             } catch (android.content.ActivityNotFoundException anfe) {
                 App.context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
             }
-
-            //Toast.makeText(getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_LONG).show();
-            //e.printStackTrace();
         }
     }
 

@@ -10,12 +10,12 @@ import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 
 public interface IntegracaoUsuario {
-    public void bemVindo();
-    public int findComando(String texto);
-    public void pararMensagem();
-    public void bemVindoFuncao(TipoFuncao tipoFuncao);
-    public void capturarComandoIniciado();
-    public void capturarComandoEncerrado();
+    void bemVindo();
+    int findComando(String texto);
+    void pararMensagem();
+    void bemVindoFuncao(TipoFuncao tipoFuncao);
+    void capturarComandoIniciado();
+    void capturarComandoEncerrado();
 
     void instrucaoParaUsuario(int idSom);
 
@@ -31,13 +31,13 @@ public interface IntegracaoUsuario {
 
     MedicamentoDTO descrerverMedicamento(List<MedicamentoDTO> medicamentos, String s);
 
-    public void descrerverHorario(MedicamentoDTO medicamentoDTO, List<HorarioDTO> horarios);
+    void descrerverHorario(MedicamentoDTO medicamentoDTO, List<HorarioDTO> horarios);
 
     void tenteNovamenteComandoVoz();
 
-    public void falar(String texto);
+    void falar(String texto);
 
-    public MedicamentoDTO findMedicamentoByAcaoVoz(List<MedicamentoDTO> medicamentos, String s, int acao);
+    MedicamentoDTO findMedicamentoByAcaoVoz(List<MedicamentoDTO> medicamentos, String s, int acao);
 
     boolean validarUtilizacaoMedicamento(List<HorarioDTO> horarios);
 
@@ -53,7 +53,7 @@ public interface IntegracaoUsuario {
 
     int obterQtde(String s, int acao);
 
-    public void informarSaldoEstoque();
+    void informarSaldoEstoque();
 
     void avisarSaldoAtualizadoComSucesso(int novoSaldo);
 

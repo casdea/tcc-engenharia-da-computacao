@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@drawable/quatro"
-        android:contentDescription="Bem vindo Imagem 4" />
+        android:contentDescription="@string/bem_vindo_imagem4" />
 
     <TextView
         android:id="@+id/textView"
@@ -26,7 +26,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Tudo organizado, no \n celular ou tablet"
+        android:text="@string/texto_intro4"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="18sp"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Use no seu smartphone acessando o \n Amu pelo dispositivo Móvel"
+        android:text="@string/texto_intro4_parte2"
         android:textAlignment="center"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"

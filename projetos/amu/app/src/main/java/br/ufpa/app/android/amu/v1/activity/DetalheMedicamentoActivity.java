@@ -64,7 +64,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
     OnEstoquesListener onEstoqueListener;
     OnUtilizacoesListener onUtilizacoesListener;
 
-    private ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -82,15 +82,15 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             });
 
     public interface OnHorariosListener {
-        public void atualizarLista(View view);
+        void atualizarLista(View view);
     }
 
     public interface OnEstoquesListener {
-        public void atualizarLista(View view);
+        void atualizarLista(View view);
     }
 
     public interface OnUtilizacoesListener {
-        public void atualizarLista(View view);
+        void atualizarLista(View view);
     }
 
     @Override
@@ -275,7 +275,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     public void abrirDialogUtilizacao(View view) {
 
-        if (App.integracaoUsuario.validarUtilizacaoMedicamento(App.listaHorarios) == false) return;
+        if (!App.integracaoUsuario.validarUtilizacaoMedicamento(App.listaHorarios)) return;
 
         //Instanciar AlertDialog
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -302,7 +302,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                return;
+                dialog.cancel();
             }
         });
 
@@ -329,7 +329,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     public void abrirDialogEntradaEstoque(View view) {
 
-        if (App.integracaoUsuario.validarEntradaEstoque(textInpTextQtdeEstoque.getText().toString()) == false)
+        if (!App.integracaoUsuario.validarEntradaEstoque(textInpTextQtdeEstoque.getText().toString()))
             return;
 
         //Instanciar AlertDialog
@@ -358,7 +358,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                return;
+                dialog.cancel();
             }
         });
 
@@ -383,7 +383,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     public void abrirDialogSaidaEstoque(View view) {
 
-        if (App.integracaoUsuario.validarSaidaEstoque(textInpTextQtdeEstoque.getText().toString()) == false)
+        if (!App.integracaoUsuario.validarSaidaEstoque(textInpTextQtdeEstoque.getText().toString()))
             return;
 
         //Instanciar AlertDialog
@@ -411,7 +411,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                return;
+                dialog.cancel();
             }
         });
 
@@ -520,7 +520,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         } else if (numeroAcao == Constantes.ACAO_CHAMAR_COMANDO_VOZ) {
             mRecursoVozObserver.chamarItenteReconechimentoVoz();
         } else if (numeroAcao == Constantes.ACAO_VOZ_DOSE_REALIZADA) {
-            if (App.integracaoUsuario.validarUtilizacaoMedicamento(App.listaHorarios) == false)
+            if (!App.integracaoUsuario.validarUtilizacaoMedicamento(App.listaHorarios))
                 return;
 
             sinalizarDoseRealizada();
@@ -533,7 +533,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
             textInpTextQtdeEstoque.setText(String.valueOf(qtde));
 
-            if (App.integracaoUsuario.validarEntradaEstoque(textInpTextQtdeEstoque.getText().toString()) == false)
+            if (!App.integracaoUsuario.validarEntradaEstoque(textInpTextQtdeEstoque.getText().toString()))
                 return;
             efetuarEntradaEstoque();
         } else if (numeroAcao == Constantes.ACAO_VOZ_SAIDA_ESTOQUE) {
@@ -543,7 +543,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
             textInpTextQtdeEstoque.setText(String.valueOf(qtde));
 
-            if (App.integracaoUsuario.validarSaidaEstoque(textInpTextQtdeEstoque.getText().toString()) == false)
+            if (!App.integracaoUsuario.validarSaidaEstoque(textInpTextQtdeEstoque.getText().toString()))
                 return;
             efetuarSaidaEstoque();
         } else if (numeroAcao == Constantes.ACAO_AVISAR_SALDO_ATUALIZADO) {

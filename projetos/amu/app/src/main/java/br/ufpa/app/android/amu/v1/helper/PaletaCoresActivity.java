@@ -12,11 +12,11 @@ import br.ufpa.app.android.amu.v1.R;
 
 public class PaletaCoresActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private int[] idViews = new int[]
+    private final int[] idViews = new int[]
             {R.id.txvCor1, R.id.txvCor2, R.id.txvCor3, R.id.txvCor4, R.id.txvCor5, R.id.txvCor6, R.id.txvCor7,
                     R.id.txvCor8, R.id.txvCor9, R.id.txvCor10};
 
-    private String[] cores = new String[]
+    private final String[] cores = new String[]
             {"#4CAF50", "#01C9D5", "#FF9800","#BD88FD","#03A9F4","#17090909","#FBC02D","#FFEB3B","#9E9D24","#CC534E"};
 
 

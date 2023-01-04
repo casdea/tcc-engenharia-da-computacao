@@ -21,8 +21,8 @@ import br.ufpa.app.android.amu.v1.dao.impl.UtilizacaoDao;
 
 public class FactoryDAO {
 
-    private DatabaseReference em;
-    private AppCompatActivity atividade;
+    private final DatabaseReference em;
+    private final AppCompatActivity atividade;
     private Callable proximoComando;
 
     public FactoryDAO(DatabaseReference em, AppCompatActivity atividade)

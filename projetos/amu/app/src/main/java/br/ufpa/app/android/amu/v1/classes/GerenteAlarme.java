@@ -23,10 +23,10 @@ import br.ufpa.app.android.amu.v1.util.DataUtil;
 
 public class GerenteAlarme {
 
-    private AppCompatActivity atividade;
-    private List<MedicamentoDTO> medicamentos;
-    private List<UtilizacaoDTO> utilizacoes;
-    private List<AlarmeDTO> alarmes;
+    private final AppCompatActivity atividade;
+    private final List<MedicamentoDTO> medicamentos;
+    private final List<UtilizacaoDTO> utilizacoes;
+    private final List<AlarmeDTO> alarmes;
     private List<MapaHorarioDTO> vMapa = new ArrayList<>();
 
     public GerenteAlarme(AppCompatActivity atividade, List<MedicamentoDTO> medicamentos, List<UtilizacaoDTO> utilizacoes, List<AlarmeDTO> alarmes) {
@@ -36,7 +36,7 @@ public class GerenteAlarme {
         this.alarmes = alarmes;
     }
 
-    public void verificar(TextView txvCadastrados, TextView txvNaoAdministrado) throws InterruptedException {
+    public void verificar(TextView txvQtdeCadastrados, TextView txvQtdeNaoAdministrado) throws InterruptedException {
 
 
         int cadastradosHorarioAtivo = 0;
@@ -74,8 +74,8 @@ public class GerenteAlarme {
             //ThreadUtil.esperar(ThreadUtil.CINCO_SEGUNDOS);
         }
 
-        txvCadastrados.setText("Cadastrados/Horário "+String.valueOf(cadastradosHorarioAtivo));
-        txvNaoAdministrado.setText("Dose não adminstradas "+String.valueOf(naoAdministrados));
+        txvQtdeCadastrados.setText(String.valueOf(cadastradosHorarioAtivo));
+        txvQtdeNaoAdministrado.setText(String.valueOf(naoAdministrados));
     }
 
     private List<AlarmeDTO> verificarCriarAlarme(List<UtilizacaoDTO> utilizacoes, HorarioDTO
@@ -112,12 +112,12 @@ public class GerenteAlarme {
                 if (gerarAlarme(medicamentoDTO.getIdMedicamento(), AlarmeDTO.TIPO_ALARME_PROXIMA_DOSE, mapaHorarioDTO,-5,0))
                 {
                     vAlarmes.add(new AlarmeDTO("0", medicamentoDTO, AlarmeDTO.TIPO_ALARME_PROXIMA_DOSE, minutos));
-                };
+                }
 
                 if (gerarAlarme(medicamentoDTO.getIdMedicamento(), AlarmeDTO.TIPO_ALARME_HORA_DOSE, mapaHorarioDTO,0,0))
                 {
                     vAlarmes.add(new AlarmeDTO("0", medicamentoDTO, AlarmeDTO.TIPO_ALARME_HORA_DOSE, minutos));
-                };
+                }
 
                 if (gerarAlarme(medicamentoDTO.getIdMedicamento(),AlarmeDTO.TIPO_ALARME_DOSE_ATRASADA, mapaHorarioDTO,1,5))
                 {
@@ -137,7 +137,7 @@ public class GerenteAlarme {
 
     private HorarioDTO obterHorario(MedicamentoDTO medicamentoDTO) {
         for (HorarioDTO horarioDTO : App.listaHorarios) {
-            if (horarioDTO.getIdMedicamento().equals(medicamentoDTO.getIdMedicamento()) == false)
+            if (!horarioDTO.getIdMedicamento().equals(medicamentoDTO.getIdMedicamento()))
                 continue;
 
             if (horarioDTO.getAtivo().equals("NÃO")) continue;
@@ -203,7 +203,7 @@ public class GerenteAlarme {
         if (DataUtil.getDataAtual().after(fim)) return false;
 
         for (AlarmeDTO alarmeDTO : this.alarmes) {
-            if (alarmeDTO.getIdMedicamento().equals(idMedicameto) == false) continue;
+            if (!alarmeDTO.getIdMedicamento().equals(idMedicameto)) continue;
             if (alarmeDTO.getTipoAlarme() != tipoAlarme) continue;
 
             if (DataUtil.convertStringToDateTime(alarmeDTO.getDataHora()).before(inicio))

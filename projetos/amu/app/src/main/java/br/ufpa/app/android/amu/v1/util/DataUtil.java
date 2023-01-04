@@ -22,7 +22,7 @@ public class DataUtil {
         try {
             Calendar cal = GregorianCalendar.getInstance();
             cal.setTime(new Date());
-            hora = (new SimpleDateFormat("HH:mm")).parse(hourOfDay + ":" + minute);
+            hora = (new SimpleDateFormat("HH:mm",java.util.Locale.getDefault())).parse(hourOfDay + ":" + minute);
         }
         catch (ParseException e)
         {
@@ -33,25 +33,25 @@ public class DataUtil {
         return hora;
     }
 
-    public static final String convertDateToString(java.util.Date date)
+    public static String convertDateToString(java.util.Date date)
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy",java.util.Locale.getDefault());
         return sdf.format(date);
     }
 
-    public static final String convertDateTimeToString(java.util.Date date)
+    public static String convertDateTimeToString(java.util.Date date)
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm",java.util.Locale.getDefault());
         return sdf.format(date);
     }
 
-    public static final String convertTimeToString(java.util.Date date)
+    public static String convertTimeToString(java.util.Date date)
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm",java.util.Locale.getDefault());
         return sdf.format(date);
     }
 
-    public static final Date convertStringToDate(String str)
+    public static Date convertStringToDate(String str)
     {
         try
         {
@@ -60,7 +60,7 @@ public class DataUtil {
                 Log.e("Conversao de Data ","Data não pode ser nula ou vazia "+str);
                 return null;
             }
-            SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy",java.util.Locale.getDefault());
             return new Date(sdf.parse(str).getTime());
         }
         catch (ParseException e)
@@ -70,7 +70,7 @@ public class DataUtil {
         }
     }
 
-    public static final boolean isDataValida(String str)
+    public static boolean isDataValida(String str)
     {
         if (str == null || str.trim().equals(""))
         {
@@ -78,7 +78,7 @@ public class DataUtil {
         }
         try
         {
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy",java.util.Locale.getDefault());
             format.setLenient(false);
             @SuppressWarnings("unused")
             java.util.Date data = new Date(format.parse(str).getTime());
@@ -88,12 +88,6 @@ public class DataUtil {
         {
             return false;
         }
-    }
-
-    public static SimpleDateFormat converteStringToTime(String hora) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        simpleDateFormat.format(Calendar.getInstance());
-        return simpleDateFormat;
     }
 
     public static String unmask(String s) {
@@ -146,7 +140,7 @@ public class DataUtil {
         return new java.util.Date();
     }
 
-    public static final Date convertStringToDate(String str, String formato) throws Exception
+    public static Date convertStringToDate(String str, String formato) throws Exception
     {
         try
         {
@@ -154,7 +148,7 @@ public class DataUtil {
             {
                 throw new Exception("Data não pode ser nula ou vazia");
             }
-            SimpleDateFormat sdf = new SimpleDateFormat(formato);
+            SimpleDateFormat sdf = new SimpleDateFormat(formato,java.util.Locale.getDefault());
             return new Date(sdf.parse(str).getTime());
         }
         catch (ParseException e)
@@ -163,7 +157,7 @@ public class DataUtil {
         }
     }
 
-    public static final Date somaHoras(Date dataInicial, int horas) throws Exception
+    public static Date somaHoras(Date dataInicial, int horas) throws Exception
     {
         if (dataInicial == null)
         {
@@ -175,7 +169,7 @@ public class DataUtil {
         return new Date(cal.getTimeInMillis());
     }
 
-    public static final Date somaMinutos(Date dataInicial, int minutos)
+    public static Date somaMinutos(Date dataInicial, int minutos)
     {
         Calendar cal = Calendar.getInstance();
         cal.setTime(dataInicial);
@@ -183,7 +177,7 @@ public class DataUtil {
         return new Date(cal.getTimeInMillis());
     }
 
-    public static final int getDiferencaEmMinutos(Date dataInicio, Date dataFim)
+    public static int getDiferencaEmMinutos(Date dataInicio, Date dataFim)
     {
         Calendar calInicio = Calendar.getInstance();
         Calendar calFim = Calendar.getInstance();

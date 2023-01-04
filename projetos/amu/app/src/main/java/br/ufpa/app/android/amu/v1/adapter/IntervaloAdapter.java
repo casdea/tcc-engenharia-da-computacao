@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class IntervaloAdapter extends BaseAdapter {
-	private Context ctx;
-	private String[] lista;
+	private final Context ctx;
+	private final String[] lista;
 	
 	
 	public IntervaloAdapter(Context context, String[] lista){

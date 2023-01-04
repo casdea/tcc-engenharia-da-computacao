@@ -11,13 +11,9 @@ import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 
 public class UsuarioDao extends AbstractEntityDao<Usuario> implements IUsuarioDao {
 
-    private GerenteServicosListener gerenteServicosListener;
-    private AppCompatActivity atividade;
-
     public UsuarioDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
-        this.atividade = atividade;
-        this.gerenteServicosListener = (GerenteServicosListener) atividade;
+        GerenteServicosListener gerenteServicosListener = (GerenteServicosListener) atividade;
 
     }
 

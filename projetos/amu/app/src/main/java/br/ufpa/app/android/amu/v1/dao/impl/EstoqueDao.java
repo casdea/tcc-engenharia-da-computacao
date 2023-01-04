@@ -30,8 +30,8 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 
 public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDao {
 
-    GerenteServicosListener gerenteServicosListener;
-    AppCompatActivity atividade;
+    final GerenteServicosListener gerenteServicosListener;
+    final AppCompatActivity atividade;
     Callable proximoComando;
 
     public EstoqueDao(DatabaseReference em, AppCompatActivity atividade) {

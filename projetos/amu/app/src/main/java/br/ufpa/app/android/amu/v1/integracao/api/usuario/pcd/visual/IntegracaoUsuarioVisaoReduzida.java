@@ -37,7 +37,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         textoLido.setSpeechRate(0.75f);
     }
 
-    private String[] TEXTOS_VOZ_LISTA_MEDICAMENTO = {
+    private final String[] TEXTOS_VOZ_LISTA_MEDICAMENTO = {
             "LISTA",
             "LISTA DE MEDICAMENTO",
             "LISTAGEM DE MEDICAMENTO",
@@ -48,7 +48,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "O QUE TENHO NA FARMACIA"
     };
 
-    private String[] TEXTOS_VOZ_DESCREVE_MEDICAMENTO = {
+    private final String[] TEXTOS_VOZ_DESCREVE_MEDICAMENTO = {
             "DETALHE",
             "DESCRICAO DO MEDICAMENTO",
             "DESCRICAO DO ITEM",
@@ -65,7 +65,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "QUERO SABER DETALHES DO ITEM"
     };
 
-    private String[] TEXTOS_VOZ_HORARIO_MEDICAMENTO = {
+    private final String[] TEXTOS_VOZ_HORARIO_MEDICAMENTO = {
             "HORARIO DO MEDICAMENTO",
             "HORARIO",
             "HORARIO DO ITEM",
@@ -76,7 +76,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "DEVO TOMAR QUE HORAS O ITEM",
     };
 
-    private String[] TEXTOS_VOZ_NUMEROS = {
+    private final String[] TEXTOS_VOZ_NUMEROS = {
             "UM",
             "DOIS",
             "TRES",
@@ -109,12 +109,12 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "TRINTA",
     };
 
-    private String[] TEXTOS_VOZ_TELA_ANTERIOR = {
+    private final String[] TEXTOS_VOZ_TELA_ANTERIOR = {
             "TELA ANTERIOR",
             "VOLTAR"
     };
 
-    private String[] TEXTOS_VOZ_UTILIZACAO = {
+    private final String[] TEXTOS_VOZ_UTILIZACAO = {
             "TOMEI",
             "TOMEI REMEDIO",
             "REMEDIO UTILIZADO",
@@ -122,21 +122,21 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "UTILIZAR REMEDIO"
     };
 
-    private String[] TEXTOS_VOZ_ESTOQUE_ATUAL = {
+    private final String[] TEXTOS_VOZ_ESTOQUE_ATUAL = {
             "ESTOQUE",
             "QUANTOS REMEDIOS TEM",
             "QUANTOS FALTA PRA ACABAR"
     };
 
-    private String[] TEXTOS_VOZ_ENTRADA_ESTOQUE = {
+    private final String[] TEXTOS_VOZ_ENTRADA_ESTOQUE = {
             "ENTRADA"
     };
 
-    private String[] TEXTOS_VOZ_SAIDA_ESTOQUE = {
+    private final String[] TEXTOS_VOZ_SAIDA_ESTOQUE = {
             "SAIDA"
     };
 
-    private String[] TEXTOS_VOZ_ALTERNAR_PERFIL = {
+    private final String[] TEXTOS_VOZ_ALTERNAR_PERFIL = {
             "ALTERAR PERFIL",
             "ADMINISTRAR",
             "MUDAR PERFIL",
@@ -145,13 +145,13 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             "CONFIGURAR"
     };
 
-    private String[] TEXTOS_VOZ_FECHAR_APP = {
+    private final String[] TEXTOS_VOZ_FECHAR_APP = {
             "SAIR",
             "FECHAR APLICATIVO",
             "SAIR DO APLICATIVO"
     };
 
-    private String[] TEXTOS_VOZ_PESQUISAR_ANVISA = {
+    private final String[] TEXTOS_VOZ_PESQUISAR_ANVISA = {
             "PESQUISAR",
             "PESQUISAR MEDICAMENTO"
     };
@@ -303,9 +303,6 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                // mediaPlayer = MediaPlayer.create(App.context, R.raw.opcaomenuprincipal);
-                // mediaPlayer.start(); // no need to call prepare(); create() does that for you
-
             }
         });
     }
@@ -405,8 +402,6 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
         String texto = "Item . " + medicamentoDTO.getNomeFantasia() + " . " +
                 "Quantidade da Embalagem . " + medicamentoDTO.getQtdeEmbalagem();
-        //"Composição . " + medicamentoDTO.getComposicao()+" . "+
-        //"Principio Ativo . " + medicamentoDTO.getPrincipioAtivo();
 
         textoLido.speak(texto, TextToSpeech.QUEUE_ADD, null);
 
@@ -421,7 +416,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             return;
         }
 
-        if (horarios.get(horarios.size() - 1).getAtivo().equals("SIM") == false) {
+        if (!horarios.get(horarios.size() - 1).getAtivo().equals("SIM")) {
             falar("O ultimo horário deve está ativo !");
             return;
         }
@@ -484,7 +479,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             return false;
         }
 
-        if (horarios.get(horarios.size() - 1).getAtivo().equals("SIM") == false) {
+        if (!horarios.get(horarios.size() - 1).getAtivo().equals("SIM")) {
             falar("O ultimo horário deve está ativo !");
             return false;
         }
@@ -582,7 +577,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
     @Override
     public void avisarSaldoAtualizadoComSucesso(int novoSaldo) {
-        falar("Saldo atualizado com sucesso. Estoque atual: " + String.valueOf(novoSaldo));
+        falar("Saldo atualizado com sucesso. Estoque atual: " + novoSaldo);
     }
 
     @Override

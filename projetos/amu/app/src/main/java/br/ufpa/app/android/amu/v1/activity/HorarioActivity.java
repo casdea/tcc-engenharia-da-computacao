@@ -80,7 +80,7 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
                 textInpTextInicioAdministracao.setText("");
 
                 String myFormat = "dd/MM/yyyy"; //In which you need put here
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault());
 
                 textInpTextInicioAdministracao.setText(sdf.format(calendar.getTime()));
             }

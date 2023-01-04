@@ -26,19 +26,12 @@ public abstract class NumberUtil
 	 * @param valor
 	 * @return boolean
 	 */
-	public static final boolean isZeroOrNull(Integer valor)
+	public static boolean isZeroOrNull(Integer valor)
 	{
-		if (valor != null && !valor.equals(Integer.valueOf(0)))
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return valor == null || valor.equals(Integer.valueOf(0));
 	}
 
-	public static final String toString(Integer valor)
+	public static String toString(Integer valor)
 	{
 		if (valor != null)
 		{
@@ -61,11 +54,7 @@ public abstract class NumberUtil
 	{
 		Integer aux1 = isZeroOrNull(valor1) ? Integer.valueOf(0) : valor1;
 		Integer aux2 = isZeroOrNull(valor2) ? Integer.valueOf(0) : valor2;
-		if (aux1.equals(aux2))
-		{
-			return true;
-		}
-		return false;
+		return aux1.equals(aux2);
 	}
 
 	/**
@@ -74,19 +63,12 @@ public abstract class NumberUtil
 	 * @param valor
 	 * @return java.lang.Integer
 	 */
-	public static final boolean isZeroOrNull(Long valor)
+	public static boolean isZeroOrNull(Long valor)
 	{
-		if (valor != null && !valor.equals(Long.valueOf(0)))
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return valor == null || valor.equals(Long.valueOf(0));
 	}
 
-	public static final String toString(Long valor)
+	public static String toString(Long valor)
 	{
 		if (valor != null)
 		{
@@ -109,11 +91,7 @@ public abstract class NumberUtil
 	{
 		Long aux1 = isZeroOrNull(valor1) ? Long.valueOf(0) : valor1;
 		Long aux2 = isZeroOrNull(valor2) ? Long.valueOf(0) : valor2;
-		if (aux1.equals(aux2))
-		{
-			return true;
-		}
-		return false;
+		return aux1.equals(aux2);
 	}
 
 	/**
@@ -122,19 +100,12 @@ public abstract class NumberUtil
 	 * @param valor
 	 * @return java.lang.Double
 	 */
-	public static final boolean isZeroOrNull(Double valor)
+	public static boolean isZeroOrNull(Double valor)
 	{
-		if (valor != null && !valor.equals(Double.valueOf(0.0)))
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return valor == null || valor.equals(Double.valueOf(0.0));
 	}
 
-	public static final String toString(Double valor)
+	public static String toString(Double valor)
 	{
 		if (valor != null)
 		{
@@ -153,15 +124,11 @@ public abstract class NumberUtil
 	 * @param valor2
 	 * @return boolean
 	 */
-	public static final boolean equals(Double valor1, Double valor2)
+	public static boolean equals(Double valor1, Double valor2)
 	{
 		Double aux1 = isZeroOrNull(valor1) ? Double.valueOf(0.0) : valor1;
 		Double aux2 = isZeroOrNull(valor2) ? Double.valueOf(0.0) : valor2;
-		if (aux1.equals(aux2))
-		{
-			return true;
-		}
-		return false;
+		return aux1.equals(aux2);
 	}
 
 }

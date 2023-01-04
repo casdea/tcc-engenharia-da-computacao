@@ -13,9 +13,9 @@ import br.ufpa.app.android.amu.v1.util.App;
 
 public class ObterListaUtilizacoesTask implements Callable<Integer> {
 
-    private DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
-    private AppCompatActivity atividade;
-    private Callable proximoComando;
+    private final DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
+    private final AppCompatActivity atividade;
+    private final Callable proximoComando;
 
     public ObterListaUtilizacoesTask(AppCompatActivity atividade, Callable proximoComando) {
         this.atividade = atividade;

@@ -11,16 +11,16 @@ import br.ufpa.app.android.amu.v1.interfaces.Transacao;
 
 public class TransacaoVerificarAlarme implements Transacao {
 
-    private AppCompatActivity atividade;
-    private List<MedicamentoDTO> medicamentos;
-    private TextView txvCadastrados;
-    private TextView txvNaoAdministrado;
+    private final AppCompatActivity atividade;
+    private final List<MedicamentoDTO> medicamentos;
+    private final TextView txvQtdeCadastrados;
+    private final TextView txvQtdeNaoAdministrado;
 
-    public TransacaoVerificarAlarme(AppCompatActivity atividade, List<MedicamentoDTO> medicamentos, TextView txvCadastrados, TextView txvNaoAdministrado) {
+    public TransacaoVerificarAlarme(AppCompatActivity atividade, List<MedicamentoDTO> medicamentos, TextView txvQtdeCadastrados, TextView txvQtdeNaoAdministrado) {
         this.atividade = atividade;
         this.medicamentos = medicamentos;
-        this.txvCadastrados = txvCadastrados;
-        this.txvNaoAdministrado = txvNaoAdministrado;
+        this.txvQtdeCadastrados = txvQtdeCadastrados;
+        this.txvQtdeNaoAdministrado = txvQtdeNaoAdministrado;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class TransacaoVerificarAlarme implements Transacao {
                   new ObterListaUtilizacoesTask(atividade,
                      new ObterListaAlarmesTask(atividade,
                         new ExibirListaAlarmesTask(atividade,
-                                  medicamentos, txvCadastrados, txvNaoAdministrado)))).call();
+                                  medicamentos, txvQtdeCadastrados, txvQtdeNaoAdministrado)))).call();
         System.out.println("Tarefa completa!");
     }
 }

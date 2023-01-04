@@ -109,7 +109,7 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
             return false;
         }
 
-        if (horarios.get(horarios.size() - 1).getAtivo().equals("SIM") == false) {
+        if (!horarios.get(horarios.size() - 1).getAtivo().equals("SIM")) {
             Toast.makeText(App.context,
                     "O ultimo horário deve está ativo !",
                     Toast.LENGTH_LONG).show();
@@ -185,7 +185,7 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
     @Override
     public void avisarSaldoAtualizadoComSucesso(int novoSaldo) {
         Toast.makeText(App.context,
-                "Saldo atualizado com sucesso. Estoque atual: " + String.valueOf(novoSaldo),
+                "Saldo atualizado com sucesso. Estoque atual: " + novoSaldo,
                 Toast.LENGTH_LONG).show();
     }
 

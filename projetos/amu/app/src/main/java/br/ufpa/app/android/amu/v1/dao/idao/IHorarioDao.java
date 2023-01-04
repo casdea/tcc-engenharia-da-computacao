@@ -5,6 +5,6 @@ import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
 
 public interface IHorarioDao extends IDao<Horario>
 {
-    public void findAllByUsuarioIdMedicamento(String idUsuario, String idMedicamento);
-    public void findAllByUsuario(String idUsuario);
+    void findAllByUsuarioIdMedicamento(String idUsuario, String idMedicamento);
+    void findAllByUsuario(String idUsuario);
 }

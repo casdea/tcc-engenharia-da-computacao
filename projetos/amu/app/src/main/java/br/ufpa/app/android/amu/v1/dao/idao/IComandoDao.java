@@ -5,5 +5,5 @@ import br.ufpa.app.android.amu.v1.dao.modelo.Comando;
 
 public interface IComandoDao extends IDao<Comando>
 {
-    public void findAllByUsuario(String idUsuario);
+    void findAllByUsuario(String idUsuario);
 }
