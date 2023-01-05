@@ -229,7 +229,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                         }
 
                         @Override
-                        public void onLongItemClick(View view, int position) {
+                        public void onLongItemClick(int position) {
 
                         }
 

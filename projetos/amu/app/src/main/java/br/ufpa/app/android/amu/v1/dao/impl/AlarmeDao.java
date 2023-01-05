@@ -31,18 +31,10 @@ import br.ufpa.app.android.amu.v1.util.DataUtil;
 public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
 
     final GerenteServicosListener gerenteServicosListener;
-    final AppCompatActivity atividade;
     Callable proximoComando;
-
-    public AlarmeDao(DatabaseReference em, AppCompatActivity atividade) {
-        super(em);
-        this.atividade = atividade;
-        this.gerenteServicosListener = (GerenteServicosListener) atividade;
-    }
 
     public AlarmeDao(DatabaseReference em, AppCompatActivity atividade, Callable proximoComando) {
         super(em);
-        this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
         this.proximoComando = proximoComando;
     }

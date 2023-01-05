@@ -63,7 +63,7 @@ public class EstoquesFragment extends Fragment implements DetalheMedicamentoActi
                     }
 
                     @Override
-                    public void onLongItemClick(View view, int position) {
+                    public void onLongItemClick(int position) {
                         if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
                             gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, position);
                     }

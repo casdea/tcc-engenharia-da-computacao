@@ -34,7 +34,6 @@ public class App extends Application {
     public static FontesConsulta fontesConsulta;
     public static IntegracaoUsuario integracaoUsuario;
     public static IntegracaoBularioEletronico integracaoBularioEletronico;
-    public static TipoFuncao comandoAtualVoz;
     public static Usuario usuario;
     public static MedicamentoDTO medicamentoDTO;
     public static HorarioDTO horarioDTO;

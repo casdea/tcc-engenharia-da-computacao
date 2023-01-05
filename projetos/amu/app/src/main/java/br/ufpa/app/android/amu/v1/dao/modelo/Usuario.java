@@ -37,23 +37,11 @@ public class Usuario extends AbstractEntity {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getTipoPerfil() {
         return tipoPerfil;
-    }
-
-    public void setTipoPerfil(String tipoPerfil) {
-        this.tipoPerfil = tipoPerfil;
     }
 }

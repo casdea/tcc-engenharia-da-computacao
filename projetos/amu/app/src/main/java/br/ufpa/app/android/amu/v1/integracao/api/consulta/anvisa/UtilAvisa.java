@@ -35,16 +35,8 @@ public class UtilAvisa {
     public static final String CODIGO_IDENTIFICACAO = "0@";
     public static final String CODIGO_PARA_QUE_INDICADO = "1@";
     public static final String CODIGO_COMO_FUNCIONA = "2@";
-    public static final String CODIGO_QUANDO_NAO_USAR = "3@";
-    public static final String CODIGO_SABER_ANTES_USAR = "4@";
-    public static final String CODIGO_QUANTO_TEMPO_GUARDAR = "5@";
     public static final String CODIGO_COMO_USAR = "6@";
     public static final String CODIGO_QUANDO_ESQUECER = "7@";
-    public static final String CODIGO_MALES_CAUSAM = "8@";
-    public static final String CODIGO_SUPERDOSAGEM = "9@";
-    public static final String CODIGO_DIZERES_LEGAIS = "10@";
-    public static final String CODIGO_HISTORICO_ALTERACAO_BULA1 = "11@";
-    public static final String CODIGO_HISTORICO_ALTERACAO_BULA2 = "11@";
 
     public static final String PARA_QUE_INDICADO = "1. PARA QUE ESTE MEDICAMENTO É INDICADO?";
     public static final String COMO_FUNCIONA = "2. COMO ESTE MEDICAMENTO FUNCIONA?";
@@ -67,7 +59,6 @@ public class UtilAvisa {
     public static final String CODIGO_IDENTIFICACAO_APRESENTACAO = "21@";
     public static final String CODIGO_IDENTIFICACAO_COMPOSICAO = "22@";
     public static final String CODIGO_IDENTIFICACAO_VIA_ADM = "23@";
-    public static final String CODIGO_IDENTIFICACAO_PUBLICO_ALVO = "24@";
 
     public static final String IDENTIFICACAO_APRESENTACAO = "APRESENTAÇÕES";
     public static final String IDENTIFICACAO_COMPOSICAO = "COMPOSIÇÃO";

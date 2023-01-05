@@ -40,48 +40,25 @@ public class Alarme extends AbstractEntity {
         return idMedicamento;
     }
 
-    public void setIdMedicamento(String idMedicamento) {
-        this.idMedicamento = idMedicamento;
-    }
-
     public String getIdUsuario() {
         return idUsuario;
-    }
-
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
     }
 
     public String getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(String dataHora) {
-        this.dataHora = dataHora;
-    }
-
     public int getTipoAlarme() {
         return tipoAlarme;
-    }
-
-    public void setTipoAlarme(int tipoAlarme) {
-        this.tipoAlarme = tipoAlarme;
     }
 
     public String getTitulo() {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
     public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 }
 

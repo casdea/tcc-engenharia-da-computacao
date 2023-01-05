@@ -13,8 +13,6 @@ public class UsuarioDao extends AbstractEntityDao<Usuario> implements IUsuarioDa
 
     public UsuarioDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
-        GerenteServicosListener gerenteServicosListener = (GerenteServicosListener) atividade;
-
     }
 
     public Class<Usuario> getClassImplement() {

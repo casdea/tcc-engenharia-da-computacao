@@ -42,7 +42,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     public interface OnItemClickListener extends AdapterView.OnItemClickListener {
         void onItemClick(View view, int position);
 
-        void onLongItemClick(View view, int position);
+        void onLongItemClick(int position);
     }
 
     public RecyclerItemClickListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {
@@ -57,7 +57,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
             public void onLongPress(MotionEvent e) {
                 View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
                 if (child != null && mListener != null) {
-                    mListener.onLongItemClick(child, recyclerView.getChildAdapterPosition(child));
+                    mListener.onLongItemClick(recyclerView.getChildAdapterPosition(child));
                 }
             }
         });
