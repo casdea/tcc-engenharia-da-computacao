@@ -7,7 +7,7 @@ import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 public interface IEstoqueDao extends IDao<Estoque>
 {
     void findAllByUsuarioIdMedicamento(String idUsuario, String idMedicamento);
-    void atualizarSaldoEstoque(String idUsuario, String idMedicamento, EstoqueDTO movtoEstoqueDTO);
-    void sinalizarDoseRealizada(String idUsuario, String idMedicamento, EstoqueDTO movtoEstoqueDTO);
+    void atualizarSaldoEstoque(String idUsuario, EstoqueDTO movtoEstoqueDTO);
+    void sinalizarDoseRealizada(String idUsuario, EstoqueDTO movtoEstoqueDTO);
     void findAllByUsuario(String idUsuario);
 }

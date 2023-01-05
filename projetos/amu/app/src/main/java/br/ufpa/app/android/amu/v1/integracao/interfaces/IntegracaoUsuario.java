@@ -10,14 +10,10 @@ import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 
 public interface IntegracaoUsuario {
-    void bemVindo();
     int findComando(String texto);
-    void pararMensagem();
     void bemVindoFuncao(TipoFuncao tipoFuncao);
     void capturarComandoIniciado();
     void capturarComandoEncerrado();
-
-    void instrucaoParaUsuario(int idSom);
 
     void exibirMedicamentosEncontrados(TextToSpeech textoLido, List<MedicamentoRetDTO> medicamentos, String argumento);
 
@@ -36,8 +32,6 @@ public interface IntegracaoUsuario {
     void tenteNovamenteComandoVoz();
 
     void falar(String texto);
-
-    MedicamentoDTO findMedicamentoByAcaoVoz(List<MedicamentoDTO> medicamentos, String s, int acao);
 
     boolean validarUtilizacaoMedicamento(List<HorarioDTO> horarios);
 

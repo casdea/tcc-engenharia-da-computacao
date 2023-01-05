@@ -30,24 +30,12 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDao {
 
     final GerenteServicosListener gerenteServicosListener;
-    final AppCompatActivity atividade;
     Callable proximoComando;
-
-    public HorarioDao(DatabaseReference em, AppCompatActivity atividade) {
-        super(em);
-        this.atividade = atividade;
-        this.gerenteServicosListener = (GerenteServicosListener) atividade;
-    }
 
     public HorarioDao(DatabaseReference em, AppCompatActivity atividade, Callable proximoComando) {
         super(em);
-        this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
         this.proximoComando = proximoComando;
-    }
-
-    public Class<Horario> getClassImplement() {
-        return Horario.class;
     }
 
     @Override

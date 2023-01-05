@@ -160,8 +160,6 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.ref = position;
-
             holder.txvNomeComercial.setText(medicamentosRetDTO.getNomeComercial());
             holder.txvNomeLaboratorio.setText(medicamentosRetDTO.getNomeLaboratorio());
 
@@ -171,7 +169,6 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
         class ViewHolder {
             TextView txvNomeComercial;
             TextView txvNomeLaboratorio;
-            int ref;
         }
 
     }

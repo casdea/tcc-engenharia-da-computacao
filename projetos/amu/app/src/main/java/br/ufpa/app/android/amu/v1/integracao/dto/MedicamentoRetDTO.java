@@ -30,39 +30,20 @@ public class MedicamentoRetDTO {
         return nomeComercial;
     }
 
-    public void setNomeComercial(String nomeComercial) {
-        this.nomeComercial = nomeComercial;
-    }
-
     public String getNomeLaboratorio() {
         return nomeLaboratorio;
-    }
-
-    public void setNomeLaboratorio(String nomeLaboratorio) {
-        this.nomeLaboratorio = nomeLaboratorio;
     }
 
     public String getNomeArquivoBulaPaciente() {
         return nomeArquivoBulaPaciente;
     }
 
-    public void setNomeArquivoBulaPaciente(String nomeArquivoBulaPaciente) {
-        this.nomeArquivoBulaPaciente = nomeArquivoBulaPaciente;
-    }
-
     public String getIdProduto() {
         return idProduto;
-    }
-
-    public void setIdProduto(String idProduto) {
-        this.idProduto = idProduto;
     }
 
     public String getDataProduto() {
         return dataProduto;
     }
 
-    public void setDataProduto(String dataProduto) {
-        this.dataProduto = dataProduto;
-    }
 }

@@ -128,9 +128,7 @@ public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, Retorno
     private boolean parsePdf(String pdf, String txt) throws Exception {
         try {
             PdfReader reader = new PdfReader(pdf);
-            PdfReaderContentParser parser = new PdfReaderContentParser(reader);
             PrintWriter out = new PrintWriter(new FileOutputStream(txt));
-            TextExtractionStrategy strategy;
             for (int i = 1; i <= reader.getNumberOfPages(); i++) {
                 out.println(PdfTextExtractor.getTextFromPage(reader, i).trim()+"\n"); //Extracting the content from the different pages
             }

@@ -46,20 +46,12 @@ public class GerenteServicos  {
     final DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
     final AppCompatActivity atividade;
     final GerenteServicosListener gerenteServicosListener;
-    Callable proximoComando;
-
-    private static GerenteServicos gerenteServicos;
 
     public GerenteServicos(AppCompatActivity atividade) {
         this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
     }
 
-    public GerenteServicos(AppCompatActivity atividade, Callable proximoComando) {
-        this.atividade = atividade;
-        this.gerenteServicosListener = (GerenteServicosListener) atividade;
-        this.proximoComando = (Callable) proximoComando;
-    }
     public Usuario incluirUsuario(UsuarioDTO usuarioDTO) {
         FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
         Usuario usuario = new Usuario(usuarioDTO);
@@ -72,7 +64,7 @@ public class GerenteServicos  {
         return factoryDAO.getUsuarioDao().update(usuario);
     }
 
-    public void verificarUsuarioLogado(AppCompatActivity atividadeLocal) {
+    public void verificarUsuarioLogado() {
         FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
 
         if (autenticacao.getCurrentUser() != null) {
@@ -90,7 +82,6 @@ public class GerenteServicos  {
                         App.usuario.setIdUsuario(idUsuario);
                         App.tipoPerfil = TipoPerfil.COMUM; //TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
-                        //abrirTelaPrincipal(atividadeLocal);
                         gerenteServicosListener.executarAcao(Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL,autenticacao);
                     } else {
                         Toast.makeText(App.context,
@@ -98,8 +89,6 @@ public class GerenteServicos  {
                                 Toast.LENGTH_LONG).show();
 
                         gerenteServicosListener.executarAcao(Constantes.ACAO_APRESENTAR_TELA_BOAS_VINDAS,autenticacao);
-
-                        //abrirTelaBoasVindas(autenticacao, atividadeLocal);
                     }
                 }
 
@@ -109,17 +98,6 @@ public class GerenteServicos  {
                 }
             });
         }
-    }
-
-    public void abrirTelaPrincipal(AppCompatActivity atividadeLocal) {
-        //App.context.startActivity(new Intent(atividadeLocal, MainActivity.class));
-        App.context.startActivity(new Intent(atividade, PrincipalActivity.class));
-    }
-
-    public void abrirTelaBoasVindas(FirebaseAuth autenticacao, AppCompatActivity atividadeLocal) {
-        autenticacao.signOut();
-        App.context.startActivity(new Intent(atividadeLocal, BemVindoActivity.class));
-        atividadeLocal.finish();
     }
 
     public void incluirMedicamento(MedicamentoDTO medicamentoDTO, HorarioDTO horarioDTO) {
@@ -184,10 +162,9 @@ public class GerenteServicos  {
         factoryDAO.getUtilizacaoDao().findAllByUsuarioIdMedicamento(idUsuario,idMedicamento);
     }
 
-    public void atualizarSaldoEstoque(String idUsuario, String idMedicamento, EstoqueDTO estoqueDTO) {
+    public void atualizarSaldoEstoque(String idUsuario, EstoqueDTO estoqueDTO) {
         FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
-        Estoque estoque = new Estoque(estoqueDTO);
-        factoryDAO.getEstoqueDao().atualizarSaldoEstoque(idUsuario,idMedicamento,estoqueDTO);
+        factoryDAO.getEstoqueDao().atualizarSaldoEstoque(idUsuario,estoqueDTO);
     }
 
     public void obterListaEstoquesByUsuarioMedicamento(String idUsuario, String idMedicamento) {
@@ -195,10 +172,9 @@ public class GerenteServicos  {
         factoryDAO.getEstoqueDao().findAllByUsuarioIdMedicamento(idUsuario,idMedicamento);
     }
 
-    public void sinalizarDoseRealizada(String idUsuario, String idMedicamento, EstoqueDTO estoqueDTO) {
+    public void sinalizarDoseRealizada(String idUsuario, EstoqueDTO estoqueDTO) {
         FactoryDAO factoryDAO = new FactoryDAO(em, atividade);
-        Estoque estoque = new Estoque(estoqueDTO);
-        factoryDAO.getEstoqueDao().sinalizarDoseRealizada(idUsuario,idMedicamento,estoqueDTO);
+        factoryDAO.getEstoqueDao().sinalizarDoseRealizada(idUsuario,estoqueDTO);
     }
 
     public void incluirAlarme(AlarmeDTO alarmeDTO) {

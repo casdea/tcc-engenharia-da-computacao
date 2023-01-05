@@ -14,18 +14,8 @@ import br.ufpa.app.android.amu.v1.util.App;
 
 public class IntegracaoUsuarioComum implements IntegracaoUsuario {
     @Override
-    public void bemVindo() {
-
-    }
-
-    @Override
     public int findComando(String texto) {
         return 0;
-    }
-
-    @Override
-    public void pararMensagem() {
-
     }
 
     @Override
@@ -40,11 +30,6 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
 
     @Override
     public void capturarComandoEncerrado() {
-
-    }
-
-    @Override
-    public void instrucaoParaUsuario(int idSom) {
 
     }
 
@@ -92,12 +77,6 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
     @Override
     public void falar(String texto) {
 
-    }
-
-    @Override
-    public MedicamentoDTO findMedicamentoByAcaoVoz(List<MedicamentoDTO> medicamentos, String s, int acao)
-    {
-        return null;
     }
 
     @Override

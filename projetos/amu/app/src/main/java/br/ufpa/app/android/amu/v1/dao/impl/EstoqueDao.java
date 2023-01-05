@@ -31,24 +31,10 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDao {
 
     final GerenteServicosListener gerenteServicosListener;
-    final AppCompatActivity atividade;
-    Callable proximoComando;
 
     public EstoqueDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
-        this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
-    }
-
-    public EstoqueDao(DatabaseReference em, AppCompatActivity atividade, Callable proximoComando) {
-        super(em);
-        this.atividade = atividade;
-        this.gerenteServicosListener = (GerenteServicosListener) atividade;
-        this.proximoComando = proximoComando;
-    }
-
-    public Class<Estoque> getClassImplement() {
-        return Estoque.class;
     }
 
     @Override
@@ -168,8 +154,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
 
     }
 
-    public void atualizarSaldoEstoque(String idUsuario, String idMedicamento, EstoqueDTO movtoEstoqueDTO) {
-        List<EstoqueDTO> listaEstoques = new ArrayList<>();
+    public void atualizarSaldoEstoque(String idUsuario, EstoqueDTO movtoEstoqueDTO) {
         DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
 
         Query estoquesQuery = em.child("estoques").orderByChild("idUsuario").equalTo(idUsuario);
@@ -232,8 +217,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
 
     }
 
-    public void sinalizarDoseRealizada(String idUsuario, String idMedicamento, EstoqueDTO movtoEstoqueDTO) {
-        List<EstoqueDTO> listaEstoques = new ArrayList<>();
+    public void sinalizarDoseRealizada(String idUsuario, EstoqueDTO movtoEstoqueDTO) {
         DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
 
         Query estoquesQuery = em.child("estoques").orderByChild("idUsuario").equalTo(idUsuario);

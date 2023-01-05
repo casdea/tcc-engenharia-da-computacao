@@ -11,7 +11,6 @@ public class Constantes {
     public static final int ACAO_ALTERAR_ESTOQUE = 8;
     public static final int ACAO_REGISTRAR_UTILIZACAO = 9;
     public static final int ACAO_ALTERAR_UTILIZACAO = 10;
-    public static final int ACAO_OBTER_ULTIMO_ESTOQUE_POR_USUARIO_PRODUTO = 11;
     public static final int ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO = 12;
     public static final int ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO = 13;
     public static final int ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO = 14;
@@ -42,11 +41,7 @@ public class Constantes {
     public static final int ACAO_AVISAR_SALDO_ATUALIZADO = 38;
     public static final int ACAO_VOZ_ALTERNAR_PERFIL = 39;
     public static final int ACAO_VOZ_FECHAR_APP = 40;
-    public static final int ACAO_OBTER_LISTA_HORARIO_ATIVO = 41;
-    public static final int ACAO_OBTER_LISTA_UTILIZACAO_HOJE = 42;
-    public static final int ACAO_REGISTRO_ALARME_CONCLUIDO = 43;
     public static final int ACAO_ALTERAR_ALARME_CONCLUIDO = 44;
-    public static final int ACAO_OBTER_LISTA_ALARME_HOJE = 45;
     public static final int ACAO_VOZ_COMANDOS_TELA_PRINCIPAL = 46;
     public static final int ACAO_VOZ_COMANDOS_DETALHE_MEDICAMENTO = 47;
     public static final int ACAO_VOZ_MONTAR_LISTA_ANVISA = 48;

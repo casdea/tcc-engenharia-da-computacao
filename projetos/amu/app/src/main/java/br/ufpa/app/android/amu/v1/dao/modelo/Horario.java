@@ -51,55 +51,27 @@ public class Horario extends AbstractEntity {
         return idUsuario;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
     public int getQtdePorDose() {
         return qtdePorDose;
-    }
-
-    public void setQtdePorDose(int qtdePorDose) {
-        this.qtdePorDose = qtdePorDose;
     }
 
     public String getDataInicial() {
         return dataInicial;
     }
 
-    public void setDataInicial(String dataInicial) {
-        this.dataInicial = dataInicial;
-    }
-
     public String getHorarioInicial() {
         return horarioInicial;
-    }
-
-    public void setHorarioInicial(String horarioInicial) {
-        this.horarioInicial = horarioInicial;
     }
 
     public String getIntervalo() {
         return intervalo;
     }
 
-    public void setIntervalo(String intervalo) {
-        this.intervalo = intervalo;
-    }
-
     public int getNrDoses() {
         return nrDoses;
     }
 
-    public void setNrDoses(int nrDoses) {
-        this.nrDoses = nrDoses;
-    }
-
     public String getAtivo() {
         return ativo;
-    }
-
-    public void setAtivo(String ativo) {
-        this.ativo = ativo;
     }
 }

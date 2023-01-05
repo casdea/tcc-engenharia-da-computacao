@@ -48,8 +48,6 @@ public class EstoquesRecyclerViewAdapter extends RecyclerView.Adapter<EstoquesRe
 
     public class HorarioViewHolder extends RecyclerView.ViewHolder {
 
-        public androidx.constraintlayout.widget.ConstraintLayout saldoParte1;
-        public androidx.constraintlayout.widget.ConstraintLayout saldoParte2;
         public final TextView txvDataHora;
         public final TextView txvEntrada;
         public final TextView txvSaida;

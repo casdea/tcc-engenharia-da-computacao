@@ -9,10 +9,6 @@ public class Utilizacao  extends AbstractEntity  {
     private String idUsuario;
     private String dataHora;
 
-    public Utilizacao() {
-        nomeTabela = "utilizacoes";
-    }
-
     public Utilizacao(UtilizacaoDTO utilizacaoDTO) {
         nomeTabela = "utilizacoes";
         this.idUtilizacao = utilizacaoDTO.getIdUtilizacao();
@@ -33,23 +29,11 @@ public class Utilizacao  extends AbstractEntity  {
         return idMedicamento;
     }
 
-    public void setIdMedicamento(String idMedicamento) {
-        this.idMedicamento = idMedicamento;
-    }
-
     public String getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
     public String getDataHora() {
         return dataHora;
-    }
-
-    public void setDataHora(String dataHora) {
-        this.dataHora = dataHora;
     }
 }

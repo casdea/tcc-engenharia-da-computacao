@@ -220,8 +220,6 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
                 App.medicamentoDTO.setCor(cor);
                 App.medicamentoDTO.setIdUsuario(App.usuario.getIdUsuario());
                 App.medicamentoDTO.setQtdeEmbalagem(Integer.parseInt(textInpTextQtdeEmbalagem.getText().toString()));
-                App.medicamentoDTO.setEstoques(new ArrayList<>());
-                App.medicamentoDTO.setUtilizacoes(new ArrayList<>());
 
                 App.horarioDTO = new HorarioDTO();
                 App.horarioDTO.setIdHorario(StringUtil.createId());

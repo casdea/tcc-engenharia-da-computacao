@@ -156,7 +156,7 @@ public class GerenteAlarme {
         Date horaPrescrita = DataUtil.convertStringToDate(dataInicial + " " + horaInicial, "dd/MM/yyyy HH:mm");
         Date horaAdministrada = null;
         for (int i = 0; i < nrDoses; i++) {
-            MapaHorarioDTO dto = new MapaHorarioDTO(i + 1, horaPrescrita, horaAdministrada);
+            MapaHorarioDTO dto = new MapaHorarioDTO(horaPrescrita, horaAdministrada);
             horaPrescrita = DataUtil.somaHoras(horaPrescrita, intervalo);
             vMapa.add(dto);
         }
@@ -166,7 +166,7 @@ public class GerenteAlarme {
             if (i <= vMapa.size() - 1)
                 vMapa.get(i).setHoraAdministrada(utilizacaoDTO.getDataUtilizacao());
             else {
-                vMapa.add(new MapaHorarioDTO(i + 1, null, utilizacaoDTO.getDataUtilizacao()));
+                vMapa.add(new MapaHorarioDTO( null, utilizacaoDTO.getDataUtilizacao()));
             }
             i++;
         }

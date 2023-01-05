@@ -44,7 +44,7 @@ public class FactoryDAO {
     {
         if (usuarioDao == null)
         {
-            usuarioDao = new UsuarioDao(em, atividade);
+            usuarioDao = new UsuarioDao(em);
         }
         return usuarioDao;
     }
@@ -89,7 +89,7 @@ public class FactoryDAO {
     {
         if (estoqueDao == null)
         {
-            estoqueDao = new EstoqueDao(em, atividade, proximoComando);
+            estoqueDao = new EstoqueDao(em, atividade);
         }
         return estoqueDao;
     }

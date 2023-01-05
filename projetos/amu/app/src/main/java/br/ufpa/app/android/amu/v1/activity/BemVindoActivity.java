@@ -62,7 +62,7 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
     protected void onStart() {
         super.onStart();
         GerenteServicos gerenteServicos = new GerenteServicos(BemVindoActivity.this);
-        gerenteServicos.verificarUsuarioLogado(this);
+        gerenteServicos.verificarUsuarioLogado();
     }
 
     @Override

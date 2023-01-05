@@ -35,7 +35,4 @@ public class ConsultarMedicamentoRetDTO {
         return medicamentos;
     }
 
-    public void setMedicamentos(List<MedicamentoRetDTO> medicamentos) {
-        this.medicamentos = medicamentos;
-    }
 }

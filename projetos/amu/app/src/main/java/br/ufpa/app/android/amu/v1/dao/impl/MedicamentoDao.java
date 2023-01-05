@@ -35,16 +35,10 @@ import br.ufpa.app.android.amu.v1.util.DataUtil;
 public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IMedicamentoDao {
 
     final GerenteServicosListener gerenteServicosListener;
-    final AppCompatActivity atividade;
 
     public MedicamentoDao(DatabaseReference em, AppCompatActivity atividade) {
         super(em);
-        this.atividade = atividade;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
-    }
-
-    public Class<Usuario> getClassImplement() {
-        return Usuario.class;
     }
 
     @Override
@@ -230,9 +224,6 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
         medicamentoDTO.setIdProdutoAnvisa(medicamento.getIdProdutoAnvisa());
         medicamentoDTO.setDataProdutoAnvisa(medicamento.getDataProdutoAnvisa());
         medicamentoDTO.setIdUsuario(medicamento.getIdUsuario());
-        //Listas
-        medicamentoDTO.setEstoques(new ArrayList<>());
-        medicamentoDTO.setUtilizacoes(new ArrayList<>());
 
         return medicamentoDTO;
     }

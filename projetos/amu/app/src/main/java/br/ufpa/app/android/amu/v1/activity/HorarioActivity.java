@@ -37,7 +37,6 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
 
     TextInputEditText textInpTextInicioAdministracao;
     TextInputEditText textInpTextHorarioPrimeiraDose;
-    Spinner spIntervalos;
     TextInputEditText textInpTextDosesDia;
     TextInputEditText textInpTextQtdeDose;
     SwitchCompat swAtivo;
@@ -50,7 +49,6 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
 
         textInpTextInicioAdministracao = findViewById(R.id.textInpTextInicioAdministracao);
         textInpTextHorarioPrimeiraDose =  findViewById(R.id.textInpTextHorarioPrimeiraDose);
-        spIntervalos = findViewById(R.id.spIntervalos);
         textInpTextDosesDia = findViewById(R.id.textInpTextDosesDia);
         textInpTextQtdeDose = findViewById(R.id.textInpTextQtdeDose);
         swAtivo = findViewById(R.id.swAtivo);
@@ -78,7 +76,6 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
 
                 textInpTextInicioAdministracao.setText("");
 
-                String myFormat = "dd/MM/yyyy"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault());
 
                 textInpTextInicioAdministracao.setText(sdf.format(calendar.getTime()));

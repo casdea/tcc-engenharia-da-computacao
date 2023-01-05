@@ -38,11 +38,6 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
         this.proximoComando = proximoComando;
     }
-
-    public Class<Alarme> getClassImplement() {
-        return Alarme.class;
-    }
-
     @Override
     public Alarme create(Alarme alarme) {
         DatabaseReference alarmesRef = em.child(alarme.getNomeTabela());

@@ -227,9 +227,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             } else if (view.getId() == R.id.btnUtilizar) {
                 abrirDialogUtilizacao(view);
             } else if (view.getId() == R.id.imbAdicionar) {
-                abrirDialogEntradaEstoque(view);
+                abrirDialogEntradaEstoque();
             } else if (view.getId() == R.id.imbRemover) {
-                abrirDialogSaidaEstoque(view);
+                abrirDialogSaidaEstoque();
             }
         }
     }
@@ -266,8 +266,6 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         App.medicamentoDTO.setCor(cor);
         App.medicamentoDTO.setIdUsuario(App.usuario.getIdUsuario());
         App.medicamentoDTO.setQtdeEmbalagem(Integer.parseInt(textInpTextQtdeEmbalagem.getText().toString()));
-        App.medicamentoDTO.setEstoques(new ArrayList<>());
-        App.medicamentoDTO.setUtilizacoes(new ArrayList<>());
 
         GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
         gerenteServicos.alterarMedicamento(App.medicamentoDTO);
@@ -324,10 +322,10 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         App.estoqueDTO.setSaldo(0);
 
         GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-        gerenteServicos.sinalizarDoseRealizada(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+        gerenteServicos.sinalizarDoseRealizada(App.usuario.getIdUsuario(), App.estoqueDTO);
     }
 
-    public void abrirDialogEntradaEstoque(View view) {
+    public void abrirDialogEntradaEstoque() {
 
         if (!App.integracaoUsuario.validarEntradaEstoque(textInpTextQtdeEstoque.getText().toString()))
             return;
@@ -378,10 +376,10 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         App.estoqueDTO.setSaldo(0);
 
         GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-        gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+        gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(),App.estoqueDTO);
     }
 
-    public void abrirDialogSaidaEstoque(View view) {
+    public void abrirDialogSaidaEstoque() {
 
         if (!App.integracaoUsuario.validarSaidaEstoque(textInpTextQtdeEstoque.getText().toString()))
             return;
@@ -431,7 +429,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         App.estoqueDTO.setSaldo(0);
 
         GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-        gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento(), App.estoqueDTO);
+        gerenteServicos.atualizarSaldoEstoque(App.usuario.getIdUsuario(), App.estoqueDTO);
     }
 
     @Override

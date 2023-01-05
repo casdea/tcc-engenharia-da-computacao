@@ -65,10 +65,6 @@ public class MedicamentoDTO {
 
     private int qtdeEmbalagem;
 
-    private List<EstoqueDTO> estoques;
-
-    private List<UtilizacaoDTO> utilizacoes;
-
     public String getNomeFantasiaSemAssento() {
         return StringUtil.removerAcentos(nomeFantasia);
     }
@@ -79,8 +75,6 @@ public class MedicamentoDTO {
     }
 
     public MedicamentoDTO() {
-        this.estoques = new ArrayList<>();
-        this.utilizacoes = new ArrayList<>();
     }
 
     public String getIdMedicamento() {
@@ -227,21 +221,5 @@ public class MedicamentoDTO {
 
     public void setQtdeEmbalagem(int qtdeEmbalagem) {
         this.qtdeEmbalagem = qtdeEmbalagem;
-    }
-
-    public List<EstoqueDTO> getEstoques() {
-        return estoques;
-    }
-
-    public void setEstoques(List<EstoqueDTO> estoques) {
-        this.estoques = estoques;
-    }
-
-    public List<UtilizacaoDTO> getUtilizacoes() {
-        return utilizacoes;
-    }
-
-    public void setUtilizacoes(List<UtilizacaoDTO> utilizacoes) {
-        this.utilizacoes = utilizacoes;
     }
 }

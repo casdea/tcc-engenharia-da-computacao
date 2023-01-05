@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
 
                 if (task.isSuccessful()) {
                     GerenteServicos gerenteServicos = new GerenteServicos(LoginActivity.this);
-                    gerenteServicos.verificarUsuarioLogado(LoginActivity.this);
+                    gerenteServicos.verificarUsuarioLogado();
 
                 } else {
 

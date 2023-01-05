@@ -12,10 +12,6 @@ public class Estoque  extends AbstractEntity {
     private int saida;
     private int saldo;
 
-    public Estoque() {
-        nomeTabela = "estoques";
-    }
-
     public Estoque(EstoqueDTO estoqueDTO) {
         nomeTabela = "estoques";
         this.idEstoque = estoqueDTO.getIdEstoque();
@@ -47,40 +43,21 @@ public class Estoque  extends AbstractEntity {
         return idUsuario;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
     public String getDataHora() {
         return dataHora;
-    }
-
-    public void setDataHora(String dataHora) {
-        this.dataHora = dataHora;
     }
 
     public int getEntrada() {
         return entrada;
     }
 
-    public void setEntrada(int entrada) {
-        this.entrada = entrada;
-    }
-
     public int getSaida() {
         return saida;
-    }
-
-    public void setSaida(int saida) {
-        this.saida = saida;
     }
 
     public int getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(int saldo) {
-        this.saldo = saldo;
-    }
 }
 

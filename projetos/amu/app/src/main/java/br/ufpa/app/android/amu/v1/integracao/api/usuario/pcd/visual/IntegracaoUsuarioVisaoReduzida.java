@@ -218,21 +218,6 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     }
 
     @Override
-    public void bemVindo() {
-        mediaPlayer = MediaPlayer.create(App.context, R.raw.bemvindo);
-        mediaPlayer.start(); // no need to call prepare(); create() does that for you
-
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                mediaPlayer = MediaPlayer.create(App.context, R.raw.opcaomenuprincipal);
-                mediaPlayer.start(); // no need to call prepare(); create() does that for you
-
-            }
-        });
-    }
-
-    @Override
     public int findComando(String texto) {
         if (findTexto(TEXTOS_VOZ_LISTA_MEDICAMENTO, texto)) {
             return ComandosVoz.LISTA_MEDICAMENTOS;
@@ -259,14 +244,6 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         }
 
         return -1;
-    }
-
-    public void pararMensagem() {
-        if (mediaPlayer == null) return;
-
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-        }
     }
 
     public void bemVindoFuncao(TipoFuncao tipoFuncao) {
@@ -316,12 +293,6 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     @Override
     public void capturarComandoEncerrado() {
         mediaPlayer = MediaPlayer.create(App.context, R.raw.capturaencerrada);
-        mediaPlayer.start(); // no need to call prepare(); create() does that for you
-    }
-
-    @Override
-    public void instrucaoParaUsuario(int idSom) {
-        mediaPlayer = MediaPlayer.create(App.context, idSom);
         mediaPlayer.start(); // no need to call prepare(); create() does that for you
     }
 
@@ -461,15 +432,6 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         textoLido.speak(" Item selecionado " + restoTexto + " não existe na lista. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
 
         return null;
-    }
-
-    @Override
-    public MedicamentoDTO findMedicamentoByAcaoVoz(List<MedicamentoDTO> medicamentos, String s, int acao) {
-        s = s.toUpperCase();
-
-        String textoCorrespondente = findCorrespondencia(getArrayVoz(acao), s);
-
-        return findMedicamentoByVoz(medicamentos, s, textoCorrespondente);
     }
 
     @Override
