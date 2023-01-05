@@ -51,6 +51,7 @@ public class RetrofitBuilder {
         return retrofit;
     }
 
+    @SuppressWarnings("EmptyMethod")
     private static void initHttpLogging() {
     }
 

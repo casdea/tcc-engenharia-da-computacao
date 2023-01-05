@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -115,7 +114,7 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
                     return;
                 }
 
-                if (!DataUtil.isDataValida(textInpTextInicioAdministracao.getText().toString())) {
+                if (DataUtil.isDataInvalida(textInpTextInicioAdministracao.getText().toString())) {
                     Toast.makeText(HorarioActivity.this,
                             "Data de Inicio de Administração do Medicamento inválida !",
                             Toast.LENGTH_LONG).show();

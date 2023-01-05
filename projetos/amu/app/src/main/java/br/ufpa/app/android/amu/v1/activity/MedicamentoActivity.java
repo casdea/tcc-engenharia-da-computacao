@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -170,7 +169,7 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
                     return;
                 }
 
-                if (!DataUtil.isDataValida(textInpTextInicioAdministracao.getText().toString())) {
+                if (DataUtil.isDataInvalida(textInpTextInicioAdministracao.getText().toString())) {
                     Toast.makeText(MedicamentoActivity.this,
                             "Data de Inicio de Administração do Medicamento inválida !",
                             Toast.LENGTH_LONG).show();

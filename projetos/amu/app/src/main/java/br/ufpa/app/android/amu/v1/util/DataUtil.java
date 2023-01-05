@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 
@@ -70,11 +69,11 @@ public class DataUtil {
         }
     }
 
-    public static boolean isDataValida(String str)
+    public static boolean isDataInvalida(String str)
     {
         if (str == null || str.trim().equals(""))
         {
-            return false;
+            return true;
         }
         try
         {
@@ -82,11 +81,11 @@ public class DataUtil {
             format.setLenient(false);
             @SuppressWarnings("unused")
             java.util.Date data = new Date(format.parse(str).getTime());
-            return true;
+            return false;
         }
         catch (ParseException e)
         {
-            return false;
+            return true;
         }
     }
 
