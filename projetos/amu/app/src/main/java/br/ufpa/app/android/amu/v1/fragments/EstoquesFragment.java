@@ -1,6 +1,7 @@
 package br.ufpa.app.android.amu.v1.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -32,10 +33,9 @@ public class EstoquesFragment extends Fragment implements DetalheMedicamentoActi
     GerenteServicosListener gerenteServicosListener;
 
     @Override
-    public void onAttach(@NonNull Activity activity) {
-        super.onAttach(activity);
-
-        gerenteServicosListener = (GerenteServicosListener) activity;
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        gerenteServicosListener = (GerenteServicosListener) context;
     }
 
     public EstoquesFragment() {

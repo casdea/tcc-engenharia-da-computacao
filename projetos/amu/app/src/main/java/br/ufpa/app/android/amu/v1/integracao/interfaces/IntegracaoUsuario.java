@@ -15,7 +15,7 @@ public interface IntegracaoUsuario {
     void capturarComandoIniciado();
     void capturarComandoEncerrado();
 
-    void exibirMedicamentosEncontrados(TextToSpeech textoLido, List<MedicamentoRetDTO> medicamentos, String argumento);
+    void exibirMedicamentosEncontrados(List<MedicamentoRetDTO> medicamentos, String argumento);
 
     void avisarListaVazia();
 

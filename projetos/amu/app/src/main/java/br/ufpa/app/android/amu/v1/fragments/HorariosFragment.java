@@ -1,6 +1,7 @@
 package br.ufpa.app.android.amu.v1.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,10 +41,9 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
     GerenteServicosListener gerenteServicosListener;
 
     @Override
-    public void onAttach(@NonNull Activity activity) {
-        super.onAttach(activity);
-
-        gerenteServicosListener = (GerenteServicosListener) activity;
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        gerenteServicosListener = (GerenteServicosListener) context;
     }
 
     public HorariosFragment() {
@@ -56,7 +56,6 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-
                     }
                 }
             });

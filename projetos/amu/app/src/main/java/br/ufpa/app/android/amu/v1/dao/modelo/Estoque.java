@@ -12,6 +12,10 @@ public class Estoque  extends AbstractEntity {
     private int saida;
     private int saldo;
 
+    public Estoque() {
+        nomeTabela = "estoques";
+    }
+
     public Estoque(EstoqueDTO estoqueDTO) {
         nomeTabela = "estoques";
         this.idEstoque = estoqueDTO.getIdEstoque();

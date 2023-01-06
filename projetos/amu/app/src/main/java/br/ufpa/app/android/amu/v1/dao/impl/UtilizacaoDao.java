@@ -31,7 +31,7 @@ import br.ufpa.app.android.amu.v1.util.DataUtil;
 public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUtilizacaoDao {
 
     final GerenteServicosListener gerenteServicosListener;
-    Callable callable;
+    final Callable callable;
 
     public UtilizacaoDao(DatabaseReference em, AppCompatActivity atividade, Callable callable) {
         super(em);

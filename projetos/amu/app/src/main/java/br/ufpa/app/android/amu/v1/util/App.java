@@ -3,10 +3,6 @@ package br.ufpa.app.android.amu.v1.util;
 import android.app.Application;
 import android.content.Context;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
@@ -18,7 +14,6 @@ import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.dto.VariacoesComandoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.FontesConsulta;
-import br.ufpa.app.android.amu.v1.integracao.classes.TipoFuncao;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoBularioEletronico;
 import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoUsuario;

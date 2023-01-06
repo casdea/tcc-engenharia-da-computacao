@@ -24,7 +24,6 @@ import br.ufpa.app.android.amu.v1.dao.infraestrutura.AbstractEntityDao;
 import br.ufpa.app.android.amu.v1.dao.modelo.Estoque;
 import br.ufpa.app.android.amu.v1.dao.modelo.Horario;
 import br.ufpa.app.android.amu.v1.dao.modelo.Medicamento;
-import br.ufpa.app.android.amu.v1.dao.modelo.Usuario;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;

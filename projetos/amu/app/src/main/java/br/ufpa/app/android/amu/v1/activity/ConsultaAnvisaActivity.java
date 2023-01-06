@@ -1,12 +1,9 @@
 package br.ufpa.app.android.amu.v1.activity;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,12 +35,10 @@ import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
-import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
 public class ConsultaAnvisaActivity extends AppCompatActivity implements View.OnClickListener, GerenteServicosListener {
 
     MedicamentoRetDTO medicamentoRetDTO;
-    TextToSpeech textoLido;
     RecursoVozLifeCyCleObserver mRecursoVozObserver;
 
     private final ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
@@ -57,7 +52,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
                 }
             });
 
-    private final ActivityResultLauncher<Intent> consultarMedicamentoActivityResultLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> detalheBulaActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -82,17 +77,6 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
         getLifecycle().addObserver(mRecursoVozObserver);
 
         App.integracaoUsuario.bemVindoFuncao(TipoFuncao.CONSULTA_MEDICAMENTOS);
-
-        textoLido = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                if (i != TextToSpeech.ERROR) {
-                    textoLido.setLanguage(Locale.getDefault());
-                }
-            }
-        });
-
-        textoLido.setSpeechRate(0.75f);
     }
 
     @Override
@@ -115,10 +99,10 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
         ConsultarMedicamentoRetDTO consultarMedicamentoRetDTO = App.integracaoBularioEletronico.consultarDadosMedicamentos(this, argumento);
 
         if (!consultarMedicamentoRetDTO.isOperacaoExecutada()) {
-            textoLido.speak("Consulta falhou", TextToSpeech.QUEUE_FLUSH, null);
+            App.integracaoUsuario.falar("Consulta falhou");
             txvStatusConsulta.setText(consultarMedicamentoRetDTO.getMensagemExecucao());
         } else {
-            App.integracaoUsuario.exibirMedicamentosEncontrados(textoLido, consultarMedicamentoRetDTO.getMedicamentos(), argumento);
+            App.integracaoUsuario.exibirMedicamentosEncontrados(consultarMedicamentoRetDTO.getMedicamentos(), argumento);
         }
 
         ListView lvMedicamentos = (ListView) findViewById(R.id.lvMedicamentos);
@@ -191,7 +175,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
     public void executarAcao(int numeroAcao,  Object parametro) {
         if (numeroAcao == Constantes.ACAO_RECEBER_TEXTO_BULA) {
             Intent intent = new Intent(ConsultaAnvisaActivity.this, DetalheAnvisaActivity.class);
-            consultarMedicamentoActivityResultLauncher.launch(intent);
+            detalheBulaActivityResultLauncher.launch(intent);
         } else if (numeroAcao == Constantes.ACAO_FECHAR_TELA) {
             setResult(Activity.RESULT_OK, null);
             finish();

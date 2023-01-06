@@ -34,7 +34,7 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
     }
 
     @Override
-    public void exibirMedicamentosEncontrados(TextToSpeech textoLido, List<MedicamentoRetDTO> medicamentos, String argumento) {
+    public void exibirMedicamentosEncontrados(List<MedicamentoRetDTO> medicamentos, String argumento) {
 
     }
 

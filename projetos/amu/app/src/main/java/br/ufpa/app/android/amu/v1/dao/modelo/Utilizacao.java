@@ -9,6 +9,10 @@ public class Utilizacao  extends AbstractEntity  {
     private String idUsuario;
     private String dataHora;
 
+    public Utilizacao() {
+        nomeTabela = "utilizacoes";
+    }
+
     public Utilizacao(UtilizacaoDTO utilizacaoDTO) {
         nomeTabela = "utilizacoes";
         this.idUtilizacao = utilizacaoDTO.getIdUtilizacao();

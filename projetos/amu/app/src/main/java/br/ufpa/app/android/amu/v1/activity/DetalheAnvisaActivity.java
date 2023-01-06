@@ -46,7 +46,6 @@ public class DetalheAnvisaActivity extends AppCompatActivity {
         TextView txvTextoComoFunciona = findViewById(R.id.txvTextoComoFunciona);
         TextView txvTextoComoDevoUsar = findViewById(R.id.txvTextoComoDevoUsar);
         TextView txvTextoQuandoEsquecer = findViewById(R.id.txvTextoQuandoEsquecer);
-        txvNomeFabricante = findViewById(R.id.txvNomeFabricante);
         //preencher dados
         txvNomeComercial.setText(App.medicamentoDTO.getNomeComercial());
         txvNomeFabricante.setText(App.medicamentoDTO.getFabricante());

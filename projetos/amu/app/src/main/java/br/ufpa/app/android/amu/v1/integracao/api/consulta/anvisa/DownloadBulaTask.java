@@ -8,9 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
-import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 
 import org.apache.commons.io.IOUtils;
 

@@ -30,7 +30,6 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;

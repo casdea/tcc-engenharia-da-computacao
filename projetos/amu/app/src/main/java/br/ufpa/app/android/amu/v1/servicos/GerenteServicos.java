@@ -1,6 +1,5 @@
 package br.ufpa.app.android.amu.v1.servicos;
 
-import android.content.Intent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,10 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
-import br.ufpa.app.android.amu.v1.activity.BemVindoActivity;
-import br.ufpa.app.android.amu.v1.activity.PrincipalActivity;
 import br.ufpa.app.android.amu.v1.classes.ProxyAssincronoServico;
 import br.ufpa.app.android.amu.v1.classes.TransacaoVerificarAlarme;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;

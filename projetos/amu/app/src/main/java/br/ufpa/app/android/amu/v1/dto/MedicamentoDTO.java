@@ -1,8 +1,5 @@
 package br.ufpa.app.android.amu.v1.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.ufpa.app.android.amu.v1.util.StringUtil;
 
 public class MedicamentoDTO {

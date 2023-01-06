@@ -1,6 +1,7 @@
 package br.ufpa.app.android.amu.v1.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,6 +23,7 @@ import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
+import br.ufpa.app.android.amu.v1.interfaces.PickDateListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
@@ -32,10 +34,9 @@ public class UtilizacoesFragment extends Fragment implements DetalheMedicamentoA
     GerenteServicosListener gerenteServicosListener;
 
     @Override
-    public void onAttach(@NonNull Activity activity) {
-        super.onAttach(activity);
-
-        gerenteServicosListener = (GerenteServicosListener) activity;
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        gerenteServicosListener = (GerenteServicosListener) context;
     }
 
     public UtilizacoesFragment() {

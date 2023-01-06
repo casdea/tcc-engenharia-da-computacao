@@ -1,6 +1,5 @@
 package br.ufpa.app.android.amu.v1.util;
 
-import java.nio.charset.Charset;
 import java.util.UUID;
 
 public abstract class StringUtil {
@@ -8,7 +7,6 @@ public abstract class StringUtil {
 	 * Retorna true caso o valor da String seja vazio ou null, caso contrario
 	 * retorna false
 	 * 
-	 * @param valor
 	 * @return java.lang.String
 	 */
 	public static boolean isVazioOrNull(String valor) {

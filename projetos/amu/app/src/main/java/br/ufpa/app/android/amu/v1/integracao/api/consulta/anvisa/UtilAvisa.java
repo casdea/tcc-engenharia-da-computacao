@@ -1,6 +1,5 @@
 package br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa;
 
-import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 

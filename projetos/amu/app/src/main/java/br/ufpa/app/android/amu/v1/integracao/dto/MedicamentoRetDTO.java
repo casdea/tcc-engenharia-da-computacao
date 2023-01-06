@@ -2,11 +2,11 @@ package br.ufpa.app.android.amu.v1.integracao.dto;
 
 public class MedicamentoRetDTO {
 
-    private String nomeComercial;
-    private String nomeLaboratorio;
-    private String nomeArquivoBulaPaciente;
-    private String idProduto;
-    private String dataProduto;
+    private final String nomeComercial;
+    private final String nomeLaboratorio;
+    private final String nomeArquivoBulaPaciente;
+    private final String idProduto;
+    private final String dataProduto;
 
     public String getNomeArquivoPdf() {
 

@@ -15,8 +15,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;

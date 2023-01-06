@@ -7,7 +7,7 @@ public class ConsultarMedicamentoRetDTO {
 
     private boolean operacaoExecutada;
     private String mensagemExecucao;
-    private List<MedicamentoRetDTO> medicamentos;
+    private final List<MedicamentoRetDTO> medicamentos;
 
     public ConsultarMedicamentoRetDTO(boolean operacaoExecutada, String mensagemExecucao) {
         this.operacaoExecutada = operacaoExecutada;

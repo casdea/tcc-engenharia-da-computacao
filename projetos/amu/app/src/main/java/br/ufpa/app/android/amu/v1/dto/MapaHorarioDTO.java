@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class MapaHorarioDTO
 {
-	private Date horaPrescrita;
+	private final Date horaPrescrita;
 
 	private Date horaAdministrada;
 

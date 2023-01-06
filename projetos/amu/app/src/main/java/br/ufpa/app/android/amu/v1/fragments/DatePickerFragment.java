@@ -3,6 +3,7 @@ package br.ufpa.app.android.amu.v1.fragments;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.DatePicker;
 
@@ -11,6 +12,7 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
+import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.interfaces.PickDateListener;
 
 public class DatePickerFragment extends DialogFragment
@@ -18,6 +20,12 @@ public class DatePickerFragment extends DialogFragment
 
     private PickDateListener pickDateListener;
     private Calendar calendar;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        pickDateListener = (PickDateListener) context;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -40,13 +48,6 @@ public class DatePickerFragment extends DialogFragment
         calendar.set(Calendar.DAY_OF_MONTH, day);
 
         pickDateListener.atualizarDataListener(view.getDayOfMonth(), view.getMonth(), view.getYear());
-    }
-
-    @Override
-    public void onAttach(@NonNull Activity activity) {
-        super.onAttach(activity);
-
-        pickDateListener = (PickDateListener) activity;
     }
 }
 

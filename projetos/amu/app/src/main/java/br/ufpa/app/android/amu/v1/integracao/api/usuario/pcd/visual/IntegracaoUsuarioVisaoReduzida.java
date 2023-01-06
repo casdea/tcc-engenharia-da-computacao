@@ -1,12 +1,14 @@
 package br.ufpa.app.android.amu.v1.integracao.api.usuario.pcd.visual;
 
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 import java.util.List;
 import java.util.Locale;
 
+import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
@@ -297,22 +299,31 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     }
 
     @Override
-    public void exibirMedicamentosEncontrados(TextToSpeech textoLido, List<MedicamentoRetDTO> medicamentos, String argumento) {
+    public void exibirMedicamentosEncontrados(List<MedicamentoRetDTO> medicamentos, String argumento) {
         if (medicamentos.size() == 0) {
-            textoLido.speak("Nenhum medicamento encontrado com o nome " + argumento, TextToSpeech.QUEUE_ADD, null);
+            reproduzirVoz(textoLido, "Nenhum medicamento encontrado com o nome " + argumento);
             return;
         }
 
-        textoLido.speak("Foram encontrados " + medicamentos.size() + " medicamentos com o argumento informado " + argumento, TextToSpeech.QUEUE_ADD, null);
+        reproduzirVoz(textoLido,"Foram encontrados " + medicamentos.size() + " medicamentos com o argumento informado " + argumento);
 
         int item = 1;
 
         for (MedicamentoRetDTO medicamentoRetDTO : medicamentos) {
-            textoLido.speak("Item " + item + " " + medicamentoRetDTO.getNomeComercial(), TextToSpeech.QUEUE_ADD, null);
+            reproduzirVoz(textoLido,"Item " + item + " " + medicamentoRetDTO.getNomeComercial());
             item++;
             ThreadUtil.esperar(ThreadUtil.HUM_SEGUNDO);
         }
 
+    }
+
+    @SuppressWarnings("deprecation")
+    private void reproduzirVoz(TextToSpeech textoLido, String argumento) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            textoLido.speak(argumento,TextToSpeech.QUEUE_ADD,null,null);
+        } else {
+            textoLido.speak(argumento, TextToSpeech.QUEUE_ADD, null);
+        }
     }
 
     @Override
@@ -324,7 +335,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
                     textoLido.setLanguage(Locale.getDefault());
                 }
                 if (i == TextToSpeech.SUCCESS) {
-                    textoLido.speak(texto, TextToSpeech.QUEUE_ADD, null);
+                    reproduzirVoz(textoLido, texto);
                 }
             }
         });
@@ -344,18 +355,19 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
     @Override
     public void comandoNaoReconhecido(String comandoInformado) {
-        Log.i("Comando nao reconhecido", comandoInformado);
+        if (BuildConfig.DEBUG)
+            Log.i("Comando nao reconhecido", comandoInformado);
         falar("Comando. " + comandoInformado + ". não reconhecido. Toque na tela e fale o comando novamente.");
     }
 
     @Override
     public void listarMedicamentos(List<MedicamentoDTO> medicamentos) {
-        textoLido.speak("Há " + medicamentos.size() + " medicamentos cadastrados", TextToSpeech.QUEUE_ADD, null);
+        reproduzirVoz(textoLido,"Há " + medicamentos.size() + " medicamentos cadastrados");
 
         int item = 1;
 
         for (MedicamentoDTO medicamentoDTO : medicamentos) {
-            textoLido.speak("Item . " + item + ". " + medicamentoDTO.getNomeFantasia(), TextToSpeech.QUEUE_ADD, null);
+            reproduzirVoz(textoLido,"Item . " + item + ". " + medicamentoDTO.getNomeFantasia());
             item++;
             ThreadUtil.esperar(ThreadUtil.HUM_SEGUNDO);
         }
@@ -374,7 +386,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         String texto = "Item . " + medicamentoDTO.getNomeFantasia() + " . " +
                 "Quantidade da Embalagem . " + medicamentoDTO.getQtdeEmbalagem();
 
-        textoLido.speak(texto, TextToSpeech.QUEUE_ADD, null);
+        reproduzirVoz(textoLido,texto);
 
         return medicamentoDTO;
     }
@@ -383,7 +395,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     public void descrerverHorario(MedicamentoDTO medicamentoDTO, List<HorarioDTO> horarios) {
 
         if (horarios == null || horarios.size() == 0) {
-            textoLido.speak(" O medicamento " + medicamentoDTO.getNomeFantasia() + " não tem horário cadastrado. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+            reproduzirVoz(textoLido,"O medicamento " + medicamentoDTO.getNomeFantasia() + " não tem horário cadastrado. Toque na tela e fale o comando novamente.");
             return;
         }
 
@@ -401,17 +413,17 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
                 "Número de Doses: " + horarioDTO.getNrDoses() + " . " +
                 "Quantidade de Doses: " + horarioDTO.getQtdePorDose();
 
-        textoLido.speak(texto, TextToSpeech.QUEUE_ADD, null);
+        reproduzirVoz(textoLido,texto);
     }
 
     @Override
     public void tenteNovamenteComandoVoz() {
-        textoLido.speak(" Você não falou nenhum comando ou demorou muito a falar. Toque na tela e fale novamente", TextToSpeech.QUEUE_ADD, null);
+        reproduzirVoz(textoLido," Você não falou nenhum comando ou demorou muito a falar. Toque na tela e fale novamente");
     }
 
     private MedicamentoDTO findMedicamentoByVoz(List<MedicamentoDTO> medicamentos, String s, String textoCorrespondente) {
         if (textoCorrespondente.equals("")) {
-            textoLido.speak(" Item selecionado " + s + " não existe na lista. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+            reproduzirVoz(textoLido," Item selecionado " + s + " não existe na lista. Toque na tela e fale o comando novamente.");
             return null;
         }
 
@@ -429,7 +441,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             item++;
         }
 
-        textoLido.speak(" Item selecionado " + restoTexto + " não existe na lista. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+        reproduzirVoz(textoLido, " Item selecionado " + restoTexto + " não existe na lista. Toque na tela e fale o comando novamente.");
 
         return null;
     }
@@ -499,7 +511,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         String textoCorrespondente = findCorrespondencia(getArrayVoz(acao), s);
 
         if (textoCorrespondente.equals("")) {
-            textoLido.speak(" quantidade inválida. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+            reproduzirVoz(textoLido," quantidade inválida. Toque na tela e fale o comando novamente.");
             return 0;
         }
 
@@ -514,13 +526,13 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
                 i = Integer.valueOf(findNumero(restoTexto));
             } catch (Exception e1) {
                 i = 0;
-                textoLido.speak(" quantidade inválida. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+                reproduzirVoz(textoLido," quantidade inválida. Toque na tela e fale o comando novamente.");
             }
 
         }
 
         if (i <= 0)
-            textoLido.speak(" quantidade inválida. Toque na tela e fale o comando novamente.", TextToSpeech.QUEUE_ADD, null);
+            reproduzirVoz(textoLido," quantidade inválida. Toque na tela e fale o comando novamente.");
 
         return i;
     }

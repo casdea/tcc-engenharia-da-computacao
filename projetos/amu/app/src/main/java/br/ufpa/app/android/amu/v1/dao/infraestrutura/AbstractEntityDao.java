@@ -4,18 +4,7 @@ import com.google.firebase.database.DatabaseReference;
 
 public abstract class AbstractEntityDao<T> implements IDao<T>, IEntityDao
 {
-	protected Class<?> implClass;
-
 	protected DatabaseReference em;
-
-	public String getIdField()
-	{
-		return "id";
-	}
-
-	public AbstractEntityDao()
-	{
-	}
 
 	public AbstractEntityDao(DatabaseReference em)
 	{
