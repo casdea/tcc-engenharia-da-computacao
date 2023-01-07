@@ -186,8 +186,8 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     private boolean findTexto(String[] palavras, String palavra) {
         String palavraSemAcento = StringUtil.removerAcentos(palavra);
 
-        for (int i = 0; i < palavras.length; i++) {
-            if (palavras[i].equals(palavraSemAcento.toUpperCase()) || palavraSemAcento.toUpperCase().contains(palavras[i])) {
+        for (String s : palavras) {
+            if (s.equals(palavraSemAcento.toUpperCase()) || palavraSemAcento.toUpperCase().contains(s)) {
                 return true;
             }
         }
@@ -198,9 +198,9 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     private String findCorrespondencia(String[] palavras, String palavra) {
         String palavraSemAcento = StringUtil.removerAcentos(palavra);
 
-        for (int i = 0; i < palavras.length; i++) {
-            if (palavras[i].equals(palavraSemAcento.toUpperCase()) || palavraSemAcento.toUpperCase().contains(palavras[i])) {
-                return palavras[i];
+        for (String s : palavras) {
+            if (s.equals(palavraSemAcento.toUpperCase()) || palavraSemAcento.toUpperCase().contains(s)) {
+                return s;
             }
         }
 

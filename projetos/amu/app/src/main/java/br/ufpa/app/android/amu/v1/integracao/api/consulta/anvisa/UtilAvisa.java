@@ -142,13 +142,13 @@ public class UtilAvisa {
     private static String findParteByChave(String[] partes, String chaveParte) {
         String parte;
 
-        for (int i = 0; i < partes.length; i++) {
-            parte = partes[i].trim();
+        for (String s : partes) {
+            parte = s.trim();
 
-            if (parte.equals("") || parte.length()<=5) continue;
+            if (parte.equals("") || parte.length() <= 5) continue;
 
             if (BuildConfig.DEBUG)
-                Log.i("Decodificando a parte ",parte);
+                Log.i("Decodificando a parte ", parte);
             try {
                 if (parte.startsWith(chaveParte)) {
                     return parte.substring(chaveParte.length());
