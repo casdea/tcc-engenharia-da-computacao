@@ -111,7 +111,7 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
                     }
                     // TODO: handle the post
                 }
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO, App.listaHorarios);
+                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO, null);
 
             }
 

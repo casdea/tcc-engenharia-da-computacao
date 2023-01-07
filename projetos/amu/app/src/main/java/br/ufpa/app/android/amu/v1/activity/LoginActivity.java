@@ -24,6 +24,7 @@ import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
+import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
@@ -148,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
     }
 
     @Override
-    public void carregarLista(int numeroAcao, List<?> lista) {
+    public void carregarLista(int numeroAcao, List<MedicamentoDTO> lista) {
     }
 
     @Override

@@ -114,7 +114,7 @@ public class VariacoesComandoDao extends AbstractEntityDao<VariacoesComando> imp
                     }
                     // TODO: handle the post
                 }
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_VARIACAO_POR_USUARIO_COMANDO,  App.listaVariacoesComandos);
+                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_VARIACAO_POR_USUARIO_COMANDO,  null);
 
             }
 

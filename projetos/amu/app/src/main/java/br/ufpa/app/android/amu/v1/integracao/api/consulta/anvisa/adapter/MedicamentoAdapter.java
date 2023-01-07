@@ -1,4 +1,4 @@
-package br.ufpa.app.android.amu.v1.adapter;
+package br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa.adapter;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

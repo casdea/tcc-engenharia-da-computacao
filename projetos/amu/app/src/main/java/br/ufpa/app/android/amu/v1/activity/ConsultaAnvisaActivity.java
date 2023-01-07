@@ -102,7 +102,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
 
         ListView lvMedicamentos = findViewById(R.id.lvMedicamentos);
 
-        ConsultaMedicamentosAdapter adapter = new ConsultaMedicamentosAdapter(ConsultaAnvisaActivity.this, (ArrayList) consultarMedicamentoRetDTO.getMedicamentos());
+        ConsultaMedicamentosAdapter adapter = new ConsultaMedicamentosAdapter(ConsultaAnvisaActivity.this, (ArrayList<MedicamentoRetDTO>) consultarMedicamentoRetDTO.getMedicamentos());
         lvMedicamentos.setAdapter(adapter);
         lvMedicamentos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -153,13 +153,13 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
     }
 
     @Override
-    public void carregarLista(int numeroAcao, List<?> lista) {
+    public void carregarLista(int numeroAcao, List<MedicamentoDTO> lista) {
         if (numeroAcao == Constantes.ACAO_OBTER_MEDICAMENTO_POR_USUARIO_PRODUTO) {
             if (lista.size() == 0) {
                 GerenteServicos gerenteServicos = new GerenteServicos(ConsultaAnvisaActivity.this);
                 gerenteServicos.obterTextoBula(medicamentoRetDTO);
             } else {
-                App.medicamentoDTO = (MedicamentoDTO) lista.get(0);
+                App.medicamentoDTO = lista.get(0);
                 Intent intent = new Intent(ConsultaAnvisaActivity.this, DetalheMedicamentoActivity.class);
                 detalheMedicamentoActivityResultLauncher.launch(intent);
             }

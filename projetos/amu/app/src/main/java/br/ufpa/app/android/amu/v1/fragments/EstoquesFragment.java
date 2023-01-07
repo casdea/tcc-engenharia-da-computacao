@@ -17,7 +17,8 @@ import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
-import br.ufpa.app.android.amu.v1.adapter.EstoquesRecyclerViewAdapter;
+import br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa.adapter.EstoquesRecyclerViewAdapter;
+import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
@@ -97,7 +98,7 @@ public class EstoquesFragment extends Fragment implements DetalheMedicamentoActi
     }
 
     @Override
-    public void carregarLista(int numeroAcao, List<?> lista) {
+    public void carregarLista(int numeroAcao, List<MedicamentoDTO> lista) {
 
     }
 

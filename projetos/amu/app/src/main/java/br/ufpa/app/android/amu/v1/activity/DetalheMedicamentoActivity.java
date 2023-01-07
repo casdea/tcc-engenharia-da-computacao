@@ -37,6 +37,7 @@ import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
+import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.fragments.EstoquesFragment;
 import br.ufpa.app.android.amu.v1.fragments.HorariosFragment;
@@ -433,7 +434,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
     }
 
     @Override
-    public void carregarLista(int numeroAcao, List<?> lista) {
+    public void carregarLista(int numeroAcao, List<MedicamentoDTO> lista) {
         if (numeroAcao == Constantes.ACAO_OBTER_LISTA_HORARIO_USUARIO_MEDICAMENTO) {
             atualizarListaHorario();
         } else if (numeroAcao == Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO) {

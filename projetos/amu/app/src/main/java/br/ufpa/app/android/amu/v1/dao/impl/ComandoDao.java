@@ -107,7 +107,7 @@ public class ComandoDao extends AbstractEntityDao<Comando> implements IComandoDa
                     // TODO: handle the post
                 }
 
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_COMANDO_POR_USUARIO,  App.listaComandos);
+                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_COMANDO_POR_USUARIO,  null);
 
             }
 

@@ -10,6 +10,7 @@ import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.integracao.classes.FontesConsulta;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
@@ -77,7 +78,7 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
     }
 
     @Override
-    public void carregarLista(int numeroAcao, List<?> lista) {
+    public void carregarLista(int numeroAcao, List<MedicamentoDTO> lista) {
 
     }
 

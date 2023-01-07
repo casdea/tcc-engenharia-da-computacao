@@ -113,7 +113,7 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
                     }
                     // TODO: handle the post
                 }
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO,  App.listaUtilizacoes);
+                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_UTILIZACAO_POR_USUARIO_MEDICAMENTO,  null);
 
             }
 

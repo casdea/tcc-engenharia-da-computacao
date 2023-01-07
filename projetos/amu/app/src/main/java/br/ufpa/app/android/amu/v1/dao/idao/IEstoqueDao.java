@@ -9,5 +9,4 @@ public interface IEstoqueDao extends IDao<Estoque>
     void findAllByUsuarioIdMedicamento(String idUsuario, String idMedicamento);
     void atualizarSaldoEstoque(String idUsuario, EstoqueDTO movtoEstoqueDTO);
     void sinalizarDoseRealizada(String idUsuario, EstoqueDTO movtoEstoqueDTO);
-    void findAllByUsuario(String idUsuario);
 }

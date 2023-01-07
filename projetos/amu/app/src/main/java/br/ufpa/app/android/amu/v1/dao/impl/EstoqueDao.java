@@ -108,39 +108,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                     }
                     // TODO: handle the post
                 }
-                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO, App.listaEstoques);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
-        estoquesQuery.addListenerForSingleValueEvent(evento);
-
-    }
-
-    @Override
-    public void findAllByUsuario(String idUsuario) {
-        App.listaEstoques = new ArrayList<>();
-        DatabaseReference em = ConfiguracaoFirebase.getFirebaseDatabase();
-
-        Query estoquesQuery = em.child("estoques").orderByChild("idUsuario").equalTo(idUsuario);
-
-        ValueEventListener evento = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    EstoqueDTO estoqueDTO = getEstoqueDTO(postSnapshot);
-
-                    if (BuildConfig.DEBUG)
-                        Log.i("Lendo dados ", postSnapshot.toString());
-
-                    App.listaEstoques.add(estoqueDTO);
-                    // TODO: handle the post
-                }
-                //gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO, App.listaEstoques);
+                gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO, null);
             }
 
             @Override
@@ -192,7 +160,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                             movtoEstoqueDTO.setIdEstoque(chave);
                             App.listaEstoques.add(movtoEstoqueDTO);
 
-                            gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO, App.listaEstoques);
+                            gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO, null);
                             gerenteServicosListener.executarAcao(Constantes.ACAO_AVISAR_SALDO_ATUALIZADO, movtoEstoqueDTO);
                         }
                     }).addOnFailureListener(new OnFailureListener() {

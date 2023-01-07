@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.R;
-import br.ufpa.app.android.amu.v1.adapter.MedicamentoAdapter;
+import br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa.adapter.MedicamentoAdapter;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
@@ -193,9 +193,9 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     }
 
     @Override
-    public void carregarLista(int numeroAcao, List<?> lista) {
+    public void carregarLista(int numeroAcao, List<MedicamentoDTO> lista) {
         if (numeroAcao == Constantes.ACAO_OBTER_LISTA_MEDICAMENTO_POR_USUARIO) {
-            this.listaMedicamentos = (List<MedicamentoDTO>) lista;
+            this.listaMedicamentos = lista;
 
             txvListaVazia.setVisibility(View.INVISIBLE);
 
@@ -207,7 +207,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                     txvListaVazia.setVisibility(View.VISIBLE);
             }
 
-            MedicamentoAdapter medicamentoAdapter = new MedicamentoAdapter((List<MedicamentoDTO>) lista);
+            MedicamentoAdapter medicamentoAdapter = new MedicamentoAdapter(lista);
 
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
             recyclerView.setLayoutManager(layoutManager);
@@ -287,26 +287,23 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         super.onBackPressed();
 
         if (!App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
-            AlertDialog alert_back = new AlertDialog.Builder(this).create();
-            alert_back.setMessage("Deseja sair?");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-            alert_back.setButton("Não", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            builder.setMessage("Deseja sair?");
+            // Add the buttons
+            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    finish();
+                }
+            });
+            builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
                 }
             });
 
-            alert_back.setButton2("Sim", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            });
-
-            alert_back.show();
+            AlertDialog dialog = builder.create();
         }
-
     }
 
     public void verificarAlarme() {
