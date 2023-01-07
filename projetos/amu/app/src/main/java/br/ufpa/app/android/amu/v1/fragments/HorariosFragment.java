@@ -1,6 +1,5 @@
 package br.ufpa.app.android.amu.v1.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.activity.HorarioActivity;
 import br.ufpa.app.android.amu.v1.adapter.HorariosRecyclerViewAdapter;
-import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
@@ -55,8 +53,6 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                    }
                 }
             });
 
@@ -126,7 +122,7 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
 
     @Override
     public void atualizarLista(View view) {
-        HorariosRecyclerViewAdapter horariosRecyclerViewAdapter = new HorariosRecyclerViewAdapter((List<HorarioDTO>) App.listaHorarios);
+        HorariosRecyclerViewAdapter horariosRecyclerViewAdapter = new HorariosRecyclerViewAdapter(App.listaHorarios);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         if (recyclerView == null) recyclerView = view.findViewById(R.id.recyclerView);

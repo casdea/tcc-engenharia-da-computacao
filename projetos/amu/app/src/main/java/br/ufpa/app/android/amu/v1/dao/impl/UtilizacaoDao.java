@@ -15,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
@@ -39,16 +40,12 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
         this.callable = callable;
     }
 
-    public Class<Utilizacao> getClassImplement() {
-        return Utilizacao.class;
-    }
-
     @Override
     public Utilizacao create(Utilizacao utilizacao) {
         DatabaseReference utilizacoesRef = em.child(utilizacao.getNomeTabela());
         String chave = utilizacoesRef.push().getKey();
         utilizacao.setIdUtilizacao(chave);
-        utilizacoesRef.child(chave).setValue(utilizacao).addOnSuccessListener(new OnSuccessListener<Void>() {
+        utilizacoesRef.child(Objects.requireNonNull(chave)).setValue(utilizacao).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(App.context,
@@ -176,7 +173,7 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
         Utilizacao utilizacao = postSnapshot.getValue(Utilizacao.class);
 
         UtilizacaoDTO utilizacaoDTO = new UtilizacaoDTO();
-        utilizacaoDTO.setIdUtilizacao(utilizacao.getIdUtilizacao());
+        utilizacaoDTO.setIdUtilizacao(Objects.requireNonNull(utilizacao).getIdUtilizacao());
         utilizacaoDTO.setIdMedicamento(utilizacao.getIdMedicamento());
         utilizacaoDTO.setIdUsuario(utilizacao.getIdUsuario());
         utilizacaoDTO.setDataHora(utilizacao.getDataHora());

@@ -15,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
@@ -40,7 +41,7 @@ public class ComandoDao extends AbstractEntityDao<Comando> implements IComandoDa
         DatabaseReference comandosRef = em.child(comando.getNomeTabela());
         String chave = comandosRef.push().getKey();
         comando.setIdComando(chave);
-        comandosRef.child(chave).setValue(comando).addOnSuccessListener(new OnSuccessListener<Void>() {
+        comandosRef.child(Objects.requireNonNull(chave)).setValue(comando).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(App.context,
@@ -125,7 +126,7 @@ public class ComandoDao extends AbstractEntityDao<Comando> implements IComandoDa
         Comando comando = postSnapshot.getValue(Comando.class);
 
         ComandoDTO comandoDTO = new ComandoDTO();
-        comandoDTO.setIdComando(comando.getIdComando());
+        comandoDTO.setIdComando(Objects.requireNonNull(comando).getIdComando());
         comandoDTO.setNrComando(comando.getNrComando());
         comandoDTO.setIdUsuario(comando.getIdUsuario());
         comandoDTO.setNomeComando(comando.getNomeComando());

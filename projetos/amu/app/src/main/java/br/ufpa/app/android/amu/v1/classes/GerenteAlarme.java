@@ -153,9 +153,8 @@ public class GerenteAlarme {
                                                   int intervalo, int nrDoses, List<UtilizacaoDTO> utilizacoes) throws Exception {
         List<MapaHorarioDTO> vMapa = new ArrayList<MapaHorarioDTO>();
         Date horaPrescrita = DataUtil.convertStringToDate(dataInicial + " " + horaInicial, "dd/MM/yyyy HH:mm");
-        Date horaAdministrada = null;
         for (int i = 0; i < nrDoses; i++) {
-            MapaHorarioDTO dto = new MapaHorarioDTO(horaPrescrita, horaAdministrada);
+            MapaHorarioDTO dto = new MapaHorarioDTO(horaPrescrita, null);
             horaPrescrita = DataUtil.somaHoras(horaPrescrita, intervalo);
             vMapa.add(dto);
         }

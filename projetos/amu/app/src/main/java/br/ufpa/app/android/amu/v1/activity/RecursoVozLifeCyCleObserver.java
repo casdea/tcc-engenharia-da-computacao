@@ -17,6 +17,7 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.integracao.classes.ComandosVoz;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
@@ -50,7 +51,7 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
 
                             // There are no request codes
                             Intent data = result.getData();
-                            ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                            ArrayList<String> text = Objects.requireNonNull(data).getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
                             if (text == null || text.size() == 0) {
                                 //txvStatusComando.setText("Texto de Voz inválido");

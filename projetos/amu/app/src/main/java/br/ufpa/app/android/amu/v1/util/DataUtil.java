@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 
@@ -60,7 +61,7 @@ public class DataUtil {
                 return null;
             }
             SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy",java.util.Locale.getDefault());
-            return new Date(sdf.parse(str).getTime());
+            return new Date(Objects.requireNonNull(sdf.parse(str)).getTime());
         }
         catch (ParseException e)
         {
@@ -80,7 +81,7 @@ public class DataUtil {
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy",java.util.Locale.getDefault());
             format.setLenient(false);
             @SuppressWarnings("unused")
-            java.util.Date data = new Date(format.parse(str).getTime());
+            java.util.Date data = new Date(Objects.requireNonNull(format.parse(str)).getTime());
             return false;
         }
         catch (ParseException e)
@@ -148,7 +149,7 @@ public class DataUtil {
                 throw new Exception("Data não pode ser nula ou vazia");
             }
             SimpleDateFormat sdf = new SimpleDateFormat(formato,java.util.Locale.getDefault());
-            return new Date(sdf.parse(str).getTime());
+            return new Date(Objects.requireNonNull(sdf.parse(str)).getTime());
         }
         catch (ParseException e)
         {

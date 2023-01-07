@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.classes.ProxyAssincronoServico;
 import br.ufpa.app.android.amu.v1.classes.TransacaoVerificarAlarme;
@@ -65,7 +66,7 @@ public class GerenteServicos  {
 
         if (autenticacao.getCurrentUser() != null) {
             String emailUsuario = autenticacao.getCurrentUser().getEmail();
-            String idUsuario = Base64Custom.codificarBase64(emailUsuario);
+            String idUsuario = Base64Custom.codificarBase64(Objects.requireNonNull(emailUsuario));
 
             DatabaseReference usuariosRef = ConfiguracaoFirebase.getFirebaseDatabase().child("usuarios").child(idUsuario);
 

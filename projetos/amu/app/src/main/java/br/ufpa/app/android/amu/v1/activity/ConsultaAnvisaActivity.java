@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
@@ -46,9 +44,6 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-
-                    }
                 }
             });
 
@@ -70,7 +65,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_anvisa);
 
-        Button btnPesquisar = (Button) findViewById(R.id.btnPesquisar);
+        Button btnPesquisar = findViewById(R.id.btnPesquisar);
         btnPesquisar.setOnClickListener(this);
 
         mRecursoVozObserver = new RecursoVozLifeCyCleObserver(getActivityResultRegistry(), ConsultaAnvisaActivity.this);
@@ -85,7 +80,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
             mRecursoVozObserver.chamarItenteReconechimentoVoz();
         } else {
             if (v.getId() == R.id.btnPesquisar) {
-                EditText edtNomeComercial = (EditText) findViewById(R.id.edtNomeComercial);
+                EditText edtNomeComercial = findViewById(R.id.edtNomeComercial);
 
                 montarLista(edtNomeComercial.getText().toString());
             }
@@ -93,7 +88,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
     }
 
     public void montarLista(String argumento) {
-        TextView txvStatusConsulta = (TextView) findViewById(R.id.txvStatusConsulta);
+        TextView txvStatusConsulta = findViewById(R.id.txvStatusConsulta);
         txvStatusConsulta.setText("");
 
         ConsultarMedicamentoRetDTO consultarMedicamentoRetDTO = App.integracaoBularioEletronico.consultarDadosMedicamentos(this, argumento);
@@ -105,7 +100,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
             App.integracaoUsuario.exibirMedicamentosEncontrados(consultarMedicamentoRetDTO.getMedicamentos(), argumento);
         }
 
-        ListView lvMedicamentos = (ListView) findViewById(R.id.lvMedicamentos);
+        ListView lvMedicamentos = findViewById(R.id.lvMedicamentos);
 
         ConsultaMedicamentosAdapter adapter = new ConsultaMedicamentosAdapter(ConsultaAnvisaActivity.this, (ArrayList) consultarMedicamentoRetDTO.getMedicamentos());
         lvMedicamentos.setAdapter(adapter);
@@ -120,7 +115,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
         });
     }
 
-    public class ConsultaMedicamentosAdapter extends ArrayAdapter<MedicamentoRetDTO> {
+    public static class ConsultaMedicamentosAdapter extends ArrayAdapter<MedicamentoRetDTO> {
         public ConsultaMedicamentosAdapter(Context context, ArrayList<MedicamentoRetDTO> lista) {
             super(context, 0, lista);
         }
@@ -138,8 +133,8 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
                 holder = new ViewHolder();
                 convertView.setTag(holder);
 
-                holder.txvNomeComercial = (TextView) convertView.findViewById(R.id.txvNomeComercial);
-                holder.txvNomeLaboratorio = (TextView) convertView.findViewById(R.id.txvNomeLaboratorio);
+                holder.txvNomeComercial = convertView.findViewById(R.id.txvNomeComercial);
+                holder.txvNomeLaboratorio = convertView.findViewById(R.id.txvNomeLaboratorio);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
@@ -150,7 +145,7 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
             return convertView;
         }
 
-        class ViewHolder {
+        static class ViewHolder {
             TextView txvNomeComercial;
             TextView txvNomeLaboratorio;
         }

@@ -24,6 +24,7 @@ public class EstoquesRecyclerViewAdapter extends RecyclerView.Adapter<EstoquesRe
         this.lista = lista;
     }
 
+    @NonNull
     @Override
     public HorarioViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemlista = LayoutInflater.from(parent.getContext())
@@ -46,7 +47,7 @@ public class EstoquesRecyclerViewAdapter extends RecyclerView.Adapter<EstoquesRe
         return lista.size();
     }
 
-    public class HorarioViewHolder extends RecyclerView.ViewHolder {
+    public static class HorarioViewHolder extends RecyclerView.ViewHolder {
 
         public final TextView txvDataHora;
         public final TextView txvEntrada;

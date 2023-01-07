@@ -73,9 +73,8 @@ public class UtilAvisa {
             if (!path.exists()) {
                 if (!path.mkdirs()) {
                     throw new Exception("Diretorio não foi criado " + diretorio);
-                } else {
-                    //create new folder
-                }
+                }  //create new folder
+
             }
             return path;
         } catch (Exception ex) {

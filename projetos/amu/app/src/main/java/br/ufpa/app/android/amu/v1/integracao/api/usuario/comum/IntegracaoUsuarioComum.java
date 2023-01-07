@@ -1,6 +1,5 @@
 package br.ufpa.app.android.amu.v1.integracao.api.usuario.comum;
 
-import android.speech.tts.TextToSpeech;
 import android.widget.Toast;
 
 import java.util.List;
@@ -85,16 +84,16 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
             Toast.makeText(App.context,
                     "Cadastre um horário para o medicamento e o ative !",
                     Toast.LENGTH_LONG).show();
-            return false;
+            return true;
         }
 
         if (!horarios.get(horarios.size() - 1).getAtivo().equals("SIM")) {
             Toast.makeText(App.context,
                     "O ultimo horário deve está ativo !",
                     Toast.LENGTH_LONG).show();
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -121,16 +120,16 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
             Toast.makeText(App.context,
                     "Preencha a quantidade de compra do medicamento !",
                     Toast.LENGTH_LONG).show();
-            return false;
+            return true;
         }
 
         if (qtde.equals("0")) {
             Toast.makeText(App.context,
                     "Preencha a quantidade de compra do medicamento !",
                     Toast.LENGTH_LONG).show();
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -139,17 +138,17 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
             Toast.makeText(App.context,
                     "Preencha a quantidade de saída do medicamento !",
                     Toast.LENGTH_LONG).show();
-            return false;
+            return true;
         }
 
         if (qtde.equals("0")) {
             Toast.makeText(App.context,
                     "Preencha a quantidade de saída do medicamento !",
                     Toast.LENGTH_LONG).show();
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
     @Override
     public int obterQtde(String s, int acao) {

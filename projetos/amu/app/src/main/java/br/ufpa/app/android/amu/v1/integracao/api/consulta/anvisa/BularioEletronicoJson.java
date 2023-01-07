@@ -1,5 +1,7 @@
 package br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa;
 
+import androidx.annotation.NonNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
@@ -80,6 +82,7 @@ public class BularioEletronicoJson {
 		this.number = number;
 	}
 
+	@NonNull
 	@Override
 	public String toString() {
 		return "BularioEletronicoJson [totalElements=" + totalElements + ", totalPages="

@@ -1,6 +1,5 @@
 package br.ufpa.app.android.amu.v1.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import java.util.List;
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.adapter.EstoquesRecyclerViewAdapter;
-import br.ufpa.app.android.amu.v1.dto.EstoqueDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
@@ -87,7 +85,7 @@ public class EstoquesFragment extends Fragment implements DetalheMedicamentoActi
 
     @Override
     public void atualizarLista(View view) {
-        EstoquesRecyclerViewAdapter estoquesRecyclerViewAdapter = new EstoquesRecyclerViewAdapter((List<EstoqueDTO>) App.listaEstoques);
+        EstoquesRecyclerViewAdapter estoquesRecyclerViewAdapter = new EstoquesRecyclerViewAdapter(App.listaEstoques);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         if (recyclerView == null) recyclerView = view.findViewById(R.id.recyclerView);

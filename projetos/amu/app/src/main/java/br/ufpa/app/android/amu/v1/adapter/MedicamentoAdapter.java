@@ -57,7 +57,7 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
         return listaMedicamentos.size();
     }
 
-    public class MedicamentoViewHoder extends RecyclerView.ViewHolder {
+    public static class MedicamentoViewHoder extends RecyclerView.ViewHolder {
 
         final androidx.constraintlayout.widget.ConstraintLayout fundo;
         final TextView txvNomeMedicamento;

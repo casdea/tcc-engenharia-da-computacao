@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.integracao.dto.MedicamentoRetDTO;
 import br.ufpa.app.android.amu.v1.integracao.dto.RetornoExecucaoDTO;
@@ -65,7 +66,7 @@ public class DownloadBulaTask extends AsyncTask<MedicamentoRetDTO, Void, Retorno
                 File file = new File(path, this.medicamentoRetDTO.getNomeArquivoPdf());
                 Log.i("Arquivo pdf ",file.getName());
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
-                IOUtils.write(arg.body().bytes(), fileOutputStream);
+                IOUtils.write(Objects.requireNonNull(arg.body()).bytes(), fileOutputStream);
             }
 
             retornoExecucaoDTO.setMensagemExecucao("");

@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import java.util.List;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
@@ -157,7 +158,7 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
 
                         String excecao;
                         try {
-                            throw task.getException();
+                            throw Objects.requireNonNull(task.getException());
                         } catch (FirebaseAuthWeakPasswordException e) {
                             excecao = "Digite uma senha mais forte!";
                         } catch (FirebaseAuthInvalidCredentialsException e) {

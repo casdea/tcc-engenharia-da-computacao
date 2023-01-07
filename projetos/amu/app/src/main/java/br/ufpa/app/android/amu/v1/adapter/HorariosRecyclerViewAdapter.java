@@ -25,6 +25,7 @@ public class HorariosRecyclerViewAdapter extends RecyclerView.Adapter<HorariosRe
         this.listaHistoricos = listaHistoricos;
     }
 
+    @NonNull
     @Override
     public HorarioViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemlista = LayoutInflater.from(parent.getContext())
@@ -49,7 +50,7 @@ public class HorariosRecyclerViewAdapter extends RecyclerView.Adapter<HorariosRe
         return listaHistoricos.size();
     }
 
-    public class HorarioViewHolder extends RecyclerView.ViewHolder {
+    public static class HorarioViewHolder extends RecyclerView.ViewHolder {
         public final TextView txvInicioAdministracao;
         public final TextView txvHorarioInicio;
         public final TextView txvIntervalo;

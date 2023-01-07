@@ -15,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
@@ -46,7 +47,7 @@ public class VariacoesComandoDao extends AbstractEntityDao<VariacoesComando> imp
         DatabaseReference variacoesComandoRef = em.child(variacoesComando.getNomeTabela());
         String chave = variacoesComandoRef.push().getKey();
         variacoesComando.setIdVariacaoComando(chave);
-        variacoesComandoRef.child(chave).setValue(variacoesComando).addOnSuccessListener(new OnSuccessListener<Void>() {
+        variacoesComandoRef.child(Objects.requireNonNull(chave)).setValue(variacoesComando).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(App.context,
@@ -132,7 +133,7 @@ public class VariacoesComandoDao extends AbstractEntityDao<VariacoesComando> imp
         VariacoesComando variacoesComando = postSnapshot.getValue(VariacoesComando.class);
 
         VariacoesComandoDTO variacoesComandoDTO = new VariacoesComandoDTO();
-        variacoesComandoDTO.setIdVariacaoComando(variacoesComando.getIdVariacaoComando());
+        variacoesComandoDTO.setIdVariacaoComando(Objects.requireNonNull(variacoesComando).getIdVariacaoComando());
         variacoesComandoDTO.setIdComando(variacoesComando.getIdComando());
         variacoesComandoDTO.setIdUsuario(variacoesComando.getIdUsuario());
         variacoesComandoDTO.setTexto(variacoesComando.getTexto());

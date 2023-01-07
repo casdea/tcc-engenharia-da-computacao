@@ -1,7 +1,5 @@
 package br.ufpa.app.android.amu.v1.integracao.interfaces;
 
-import android.speech.tts.TextToSpeech;
-
 import java.util.List;
 
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;

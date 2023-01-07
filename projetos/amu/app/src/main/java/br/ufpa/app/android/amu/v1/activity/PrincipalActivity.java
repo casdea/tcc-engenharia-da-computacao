@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.adapter.MedicamentoAdapter;
@@ -101,7 +102,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         App.listaAlarmes = new ArrayList<>();
 
         if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
-            getSupportActionBar().hide();
+            Objects.requireNonNull(getSupportActionBar()).hide();
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setOnClickListener(this);
@@ -173,7 +174,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
             App.integracaoUsuario.avisoSaidaPerfilAdmin();
 
             if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
-                getSupportActionBar().hide();
+                Objects.requireNonNull(getSupportActionBar()).hide();
 
         }
         if (item.getItemId() == R.id.menuPerfil)
@@ -222,7 +223,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                             if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
                                 mRecursoVozObserver.chamarItenteReconechimentoVoz();
                             } else {
-                                App.medicamentoDTO = (MedicamentoDTO) listaMedicamentos.get(position);
+                                App.medicamentoDTO = listaMedicamentos.get(position);
                                 Intent intent = new Intent(PrincipalActivity.this, DetalheMedicamentoActivity.class);
                                 detalheMedicamentoActivityResultLauncher.launch(intent);
                             }
@@ -258,7 +259,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
             App.tipoPerfil = TipoPerfil.COMUM;
             App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
 
-            getSupportActionBar().show();
+            Objects.requireNonNull(getSupportActionBar()).show();
         } else if (numeroAcao == Constantes.ACAO_VOZ_FECHAR_APP) {
             finish();
         }

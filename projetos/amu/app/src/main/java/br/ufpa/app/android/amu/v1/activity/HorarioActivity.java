@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.R;
@@ -104,7 +105,7 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
             @Override
             public void onClick(View view) {
 
-                if (textInpTextInicioAdministracao.getText().toString().isEmpty()) {
+                if (Objects.requireNonNull(textInpTextInicioAdministracao.getText()).toString().isEmpty()) {
                     Toast.makeText(HorarioActivity.this,
                             "Escolha uma data de Inicio de Administração do Medicamento !",
                             Toast.LENGTH_LONG).show();
@@ -118,7 +119,7 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
                     return;
                 }
 
-                if (textInpTextHorarioPrimeiraDose.getText().toString().isEmpty()) {
+                if (Objects.requireNonNull(textInpTextHorarioPrimeiraDose.getText()).toString().isEmpty()) {
                     Toast.makeText(HorarioActivity.this,
                             "Escolha uma Hora Inicio da Primeira Dose !",
                             Toast.LENGTH_LONG).show();
@@ -132,14 +133,14 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
                     return;
                 }
 
-                if (textInpTextDosesDia.getText().toString().isEmpty()) {
+                if (Objects.requireNonNull(textInpTextDosesDia.getText()).toString().isEmpty()) {
                     Toast.makeText(HorarioActivity.this,
                             "Preencha o numero de doses diárias !",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                if (textInpTextQtdeDose.getText().toString().isEmpty()) {
+                if (Objects.requireNonNull(textInpTextQtdeDose.getText()).toString().isEmpty()) {
                     Toast.makeText(HorarioActivity.this,
                             "Preencha Quantidade por dose !",
                             Toast.LENGTH_LONG).show();

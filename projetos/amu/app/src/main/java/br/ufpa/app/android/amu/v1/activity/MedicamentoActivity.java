@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.R;
@@ -55,7 +56,7 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         // There are no request codes
                         Intent data = result.getData();
-                        cor = data.getStringExtra("cor");
+                        cor = Objects.requireNonNull(data).getStringExtra("cor");
                         //findViewById(R.id.editTextTextPersonName3).setBackgroundDrawable(new ColorDrawable(Color.parseColor(cor)));
                         findViewById(R.id.txvCorSelecionada).setBackground(new ColorDrawable(Color.parseColor(cor)));
                         //use setBackground(android.graphics.drawable.Drawable)
@@ -147,21 +148,21 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
                 TextInputEditText textInpTextQtdeDose = findViewById(R.id.textInpTextQtdeDose);
                 SwitchCompat swAtivo = findViewById(R.id.swAtivo);
 
-                if (textInpTextApelido.getText().toString().isEmpty()) {
+                if (Objects.requireNonNull(textInpTextApelido.getText()).toString().isEmpty()) {
                     Toast.makeText(MedicamentoActivity.this,
                             "Preencha o apelido do medicamento !",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                if (textInpTextQtdeEmbalagem.getText().toString().isEmpty()) {
+                if (Objects.requireNonNull(textInpTextQtdeEmbalagem.getText()).toString().isEmpty()) {
                     Toast.makeText(MedicamentoActivity.this,
                             "Preencha Quantidade por Embalagem !",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                if (textInpTextInicioAdministracao.getText().toString().isEmpty()) {
+                if (Objects.requireNonNull(textInpTextInicioAdministracao.getText()).toString().isEmpty()) {
                     Toast.makeText(MedicamentoActivity.this,
                             "Escolha uma data de Inicio de Administração do Medicamento !",
                             Toast.LENGTH_LONG).show();
@@ -175,7 +176,7 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
                     return;
                 }
 
-                if (textInpTextHorarioPrimeiraDose.getText().toString().isEmpty()) {
+                if (Objects.requireNonNull(textInpTextHorarioPrimeiraDose.getText()).toString().isEmpty()) {
                     Toast.makeText(MedicamentoActivity.this,
                             "Escolha uma Hora Inicio da Primeira Dose !",
                             Toast.LENGTH_LONG).show();
@@ -189,14 +190,14 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
                     return;
                 }
 
-                if (textInpTextDosesDia.getText().toString().isEmpty()) {
+                if (Objects.requireNonNull(textInpTextDosesDia.getText()).toString().isEmpty()) {
                     Toast.makeText(MedicamentoActivity.this,
                             "Preencha o numero de doses diárias !",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                if (textInpTextQtdeDose.getText().toString().isEmpty()) {
+                if (Objects.requireNonNull(textInpTextQtdeDose.getText()).toString().isEmpty()) {
                     Toast.makeText(MedicamentoActivity.this,
                             "Preencha Quantidade por dose !",
                             Toast.LENGTH_LONG).show();

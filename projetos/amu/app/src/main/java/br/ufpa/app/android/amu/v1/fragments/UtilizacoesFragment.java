@@ -1,6 +1,5 @@
 package br.ufpa.app.android.amu.v1.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,11 +18,9 @@ import java.util.List;
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.adapter.UtilizacoesRecyclerViewAdapter;
-import br.ufpa.app.android.amu.v1.dto.UtilizacaoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
-import br.ufpa.app.android.amu.v1.interfaces.PickDateListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
@@ -88,7 +85,7 @@ public class UtilizacoesFragment extends Fragment implements DetalheMedicamentoA
 
     @Override
     public void atualizarLista(View view) {
-        UtilizacoesRecyclerViewAdapter utilizacoesRecyclerViewAdapter = new UtilizacoesRecyclerViewAdapter((List<UtilizacaoDTO>) App.listaUtilizacoes);
+        UtilizacoesRecyclerViewAdapter utilizacoesRecyclerViewAdapter = new UtilizacoesRecyclerViewAdapter(App.listaUtilizacoes);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         if (recyclerView == null) recyclerView = view.findViewById(R.id.recyclerView);

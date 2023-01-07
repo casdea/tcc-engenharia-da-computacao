@@ -15,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
@@ -43,7 +44,7 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
         DatabaseReference horariosRef = em.child(horario.getNomeTabela());
         String chave = horariosRef.push().getKey();
         horario.setIdHorario(chave);
-        horariosRef.child(chave).setValue(horario).addOnSuccessListener(new OnSuccessListener<Void>() {
+        horariosRef.child(Objects.requireNonNull(chave)).setValue(horario).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(App.context,
@@ -169,7 +170,7 @@ public class HorarioDao extends AbstractEntityDao<Horario> implements IHorarioDa
         Horario horario = postSnapshot.getValue(Horario.class);
 
         HorarioDTO horarioDTO = new HorarioDTO();
-        horarioDTO.setIdHorario(horario.getIdHorario());
+        horarioDTO.setIdHorario(Objects.requireNonNull(horario).getIdHorario());
         horarioDTO.setIdMedicamento(horario.getIdMedicamento());
         horarioDTO.setIdUsuario(horario.getIdUsuario());
         horarioDTO.setDataInicial(horario.getDataInicial());

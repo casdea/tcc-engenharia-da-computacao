@@ -450,14 +450,14 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     public boolean validarUtilizacaoMedicamento(List<HorarioDTO> horarios) {
         if (horarios == null || horarios.size() <= 0) {
             falar("Cadastre um horário para o medicamento e o ative !");
-            return false;
+            return true;
         }
 
         if (!horarios.get(horarios.size() - 1).getAtivo().equals("SIM")) {
             falar("O ultimo horário deve está ativo !");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public void saidaNegadaSemSaldo() {
@@ -478,30 +478,30 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     public boolean validarEntradaEstoque(String qtde) {
         if (qtde.isEmpty()) {
             falar("Preencha a quantidade de compra do medicamento !");
-            return false;
+            return true;
         }
 
         if (qtde.equals("0")) {
             falar("Preencha a quantidade de compra do medicamento !");
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     @Override
     public boolean validarSaidaEstoque(String qtde) {
         if (qtde.isEmpty()) {
             falar("Preencha a quantidade de saída do medicamento !");
-            return false;
+            return true;
         }
 
         if (qtde.equals("0")) {
             falar("Preencha a quantidade de saída do medicamento !");
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     @Override

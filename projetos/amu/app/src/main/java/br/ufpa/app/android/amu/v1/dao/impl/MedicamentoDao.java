@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
@@ -45,7 +46,7 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
         DatabaseReference medicamentosRef = em.child(medicamento.getNomeTabela());
         String chave = medicamentosRef.push().getKey();
         medicamento.setIdMedicamento(chave);
-        medicamentosRef.child(chave).setValue(medicamento).addOnSuccessListener(new OnSuccessListener<Void>() {
+        medicamentosRef.child(Objects.requireNonNull(chave)).setValue(medicamento).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
 
@@ -55,7 +56,7 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
                 String chaveHorario = horariosRef.push().getKey();
                 horario.setIdHorario(chaveHorario);
                 horario.setIdMedicamento(medicamento.getIdMedicamento());
-                horariosRef.child(chaveHorario).setValue(horario).addOnSuccessListener(new OnSuccessListener<Void>() {
+                horariosRef.child(Objects.requireNonNull(chaveHorario)).setValue(horario).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         App.estoqueDTO = new EstoqueDTO();
@@ -73,7 +74,7 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
                         String chaveEstoque = estoqueRef.push().getKey();
                         estoque.setIdEstoque(chaveEstoque);
                         estoque.setIdMedicamento(medicamento.getIdMedicamento());
-                        estoqueRef.child(chaveEstoque).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        estoqueRef.child(Objects.requireNonNull(chaveEstoque)).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(App.context,
@@ -202,7 +203,7 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
     MedicamentoDTO getMedicamentoDTO(DataSnapshot postSnapshot) {
         Medicamento medicamento = postSnapshot.getValue(Medicamento.class);
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO();
-        medicamentoDTO.setNomeComercial(medicamento.getNomeComercial());
+        medicamentoDTO.setNomeComercial(Objects.requireNonNull(medicamento).getNomeComercial());
         medicamentoDTO.setNomeFantasia(medicamento.getNomeFantasia());
         medicamentoDTO.setFabricante(medicamento.getFabricante());
         medicamentoDTO.setCor(medicamento.getCor());

@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 import java.util.List;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
@@ -127,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
 
                     String excecao;
                     try {
-                        throw task.getException();
+                        throw Objects.requireNonNull(task.getException());
                     } catch (FirebaseAuthInvalidUserException e) {
                         excecao = "Usuário não está cadastrado.";
                     } catch (FirebaseAuthInvalidCredentialsException e) {

@@ -1,5 +1,7 @@
 package br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa;
 
+import androidx.annotation.NonNull;
+
 public class BularioEletronicoConteudoJson {
 
 	private int idProduto;
@@ -15,102 +17,7 @@ public class BularioEletronicoConteudoJson {
 	private String idBulaProfissionalProtegido;
 	private String dataAtualizacao;
 
-	public int getIdProduto() {
-		return idProduto;
-	}
-
-	public void setIdProduto(int idProduto) {
-		this.idProduto = idProduto;
-	}
-
-	public String getNumeroRegistro() {
-		return numeroRegistro;
-	}
-
-	public void setNumeroRegistro(String numeroRegistro) {
-		this.numeroRegistro = numeroRegistro;
-	}
-
-	public String getNomeProduto() {
-		return nomeProduto;
-	}
-
-	public void setNomeProduto(String nomeProduto) {
-		this.nomeProduto = nomeProduto;
-	}
-
-	public String getExpediente() {
-		return expediente;
-	}
-
-	public void setExpediente(String expediente) {
-		this.expediente = expediente;
-	}
-
-	public String getRazaoSocial() {
-		return razaoSocial;
-	}
-
-	public void setRazaoSocial(String razaoSocial) {
-		this.razaoSocial = razaoSocial;
-	}
-
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
-
-	public String getNumeroTransacao() {
-		return numeroTransacao;
-	}
-
-	public void setNumeroTransacao(String numeroTransacao) {
-		this.numeroTransacao = numeroTransacao;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
-
-	public String getNumProcesso() {
-		return numProcesso;
-	}
-
-	public void setNumProcesso(String numProcesso) {
-		this.numProcesso = numProcesso;
-	}
-
-	public String getIdBulaPacienteProtegido() {
-		return idBulaPacienteProtegido;
-	}
-
-	public void setIdBulaPacienteProtegido(String idBulaPacienteProtegido) {
-		this.idBulaPacienteProtegido = idBulaPacienteProtegido;
-	}
-
-	public String getIdBulaProfissionalProtegido() {
-		return idBulaProfissionalProtegido;
-	}
-
-	public void setIdBulaProfissionalProtegido(String idBulaProfissionalProtegido) {
-		this.idBulaProfissionalProtegido = idBulaProfissionalProtegido;
-	}
-
-	public String getDataAtualizacao() {
-		return dataAtualizacao;
-	}
-
-	public void setDataAtualizacao(String dataAtualizacao) {
-		this.dataAtualizacao = dataAtualizacao;
-	}
-
+	@NonNull
 	@Override
 	public String toString() {
 		return "BularioEletronicoConteudoJson{" +

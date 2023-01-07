@@ -1,6 +1,5 @@
 package br.ufpa.app.android.amu.v1.fragments;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -12,7 +11,6 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
-import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.interfaces.PickDateListener;
 
 public class DatePickerFragment extends DialogFragment
@@ -27,6 +25,7 @@ public class DatePickerFragment extends DialogFragment
         pickDateListener = (PickDateListener) context;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current date as the default date in the picker

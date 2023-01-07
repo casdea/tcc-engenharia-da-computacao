@@ -25,6 +25,7 @@ public class TimePickerFragment extends DialogFragment
         pickTimeListener = (PickTimeListener) context;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current time as the default values for the picker

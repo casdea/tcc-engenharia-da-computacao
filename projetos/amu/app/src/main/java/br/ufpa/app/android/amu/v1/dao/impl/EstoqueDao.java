@@ -15,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
@@ -40,7 +41,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
         DatabaseReference estoquesRef = em.child(estoque.getNomeTabela());
         String chave = estoquesRef.push().getKey();
         estoque.setIdEstoque(chave);
-        estoquesRef.child(chave).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
+        estoquesRef.child(Objects.requireNonNull(chave)).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(App.context,
@@ -185,7 +186,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                     DatabaseReference estoquesRef = em.child("estoques");
                     String chave = estoquesRef.push().getKey();
                     estoque.setIdEstoque(chave);
-                    estoquesRef.child(chave).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    estoquesRef.child(Objects.requireNonNull(chave)).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             movtoEstoqueDTO.setIdEstoque(chave);
@@ -248,7 +249,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                     DatabaseReference estoquesRef = em.child("estoques");
                     String chave = estoquesRef.push().getKey();
                     estoque.setIdEstoque(chave);
-                    estoquesRef.child(chave).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    estoquesRef.child(Objects.requireNonNull(chave)).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             movtoEstoqueDTO.setIdEstoque(chave);
@@ -280,7 +281,7 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
         Estoque estoque = postSnapshot.getValue(Estoque.class);
 
         EstoqueDTO estoqueDTO = new EstoqueDTO();
-        estoqueDTO.setIdEstoque(estoque.getIdEstoque());
+        estoqueDTO.setIdEstoque(Objects.requireNonNull(estoque).getIdEstoque());
         estoqueDTO.setIdMedicamento(estoque.getIdMedicamento());
         estoqueDTO.setIdUsuario(estoque.getIdUsuario());
         estoqueDTO.setDataHora(estoque.getDataHora());
