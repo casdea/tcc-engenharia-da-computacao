@@ -187,12 +187,12 @@ public class DataUtil {
         return (int) ((m2 - m1) / (60 * 1000));
     }
 
-    public static Date convertStringToDateTime(String str) {
+    public static Date convertStringToDateTime(String str) throws Exception {
         try {
             return convertStringToDate(str, "dd/MM/yyyy HH:mm");
         } catch (Exception e)
         {
-            return null;
+            throw new Exception("Data inválida "+str);
         }
     }
 

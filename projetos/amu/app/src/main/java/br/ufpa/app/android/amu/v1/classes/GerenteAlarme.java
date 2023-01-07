@@ -104,7 +104,7 @@ public class GerenteAlarme {
         return vAlarmes;
     }
 
-    private void verificarCriarAlarmeDose(List<AlarmeDTO> vAlarmes, List<MapaHorarioDTO> vMapa, MedicamentoDTO medicamentoDTO) {
+    private void verificarCriarAlarmeDose(List<AlarmeDTO> vAlarmes, List<MapaHorarioDTO> vMapa, MedicamentoDTO medicamentoDTO) throws Exception {
         for (MapaHorarioDTO mapaHorarioDTO : vMapa) {
             if (mapaHorarioDTO.getHoraPrescrita() != null && mapaHorarioDTO.getHoraAdministrada() == null) {
                 int minutos = DataUtil.getDiferencaEmMinutos(DataUtil.getDataAtual(), mapaHorarioDTO.getHoraPrescrita());
@@ -127,8 +127,7 @@ public class GerenteAlarme {
         }
     }
 
-    private void verificarCriarAlarmeSuperDose(List<AlarmeDTO> vAlarmes, List<UtilizacaoDTO> utilizacoes, HorarioDTO horarioDTO, MapaHorarioDTO mapaHorarioDTO, MedicamentoDTO medicamentoDTO)
-    {
+    private void verificarCriarAlarmeSuperDose(List<AlarmeDTO> vAlarmes, List<UtilizacaoDTO> utilizacoes, HorarioDTO horarioDTO, MapaHorarioDTO mapaHorarioDTO, MedicamentoDTO medicamentoDTO) throws Exception {
         if (gerarAlarme(medicamentoDTO.getIdMedicamento(), AlarmeDTO.TIPO_ALARME_PROXIMA_DOSE, mapaHorarioDTO, 1,5))
         {
             vAlarmes.add(new AlarmeDTO("0", medicamentoDTO, AlarmeDTO.TIPO_ALARME_DOSE_EXCEDIDA, horarioDTO.getNrDoses(),utilizacoes.size()));
@@ -195,7 +194,7 @@ public class GerenteAlarme {
     //26/12/2022 20:00
 
     private boolean gerarAlarme(String idMedicameto, int tipoAlarme, MapaHorarioDTO
-            mapaHorarioDTO, int minutosInicio, int minutosFim) {
+            mapaHorarioDTO, int minutosInicio, int minutosFim) throws Exception {
         Date inicio = DataUtil.somaMinutos(mapaHorarioDTO.getHoraPrescrita(), minutosInicio);
         Date fim = DataUtil.somaMinutos(mapaHorarioDTO.getHoraPrescrita(), minutosFim);
 

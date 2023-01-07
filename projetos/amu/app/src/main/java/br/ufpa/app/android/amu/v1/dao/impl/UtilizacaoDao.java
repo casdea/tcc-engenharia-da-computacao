@@ -146,8 +146,12 @@ public class UtilizacaoDao extends AbstractEntityDao<Utilizacao> implements IUti
                     if (BuildConfig.DEBUG)
                         Log.i("Lendo dados ", postSnapshot.toString());
 
-                    if (!DataUtil.convertStringToDateTime(utilizacaoDTO.getDataHora()).before(DataUtil.getDataAtual()))
-                        App.listaUtilizacoes.add(utilizacaoDTO);
+                    try {
+                        if (!DataUtil.convertStringToDateTime(utilizacaoDTO.getDataHora()).before(DataUtil.getDataAtual()))
+                            App.listaUtilizacoes.add(utilizacaoDTO);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 try {

@@ -491,10 +491,8 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             gerenteServicos.obterListaEstoquesByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
         } else if (numeroAcao == Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE) {
             App.integracaoUsuario.saidaNegadaSemSaldo();
-            return;
         } else if (numeroAcao == Constantes.ACAO_ERRO_AO_ATUALIZAR_SALDO_ESTOQUE) {
             App.integracaoUsuario.informarErro((String) parametro);
-            return;
         } else if (numeroAcao == Constantes.ACAO_ATUALIZAR_SALDO_ESTOQUE) {
             GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
             gerenteServicos.incluirEstoque((EstoqueDTO) parametro);

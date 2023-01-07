@@ -15,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
@@ -43,7 +44,7 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
         DatabaseReference alarmesRef = em.child(alarme.getNomeTabela());
         String chave = alarmesRef.push().getKey();
         alarme.setIdAlarme(chave);
-        alarmesRef.child(chave).setValue(alarme).addOnSuccessListener(new OnSuccessListener<Void>() {
+        alarmesRef.child(Objects.requireNonNull(chave)).setValue(alarme).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(App.context,
@@ -105,8 +106,12 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
                     if (BuildConfig.DEBUG)
                         Log.i("Lendo dados ", postSnapshot.toString());
 
-                    if (!DataUtil.convertStringToDateTime(alarmeDTO.getDataHora()).before(DataUtil.getDataAtual()))
-                        App.listaAlarmes.add(alarmeDTO);
+                    try {
+                        if (!DataUtil.convertStringToDateTime(alarmeDTO.getDataHora()).before(DataUtil.getDataAtual()))
+                            App.listaAlarmes.add(alarmeDTO);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
               //  gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ALARME_HOJE, App.listaAlarmes);
@@ -129,16 +134,19 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
 
     @NonNull
     AlarmeDTO getAlarmeDTO(DataSnapshot postSnapshot) {
+        AlarmeDTO alarmeDTO = new AlarmeDTO();
+
         Alarme alarme = postSnapshot.getValue(Alarme.class);
 
-        AlarmeDTO alarmeDTO = new AlarmeDTO();
-        alarmeDTO.setIdAlarme(alarme.getIdAlarme());
-        alarmeDTO.setIdMedicamento(alarme.getIdMedicamento());
-        alarmeDTO.setIdUsuario(alarme.getIdUsuario());
-        alarmeDTO.setDataHora(alarme.getDataHora());
-        alarmeDTO.setTipoAlarme(alarme.getTipoAlarme());
-        alarmeDTO.setDescricao(alarme.getDescricao());
-        alarmeDTO.setTitulo(alarme.getTitulo());
+        if (alarme != null) {
+            alarmeDTO.setIdAlarme(alarme.getIdAlarme());
+            alarmeDTO.setIdMedicamento(alarme.getIdMedicamento());
+            alarmeDTO.setIdUsuario(alarme.getIdUsuario());
+            alarmeDTO.setDataHora(alarme.getDataHora());
+            alarmeDTO.setTipoAlarme(alarme.getTipoAlarme());
+            alarmeDTO.setDescricao(alarme.getDescricao());
+            alarmeDTO.setTitulo(alarme.getTitulo());
+        }
 
         return alarmeDTO;
     }
