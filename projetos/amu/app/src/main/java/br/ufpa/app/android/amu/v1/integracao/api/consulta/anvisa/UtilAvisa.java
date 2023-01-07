@@ -88,7 +88,7 @@ public class UtilAvisa {
             FileReader fileReader = new FileReader(filename);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             try {
-                StringBuffer texto = new StringBuffer();
+                StringBuilder texto = new StringBuilder();
                 // lê a primeira linha
                 String linha = bufferedReader.readLine();
                 if (linha != null)

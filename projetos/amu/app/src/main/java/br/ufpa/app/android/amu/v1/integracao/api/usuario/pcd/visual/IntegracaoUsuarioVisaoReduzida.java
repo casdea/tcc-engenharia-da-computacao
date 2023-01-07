@@ -520,10 +520,10 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         int i;
 
         try {
-            i = Integer.valueOf(restoTexto);
+            i = Integer.parseInt(restoTexto);
         } catch (Exception e) {
             try {
-                i = Integer.valueOf(findNumero(restoTexto));
+                i = findNumero(restoTexto);
             } catch (Exception e1) {
                 i = 0;
                 reproduzirVoz(textoLido," quantidade inválida. Toque na tela e fale o comando novamente.");
