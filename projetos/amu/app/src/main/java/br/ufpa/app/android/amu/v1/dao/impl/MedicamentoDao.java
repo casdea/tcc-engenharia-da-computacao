@@ -6,8 +6,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,91 +44,59 @@ public class MedicamentoDao extends AbstractEntityDao<Medicamento> implements IM
         DatabaseReference medicamentosRef = em.child(medicamento.getNomeTabela());
         String chave = medicamentosRef.push().getKey();
         medicamento.setIdMedicamento(chave);
-        medicamentosRef.child(Objects.requireNonNull(chave)).setValue(medicamento).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
+        medicamentosRef.child(Objects.requireNonNull(chave)).setValue(medicamento).addOnSuccessListener(unused -> {
 
-                App.medicamentoDTO.setIdMedicamento(medicamento.getIdMedicamento());
+            App.medicamentoDTO.setIdMedicamento(medicamento.getIdMedicamento());
 
-                DatabaseReference horariosRef = em.child(horario.getNomeTabela());
-                String chaveHorario = horariosRef.push().getKey();
-                horario.setIdHorario(chaveHorario);
-                horario.setIdMedicamento(medicamento.getIdMedicamento());
-                horariosRef.child(Objects.requireNonNull(chaveHorario)).setValue(horario).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        App.estoqueDTO = new EstoqueDTO();
-                        App.estoqueDTO.setIdUsuario(medicamento.getIdUsuario());
-                        App.estoqueDTO.setIdEstoque("0");
-                        App.estoqueDTO.setIdMedicamento(medicamento.getIdMedicamento());
-                        App.estoqueDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
-                        App.estoqueDTO.setEntrada(medicamento.getQtdeEmbalagem());
-                        App.estoqueDTO.setSaida(0);
-                        App.estoqueDTO.setSaldo(medicamento.getQtdeEmbalagem());
+            DatabaseReference horariosRef = em.child(horario.getNomeTabela());
+            String chaveHorario = horariosRef.push().getKey();
+            horario.setIdHorario(chaveHorario);
+            horario.setIdMedicamento(medicamento.getIdMedicamento());
+            horariosRef.child(Objects.requireNonNull(chaveHorario)).setValue(horario).addOnSuccessListener(unused12 -> {
+                App.estoqueDTO = new EstoqueDTO();
+                App.estoqueDTO.setIdUsuario(medicamento.getIdUsuario());
+                App.estoqueDTO.setIdEstoque("0");
+                App.estoqueDTO.setIdMedicamento(medicamento.getIdMedicamento());
+                App.estoqueDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
+                App.estoqueDTO.setEntrada(medicamento.getQtdeEmbalagem());
+                App.estoqueDTO.setSaida(0);
+                App.estoqueDTO.setSaldo(medicamento.getQtdeEmbalagem());
 
-                        Estoque estoque = new Estoque(App.estoqueDTO);
+                Estoque estoque = new Estoque(App.estoqueDTO);
 
-                        DatabaseReference estoqueRef = em.child(estoque.getNomeTabela());
-                        String chaveEstoque = estoqueRef.push().getKey();
-                        estoque.setIdEstoque(chaveEstoque);
-                        estoque.setIdMedicamento(medicamento.getIdMedicamento());
-                        estoqueRef.child(Objects.requireNonNull(chaveEstoque)).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(App.context,
-                                        "Registro de Estoque Salvo !",
-                                        Toast.LENGTH_LONG).show();
-                                gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_MEDICAMENTO, null);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(App.context,
-                                        "Falha ao Registrar Estoque.Detalhes " + e.getMessage(),
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(App.context,
-                                "Falha ao Registrar Horario.Detalhes " + e.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(App.context,
-                        "Falha ao Registrar Medicamento.Detalhes " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+                DatabaseReference estoqueRef = em.child(estoque.getNomeTabela());
+                String chaveEstoque = estoqueRef.push().getKey();
+                estoque.setIdEstoque(chaveEstoque);
+                estoque.setIdMedicamento(medicamento.getIdMedicamento());
+                estoqueRef.child(Objects.requireNonNull(chaveEstoque)).setValue(estoque).addOnSuccessListener(unused1 -> {
+                    Toast.makeText(App.context,
+                            "Registro de Estoque Salvo !",
+                            Toast.LENGTH_LONG).show();
+                    gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_MEDICAMENTO, null);
+                }).addOnFailureListener(e -> Toast.makeText(App.context,
+                        "Falha ao Registrar Estoque.Detalhes " + e.getMessage(),
+                        Toast.LENGTH_LONG).show());
+            }).addOnFailureListener(e -> Toast.makeText(App.context,
+                    "Falha ao Registrar Horario.Detalhes " + e.getMessage(),
+                    Toast.LENGTH_LONG).show());
+        }).addOnFailureListener(e -> Toast.makeText(App.context,
+                "Falha ao Registrar Medicamento.Detalhes " + e.getMessage(),
+                Toast.LENGTH_LONG).show());
 
     }
 
     @Override
     public Medicamento update(Medicamento medicamento) {
         DatabaseReference medicamentosRef = em.child(medicamento.getNomeTabela()).child(medicamento.getIdMedicamento());
-        medicamentosRef.setValue(medicamento).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(App.context,
-                        "Registro Salvo !",
-                        Toast.LENGTH_LONG).show();
+        medicamentosRef.setValue(medicamento).addOnSuccessListener(unused -> {
+            Toast.makeText(App.context,
+                    "Registro Salvo !",
+                    Toast.LENGTH_LONG).show();
 
-                gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_MEDICAMENTO, null);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(App.context,
-                        "Falha ao Registrar.Detalhes " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+            gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_MEDICAMENTO, null);
+        }).addOnFailureListener(e -> Toast.makeText(App.context,
+                "Falha ao Registrar.Detalhes " + e.getMessage(),
+                Toast.LENGTH_LONG).show());
         return medicamento;
     }
 

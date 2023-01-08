@@ -7,15 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,21 +38,15 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
 
     private final ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                }
+            result -> {
             });
 
     private final ActivityResultLauncher<Intent> detalheBulaActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        setResult(Activity.RESULT_OK, null);
-                        finish();
-                    }
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    setResult(Activity.RESULT_OK, null);
+                    finish();
                 }
             });
 
@@ -104,14 +95,11 @@ public class ConsultaAnvisaActivity extends AppCompatActivity implements View.On
 
         ConsultaMedicamentosAdapter adapter = new ConsultaMedicamentosAdapter(ConsultaAnvisaActivity.this, (ArrayList<MedicamentoRetDTO>) consultarMedicamentoRetDTO.getMedicamentos());
         lvMedicamentos.setAdapter(adapter);
-        lvMedicamentos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                medicamentoRetDTO = consultarMedicamentoRetDTO.getMedicamentos().get(position);
+        lvMedicamentos.setOnItemClickListener((parent, view, position, id) -> {
+            medicamentoRetDTO = consultarMedicamentoRetDTO.getMedicamentos().get(position);
 
-                GerenteServicos gerenteServicos = new GerenteServicos(ConsultaAnvisaActivity.this);
-                gerenteServicos.obterMedicamentoByUsuarioIdProduto(App.usuario.getIdUsuario(), medicamentoRetDTO.getIdProduto());
-            }
+            GerenteServicos gerenteServicos = new GerenteServicos(ConsultaAnvisaActivity.this);
+            gerenteServicos.obterMedicamentoByUsuarioIdProduto(App.usuario.getIdUsuario(), medicamentoRetDTO.getIdProduto());
         });
     }
 

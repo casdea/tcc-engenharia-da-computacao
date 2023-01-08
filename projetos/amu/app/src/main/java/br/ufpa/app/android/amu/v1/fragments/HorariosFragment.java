@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -51,10 +49,7 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
 
     final ActivityResultLauncher<Intent> mnutencaoHorarioActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                }
+            result -> {
             });
 
     @Override
@@ -97,17 +92,14 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
                 }));
 
         FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
-                    gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, 0);
-                }
-                else {
-                    App.horarioDTO = null;
-                    Intent intent = new Intent(view.getContext(), HorarioActivity.class);
-                    mnutencaoHorarioActivityResultLauncher.launch(intent);
-                }
+        fab.setOnClickListener(view1 -> {
+            if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+                gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, 0);
+            }
+            else {
+                App.horarioDTO = null;
+                Intent intent = new Intent(view1.getContext(), HorarioActivity.class);
+                mnutencaoHorarioActivityResultLauncher.launch(intent);
             }
         });
 

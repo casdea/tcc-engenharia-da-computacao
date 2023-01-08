@@ -57,6 +57,62 @@ public class BularioEletronicoConteudoJson {
 		this.idBulaPacienteProtegido = idBulaPacienteProtegido;
 	}
 
+	public String getNumeroRegistro() {
+		return numeroRegistro;
+	}
+
+	public void setNumeroRegistro(String numeroRegistro) {
+		this.numeroRegistro = numeroRegistro;
+	}
+
+	public String getExpediente() {
+		return expediente;
+	}
+
+	public void setExpediente(String expediente) {
+		this.expediente = expediente;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public String getNumeroTransacao() {
+		return numeroTransacao;
+	}
+
+	public void setNumeroTransacao(String numeroTransacao) {
+		this.numeroTransacao = numeroTransacao;
+	}
+
+	public String getNumProcesso() {
+		return numProcesso;
+	}
+
+	public void setNumProcesso(String numProcesso) {
+		this.numProcesso = numProcesso;
+	}
+
+	public String getIdBulaProfissionalProtegido() {
+		return idBulaProfissionalProtegido;
+	}
+
+	public void setIdBulaProfissionalProtegido(String idBulaProfissionalProtegido) {
+		this.idBulaProfissionalProtegido = idBulaProfissionalProtegido;
+	}
+
+	public String getDataAtualizacao() {
+		return dataAtualizacao;
+	}
+
+	public void setDataAtualizacao(String dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
+	}
+
 	@NonNull
 	@Override
 	public String toString() {

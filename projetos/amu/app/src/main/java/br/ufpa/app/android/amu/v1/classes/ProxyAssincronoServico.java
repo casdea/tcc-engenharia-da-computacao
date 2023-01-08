@@ -11,14 +11,11 @@ public class ProxyAssincronoServico implements Transacao {
 
     @Override
     public void executar() {
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    transacao.executar();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        Runnable r = () -> {
+            try {
+                transacao.executar();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         };
 

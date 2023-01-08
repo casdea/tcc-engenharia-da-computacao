@@ -6,8 +6,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,24 +42,16 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
         DatabaseReference alarmesRef = em.child(alarme.getNomeTabela());
         String chave = alarmesRef.push().getKey();
         alarme.setIdAlarme(chave);
-        alarmesRef.child(Objects.requireNonNull(chave)).setValue(alarme).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(App.context,
-                        "Registro Alarme Salvo !",
-                        Toast.LENGTH_LONG).show();
-                App.alarmeDTO.setIdAlarme(chave);
-                App.listaAlarmes.add(App.alarmeDTO);
+        alarmesRef.child(Objects.requireNonNull(chave)).setValue(alarme).addOnSuccessListener(unused -> {
+            Toast.makeText(App.context,
+                    "Registro Alarme Salvo !",
+                    Toast.LENGTH_LONG).show();
+            App.alarmeDTO.setIdAlarme(chave);
+            App.listaAlarmes.add(App.alarmeDTO);
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(App.context,
-                        "Falha ao Registrar.Detalhes " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+        }).addOnFailureListener(e -> Toast.makeText(App.context,
+                "Falha ao Registrar.Detalhes " + e.getMessage(),
+                Toast.LENGTH_LONG).show());
 
         return alarme;
     }
@@ -69,23 +59,15 @@ public class AlarmeDao extends AbstractEntityDao<Alarme> implements IAlarmeDao {
     @Override
     public Alarme update(Alarme alarme) {
         DatabaseReference alarmesRef = em.child(alarme.getNomeTabela()).child(alarme.getIdAlarme());
-        alarmesRef.setValue(alarme).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(App.context,
-                        "Registro Alarme Salvo !",
-                        Toast.LENGTH_LONG).show();
-                gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_ALARME_CONCLUIDO, null);
+        alarmesRef.setValue(alarme).addOnSuccessListener(unused -> {
+            Toast.makeText(App.context,
+                    "Registro Alarme Salvo !",
+                    Toast.LENGTH_LONG).show();
+            gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_ALARME_CONCLUIDO, null);
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(App.context,
-                        "Falha ao Registrar.Detalhes " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+        }).addOnFailureListener(e -> Toast.makeText(App.context,
+                "Falha ao Registrar.Detalhes " + e.getMessage(),
+                Toast.LENGTH_LONG).show());
 
         return alarme;
     }

@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -151,7 +150,7 @@ public class GerenteAlarme {
 
     private List<MapaHorarioDTO> criarMapaHorario(String dataInicial, String horaInicial,
                                                   int intervalo, int nrDoses, List<UtilizacaoDTO> utilizacoes) throws Exception {
-        List<MapaHorarioDTO> vMapa = new ArrayList<MapaHorarioDTO>();
+        List<MapaHorarioDTO> vMapa = new ArrayList<>();
         Date horaPrescrita = DataUtil.convertStringToDate(dataInicial + " " + horaInicial, "dd/MM/yyyy HH:mm");
         for (int i = 0; i < nrDoses; i++) {
             MapaHorarioDTO dto = new MapaHorarioDTO(horaPrescrita, null);
@@ -175,12 +174,9 @@ public class GerenteAlarme {
         for (UtilizacaoDTO utilizacaoDTO : utilizacoes) {
             utilizacaoDTO.setDataUtilizacao(DataUtil.convertStringToDate(utilizacaoDTO.getDataHora(), "dd/MM/yyyy HH:mm"));
         }
-        Collections.sort(utilizacoes, new Comparator<UtilizacaoDTO>() {
-            @Override
-            public int compare(UtilizacaoDTO o1, UtilizacaoDTO o2) {
-                // TODO Auto-generated method stub
-                return o1.getDataUtilizacao().compareTo(o2.getDataUtilizacao());
-            }
+        Collections.sort(utilizacoes, (o1, o2) -> {
+            // TODO Auto-generated method stub
+            return o1.getDataUtilizacao().compareTo(o2.getDataUtilizacao());
         });
     }
 

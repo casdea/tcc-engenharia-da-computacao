@@ -1,7 +1,6 @@
 package br.ufpa.app.android.amu.v1.activity;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -158,12 +157,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         SmartTabLayout viewPagerTab = findViewById(R.id.viewpagertab);
         viewPagerTab.setViewPager(viewPager);
         viewPagerTab.setOnClickListener(this);
-        viewPagerTab.setOnTabClickListener(new SmartTabLayout.OnTabClickListener() {
-            @Override
-            public void onTabClicked(int position) {
-                if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
-                    mRecursoVozObserver.chamarItenteReconechimentoVoz();
-            }
+        viewPagerTab.setOnTabClickListener(position -> {
+            if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+                mRecursoVozObserver.chamarItenteReconechimentoVoz();
         });
 
         this.onHorariosListener = (OnHorariosListener) adapter.getItem(0);
@@ -290,20 +286,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.setIcon(android.R.drawable.ic_btn_speak_now);
 
         //Configura acoes para sim e nao
-        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sinalizarDoseRealizada();
-            }
-        });
+        dialog.setPositiveButton("Sim", (dialog12, which) -> sinalizarDoseRealizada());
 
-        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-            }
-        });
+        dialog.setNegativeButton("Não", (dialog1, which) -> dialog1.cancel());
 
         //Criar e exibir AlertDialog
         dialog.create();
@@ -345,21 +330,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.setIcon(android.R.drawable.ic_btn_speak_now);
 
         //Configura acoes para sim e nao
-        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                efetuarEntradaEstoque();
+        dialog.setPositiveButton("Sim", (dialog12, which) -> efetuarEntradaEstoque());
 
-            }
-        });
-
-        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-            }
-        });
+        dialog.setNegativeButton("Não", (dialog1, which) -> dialog1.cancel());
 
         //Criar e exibir AlertDialog
         dialog.create();
@@ -399,20 +372,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         dialog.setIcon(android.R.drawable.ic_btn_speak_now);
 
         //Configura acoes para sim e nao
-        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                efetuarSaidaEstoque();
-            }
-        });
+        dialog.setPositiveButton("Sim", (dialog12, which) -> efetuarSaidaEstoque());
 
-        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.cancel();
-            }
-        });
+        dialog.setNegativeButton("Não", (dialog1, which) -> dialog1.cancel());
 
         //Criar e exibir AlertDialog
         dialog.create();

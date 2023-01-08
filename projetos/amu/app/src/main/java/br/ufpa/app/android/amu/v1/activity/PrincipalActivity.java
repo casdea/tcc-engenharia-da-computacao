@@ -2,7 +2,6 @@ package br.ufpa.app.android.amu.v1.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,8 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,23 +66,17 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
     final ActivityResultLauncher<Intent> detalheMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        prepararLista();
-                    }
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    prepararLista();
                 }
             });
 
     final ActivityResultLauncher<Intent> consultarAvisaActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        prepararLista();
-                    }
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    prepararLista();
                 }
             });
 
@@ -291,16 +282,8 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
             builder.setMessage("Deseja sair?");
             // Add the buttons
-            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    finish();
-                }
-            });
-            builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
+            builder.setPositiveButton("Sim", (dialog, id) -> finish());
+            builder.setNegativeButton("Não", (dialog, id) -> dialog.dismiss());
 
             AlertDialog dialog = builder.create();
         }

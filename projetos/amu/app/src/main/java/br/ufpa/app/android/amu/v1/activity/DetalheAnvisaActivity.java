@@ -3,11 +3,8 @@ package br.ufpa.app.android.amu.v1.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,13 +16,10 @@ public class DetalheAnvisaActivity extends AppCompatActivity {
 
     final ActivityResultLauncher<Intent> cadastrarMedicamentoActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        setResult(Activity.RESULT_OK, null);
-                        finish();
-                    }
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    setResult(Activity.RESULT_OK, null);
+                    finish();
                 }
             });
 
@@ -59,22 +53,14 @@ public class DetalheAnvisaActivity extends AppCompatActivity {
         txvTextoComoDevoUsar.setText(App.medicamentoDTO.getTextoComoUsar());
         txvTextoQuandoEsquecer.setText(App.medicamentoDTO.getTextoSeEsquecerQueFazer());
 
-        findViewById(R.id.btnNovaConsulta).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        findViewById(R.id.btnNovaConsulta).setOnClickListener(view -> finish());
 
-        findViewById(R.id.btnCapturarDados).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        findViewById(R.id.btnCapturarDados).setOnClickListener(view -> {
 
 
-                Intent intent = new Intent(DetalheAnvisaActivity.this, MedicamentoActivity.class);
-                cadastrarMedicamentoActivityResultLauncher.launch(intent);
+            Intent intent = new Intent(DetalheAnvisaActivity.this, MedicamentoActivity.class);
+            cadastrarMedicamentoActivityResultLauncher.launch(intent);
 
-            }
         });
 
 

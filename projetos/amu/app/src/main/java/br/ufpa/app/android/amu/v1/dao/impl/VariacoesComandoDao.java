@@ -6,8 +6,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,24 +45,16 @@ public class VariacoesComandoDao extends AbstractEntityDao<VariacoesComando> imp
         DatabaseReference variacoesComandoRef = em.child(variacoesComando.getNomeTabela());
         String chave = variacoesComandoRef.push().getKey();
         variacoesComando.setIdVariacaoComando(chave);
-        variacoesComandoRef.child(Objects.requireNonNull(chave)).setValue(variacoesComando).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(App.context,
-                        "Registro Variacao Comando Salvo !",
-                        Toast.LENGTH_LONG).show();
-                App.variacoesComandoDTO.setIdVariacaoComando(chave);
-                gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_VARIACAO_COMANDO, null);
+        variacoesComandoRef.child(Objects.requireNonNull(chave)).setValue(variacoesComando).addOnSuccessListener(unused -> {
+            Toast.makeText(App.context,
+                    "Registro Variacao Comando Salvo !",
+                    Toast.LENGTH_LONG).show();
+            App.variacoesComandoDTO.setIdVariacaoComando(chave);
+            gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_VARIACAO_COMANDO, null);
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(App.context,
-                        "Falha ao Registrar.Detalhes " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+        }).addOnFailureListener(e -> Toast.makeText(App.context,
+                "Falha ao Registrar.Detalhes " + e.getMessage(),
+                Toast.LENGTH_LONG).show());
 
         return variacoesComando;
     }
@@ -72,23 +62,15 @@ public class VariacoesComandoDao extends AbstractEntityDao<VariacoesComando> imp
     @Override
     public VariacoesComando update(VariacoesComando variacoesComando) {
         DatabaseReference variacoesComandoRef = em.child(variacoesComando.getNomeTabela()).child(variacoesComando.getIdVariacaoComando());
-        variacoesComandoRef.setValue(variacoesComando).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(App.context,
-                        "Registro Variacao de Comando Salvo !",
-                        Toast.LENGTH_LONG).show();
-                gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_VARIACAO_COMANDO, null);
+        variacoesComandoRef.setValue(variacoesComando).addOnSuccessListener(unused -> {
+            Toast.makeText(App.context,
+                    "Registro Variacao de Comando Salvo !",
+                    Toast.LENGTH_LONG).show();
+            gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_VARIACAO_COMANDO, null);
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(App.context,
-                        "Falha ao Registrar.Detalhes " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+        }).addOnFailureListener(e -> Toast.makeText(App.context,
+                "Falha ao Registrar.Detalhes " + e.getMessage(),
+                Toast.LENGTH_LONG).show());
 
         return variacoesComando;
     }

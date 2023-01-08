@@ -6,8 +6,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,24 +39,16 @@ public class ComandoDao extends AbstractEntityDao<Comando> implements IComandoDa
         DatabaseReference comandosRef = em.child(comando.getNomeTabela());
         String chave = comandosRef.push().getKey();
         comando.setIdComando(chave);
-        comandosRef.child(Objects.requireNonNull(chave)).setValue(comando).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(App.context,
-                        "Registro Comando Salvo !",
-                        Toast.LENGTH_LONG).show();
-                App.comandoDTO.setIdComando(chave);
-                gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_COMANDO, null);
+        comandosRef.child(Objects.requireNonNull(chave)).setValue(comando).addOnSuccessListener(unused -> {
+            Toast.makeText(App.context,
+                    "Registro Comando Salvo !",
+                    Toast.LENGTH_LONG).show();
+            App.comandoDTO.setIdComando(chave);
+            gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_COMANDO, null);
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(App.context,
-                        "Falha ao Registrar.Detalhes " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+        }).addOnFailureListener(e -> Toast.makeText(App.context,
+                "Falha ao Registrar.Detalhes " + e.getMessage(),
+                Toast.LENGTH_LONG).show());
 
         return comando;
     }
@@ -66,23 +56,15 @@ public class ComandoDao extends AbstractEntityDao<Comando> implements IComandoDa
     @Override
     public Comando update(Comando comando) {
         DatabaseReference comandosRef = em.child(comando.getNomeTabela()).child(comando.getIdComando());
-        comandosRef.setValue(comando).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(App.context,
-                        "Registro comando Salvo !",
-                        Toast.LENGTH_LONG).show();
-                gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_COMANDO, null);
+        comandosRef.setValue(comando).addOnSuccessListener(unused -> {
+            Toast.makeText(App.context,
+                    "Registro comando Salvo !",
+                    Toast.LENGTH_LONG).show();
+            gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_COMANDO, null);
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(App.context,
-                        "Falha ao Registrar.Detalhes " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+        }).addOnFailureListener(e -> Toast.makeText(App.context,
+                "Falha ao Registrar.Detalhes " + e.getMessage(),
+                Toast.LENGTH_LONG).show());
 
         return comando;
     }

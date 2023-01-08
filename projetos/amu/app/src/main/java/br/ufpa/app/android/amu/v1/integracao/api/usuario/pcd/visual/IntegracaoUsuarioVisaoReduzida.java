@@ -27,12 +27,9 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     TextToSpeech textoLido;
 
     public IntegracaoUsuarioVisaoReduzida() {
-        textoLido = new TextToSpeech(App.context, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                if (i != TextToSpeech.ERROR) {
-                    textoLido.setLanguage(Locale.getDefault());
-                }
+        textoLido = new TextToSpeech(App.context, i -> {
+            if (i != TextToSpeech.ERROR) {
+                textoLido.setLanguage(Locale.getDefault());
             }
         });
 
@@ -279,10 +276,7 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
         mediaPlayer = MediaPlayer.create(App.context, idBemVindoFuncao);
         mediaPlayer.start(); // no need to call prepare(); create() does that for you
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-            }
+        mediaPlayer.setOnCompletionListener(mediaPlayer -> {
         });
     }
 
@@ -328,15 +322,12 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
 
     @Override
     public void falar(String texto) {
-        textoLido = new TextToSpeech(App.context, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                if (i != TextToSpeech.ERROR) {
-                    textoLido.setLanguage(Locale.getDefault());
-                }
-                if (i == TextToSpeech.SUCCESS) {
-                    reproduzirVoz(textoLido, texto);
-                }
+        textoLido = new TextToSpeech(App.context, i -> {
+            if (i != TextToSpeech.ERROR) {
+                textoLido.setLanguage(Locale.getDefault());
+            }
+            if (i == TextToSpeech.SUCCESS) {
+                reproduzirVoz(textoLido, texto);
             }
         });
 

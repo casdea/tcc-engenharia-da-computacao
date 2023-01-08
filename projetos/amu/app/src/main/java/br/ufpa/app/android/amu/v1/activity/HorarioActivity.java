@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -55,46 +53,34 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
         textInpTextQtdeDose = findViewById(R.id.textInpTextQtdeDose);
         swAtivo = findViewById(R.id.swAtivo);
 
-        textInpTextHorarioPrimeiraDose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment newFragment = new TimePickerFragment();
-                newFragment.show(getSupportFragmentManager(), "timePicker");
-            }
+        textInpTextHorarioPrimeiraDose.setOnClickListener(view -> {
+            DialogFragment newFragment = new TimePickerFragment();
+            newFragment.show(getSupportFragmentManager(), "timePicker");
         });
 
         textInpTextInicioAdministracao.addTextChangedListener(DataUtil.mask("##/##/####", textInpTextInicioAdministracao));
         calendar = Calendar.getInstance();
 
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        final DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+            // TODO Auto-generated method stub
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            textInpTextInicioAdministracao.setText("");
 
-                textInpTextInicioAdministracao.setText("");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault());
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault());
-
-                textInpTextInicioAdministracao.setText(sdf.format(calendar.getTime()));
-            }
-
+            textInpTextInicioAdministracao.setText(sdf.format(calendar.getTime()));
         };
 
-        textInpTextInicioAdministracao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    new DatePickerDialog(HorarioActivity.this, date, calendar
-                            .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                            calendar.get(Calendar.DAY_OF_MONTH)).show();
-                }
-
+        textInpTextInicioAdministracao.setOnFocusChangeListener((view, b) -> {
+            if (b) {
+                new DatePickerDialog(HorarioActivity.this, date, calendar
+                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
+
         });
 
 
@@ -102,86 +88,83 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
         //spIntervalos.setAdapter(adapter);
         spIntervalos.setAdapter(new IntervaloAdapter(this, Constantes.intervalos));
 
-        findViewById(R.id.btnConfirmar).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        findViewById(R.id.btnConfirmar).setOnClickListener(view -> {
 
-                if (Objects.requireNonNull(textInpTextInicioAdministracao.getText()).toString().isEmpty()) {
-                    Toast.makeText(HorarioActivity.this,
-                            "Escolha uma data de Inicio de Administração do Medicamento !",
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (DataUtil.isDataInvalida(textInpTextInicioAdministracao.getText().toString())) {
-                    Toast.makeText(HorarioActivity.this,
-                            "Data de Inicio de Administração do Medicamento inválida !",
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (Objects.requireNonNull(textInpTextHorarioPrimeiraDose.getText()).toString().isEmpty()) {
-                    Toast.makeText(HorarioActivity.this,
-                            "Escolha uma Hora Inicio da Primeira Dose !",
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (spIntervalos.getSelectedItem()==null) {
-                    Toast.makeText(HorarioActivity.this,
-                            "Escolha um intervalo entre as doses !",
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (Objects.requireNonNull(textInpTextDosesDia.getText()).toString().isEmpty()) {
-                    Toast.makeText(HorarioActivity.this,
-                            "Preencha o numero de doses diárias !",
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (Objects.requireNonNull(textInpTextQtdeDose.getText()).toString().isEmpty()) {
-                    Toast.makeText(HorarioActivity.this,
-                            "Preencha Quantidade por dose !",
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (BuildConfig.DEBUG) {
-                    Log.i("Dados Cadastrados ", "Medicamentos");
-                    Log.i("Data Inicio ", textInpTextInicioAdministracao.getText().toString());
-                    Log.i("Hora Inicio ", textInpTextHorarioPrimeiraDose.getText().toString());
-                    Log.i("Intervalo ", spIntervalos.getSelectedItem().toString());
-                    Log.i("Dose/Dia ", textInpTextDosesDia.getText().toString());
-                    Log.i("Qtde Dose ", textInpTextQtdeDose.getText().toString());
-                    Log.i("Ativo ", swAtivo.isChecked() ? "SIM" : "NAO");
-                }
-
-                boolean inclusao = App.horarioDTO == null;
-
-                if (inclusao) {
-                    App.horarioDTO = new HorarioDTO();
-                    App.horarioDTO.setIdHorario(StringUtil.createId());
-                    App.horarioDTO.setIdUsuario(App.usuario.getIdUsuario());
-                    App.horarioDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
-                }
-
-                App.horarioDTO.setDataInicial(textInpTextInicioAdministracao.getText().toString());
-                App.horarioDTO.setHorarioInicial(textInpTextHorarioPrimeiraDose.getText().toString());
-                App.horarioDTO.setIntervalo(spIntervalos.getSelectedItem().toString());
-                App.horarioDTO.setNrDoses(Integer.parseInt(textInpTextDosesDia.getText().toString()));
-                App.horarioDTO.setQtdePorDose(Integer.parseInt(textInpTextQtdeDose.getText().toString()));
-                App.horarioDTO.setAtivo(swAtivo.isChecked() ? "SIM" : "NAO");
-
-                GerenteServicos gerenteServicos = new GerenteServicos(HorarioActivity.this);
-
-                if (inclusao)
-                    gerenteServicos.incluirHorario(App.horarioDTO);
-                else
-                    gerenteServicos.alterarHorario(App.horarioDTO);
-
+            if (Objects.requireNonNull(textInpTextInicioAdministracao.getText()).toString().isEmpty()) {
+                Toast.makeText(HorarioActivity.this,
+                        "Escolha uma data de Inicio de Administração do Medicamento !",
+                        Toast.LENGTH_LONG).show();
+                return;
             }
+
+            if (DataUtil.isDataInvalida(textInpTextInicioAdministracao.getText().toString())) {
+                Toast.makeText(HorarioActivity.this,
+                        "Data de Inicio de Administração do Medicamento inválida !",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (Objects.requireNonNull(textInpTextHorarioPrimeiraDose.getText()).toString().isEmpty()) {
+                Toast.makeText(HorarioActivity.this,
+                        "Escolha uma Hora Inicio da Primeira Dose !",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (spIntervalos.getSelectedItem()==null) {
+                Toast.makeText(HorarioActivity.this,
+                        "Escolha um intervalo entre as doses !",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (Objects.requireNonNull(textInpTextDosesDia.getText()).toString().isEmpty()) {
+                Toast.makeText(HorarioActivity.this,
+                        "Preencha o numero de doses diárias !",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (Objects.requireNonNull(textInpTextQtdeDose.getText()).toString().isEmpty()) {
+                Toast.makeText(HorarioActivity.this,
+                        "Preencha Quantidade por dose !",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (BuildConfig.DEBUG) {
+                Log.i("Dados Cadastrados ", "Medicamentos");
+                Log.i("Data Inicio ", textInpTextInicioAdministracao.getText().toString());
+                Log.i("Hora Inicio ", textInpTextHorarioPrimeiraDose.getText().toString());
+                Log.i("Intervalo ", spIntervalos.getSelectedItem().toString());
+                Log.i("Dose/Dia ", textInpTextDosesDia.getText().toString());
+                Log.i("Qtde Dose ", textInpTextQtdeDose.getText().toString());
+                Log.i("Ativo ", swAtivo.isChecked() ? "SIM" : "NAO");
+            }
+
+            boolean inclusao = App.horarioDTO == null;
+
+            if (inclusao) {
+                App.horarioDTO = new HorarioDTO();
+                App.horarioDTO.setIdHorario(StringUtil.createId());
+                App.horarioDTO.setIdUsuario(App.usuario.getIdUsuario());
+                App.horarioDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
+            }
+
+            App.horarioDTO.setDataInicial(textInpTextInicioAdministracao.getText().toString());
+            App.horarioDTO.setHorarioInicial(textInpTextHorarioPrimeiraDose.getText().toString());
+            App.horarioDTO.setIntervalo(spIntervalos.getSelectedItem().toString());
+            App.horarioDTO.setNrDoses(Integer.parseInt(textInpTextDosesDia.getText().toString()));
+            App.horarioDTO.setQtdePorDose(Integer.parseInt(textInpTextQtdeDose.getText().toString()));
+            App.horarioDTO.setAtivo(swAtivo.isChecked() ? "SIM" : "NAO");
+
+            GerenteServicos gerenteServicos = new GerenteServicos(HorarioActivity.this);
+
+            if (inclusao)
+                gerenteServicos.incluirHorario(App.horarioDTO);
+            else
+                gerenteServicos.alterarHorario(App.horarioDTO);
+
         });
 
         if (App.horarioDTO != null) {

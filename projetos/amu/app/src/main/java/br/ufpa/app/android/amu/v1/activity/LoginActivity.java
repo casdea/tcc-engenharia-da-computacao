@@ -3,18 +3,13 @@ package br.ufpa.app.android.amu.v1.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -49,65 +44,56 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
         campoSenha = findViewById(R.id.editSenha);
         botaoEntrar = findViewById(R.id.buttonEntrar);
         txvEsqueciMinhaSenha = findViewById(R.id.txvEsqueciMinhaSenha);
-        txvEsqueciMinhaSenha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String textoEmail = campoEmail.getText().toString();
+        txvEsqueciMinhaSenha.setOnClickListener(view -> {
+            String textoEmail = campoEmail.getText().toString();
 
-                if (textoEmail.isEmpty()) {
-                    Toast.makeText(LoginActivity.this,
-                            "Preencha o email!",
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                // [START send_password_reset]
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-
-                auth.sendPasswordResetEmail(textoEmail)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(LoginActivity.this,
-                                            "e-Mail enviado com sucesso. Após alterar a senha tente novamente !",
-                                            Toast.LENGTH_LONG).show();
-
-                                    Log.d("Login de Usuario", "Email enviado. ");
-                                }
-                            }
-                        });
+            if (textoEmail.isEmpty()) {
+                Toast.makeText(LoginActivity.this,
+                        "Preencha o email!",
+                        Toast.LENGTH_LONG).show();
+                return;
             }
+
+            // [START send_password_reset]
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+
+            auth.sendPasswordResetEmail(textoEmail)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this,
+                                    "e-Mail enviado com sucesso. Após alterar a senha tente novamente !",
+                                    Toast.LENGTH_LONG).show();
+
+                            Log.d("Login de Usuario", "Email enviado. ");
+                        }
+                    });
         });
 
 
-        botaoEntrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        botaoEntrar.setOnClickListener(v -> {
 
-                String textoEmail = campoEmail.getText().toString();
-                String textoSenha = campoSenha.getText().toString();
+            String textoEmail = campoEmail.getText().toString();
+            String textoSenha = campoSenha.getText().toString();
 
-                if (!textoEmail.isEmpty()) {
-                    if (!textoSenha.isEmpty()) {
+            if (!textoEmail.isEmpty()) {
+                if (!textoSenha.isEmpty()) {
 
-                        usuarioDTO = new UsuarioDTO();
-                        usuarioDTO.setEmail(textoEmail);
-                        usuarioDTO.setSenha(textoSenha);
-                        validarLogin();
+                    usuarioDTO = new UsuarioDTO();
+                    usuarioDTO.setEmail(textoEmail);
+                    usuarioDTO.setSenha(textoSenha);
+                    validarLogin();
 
-                    } else {
-                        Toast.makeText(LoginActivity.this,
-                                "Preencha a senha!",
-                                Toast.LENGTH_LONG).show();
-                    }
                 } else {
                     Toast.makeText(LoginActivity.this,
-                            "Preencha o email!",
+                            "Preencha a senha!",
                             Toast.LENGTH_LONG).show();
                 }
-
+            } else {
+                Toast.makeText(LoginActivity.this,
+                        "Preencha o email!",
+                        Toast.LENGTH_LONG).show();
             }
+
         });
 
     }
@@ -117,32 +103,29 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
         autenticacao.signInWithEmailAndPassword(
                 usuarioDTO.getEmail(),
                 usuarioDTO.getSenha()
-        ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+        ).addOnCompleteListener(task -> {
 
-                if (task.isSuccessful()) {
-                    GerenteServicos gerenteServicos = new GerenteServicos(LoginActivity.this);
-                    gerenteServicos.verificarUsuarioLogado();
+            if (task.isSuccessful()) {
+                GerenteServicos gerenteServicos = new GerenteServicos(LoginActivity.this);
+                gerenteServicos.verificarUsuarioLogado();
 
-                } else {
+            } else {
 
-                    String excecao;
-                    try {
-                        throw Objects.requireNonNull(task.getException());
-                    } catch (FirebaseAuthInvalidUserException e) {
-                        excecao = "Usuário não está cadastrado.";
-                    } catch (FirebaseAuthInvalidCredentialsException e) {
-                        excecao = "E-mail e senha não correspondem a um usuário cadastrado";
-                    } catch (Exception e) {
-                        excecao = "Erro ao cadastrar usuário: " + e.getMessage();
-                        e.printStackTrace();
-                    }
-
-                    Toast.makeText(LoginActivity.this,
-                            excecao,
-                            Toast.LENGTH_LONG).show();
+                String excecao;
+                try {
+                    throw Objects.requireNonNull(task.getException());
+                } catch (FirebaseAuthInvalidUserException e) {
+                    excecao = "Usuário não está cadastrado.";
+                } catch (FirebaseAuthInvalidCredentialsException e) {
+                    excecao = "E-mail e senha não correspondem a um usuário cadastrado";
+                } catch (Exception e) {
+                    excecao = "Erro ao cadastrar usuário: " + e.getMessage();
+                    e.printStackTrace();
                 }
+
+                Toast.makeText(LoginActivity.this,
+                        excecao,
+                        Toast.LENGTH_LONG).show();
             }
         });
 

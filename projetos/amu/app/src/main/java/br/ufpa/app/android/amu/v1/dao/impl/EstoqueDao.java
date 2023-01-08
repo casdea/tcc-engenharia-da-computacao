@@ -6,8 +6,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,24 +39,16 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
         DatabaseReference estoquesRef = em.child(estoque.getNomeTabela());
         String chave = estoquesRef.push().getKey();
         estoque.setIdEstoque(chave);
-        estoquesRef.child(Objects.requireNonNull(chave)).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(App.context,
-                        "Registro Estoque Salvo !",
-                        Toast.LENGTH_LONG).show();
-                App.estoqueDTO.setIdEstoque(chave);
-                gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_ESTOQUE, null);
+        estoquesRef.child(Objects.requireNonNull(chave)).setValue(estoque).addOnSuccessListener(unused -> {
+            Toast.makeText(App.context,
+                    "Registro Estoque Salvo !",
+                    Toast.LENGTH_LONG).show();
+            App.estoqueDTO.setIdEstoque(chave);
+            gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_ESTOQUE, null);
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(App.context,
-                        "Falha ao Registrar.Detalhes " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+        }).addOnFailureListener(e -> Toast.makeText(App.context,
+                "Falha ao Registrar.Detalhes " + e.getMessage(),
+                Toast.LENGTH_LONG).show());
 
         return estoque;
     }
@@ -66,23 +56,15 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
     @Override
     public Estoque update(Estoque estoque) {
         DatabaseReference estoquesRef = em.child(estoque.getNomeTabela()).child(estoque.getIdEstoque());
-        estoquesRef.setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(App.context,
-                        "Registro Estoque Salvo !",
-                        Toast.LENGTH_LONG).show();
-                gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_ESTOQUE, null);
+        estoquesRef.setValue(estoque).addOnSuccessListener(unused -> {
+            Toast.makeText(App.context,
+                    "Registro Estoque Salvo !",
+                    Toast.LENGTH_LONG).show();
+            gerenteServicosListener.executarAcao(Constantes.ACAO_ALTERAR_ESTOQUE, null);
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(App.context,
-                        "Falha ao Registrar.Detalhes " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+        }).addOnFailureListener(e -> Toast.makeText(App.context,
+                "Falha ao Registrar.Detalhes " + e.getMessage(),
+                Toast.LENGTH_LONG).show());
 
         return estoque;
     }
@@ -154,21 +136,13 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                     DatabaseReference estoquesRef = em.child("estoques");
                     String chave = estoquesRef.push().getKey();
                     estoque.setIdEstoque(chave);
-                    estoquesRef.child(Objects.requireNonNull(chave)).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            movtoEstoqueDTO.setIdEstoque(chave);
-                            App.listaEstoques.add(movtoEstoqueDTO);
+                    estoquesRef.child(Objects.requireNonNull(chave)).setValue(estoque).addOnSuccessListener(unused -> {
+                        movtoEstoqueDTO.setIdEstoque(chave);
+                        App.listaEstoques.add(movtoEstoqueDTO);
 
-                            gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO, null);
-                            gerenteServicosListener.executarAcao(Constantes.ACAO_AVISAR_SALDO_ATUALIZADO, movtoEstoqueDTO);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_AO_ATUALIZAR_SALDO_ESTOQUE, "Não foi possivel atualizar o estoque.");
-                        }
-                    });
+                        gerenteServicosListener.carregarLista(Constantes.ACAO_OBTER_LISTA_ESTOQUE_POR_USUARIO_MEDICAMENTO, null);
+                        gerenteServicosListener.executarAcao(Constantes.ACAO_AVISAR_SALDO_ATUALIZADO, movtoEstoqueDTO);
+                    }).addOnFailureListener(e -> gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_AO_ATUALIZAR_SALDO_ESTOQUE, "Não foi possivel atualizar o estoque."));
 
 
                 }
@@ -217,19 +191,11 @@ public class EstoqueDao extends AbstractEntityDao<Estoque> implements IEstoqueDa
                     DatabaseReference estoquesRef = em.child("estoques");
                     String chave = estoquesRef.push().getKey();
                     estoque.setIdEstoque(chave);
-                    estoquesRef.child(Objects.requireNonNull(chave)).setValue(estoque).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            movtoEstoqueDTO.setIdEstoque(chave);
-                            App.listaEstoques.add(movtoEstoqueDTO);
-                            gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_UTILIZACAO, movtoEstoqueDTO);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_AO_ATUALIZAR_SALDO_ESTOQUE, "Não foi possivel atualizar o estoque.");
-                        }
-                    });
+                    estoquesRef.child(Objects.requireNonNull(chave)).setValue(estoque).addOnSuccessListener(unused -> {
+                        movtoEstoqueDTO.setIdEstoque(chave);
+                        App.listaEstoques.add(movtoEstoqueDTO);
+                        gerenteServicosListener.executarAcao(Constantes.ACAO_REGISTRAR_UTILIZACAO, movtoEstoqueDTO);
+                    }).addOnFailureListener(e -> gerenteServicosListener.executarAcao(Constantes.ACAO_ERRO_AO_ATUALIZAR_SALDO_ESTOQUE, "Não foi possivel atualizar o estoque."));
                 }
 
             }

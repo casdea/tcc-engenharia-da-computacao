@@ -1,18 +1,13 @@
 package br.ufpa.app.android.amu.v1.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -71,40 +66,37 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
             campoSenha.setEnabled(false);
         }
 
-        botaoCadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        botaoCadastrar.setOnClickListener(v -> {
 
-                String textoNome = campoNome.getText().toString();
-                String textoEmail = campoEmail.getText().toString();
-                String textoSenha = campoSenha.getText().toString();
-                String tipoPerfil = "";
-                App.tipoPerfil = null;
+            String textoNome = campoNome.getText().toString();
+            String textoEmail = campoEmail.getText().toString();
+            String textoSenha = campoSenha.getText().toString();
+            String tipoPerfil = "";
+            App.tipoPerfil = null;
 
-                if (rbUsuarioComum.isChecked()) App.tipoPerfil = TipoPerfil.COMUM;
-                else
-                if (rbUsuarioIdoso.isChecked()) App.tipoPerfil = TipoPerfil.IDOSO;
-                else
-                if (rbUsuarioSurdoMudo.isChecked()) App.tipoPerfil = TipoPerfil.PCD_SURDO_MUDO;
-                else
-                if (rbUsuarioPerdaVisao.isChecked()) App.tipoPerfil = TipoPerfil.PCD_VISAO_REDUZIDA;
-                else
-                if (rbUsuarioTea.isChecked()) App.tipoPerfil = TipoPerfil.PCD_TEA;
+            if (rbUsuarioComum.isChecked()) App.tipoPerfil = TipoPerfil.COMUM;
+            else
+            if (rbUsuarioIdoso.isChecked()) App.tipoPerfil = TipoPerfil.IDOSO;
+            else
+            if (rbUsuarioSurdoMudo.isChecked()) App.tipoPerfil = TipoPerfil.PCD_SURDO_MUDO;
+            else
+            if (rbUsuarioPerdaVisao.isChecked()) App.tipoPerfil = TipoPerfil.PCD_VISAO_REDUZIDA;
+            else
+            if (rbUsuarioTea.isChecked()) App.tipoPerfil = TipoPerfil.PCD_TEA;
 
-                if (App.tipoPerfil != null)
-                    tipoPerfil = App.tipoPerfil.name();
+            if (App.tipoPerfil != null)
+                tipoPerfil = App.tipoPerfil.name();
 
-                //Validar se os campos foram preenchidos
-                if (!validar(textoNome, textoEmail, textoSenha, tipoPerfil)) return;
+            //Validar se os campos foram preenchidos
+            if (!validar(textoNome, textoEmail, textoSenha, tipoPerfil)) return;
 
-                usuarioDTO = new UsuarioDTO();
-                usuarioDTO.setNome(textoNome);
-                usuarioDTO.setEmail(textoEmail);
-                usuarioDTO.setSenha(textoSenha);
-                usuarioDTO.setTipoPerfil(App.tipoPerfil.name());
-                cadastrarUsuario();
+            usuarioDTO = new UsuarioDTO();
+            usuarioDTO.setNome(textoNome);
+            usuarioDTO.setEmail(textoEmail);
+            usuarioDTO.setSenha(textoSenha);
+            usuarioDTO.setTipoPerfil(App.tipoPerfil.name());
+            cadastrarUsuario();
 
-            }
         });
     }
 
@@ -142,39 +134,36 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
             FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
             autenticacao.createUserWithEmailAndPassword(
                     usuarioDTO.getEmail(), usuarioDTO.getSenha()
-            ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+            ).addOnCompleteListener(this, task -> {
 
-                    if (task.isSuccessful()) {
-                        usuarioDTO.setIdUsuario(Base64Custom.codificarBase64(usuarioDTO.getEmail()));
+                if (task.isSuccessful()) {
+                    usuarioDTO.setIdUsuario(Base64Custom.codificarBase64(usuarioDTO.getEmail()));
 
-                        GerenteServicos gerenteServicos = new GerenteServicos(UsuarioActivity.this);
-                        App.usuario = gerenteServicos.incluirUsuario(usuarioDTO);
-                        App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+                    GerenteServicos gerenteServicos = new GerenteServicos(UsuarioActivity.this);
+                    App.usuario = gerenteServicos.incluirUsuario(usuarioDTO);
+                    App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
-                        finish();
+                    finish();
 
-                    } else {
+                } else {
 
-                        String excecao;
-                        try {
-                            throw Objects.requireNonNull(task.getException());
-                        } catch (FirebaseAuthWeakPasswordException e) {
-                            excecao = "Digite uma senha mais forte!";
-                        } catch (FirebaseAuthInvalidCredentialsException e) {
-                            excecao = "Por favor, digite um e-mail válido";
-                        } catch (FirebaseAuthUserCollisionException e) {
-                            excecao = "Este conta já foi cadastrada";
-                        } catch (Exception e) {
-                            excecao = "Erro ao cadastrar usuário: " + e.getMessage();
-                            e.printStackTrace();
-                        }
-
-                        Toast.makeText(UsuarioActivity.this,
-                                excecao,
-                                Toast.LENGTH_LONG).show();
+                    String excecao;
+                    try {
+                        throw Objects.requireNonNull(task.getException());
+                    } catch (FirebaseAuthWeakPasswordException e) {
+                        excecao = "Digite uma senha mais forte!";
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        excecao = "Por favor, digite um e-mail válido";
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        excecao = "Este conta já foi cadastrada";
+                    } catch (Exception e) {
+                        excecao = "Erro ao cadastrar usuário: " + e.getMessage();
+                        e.printStackTrace();
                     }
+
+                    Toast.makeText(UsuarioActivity.this,
+                            excecao,
+                            Toast.LENGTH_LONG).show();
                 }
             });
         }
