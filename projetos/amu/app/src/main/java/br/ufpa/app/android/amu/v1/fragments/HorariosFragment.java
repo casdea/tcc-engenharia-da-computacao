@@ -23,7 +23,7 @@ import java.util.List;
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.activity.DetalheMedicamentoActivity;
 import br.ufpa.app.android.amu.v1.activity.HorarioActivity;
-import br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa.adapter.HorariosRecyclerViewAdapter;
+import br.ufpa.app.android.amu.v1.adapter.HorariosRecyclerViewAdapter;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.helper.RecyclerItemClickListener;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;

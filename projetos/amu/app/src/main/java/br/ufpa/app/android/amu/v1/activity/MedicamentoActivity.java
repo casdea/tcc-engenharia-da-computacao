@@ -29,7 +29,7 @@ import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.R;
-import br.ufpa.app.android.amu.v1.integracao.api.consulta.anvisa.adapter.IntervaloAdapter;
+import br.ufpa.app.android.amu.v1.adapter.IntervaloAdapter;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.fragments.TimePickerFragment;
