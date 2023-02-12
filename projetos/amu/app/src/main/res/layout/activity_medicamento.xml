@@ -124,11 +124,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
-            app:layout_constraintEnd_toStartOf="@+id/txvCorSelecionada"
+            app:layout_constraintEnd_toStartOf="@+id/textView33"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7">
 
@@ -143,19 +144,19 @@
 
         <TextView
             android:id="@+id/txvCorSelecionada"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="53dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:contentDescription="@string/area_cor_selecionada"
             android:padding="5dp"
-            android:text="@string/click_aqui"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textInpLayApelidoMedicamento"
+            app:layout_constraintStart_toEndOf="@+id/textView33"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
 
@@ -212,11 +213,11 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:enabled="true"
-                android:inputType="date"
+                android:focusable="true"
                 android:hint="@string/inicio_administracao"
+                android:inputType="date"
                 android:text="@string/exemplo_data_hora"
-                android:textStyle="bold"
-                android:focusable="true" />
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -256,17 +257,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInpLayInicioAdministracao" />
 
-        <Spinner
+        <br.ufpa.app.android.amu.v1.adapter.CustomSpinner
             android:id="@+id/spIntervalos"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@color/mi_ripple_color"
+            android:background="@drawable/bg_spinner_intervalo"
             android:contentDescription="@string/selecione_intervalo"
+            android:dropDownVerticalOffset="40dp"
+            android:minHeight="48dp"
             android:spinnerMode="dialog"
+            android:textColor="#333105"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/textView16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -361,6 +366,19 @@
             app:layout_constraintTop_toBottomOf="@+id/textInpLayDosesDia"
             app:layout_constraintVertical_bias="0.26" />
 
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Clique na area \n ao lado para escolher\n uma cor"
+            app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
+            app:layout_constraintEnd_toStartOf="@+id/txvCorSelecionada"
+            app:layout_constraintStart_toEndOf="@+id/textInpLayApelidoMedicamento"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

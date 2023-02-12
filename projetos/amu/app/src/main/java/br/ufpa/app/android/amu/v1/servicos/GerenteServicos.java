@@ -77,7 +77,7 @@ public class GerenteServicos  {
 
                     if (App.usuario != null) {
                         App.usuario.setIdUsuario(idUsuario);
-                        App.tipoPerfil = TipoPerfil.COMUM; //TipoPerfil.valueOf(App.usuario.getTipoPerfil());
+                        App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
 
                         gerenteServicosListener.executarAcao(Constantes.ACAO_APRESENTAR_TELA_PRINCIPAL,autenticacao);
                     } else {

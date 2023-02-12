@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.adapter.CustomSpinner;
 import br.ufpa.app.android.amu.v1.adapter.IntervaloAdapter;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
@@ -33,7 +35,7 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 import br.ufpa.app.android.amu.v1.util.DataUtil;
 import br.ufpa.app.android.amu.v1.util.StringUtil;
 
-public class HorarioActivity extends AppCompatActivity implements PickTimeListener, GerenteServicosListener {
+public class HorarioActivity extends AppCompatActivity implements PickTimeListener, GerenteServicosListener, CustomSpinner.OnSpinnerEventsListener {
 
     TextInputEditText textInpTextInicioAdministracao;
     TextInputEditText textInpTextHorarioPrimeiraDose;
@@ -41,6 +43,7 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
     TextInputEditText textInpTextQtdeDose;
     SwitchCompat swAtivo;
     Calendar calendar;
+    CustomSpinner spIntervalos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +87,11 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
         });
 
 
-        Spinner spIntervalos = findViewById(R.id.spIntervalos);
-        //spIntervalos.setAdapter(adapter);
-        spIntervalos.setAdapter(new IntervaloAdapter(this, Constantes.intervalos));
+        spIntervalos = findViewById(R.id.spIntervalos);
+
+        ArrayAdapter<String> adapterIntervalo = new ArrayAdapter<String>(this,R.layout.spinner_intervalo, Constantes.intervalos);
+        adapterIntervalo.setDropDownViewResource(R.layout.spinner_intervalo);
+        spIntervalos.setAdapter(adapterIntervalo);
 
         findViewById(R.id.btnConfirmar).setOnClickListener(view -> {
 
@@ -205,4 +210,15 @@ public class HorarioActivity extends AppCompatActivity implements PickTimeListen
         if (BuildConfig.DEBUG)
             Log.i("Hora ",hora.toString());
     }
+
+    @Override
+    public void onPopupWindowOpened(Spinner spinner) {
+        spIntervalos.setBackground(getResources().getDrawable(R.drawable.bg_spinner_intervalo_up));
+    }
+
+    @Override
+    public void onPopupWindowClosed(Spinner spinner) {
+        spIntervalos.setBackground(getResources().getDrawable(R.drawable.bg_spinner_intervalo));
+    }
+
 }

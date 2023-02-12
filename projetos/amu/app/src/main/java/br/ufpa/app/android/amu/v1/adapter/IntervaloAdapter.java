@@ -41,7 +41,7 @@ public class IntervaloAdapter extends BaseAdapter {
 		
 		TextView tv = new TextView(ctx);
 		tv.setText(lista[position]);
-		tv.setTextColor(Color.RED);
+		tv.setTextColor(Color.parseColor("#333105"));
 		
 		return tv;
 	}

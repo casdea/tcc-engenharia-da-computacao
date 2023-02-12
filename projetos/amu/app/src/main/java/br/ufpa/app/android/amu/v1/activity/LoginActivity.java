@@ -96,6 +96,8 @@ public class LoginActivity extends AppCompatActivity implements GerenteServicosL
 
         });
 
+        campoEmail.setText("jose20@gmail.com");
+        campoSenha.setText("85741100");
     }
 
     public void validarLogin() {

@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">amu</string>
+    <string name="app_name">APP AUM</string>
     <string name="perfil_usuario">Perfil de Usuário</string>
+    <string name="menu_perfil_usuario">Perfil</string>
     <string name="pesquisar">Pesquisar</string>
     <string name="hint_pesquisar">Digite o argumento e pesquise</string>
     <string name="crie_sua_conta_gratis">Crie sua conta grátis</string>
@@ -43,7 +44,7 @@
     <string name="qtde_embalagem">Qtde Embalagem</string>
     <string name="exemplo_qtde_medicamento">30</string>
     <string name="exemplo_hora_inicio">08:00</string>
-    <string name="Botao_Confirmar_Registro_Medicamento">Botão Confirmar Registro de Medicamento</string>
+    <string name="Botao_Confirmar_Registro_Medicamento">Confirmar Registro de Medicamento</string>
     <string name="confirmar">Confirmar</string>
     <string name="qtde_por_dose">Qtde Por Dose</string>
     <string name="exemplo_qtde_por_dose">1</string>
@@ -61,7 +62,7 @@
     <string name="exemplo_data_hora">01/12/2022</string>
     <string name="exemplo_qtde">80</string>
     <string name="lista_vazia">A lista de medicamentos está vazia aproveite para incluir o primeiro</string>
-    <string name="botao_inclusao_medicamento">Botão de Inclusão de Medicamento</string>
+    <string name="botao_inclusao_medicamento">Inclusão de Medicamento</string>
     <string name="incluir_horarios">Incluir Horários</string>
     <string name="abas_visualizacao_pagina">Abas da Visualizacao Página</string>
     <string name="mascara_senha">nXha@89722</string>
@@ -91,9 +92,10 @@
     <string name="saida_do_estoque">Saída do Estoque</string>
     <string name="valor_zero">0</string>
     <string name="medicamentos_cadastrados">Cadastrados</string>
-    <string name="horario_vencido">Horario Vencido</string>
+    <string name="horario_vencido">Horário Vencido</string>
     <string name="exemplo_intervalo">08 horas</string>
-    <string name="organizador_espacos">Organizador de Espaços</string>
+    <string name="organizador_espacos1">Organizador de Espaços Número 1</string>
+    <string name="organizador_espacos2">Organizador de Espaços Número 2</string>
     <string name="registro_utilizacao">Registro de Utilização</string>
     <string name="data_hora_utilizacao">Data Hora Utilização</string>
     <string name="texto_intro1">Organize seus medicamentos \n com alguns cliques</string>
@@ -109,7 +111,10 @@
     <string name="texto_intro4">Tudo organizado, no \n celular ou tablet</string>
     <string name="texto_intro4_parte2">Use no seu smartphone acessando o \n Amu pelo dispositivo Móvel</string>
     <string name="restaurar_perfil">Restaurar Perfil</string>
+    <string name="menu_restaurar_perfil">Restaurar</string>
     <string name="sair">Sair</string>
     <string name="exemplo_qtde_cadastrados">10</string>
     <string name="exemplo_horario_vencido">3</string>
+    <string name="lista_de_medicamentos_cadastrados">Lista de Medicamentos Cadastrados</string>
+    <string name="area_cor_selecionada">Cor Selecionada</string>
 </resources>

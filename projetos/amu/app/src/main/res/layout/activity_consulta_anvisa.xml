@@ -50,7 +50,6 @@
         android:layout_marginEnd="8dp"
         android:text="@string/pesquisar"
         android:textAllCaps="false"
-        android:textColor="#5E35B1"
         app:layout_constraintBaseline_toBaselineOf="@+id/edtNomeComercial"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/edtNomeComercial" />

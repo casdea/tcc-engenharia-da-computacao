@@ -10,11 +10,11 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/crie_sua_conta_gratis"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editNome"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,18 +29,21 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
+        android:autofillHints=""
         android:drawableStart="@drawable/ic_pessoa_cinza_24dp"
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="@string/nome"
+        android:textColorHint="#757575"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <EditText
         android:id="@+id/editEmail"
@@ -49,18 +52,20 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
+        android:autofillHints=""
         android:drawableStart="@drawable/ic_email_cinza_24dp"
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="@string/email"
+        android:textColorHint="#757575"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
-        android:textColorHint="#757575"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editSenha"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editNome"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/editNome" />
 
     <EditText
         android:id="@+id/editSenha"
@@ -73,8 +78,11 @@
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="@string/senha"
+        android:textColorHint="#757575"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/txvPerfilUsuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +97,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
         android:text="@string/perfil_usuario"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/rgTipoPerfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,31 +118,36 @@
             android:id="@+id/rbUsuarioComum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/usuario_comum" />
+            android:text="@string/usuario_comum"
+            android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/rbUsuarioIdoso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/usuario_idoso" />
+            android:text="@string/usuario_idoso"
+            android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/rbUsuarioSurdoMudo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/usuario_surdo_e_mudo" />
+            android:text="@string/usuario_surdo_e_mudo"
+            android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/rbUsuarioPerdaVisao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/usuario_com_perda_de_visao_reduzida" />
+            android:text="@string/usuario_com_perda_de_visao_reduzida"
+            android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/rbUsuarioTea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/usuario_com_tea" />
+            android:text="@string/usuario_com_tea"
+            android:textSize="20sp" />
 
     </RadioGroup>
 
@@ -147,7 +161,7 @@
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
         android:text="@string/cadastrar"
-        android:textColor="#37474F"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/txvTermoUso"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -163,6 +177,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/termos_de_uso"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

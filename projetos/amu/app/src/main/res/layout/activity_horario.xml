@@ -16,7 +16,8 @@
         android:background="#D1CA48"
         android:text="@string/horarios"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textColor="#333105"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,19 +83,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInpLayInicioAdministracao" />
 
-    <Spinner
+    <br.ufpa.app.android.amu.v1.adapter.CustomSpinner
         android:id="@+id/spIntervalos"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/mi_ripple_color"
+        android:background="@drawable/bg_spinner_intervalo"
         android:contentDescription="@string/selecione_intervalo"
-        android:spinnerMode="dialog"
+        android:dropDownVerticalOffset="40dp"
+        android:textColor="#333105"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/textView16"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_min="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -109,7 +114,8 @@
         android:background="#D1CA48"
         android:text="@string/doses_do_medicamento"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textColor="#333105"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textInpLayDosesDia"
         app:layout_constraintEnd_toEndOf="parent"
@@ -179,7 +185,6 @@
         android:contentDescription="@string/Botao_Confirmar_Registro_Medicamento"
         android:text="@string/confirmar"
         android:textAllCaps="false"
-        android:textColor="#5E35B1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInpLayQtdeDose" />
 

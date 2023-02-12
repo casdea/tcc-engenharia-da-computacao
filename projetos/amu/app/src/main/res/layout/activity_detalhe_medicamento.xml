@@ -47,6 +47,7 @@
                 android:layout_weight="1"
                 android:text="@string/utilizar"
                 android:textAllCaps="false"
+                android:textSize="20sp"
                 app:icon="@drawable/ic_baseline_check_24" />
 
             <Button
@@ -57,6 +58,7 @@
                 android:layout_weight="1"
                 android:text="@string/alarmes"
                 android:textAllCaps="false"
+                android:textSize="20sp"
                 app:icon="@drawable/ic_baseline_alarm_24" />
 
         </LinearLayout>
@@ -69,11 +71,12 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/nome_comercial"
-            android:textColor="@color/design_default_color_secondary_variant"
-            android:textSize="16sp"
+            android:textColor="#034f4f"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txvNomeComercial"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutConfirmar" />
 
@@ -92,17 +95,16 @@
 
         <TextView
             android:id="@+id/txvCorSelecionada"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="80dp"
+            android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
-            android:text="@string/click_aqui"
+            android:contentDescription="@string/area_cor_selecionada"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
+            app:layout_constraintBottom_toTopOf="@+id/imbRemover"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textInpLayApelidoMedicamento"
+            app:layout_constraintStart_toEndOf="@+id/textView34"
             app:layout_constraintTop_toBottomOf="@+id/txvNomeComercial" />
 
         <TextView
@@ -115,7 +117,7 @@
             android:layout_marginBottom="8dp"
             android:text="@string/detalhes"
             android:textAlignment="center"
-            android:textColor="@color/design_default_color_secondary_variant"
+            android:textColor="#034f4f"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -181,9 +183,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
-            app:layout_constraintEnd_toStartOf="@+id/txvCorSelecionada"
+            app:layout_constraintEnd_toStartOf="@+id/textView34"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txvNomeComercial">
 
@@ -266,6 +269,20 @@
             app:layout_constraintStart_toEndOf="@+id/imbAdicionar"
             app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento"
             app:srcCompat="@drawable/ic_baseline_remove_24" />
+
+        <TextView
+            android:id="@+id/textView34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="24dp"
+            android:text="Clique na area \n ao lado para escolher\n uma cor"
+            app:layout_constraintBottom_toTopOf="@+id/imbAdicionar"
+            app:layout_constraintEnd_toStartOf="@+id/txvCorSelecionada"
+            app:layout_constraintStart_toEndOf="@+id/textInpLayApelidoMedicamento"
+            app:layout_constraintTop_toBottomOf="@+id/txvNomeComercial" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

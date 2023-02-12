@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.BuildConfig;
 import br.ufpa.app.android.amu.v1.R;
+import br.ufpa.app.android.amu.v1.adapter.CustomSpinner;
 import br.ufpa.app.android.amu.v1.adapter.IntervaloAdapter;
 import br.ufpa.app.android.amu.v1.dto.HorarioDTO;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
@@ -42,13 +44,13 @@ import br.ufpa.app.android.amu.v1.util.Constantes;
 import br.ufpa.app.android.amu.v1.util.DataUtil;
 import br.ufpa.app.android.amu.v1.util.StringUtil;
 
-public class MedicamentoActivity extends AppCompatActivity implements PickTimeListener, GerenteServicosListener {
+public class MedicamentoActivity extends AppCompatActivity implements PickTimeListener, GerenteServicosListener, CustomSpinner.OnSpinnerEventsListener {
 
     String cor;
     Calendar calendar;
     TextInputEditText textInpTextInicioAdministracao;
-    Spinner spIntervalos;
 
+    CustomSpinner spIntervalos;
     final ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -120,7 +122,9 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
         });
 
 
-        spIntervalos.setAdapter(new IntervaloAdapter(this, Constantes.intervalos));
+        ArrayAdapter<String> adapterIntervalo = new ArrayAdapter<String>(this,R.layout.spinner_intervalo, Constantes.intervalos);
+        adapterIntervalo.setDropDownViewResource(R.layout.spinner_intervalo);
+        spIntervalos.setAdapter(adapterIntervalo);
 
         findViewById(R.id.btnConfirmar).setOnClickListener(view -> {
             TextInputEditText textInpTextApelido = findViewById(R.id.textInpTextApelido);
@@ -237,6 +241,16 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
     public void executarAcao(int numeroAcao, Object parametro) {
         setResult(Activity.RESULT_OK, null);
         finish();
+    }
+
+    @Override
+    public void onPopupWindowOpened(Spinner spinner) {
+        spIntervalos.setBackground(getResources().getDrawable(R.drawable.bg_spinner_intervalo_up));
+    }
+
+    @Override
+    public void onPopupWindowClosed(Spinner spinner) {
+        spIntervalos.setBackground(getResources().getDrawable(R.drawable.bg_spinner_intervalo));
     }
 }
 
