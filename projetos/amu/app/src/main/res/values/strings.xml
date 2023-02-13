@@ -116,5 +116,7 @@
     <string name="exemplo_qtde_cadastrados">10</string>
     <string name="exemplo_horario_vencido">3</string>
     <string name="lista_de_medicamentos_cadastrados">Lista de Medicamentos Cadastrados</string>
-    <string name="area_cor_selecionada">Cor Selecionada</string>
+    <string name="area_cor_selecionada">Área da Cor</string>
+    <string name="clique_na_area_nao_lado_para_escolher_numa_cor">Clique na área\nao lado para\nselecionar uma cor</string>
+    <string name="lista_utilizacao_medicamento">Lista de Utilização de Medicamento</string>
 </resources>

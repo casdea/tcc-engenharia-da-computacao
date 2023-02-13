@@ -22,7 +22,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/nome_comercial"
-            android:textSize="16sp"
+            android:textColor="#034f4f"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txvNomeComercial"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +38,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/exemplo_nome_comercial"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView13"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +53,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/fabricante_ou_laboratorio"
-            android:textSize="16sp"
+            android:textColor="#034f4f"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txvNomeFabricante"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,6 +69,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/exemplo_fabricante"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
@@ -78,7 +84,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/via_administracao"
-            android:textSize="16sp"
+            android:textColor="#034f4f"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txvViaAdministracao"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,6 +102,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/exemplo_via_administracao"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -112,6 +121,7 @@
             android:background="@color/teal_200"
             android:text="@string/informacoes_complementares"
             android:textAlignment="center"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textInpLayApelidoMedicamento"
@@ -138,7 +148,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/apelido_medicamento"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -157,7 +169,8 @@
             app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView33"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            android:textIsSelectable="true" />
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -178,7 +191,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/qtde_embalagem"
-                android:text="@string/exemplo_qtde_medicamento" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -191,7 +205,8 @@
             android:background="#D1CA48"
             android:text="@string/horarios"
             android:textAlignment="center"
-            android:textSize="16sp"
+            android:textColor="#333105"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -216,7 +231,7 @@
                 android:focusable="true"
                 android:hint="@string/inicio_administracao"
                 android:inputType="date"
-                android:text="@string/exemplo_data_hora"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -238,7 +253,7 @@
                 android:enabled="true"
                 android:hint="@string/horario_primeira_dose"
                 android:inputType="time"
-                android:text="@string/exemplo_hora_inicio"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -288,7 +303,8 @@
             android:background="#D1CA48"
             android:text="@string/doses_do_medicamento"
             android:textAlignment="center"
-            android:textSize="16sp"
+            android:textColor="#333105"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textInpLayDosesDia"
             app:layout_constraintEnd_toEndOf="parent"
@@ -312,8 +328,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/doses_administradas_por_dia"
                 android:inputType="number"
-                android:text="@string/exemplo_doses_administrada"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -334,7 +349,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/qtde_por_dose"
                 android:inputType="number"
-                android:text="@string/exemplo_qtde_por_dose"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -346,6 +361,8 @@
             android:layout_marginTop="8dp"
             android:minHeight="48dp"
             android:text="@string/ativo"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInpLayDosesDia" />
 
@@ -359,7 +376,7 @@
             android:contentDescription="@string/Botao_Confirmar_Registro_Medicamento"
             android:text="@string/confirmar"
             android:textAllCaps="false"
-            android:textColor="#5E35B1"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -374,7 +391,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Clique na area \n ao lado para escolher\n uma cor"
+            android:text="@string/clique_na_area_nao_lado_para_escolher_numa_cor"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
             app:layout_constraintEnd_toStartOf="@+id/txvCorSelecionada"
             app:layout_constraintStart_toEndOf="@+id/textInpLayApelidoMedicamento"
