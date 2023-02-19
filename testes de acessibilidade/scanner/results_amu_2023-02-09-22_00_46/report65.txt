@@ -1,0 +1,34 @@
+A lista a seguir contém oportunidades de melhoria na acessibilidade de amu. Cada item corresponde a uma área delineada na captura de tela anexa.
+
+Rótulo do item
+android:id/month_view
+O rótulo deste item pode não ser lido por leitores de tela.
+
+Área de toque
+android:id/date_picker_header_year
+A altura deste item é 35dp. Considere definir a altura desta área de toque como 48dp ou maior.
+
+Área de toque
+android:id/date_picker_header_date
+A altura deste item é 40dp. Considere definir a altura desta área de toque como 48dp ou maior.
+
+Contraste do texto
+android:id/date_picker_header_year
+A taxa de contraste do texto no item é 1,45. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #B4F4EE e da cor de fundo #03DAC5. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes. Este item pode estar coberto por outro conteúdo na tela. Considere testar manualmente o contraste deste item.
+
+Contraste do texto
+android:id/date_picker_header_date
+A taxa de contraste do texto no item é 1,77. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #FFFFFF e da cor de fundo #03DAC5. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+android:id/button2
+A taxa de contraste do texto no item é 1,77. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #03DAC5 e da cor de fundo #FFFFFF. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+android:id/button1
+A taxa de contraste do texto no item é 1,77. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #03DAC5 e da cor de fundo #FFFFFF. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Tipo de item não aceito
+android:id/day_picker_view_pager
+O tipo deste item com.android.internal.widget.ViewPager pode não ser processado pelos serviços de acessibilidade. Use um tipo definido pelo SDK do Android.
+

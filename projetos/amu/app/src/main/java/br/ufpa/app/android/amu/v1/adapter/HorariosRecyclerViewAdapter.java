@@ -42,7 +42,7 @@ public class HorariosRecyclerViewAdapter extends RecyclerView.Adapter<HorariosRe
         holder.txvDosesPorDia.setText(String.valueOf(listaHistoricos.get(position).getNrDoses()));
         holder.txvIntervalo.setText(String.valueOf(listaHistoricos.get(position).getIntervalo()));
         holder.txvQtdePorDose.setText(String.valueOf(listaHistoricos.get(position).getQtdePorDose()));
-        holder.swAtivo.setChecked(listaHistoricos.get(position).getAtivo().equals("SIM"));
+        holder.txvStatusHorario.setText(listaHistoricos.get(position).getAtivo().equals("SIM") ? "Status Horário: SIM" : "Status Horário: NÃO");
     }
 
     @Override
@@ -56,7 +56,7 @@ public class HorariosRecyclerViewAdapter extends RecyclerView.Adapter<HorariosRe
         public final TextView txvIntervalo;
         public final TextView txvDosesPorDia;
         public final TextView txvQtdePorDose;
-        public final SwitchCompat swAtivo;
+        public final TextView txvStatusHorario;
 
         public HorarioViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,7 +65,7 @@ public class HorariosRecyclerViewAdapter extends RecyclerView.Adapter<HorariosRe
             txvIntervalo = itemView.findViewById(R.id.txvIntervalo);
             txvDosesPorDia = itemView.findViewById(R.id.txvDosesPorDia);
             txvQtdePorDose = itemView.findViewById(R.id.txvQtdePorDose);
-            swAtivo = itemView.findViewById(R.id.swAtivo);
+            txvStatusHorario = itemView.findViewById(R.id.txvStatusHorario);
         }
     }
 }

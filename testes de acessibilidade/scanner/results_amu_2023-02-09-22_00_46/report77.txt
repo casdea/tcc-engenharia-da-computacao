@@ -1,0 +1,10 @@
+A lista a seguir contém oportunidades de melhoria na acessibilidade de amu. Cada item corresponde a uma área delineada na captura de tela anexa.
+
+Área de toque
+br.ufpa.app.android.amu.v1:id/txvEsqueciMinhaSenha
+A altura deste item é 20dp. Considere definir a altura desta área de toque como 48dp ou maior.
+
+Contraste do texto
+[31,56][85,93]
+A taxa de contraste do texto no item é 1,77. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #FFFFFF e da cor de fundo #03DAC5. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+

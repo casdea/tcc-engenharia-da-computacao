@@ -119,4 +119,16 @@
     <string name="area_cor_selecionada">Área da Cor</string>
     <string name="clique_na_area_nao_lado_para_escolher_numa_cor">Clique na área\nao lado para\nselecionar uma cor</string>
     <string name="lista_utilizacao_medicamento">Lista de Utilização de Medicamento</string>
+    <string name="paleta_de_cores">Paleta de Cores</string>
+    <string name="cor_2">Cor 2</string>
+    <string name="cor_3">Cor 3</string>
+    <string name="cor_4">Cor 4</string>
+    <string name="cor_5">Cor 5</string>
+    <string name="cor_6">Cor 6</string>
+    <string name="cor_7">Cor 7</string>
+    <string name="cor_8">Cor 8</string>
+    <string name="cor_9">Cor 9</string>
+    <string name="cor_10">Cor 10</string>
+    <string name="cor_1">Cor 1</string>
+    <string name="status_horario_sim_nao">Status Horário: SIM/NÃO</string>
 </resources>
