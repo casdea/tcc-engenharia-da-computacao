@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,6 +18,8 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.DialogFragment;
@@ -72,6 +76,11 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicamento);
         App.escutandoComando = false;
+
+        ActionBar actionBar = getSupportActionBar();
+
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         TextView txvNomeComercial = findViewById(R.id.txvNomeComercial);
         TextView txvNomeFabricante = findViewById(R.id.txvNomeFabricante);
@@ -221,6 +230,15 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
             gerenteServicos.incluirMedicamento(App.medicamentoDTO, App.horarioDTO);
 
         });
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

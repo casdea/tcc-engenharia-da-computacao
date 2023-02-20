@@ -1,4 +1,4 @@
-package br.ufpa.app.android.amu.v1.dao.helper;
+package br.ufpa.app.android.amu.v1.helper;
 
 import android.util.Base64;
 

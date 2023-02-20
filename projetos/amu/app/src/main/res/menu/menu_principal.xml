@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menuNovoMedicamento"
+        android:orderInCategory="100"
+        android:title="@string/novoMedicamento"
+        app:showAsAction="always"
+        />
+
+
+    <item
         android:id="@+id/restaurarPerfil"
         android:orderInCategory="100"
         android:title="@string/menu_restaurar_perfil"
@@ -22,5 +30,4 @@
         android:title="@string/sair"
         app:showAsAction="ifRoom"
         />
-
 </menu>

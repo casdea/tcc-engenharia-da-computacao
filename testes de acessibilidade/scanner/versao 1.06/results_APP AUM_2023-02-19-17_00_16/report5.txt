@@ -1,0 +1,6 @@
+A lista a seguir contém oportunidades de melhoria na acessibilidade de APP AUM. Cada item corresponde a uma área delineada na captura de tela anexa.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/rbUsuarioPerdaVisao
+A taxa de contraste do texto no item é 4,04. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #6B6B6B e da cor de fundo #E0E0E0. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes. Este item pode estar coberto por outro conteúdo na tela. Considere testar manualmente o contraste deste item.
+

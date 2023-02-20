@@ -1,11 +1,14 @@
 package br.ufpa.app.android.amu.v1.activity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,9 +21,9 @@ import java.util.Objects;
 
 import br.ufpa.app.android.amu.v1.R;
 import br.ufpa.app.android.amu.v1.dao.config.ConfiguracaoFirebase;
-import br.ufpa.app.android.amu.v1.dao.helper.Base64Custom;
 import br.ufpa.app.android.amu.v1.dto.MedicamentoDTO;
 import br.ufpa.app.android.amu.v1.dto.UsuarioDTO;
+import br.ufpa.app.android.amu.v1.helper.Base64Custom;
 import br.ufpa.app.android.amu.v1.integracao.classes.TipoPerfil;
 import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.servicos.GerenteServicos;
@@ -38,7 +41,12 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario);
         App.context = this;
+/*
+        ActionBar actionBar = getSupportActionBar();
 
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+*/
         campoNome = findViewById(R.id.editNome);
         campoEmail = findViewById(R.id.editEmail);
         campoSenha = findViewById(R.id.editSenha);
@@ -99,7 +107,16 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
 
         });
     }
-
+/*
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+*/
     boolean validar(String textoNome, String textoEmail, String textoSenha, String tipoPerfil) {
         if (textoNome.isEmpty()) {
             Toast.makeText(UsuarioActivity.this,

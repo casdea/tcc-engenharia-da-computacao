@@ -1,0 +1,30 @@
+A lista a seguir contém oportunidades de melhoria na acessibilidade de amu. Cada item corresponde a uma área delineada na captura de tela anexa.
+
+Área de toque
+br.ufpa.app.android.amu.v1:id/spIntervalos
+A altura deste item é 20dp. Considere definir a altura desta área de toque como 48dp ou maior.
+
+Contraste do texto
+[31,56][85,93]
+A taxa de contraste do texto no item é 1,77. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #FFFFFF e da cor de fundo #03DAC5. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/textView7
+A taxa de contraste do texto no item é 3,98. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #01645A e da cor de fundo #03DAC5. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/textView9
+A taxa de contraste do texto no item é 3,97. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #605D21 e da cor de fundo #D1CA48. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+[11,729][789,756]
+A taxa de contraste do texto no item é 3,26. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #FF0000 e da cor de fundo #E8E8E8. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/textView16
+A taxa de contraste do texto no item é 3,97. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #605D21 e da cor de fundo #D1CA48. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/textInpTextQtdeDose
+A taxa de contraste do texto no item é 1,34. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #03DAC5 e da cor de fundo #E0E0E0. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes. Este item pode estar apenas parcialmente visível dentro de um contêiner de rolagem.
+

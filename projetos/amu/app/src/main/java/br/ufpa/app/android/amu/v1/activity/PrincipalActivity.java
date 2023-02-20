@@ -159,6 +159,10 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menuNovoMedicamento) {
+            incluirMedicamento();
+        }
+        else
         if (item.getItemId() == R.id.restaurarPerfil) {
             App.tipoPerfil = TipoPerfil.valueOf(App.usuario.getTipoPerfil());
             App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
@@ -168,6 +172,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                 Objects.requireNonNull(getSupportActionBar()).hide();
 
         }
+        else
         if (item.getItemId() == R.id.menuPerfil)
             startActivity(new Intent(this, UsuarioActivity.class));
         else if (item.getItemId() == R.id.menuSair) {
@@ -275,7 +280,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+       // super.onBackPressed();
 
         if (!App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

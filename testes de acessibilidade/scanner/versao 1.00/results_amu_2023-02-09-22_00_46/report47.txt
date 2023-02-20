@@ -1,0 +1,34 @@
+A lista a seguir contém oportunidades de melhoria na acessibilidade de amu. Cada item corresponde a uma área delineada na captura de tela anexa.
+
+Contraste da imagem
+br.ufpa.app.android.amu.v1:id/floatingActionButton
+A taxa de contraste da imagem é 1,77. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #FFFFFF e da cor de fundo #03DAC5. Considere aumentar essa taxa para 3,00 ou mais.
+
+Contraste do texto
+[31,56][85,93]
+A taxa de contraste do texto no item é 1,77. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #FFFFFF e da cor de fundo #03DAC5. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/btnUtilizar
+A taxa de contraste do texto no item é 1,77. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #03DAC5 e da cor de fundo #FFFFFF. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+[466,120][786,184]
+A taxa de contraste do texto no item é 1,77. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #03DAC5 e da cor de fundo #FFFFFF. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/textView11
+A taxa de contraste do texto no item é 4,36. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #018786 e da cor de fundo #FFFFFF. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/textView22
+A taxa de contraste do texto no item é 4,36. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #018786 e da cor de fundo #FFFFFF. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/textView40
+A taxa de contraste do texto no item é 3,97. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #605D21 e da cor de fundo #D1CA48. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Descrições de itens
+br.ufpa.app.android.amu.v1:id/textView24
+O texto falado deste item clicável: "Organizador de Espaços" é idêntico a outros 1 itens.
+

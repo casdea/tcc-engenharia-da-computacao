@@ -1,0 +1,14 @@
+A lista a seguir contém oportunidades de melhoria na acessibilidade de APP AUM. Cada item corresponde a uma área delineada na captura de tela anexa.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/txvNomeMedicamento
+A taxa de contraste do texto no item é 3,43. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #014E70 e da cor de fundo #03A9F4. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/txvNomeFantasia
+A taxa de contraste do texto no item é 3,43. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #014E70 e da cor de fundo #03A9F4. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+
+Contraste do texto
+br.ufpa.app.android.amu.v1:id/txtNomeFabricante
+A taxa de contraste do texto no item é 3,43. Essa taxa baseia-se em uma estimativa da cor do primeiro plano #014E70 e da cor de fundo #03A9F4. Use cores que resultam em uma taxa de contraste maior que 4,50 para textos pequenos ou 3,00 para textos grandes.
+

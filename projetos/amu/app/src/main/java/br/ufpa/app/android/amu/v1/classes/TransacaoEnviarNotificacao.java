@@ -31,7 +31,7 @@ public class TransacaoEnviarNotificacao implements Transacao {
     }
 
     @Override
-    public void executar() throws InterruptedException {
+    public void executar() {
         //Configuraçõe para notificação
         String canal = idMedicamento; //atividade.getString(R.string.default_notification_channel_id);
         Uri uriSom = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

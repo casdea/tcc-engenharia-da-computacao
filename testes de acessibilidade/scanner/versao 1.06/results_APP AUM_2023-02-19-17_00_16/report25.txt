@@ -1,0 +1,18 @@
+A lista a seguir contém oportunidades de melhoria na acessibilidade de APP AUM. Cada item corresponde a uma área delineada na captura de tela anexa.
+
+Rótulo do item
+android:id/month_view
+O rótulo deste item pode não ser lido por leitores de tela.
+
+Área de toque
+android:id/date_picker_header_year
+A altura deste item é 35dp. Considere definir a altura desta área de toque como 48dp ou maior.
+
+Área de toque
+android:id/date_picker_header_date
+A altura deste item é 40dp. Considere definir a altura desta área de toque como 48dp ou maior.
+
+Tipo de item não aceito
+android:id/day_picker_view_pager
+O tipo deste item com.android.internal.widget.ViewPager pode não ser processado pelos serviços de acessibilidade. Use um tipo definido pelo SDK do Android.
+

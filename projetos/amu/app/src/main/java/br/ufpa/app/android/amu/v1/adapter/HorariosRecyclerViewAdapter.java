@@ -42,7 +42,7 @@ public class HorariosRecyclerViewAdapter extends RecyclerView.Adapter<HorariosRe
         holder.txvDosesPorDia.setText(String.valueOf(listaHistoricos.get(position).getNrDoses()));
         holder.txvIntervalo.setText(String.valueOf(listaHistoricos.get(position).getIntervalo()));
         holder.txvQtdePorDose.setText(String.valueOf(listaHistoricos.get(position).getQtdePorDose()));
-        holder.txvStatusHorario.setText(listaHistoricos.get(position).getAtivo().equals("SIM") ? "Status Horário: SIM" : "Status Horário: NÃO");
+        holder.txvStatusHorario.setText(listaHistoricos.get(position).getAtivo().equals("SIM") ? "Situação Horário: SIM" : "Situação Horário: NÃO");
     }
 
     @Override

@@ -113,6 +113,8 @@
     <string name="restaurar_perfil">Restaurar Perfil</string>
     <string name="menu_restaurar_perfil">Restaurar</string>
     <string name="sair">Sair</string>
+    <string name="novoMedicamento">Novo Medicamento</string>
+    <string name="novoHorario">Novo Horário</string>
     <string name="exemplo_qtde_cadastrados">10</string>
     <string name="exemplo_horario_vencido">3</string>
     <string name="lista_de_medicamentos_cadastrados">Lista de Medicamentos Cadastrados</string>
