@@ -53,7 +53,8 @@ import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
 import br.ufpa.app.android.amu.v1.util.DataUtil;
 
-public class DetalheMedicamentoActivity extends AppCompatActivity implements GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
+public class DetalheMedicamentoActivity extends AppCompatActivity
+        implements GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
 
     TextInputEditText textInpTextApelido;
     TextInputEditText textInpTextQtdeEmbalagem;
@@ -66,40 +67,15 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
     OnEstoquesListener onEstoqueListener;
     OnUtilizacoesListener onUtilizacoesListener;
 
-    private final ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Intent data = result.getData();
-                        cor = Objects.requireNonNull(data).getStringExtra("cor");
-                        //findViewById(R.id.editTextTextPersonName3).setBackgroundDrawable(new ColorDrawable(Color.parseColor(cor)));
-                        findViewById(R.id.txvCorSelecionada).setBackground(new ColorDrawable(Color.parseColor(cor)));
-                        findViewById(R.id.btnAlterar).setEnabled(camposAlterados());
-                        //use setBackground(android.graphics.drawable.Drawable)
-                    }
-                }
-            });
-
-    public interface OnHorariosListener {
-        void atualizarLista(View view);
-    }
-
-    public interface OnEstoquesListener {
-        void atualizarLista(View view);
-    }
-
-    public interface OnUtilizacoesListener {
-        void atualizarLista(View view);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhe_medicamento);
         App.escutandoComando = false;
+
+        mRecursoVozObserver = new RecursoVozLifeCyCleObserver(getActivityResultRegistry(),
+                DetalheMedicamentoActivity.this);
+        getLifecycle().addObserver(mRecursoVozObserver);
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -125,9 +101,6 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         txvNomeComercial.setText(App.medicamentoDTO.getNomeComercial());
         textInpTextApelido.setText(App.medicamentoDTO.getNomeFantasia());
         textInpTextQtdeEmbalagem.setText(String.valueOf(App.medicamentoDTO.getQtdeEmbalagem()));
-
-        mRecursoVozObserver = new RecursoVozLifeCyCleObserver(getActivityResultRegistry(), DetalheMedicamentoActivity.this);
-        getLifecycle().addObserver(mRecursoVozObserver);
 
         Button btnAlterar = findViewById(R.id.btnAlterar);
         btnAlterar.setEnabled(false);
@@ -182,6 +155,35 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
         }
 
         App.integracaoUsuario.bemVindoFuncao(TipoFuncao.DETALHES_MEDICAMENTO);
+    }
+
+    private final ActivityResultLauncher<Intent> selecionarCorActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        cor = Objects.requireNonNull(data).getStringExtra("cor");
+                        //findViewById(R.id.editTextTextPersonName3).setBackgroundDrawable(new ColorDrawable(Color.parseColor(cor)));
+                        findViewById(R.id.txvCorSelecionada).setBackground(new ColorDrawable(Color.parseColor(cor)));
+                        findViewById(R.id.btnAlterar).setEnabled(camposAlterados());
+                        //use setBackground(android.graphics.drawable.Drawable)
+                    }
+                }
+            });
+
+    public interface OnHorariosListener {
+        void atualizarLista(View view);
+    }
+
+    public interface OnEstoquesListener {
+        void atualizarLista(View view);
+    }
+
+    public interface OnUtilizacoesListener {
+        void atualizarLista(View view);
     }
 
     @Override
@@ -460,15 +462,24 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
 
     @Override
     public void executarAcao(int numeroAcao, Object parametro) {
+        if (numeroAcao == Constantes.ACAO_VOZ_DOSE_REALIZADA) {
+            if (App.integracaoUsuario.validarUtilizacaoMedicamento(App.listaHorarios))
+                return;
+            sinalizarDoseRealizada();
+        } else
         if (numeroAcao == Constantes.ACAO_ALTERAR_MEDICAMENTO) {
             setResult(Activity.RESULT_OK, null);
             finish();
         } else if (numeroAcao == Constantes.ACAO_REGISTRAR_HORARIO) {
-            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-            gerenteServicos.obterListaHorariosByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
+            GerenteServicos gerenteServicos = new GerenteServicos(
+                    DetalheMedicamentoActivity.this);
+            gerenteServicos.obterListaHorariosByUsuarioMedicamento(App.usuario.getIdUsuario(),
+                    App.medicamentoDTO.getIdMedicamento());
         } else if (numeroAcao == Constantes.ACAO_REGISTRAR_ESTOQUE) {
-            GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
-            gerenteServicos.obterListaEstoquesByUsuarioMedicamento(App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
+            GerenteServicos gerenteServicos = new GerenteServicos(
+                    DetalheMedicamentoActivity.this);
+            gerenteServicos.obterListaEstoquesByUsuarioMedicamento(
+                    App.usuario.getIdUsuario(), App.medicamentoDTO.getIdMedicamento());
         } else if (numeroAcao == Constantes.ACAO_ERRO_SEM_SALDO_ESTOQUE) {
             App.integracaoUsuario.saidaNegadaSemSaldo();
         } else if (numeroAcao == Constantes.ACAO_ERRO_AO_ATUALIZAR_SALDO_ESTOQUE) {
@@ -494,11 +505,6 @@ public class DetalheMedicamentoActivity extends AppCompatActivity implements Ger
             App.integracaoUsuario.descrerverHorario(App.medicamentoDTO, App.listaHorarios);
         } else if (numeroAcao == Constantes.ACAO_CHAMAR_COMANDO_VOZ) {
             mRecursoVozObserver.chamarItenteReconechimentoVoz();
-        } else if (numeroAcao == Constantes.ACAO_VOZ_DOSE_REALIZADA) {
-            if (App.integracaoUsuario.validarUtilizacaoMedicamento(App.listaHorarios))
-                return;
-
-            sinalizarDoseRealizada();
         } else if (numeroAcao == Constantes.ACAO_VOZ_ESTOQUE_ATUAL) {
             App.integracaoUsuario.informarSaldoEstoque();
         } else if (numeroAcao == Constantes.ACAO_VOZ_ENTRADA_ESTOQUE) {

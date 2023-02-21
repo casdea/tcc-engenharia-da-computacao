@@ -12,6 +12,14 @@ import br.ufpa.app.android.amu.v1.integracao.interfaces.IntegracaoUsuario;
 import br.ufpa.app.android.amu.v1.util.App;
 
 public class IntegracaoUsuarioComum implements IntegracaoUsuario {
+
+    @Override
+    public void avisarSaldoAtualizadoComSucesso(int novoSaldo) {
+        Toast.makeText(App.context,
+                "Saldo atualizado com sucesso. Estoque atual: " + novoSaldo,
+                Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public int findComando(String texto) {
         return 0;
@@ -159,14 +167,6 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
     public void informarSaldoEstoque() {
 
     }
-
-    @Override
-    public void avisarSaldoAtualizadoComSucesso(int novoSaldo) {
-        Toast.makeText(App.context,
-                "Saldo atualizado com sucesso. Estoque atual: " + novoSaldo,
-                Toast.LENGTH_LONG).show();
-    }
-
     @Override
     public void avisoEntradaPerfilAdmin() {
 

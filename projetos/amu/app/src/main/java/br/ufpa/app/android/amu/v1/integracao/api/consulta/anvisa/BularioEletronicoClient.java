@@ -13,8 +13,10 @@ public interface BularioEletronicoClient {
 
 	@Headers({ "accept: application/json", "authorization: Guest" })
 	@GET("/api/consulta/bulario?")
-	CompletableFuture<BularioEletronicoJson> getBulario(@Query("count") int count,
-														@Query("filter[nomeProduto]") String nomeProduto, @Query("page") int page);
+	CompletableFuture<BularioEletronicoJson> getBulario(
+			@Query("count") int count,
+			@Query("filter[nomeProduto]")
+			String nomeProduto, @Query("page") int page);
 
 	@Headers({ "accept: application/json", "authorization: Guest" })
 	@GET("/api/consulta/medicamentos/arquivo/bula/parecer/{nomeArquivo}/?Authorization=")

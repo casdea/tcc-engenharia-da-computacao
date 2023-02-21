@@ -16,7 +16,10 @@ public class TransacaoVerificarAlarme implements Transacao {
     private final TextView txvQtdeCadastrados;
     private final TextView txvQtdeNaoAdministrado;
 
-    public TransacaoVerificarAlarme(AppCompatActivity atividade, List<MedicamentoDTO> medicamentos, TextView txvQtdeCadastrados, TextView txvQtdeNaoAdministrado) {
+    public TransacaoVerificarAlarme(AppCompatActivity atividade,
+                                    List<MedicamentoDTO> medicamentos,
+                                    TextView txvQtdeCadastrados,
+                                    TextView txvQtdeNaoAdministrado) {
         this.atividade = atividade;
         this.medicamentos = medicamentos;
         this.txvQtdeCadastrados = txvQtdeCadastrados;
@@ -29,8 +32,11 @@ public class TransacaoVerificarAlarme implements Transacao {
                 atividade,
                   new ObterListaUtilizacoesTask(atividade,
                      new ObterListaAlarmesTask(atividade,
-                        new ExibirListaAlarmesTask(atividade,
-                                  medicamentos, txvQtdeCadastrados, txvQtdeNaoAdministrado)))).call();
+                        new ExibirListaAlarmesTask(
+                                atividade,
+                                medicamentos,
+                                txvQtdeCadastrados,
+                                txvQtdeNaoAdministrado)))).call();
         System.out.println("Tarefa completa!");
     }
 }

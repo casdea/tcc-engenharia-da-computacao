@@ -41,7 +41,8 @@ import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
 import br.ufpa.app.android.amu.v1.util.ThreadUtil;
 
-public class PrincipalActivity extends AppCompatActivity implements GerenteServicosListener, View.OnClickListener, View.OnTouchListener {
+public class PrincipalActivity extends AppCompatActivity implements GerenteServicosListener,
+        View.OnClickListener, View.OnTouchListener {
 
     RecyclerView recyclerView;
     final FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
@@ -50,6 +51,50 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     TextView txvQtdeCadastrados;
     TextView txvQtdeNaoAdministrado;
     RecursoVozLifeCyCleObserver mRecursoVozObserver;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_principal);
+        App.context = this;
+
+        App.escutandoComando = false;
+
+        App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
+        App.integracaoBularioEletronico =
+                new FactoryIntegracaoBularioEletronico().createIntegracaoBularioEletronico(
+                App.fontesConsulta);
+        App.listaAlarmes = new ArrayList<>();
+
+        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
+            Objects.requireNonNull(getSupportActionBar()).hide();
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setOnClickListener(this);
+        //recyclerView.setOnTouchListener(this);
+
+        mRecursoVozObserver = new RecursoVozLifeCyCleObserver(getActivityResultRegistry(),
+                PrincipalActivity.this);
+        getLifecycle().addObserver(mRecursoVozObserver);
+
+        txvListaVazia = findViewById(R.id.txvListaVazia);
+        txvListaVazia.setVisibility(View.INVISIBLE);
+        findViewById(R.id.floatingActionButton).setOnClickListener(this);
+        findViewById(R.id.fundo).setOnClickListener(this);
+        findViewById(R.id.cabecalho).setOnClickListener(this);
+
+        txvQtdeCadastrados = findViewById(R.id.txvQtdeCadastrados);
+        txvQtdeNaoAdministrado = findViewById(R.id.txvQtdeNaoAdministrado);
+
+        App.integracaoUsuario.bemVindoFuncao(TipoFuncao.PESQUISA_MEDICAMENTOS);
+
+        prepararLista();
+
+        if (timerHandler != null && timerRunnable != null)
+            timerHandler.postDelayed(timerRunnable, 0);
+
+
+    }
 
     final Handler timerHandler = new Handler();
     final Runnable timerRunnable = new Runnable() {
@@ -79,47 +124,6 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                     prepararLista();
                 }
             });
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal);
-        App.context = this;
-
-        App.escutandoComando = false;
-
-        App.integracaoUsuario = new FactoryIntegracaoUsuario().createIntegracaoUsuario(App.tipoPerfil);
-        App.integracaoBularioEletronico = new FactoryIntegracaoBularioEletronico().createIntegracaoBularioEletronico(App.fontesConsulta);
-        App.listaAlarmes = new ArrayList<>();
-
-        if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA))
-            Objects.requireNonNull(getSupportActionBar()).hide();
-
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setOnClickListener(this);
-        //recyclerView.setOnTouchListener(this);
-
-        mRecursoVozObserver = new RecursoVozLifeCyCleObserver(getActivityResultRegistry(), PrincipalActivity.this);
-        getLifecycle().addObserver(mRecursoVozObserver);
-
-        txvListaVazia = findViewById(R.id.txvListaVazia);
-        txvListaVazia.setVisibility(View.INVISIBLE);
-        findViewById(R.id.floatingActionButton).setOnClickListener(this);
-        findViewById(R.id.fundo).setOnClickListener(this);
-        findViewById(R.id.cabecalho).setOnClickListener(this);
-
-        txvQtdeCadastrados = findViewById(R.id.txvQtdeCadastrados);
-        txvQtdeNaoAdministrado = findViewById(R.id.txvQtdeNaoAdministrado);
-
-        App.integracaoUsuario.bemVindoFuncao(TipoFuncao.PESQUISA_MEDICAMENTOS);
-
-        prepararLista();
-
-        if (timerHandler != null && timerRunnable != null)
-            timerHandler.postDelayed(timerRunnable, 0);
-
-
-    }
 
     @Override
     protected void onPause() {
@@ -280,7 +284,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
     @Override
     public void onBackPressed() {
-       // super.onBackPressed();
+       //    super.onBackPressed();
 
         if (!App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

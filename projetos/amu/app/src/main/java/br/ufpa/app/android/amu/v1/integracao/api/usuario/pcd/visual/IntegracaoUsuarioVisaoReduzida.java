@@ -36,6 +36,25 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         textoLido.setSpeechRate(0.75f);
     }
 
+    @Override
+    public void avisarSaldoAtualizadoComSucesso(int novoSaldo) {
+        falar("Saldo atualizado com sucesso. Estoque atual: " + novoSaldo);
+    }
+
+    @Override
+    public void falar(String texto) {
+        textoLido = new TextToSpeech(App.context, i -> {
+            if (i != TextToSpeech.ERROR) {
+                textoLido.setLanguage(Locale.getDefault());
+            }
+            if (i == TextToSpeech.SUCCESS) {
+                reproduzirVoz(textoLido, texto);
+            }
+        });
+
+        textoLido.setSpeechRate(0.75f);
+    }
+
     private final String[] TEXTOS_VOZ_LISTA_MEDICAMENTO = {
             "LISTA",
             "LISTA DE MEDICAMENTO",
@@ -321,20 +340,6 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     }
 
     @Override
-    public void falar(String texto) {
-        textoLido = new TextToSpeech(App.context, i -> {
-            if (i != TextToSpeech.ERROR) {
-                textoLido.setLanguage(Locale.getDefault());
-            }
-            if (i == TextToSpeech.SUCCESS) {
-                reproduzirVoz(textoLido, texto);
-            }
-        });
-
-        textoLido.setSpeechRate(0.75f);
-    }
-
-    @Override
     public void avisarListaVazia() {
         falar("A lista de medicamentos está vazia. Aproveite para começar a cadastrar. Toque na tela e fale o comando incluir medicamento.");
     }
@@ -538,11 +543,6 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
         EstoqueDTO estoqueDTO = App.listaEstoques.get(App.listaEstoques.size() - 1);
 
         falar("Estoque atual: " + estoqueDTO.getSaldo() + " do Medicamento: " + App.medicamentoDTO.getNomeFantasia());
-    }
-
-    @Override
-    public void avisarSaldoAtualizadoComSucesso(int novoSaldo) {
-        falar("Saldo atualizado com sucesso. Estoque atual: " + novoSaldo);
     }
 
     @Override

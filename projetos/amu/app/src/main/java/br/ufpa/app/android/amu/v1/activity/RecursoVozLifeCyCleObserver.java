@@ -1,5 +1,4 @@
 package br.ufpa.app.android.amu.v1.activity;
-
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -22,17 +21,14 @@ import br.ufpa.app.android.amu.v1.interfaces.GerenteServicosListener;
 import br.ufpa.app.android.amu.v1.util.App;
 import br.ufpa.app.android.amu.v1.util.Constantes;
 import br.ufpa.app.android.amu.v1.util.ThreadUtil;
-
 public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
     final ActivityResultRegistry mRegistry;
     ActivityResultLauncher<Intent> mGetRecursoVoz;
     final GerenteServicosListener gerenteServicosListener;
-
     RecursoVozLifeCyCleObserver(@NonNull ActivityResultRegistry registry, AppCompatActivity atividade) {
         mRegistry = registry;
         this.gerenteServicosListener = (GerenteServicosListener) atividade;
     }
-
     public void onCreate(@NonNull LifecycleOwner owner) {
         // ...
         mGetRecursoVoz = mRegistry.register("key", owner,
@@ -40,40 +36,33 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         App.escutandoComando = false;
-
                         App.integracaoUsuario.capturarComandoEncerrado();
-
                         ThreadUtil.esperar(ThreadUtil.CINCO_SEGUNDOS);
-
                         // There are no request codes
                         Intent data = result.getData();
-                        ArrayList<String> text = Objects.requireNonNull(data).getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
+                        ArrayList<String> text = Objects.requireNonNull(data).getStringArrayListExtra(
+                                RecognizerIntent.EXTRA_RESULTS);
                         if (text == null || text.size() == 0) {
                             //txvStatusComando.setText("Texto de Voz inválido");
                             return;
                         }
-
                         int nrComandoVoz = App.integracaoUsuario.findComando(text.get(0));
-
                         switch (nrComandoVoz) {
                             case ComandosVoz.COMANDO_NAO_RECONHECIDO: {
                                 App.integracaoUsuario.comandoNaoReconhecido(text.get(0));
                                 break;
                             }
-
                             case ComandosVoz.DOSE_REALIZADA: {
                                 gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_DOSE_REALIZADA, text.get(0));
                                 break;
                             }
-
-                            case ComandosVoz.TELA_ANTERIOR: {
-                                gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_TELA_ANTERIOR, text.get(0));
+                            case ComandosVoz.LISTA_MEDICAMENTOS: {
+                                gerenteServicosListener.executarAcao(
+                                        Constantes.ACAO_VOZ_LISTA_MEDICAMENTOS, text.get(0));
                                 break;
                             }
-
-                            case ComandosVoz.LISTA_MEDICAMENTOS: {
-                                gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_LISTA_MEDICAMENTOS, text.get(0));
+                            case ComandosVoz.TELA_ANTERIOR: {
+                                gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_TELA_ANTERIOR, text.get(0));
                                 break;
                             }
 

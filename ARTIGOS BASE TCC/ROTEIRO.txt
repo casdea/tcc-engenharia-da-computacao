@@ -1,0 +1,84 @@
+verificar a possibilidade gerar pro-rata apenas do valor do contrato rescindido - e as mensalidade normais que 
+nao forem rescindidas - 0E635
+fatura 742131 - ajustar produtos. permanece apenas o seguro com o valor de 18.80 - 02526
+
+pix na duplicata
+atalho no contrato da visualizacao da fatura
+envio por email com erro
+retiro o texto grande a partir do faturamento de fevereiro
+Conciliacao Bancaria x contas a pagar 
+Lancamento do tipo emprestimo poderia baixar contas a pagar exemplo
+    banco x fornecedor emprestimo 
+    se nao achar gerar chamado
+
+
+VL_SERVICO
+VL_ALUGUEL
+Fatores que dificultam a adesão ao uso de medicamentos
+  TAVARES et al.(2013) 
+
+  TAVARES, Noemia Urruth Leao et al. Fatores associados à baixa adesão ao
+  tratamento medicamentoso em idosos. Revista de Saúde Pública, v. 47, n. 6, p.
+  1092-1101, 2013.
+
+  SILVA (2016)
+
+  A SILVA, Cláudio Henrique; SPINILLO, Carla Galvão. Dificuldades e estratégias
+  no uso de múltiplos medicamentos por idosos no contexto do design da informação.
+  Estudos em Design, v. 24, n. 3, 2016.
+
+  (CORRER, OTUKI, 2013),
+
+  REMONDI (2014)
+
+  REMONDI, Felipe Assan; CABRERA, Marcos Aparecido Sarria; SOUZA, Regina
+  Kazue Tanno de. Não adesão ao tratamento medicamentoso contínuo: prevalência e
+  determinantes em adultos de 40 anos e mais. Cadernos de Saúde Pública, v. 30, p.
+  126-136, 2014.
+
+Lista Sugestoes para melhorar a adesao ao uso de medicamentos
+TAVARES et al.(2013)
+
+Lista Outras Sugestoes para aumentar a adesao ao uso de medicamentos
+DA SILVA(2016)
+
+Dificuldade do idoso no uso de tecnologia
+TAVARES, M.(2012)
+
+Inclusao do idoso tem aumentado no uso de tecnologia Brasil
+(PAIVA, 2018) )(COSTA, 2018) 
+
+Inclusao do idoso tem aumentado no uso de tecnologia Mundo
+ANDERSON(2017)
+
+ANDERSON, Monica e PERRIN, Andrew. Technology use among seniors | Pew
+Research Center, 2017. Disponível em:
+<https://www.pewinternet.org/2017/05/17/technology-use-among-seniors/>. Acesso
+em: 13 jun. 2019.
+
+Lista algumas formas do uso da tecnologia
+KOCUREK(2009)
+
+Atualmente ja existem equipamentos que propoem o uso da tecnologia 
+para usar o idoso no uso do medicamento
+
+os equipamentosmais comuns serão citados para contextualizar com
+o trabalho proposto para diferenciar as limitacoes, beneficios
+e diferencas entre os existentes e o proposto
+
+equipamentos:
+   caixa organizadora
+      mostra beneficios e em seguida explora as falhas
+
+   caixa organizadora eletronica
+      lista varios modelos/precos e beneficios
+      nao estao disponiveis no mercado brasileiro
+      tornando dificil a aquisicao 
+
+   VAUR (1999). - Destacado por gerar insumos em pesquisa
+
+
+
+
+
+
