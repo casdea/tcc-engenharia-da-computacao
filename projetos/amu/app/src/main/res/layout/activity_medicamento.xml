@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="100dp"
             android:layout_marginEnd="8dp"
             android:text="@string/nome_comercial"
             android:textColor="#034f4f"
@@ -134,12 +134,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
-            app:layout_constraintEnd_toStartOf="@+id/textView33"
+            app:layout_constraintBottom_toTopOf="@+id/txvCorSelecionada"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7">
 
@@ -156,21 +156,24 @@
 
         <TextView
             android:id="@+id/txvCorSelecionada"
-            android:layout_width="80dp"
-            android:layout_height="53dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:contentDescription="@string/area_cor_selecionada"
+            android:minHeight="48dp"
             android:padding="5dp"
-            android:textSize="16sp"
+            android:text="@string/clique_na_area_nao_lado_para_escolher_numa_cor"
+            android:textColor="@color/black"
+            android:textIsSelectable="true"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView33"
-            app:layout_constraintTop_toBottomOf="@+id/textView7"
-            android:textIsSelectable="true" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento" />
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -184,7 +187,7 @@
             app:layout_constraintBottom_toTopOf="@+id/textView9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento">
+            app:layout_constraintTop_toBottomOf="@+id/txvCorSelecionada">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInpTextQtdeEmbalagem"
@@ -218,7 +221,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/textInpLayHorarioPrimeiraDose"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9">
 
@@ -242,9 +246,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView14"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textInpLayInicioAdministracao"
-            app:layout_constraintTop_toBottomOf="@+id/textView9">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInpLayInicioAdministracao">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInpTextHorarioPrimeiraDose"
@@ -262,10 +268,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="100dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/intervalo"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/spIntervalos"
             app:layout_constraintEnd_toEndOf="parent"
@@ -318,7 +325,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/textInpLayQtdeDose"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16">
 
@@ -340,8 +347,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textInpLayDosesDia"
-            app:layout_constraintTop_toBottomOf="@+id/textView16">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInpLayDosesDia">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInpTextQtdeDose"
@@ -364,40 +371,22 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInpLayDosesDia" />
+            app:layout_constraintTop_toBottomOf="@+id/textInpLayQtdeDose" />
 
         <Button
             android:id="@+id/btnConfirmar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="149dp"
-            android:layout_marginEnd="156dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:contentDescription="@string/Botao_Confirmar_Registro_Medicamento"
             android:text="@string/confirmar"
             android:textAllCaps="false"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textView11"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInpLayDosesDia"
-            app:layout_constraintVertical_bias="0.26" />
-
-        <TextView
-            android:id="@+id/textView33"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/clique_na_area_nao_lado_para_escolher_numa_cor"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
-            app:layout_constraintEnd_toStartOf="@+id/txvCorSelecionada"
-            app:layout_constraintStart_toEndOf="@+id/textInpLayApelidoMedicamento"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

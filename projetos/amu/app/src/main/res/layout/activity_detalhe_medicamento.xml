@@ -95,24 +95,57 @@
 
         <TextView
             android:id="@+id/txvCorSelecionada"
-            android:layout_width="80dp"
-            android:layout_height="48dp"
+            android:layout_width="784dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/area_cor_selecionada"
+            android:text=" Clique na área\nao lado para\nselecionar uma cor"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="186dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInpLayApelidoMedicamento"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvNomeComercial">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInpTextApelido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/apelido_medicamento"
+                android:text="@string/exemplo_nome_fantasia" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInpLayQtdeEmbalagem"
+            android:layout_width="784dp"
+            android:layout_height="59dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:contentDescription="@string/area_cor_selecionada"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/imbRemover"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView34"
-            app:layout_constraintTop_toBottomOf="@+id/txvNomeComercial" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="378dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInpTextQtdeEmbalagem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/qtde_embalagem"
+                android:text="@string/exemplo_qtde_medicamento" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/textView22"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/detalhes"
@@ -176,113 +209,6 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/abas_visualizacao_pagina" />
         </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInpLayApelidoMedicamento"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textInpLayQtdeEmbalagem"
-            app:layout_constraintEnd_toStartOf="@+id/textView34"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txvNomeComercial">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInpTextApelido"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/apelido_medicamento"
-                android:text="@string/exemplo_nome_fantasia" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInpLayQtdeEmbalagem"
-            android:layout_width="0dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView22"
-            app:layout_constraintEnd_toStartOf="@+id/textInputLayoutEstoque"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInpTextQtdeEmbalagem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/qtde_embalagem"
-                android:text="@string/exemplo_qtde_medicamento" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutEstoque"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView22"
-            app:layout_constraintEnd_toStartOf="@+id/imbAdicionar"
-            app:layout_constraintStart_toEndOf="@+id/textInpLayQtdeEmbalagem"
-            app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInpTextQtdeEstoque"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/estoque"
-                android:inputType="number"
-                android:text="@string/valor_zero" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageButton
-            android:id="@+id/imbAdicionar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/entrada_no_estoque"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toStartOf="@+id/imbRemover"
-            app:layout_constraintStart_toEndOf="@+id/textInputLayoutEstoque"
-            app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento"
-            app:srcCompat="@drawable/ic_baseline_add_24" />
-
-        <ImageButton
-            android:id="@+id/imbRemover"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/saida_do_estoque"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imbAdicionar"
-            app:layout_constraintTop_toBottomOf="@+id/textInpLayApelidoMedicamento"
-            app:srcCompat="@drawable/ic_baseline_remove_24" />
-
-        <TextView
-            android:id="@+id/textView34"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="24dp"
-            android:text="Clique na area \n ao lado para escolher\n uma cor"
-            app:layout_constraintBottom_toTopOf="@+id/imbAdicionar"
-            app:layout_constraintEnd_toStartOf="@+id/txvCorSelecionada"
-            app:layout_constraintStart_toEndOf="@+id/textInpLayApelidoMedicamento"
-            app:layout_constraintTop_toBottomOf="@+id/txvNomeComercial" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
