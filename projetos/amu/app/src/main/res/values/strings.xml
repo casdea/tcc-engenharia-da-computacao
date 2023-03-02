@@ -34,6 +34,7 @@
     <string name="apelido_medicamento">Apelido do Medicamento</string>
     <string name="click_aqui">Click aqui para\nSelecionar a COR</string>
     <string name="horarios">Horários</string>
+    <string name="Estoque">Estoque</string>
     <string name="registro_horarios">Registro de Horário</string>
     <string name="detalhes">Detalhes</string>
     <string name="inicio_administracao">Inicio da Administração</string>
@@ -115,8 +116,8 @@
     <string name="sair">Sair</string>
     <string name="novoMedicamento">Novo Medicamento</string>
     <string name="novoHorario">Novo Horário</string>
-    <string name="exemplo_qtde_cadastrados">10</string>
-    <string name="exemplo_horario_vencido">3</string>
+    <string name="exemplo_qtde_cadastrados">0</string>
+    <string name="exemplo_horario_vencido">0</string>
     <string name="lista_de_medicamentos_cadastrados">Lista de Medicamentos Cadastrados</string>
     <string name="area_cor_selecionada">Área da Cor</string>
     <string name="clique_na_area_nao_lado_para_escolher_numa_cor">Clique aqui para selecionar uma cor</string>

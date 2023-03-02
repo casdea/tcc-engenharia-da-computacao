@@ -90,8 +90,8 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
         prepararLista();
 
-        if (timerHandler != null && timerRunnable != null)
-            timerHandler.postDelayed(timerRunnable, 0);
+      //  if (timerHandler != null && timerRunnable != null)
+      ///      timerHandler.postDelayed(timerRunnable, 15000);
 
 
     }
@@ -206,6 +206,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
                 else
                     txvListaVazia.setVisibility(View.VISIBLE);
             }
+            verificarAlarme();
 
             MedicamentoAdapter medicamentoAdapter = new MedicamentoAdapter(lista);
 
@@ -306,8 +307,8 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     @Override
     protected void onStart() {
         super.onStart();
-        if (timerHandler != null && timerRunnable != null)
-            timerHandler.postDelayed(timerRunnable, 0);
+   //    if (timerHandler != null && timerRunnable != null)
+  //          timerHandler.postDelayed(timerRunnable, 0);
 
 
     }

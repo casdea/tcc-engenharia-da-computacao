@@ -58,7 +58,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
 
     TextInputEditText textInpTextApelido;
     TextInputEditText textInpTextQtdeEmbalagem;
-    TextInputEditText textInpTextQtdeEstoque;
+ //   TextInputEditText textInpTextQtdeEstoque;
     TextView txvCorSelecionada;
     String cor;
     FragmentPagerItemAdapter adapter;
@@ -86,17 +86,17 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
         findViewById(R.id.layoutConfirmar).setOnClickListener(this);
         findViewById(R.id.textInpLayApelidoMedicamento).setOnClickListener(this);
         findViewById(R.id.textInpLayQtdeEmbalagem).setOnClickListener(this);
-        findViewById(R.id.textInputLayoutEstoque).setOnClickListener(this);
+     //   findViewById(R.id.textInputLayoutEstoque).setOnClickListener(this);
 
         TextView txvNomeComercial = findViewById(R.id.txvNomeComercial);
         txvCorSelecionada = findViewById(R.id.txvCorSelecionada);
         textInpTextApelido = findViewById(R.id.textInpTextApelido);
         textInpTextQtdeEmbalagem = findViewById(R.id.textInpTextQtdeEmbalagem);
-        textInpTextQtdeEstoque = findViewById(R.id.textInpTextQtdeEstoque);
+    //    textInpTextQtdeEstoque = findViewById(R.id.textInpTextQtdeEstoque);
 
         textInpTextApelido.setOnClickListener(this);
         textInpTextQtdeEmbalagem.setOnClickListener(this);
-        textInpTextQtdeEstoque.setOnClickListener(this);
+     //   textInpTextQtdeEstoque.setOnClickListener(this);
 
         txvNomeComercial.setText(App.medicamentoDTO.getNomeComercial());
         textInpTextApelido.setText(App.medicamentoDTO.getNomeFantasia());
@@ -109,8 +109,11 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
         Button btnUtilizar = findViewById(R.id.btnUtilizar);
         btnUtilizar.setOnClickListener(this);
 
-        findViewById(R.id.imbAdicionar).setOnClickListener(this);
-        findViewById(R.id.imbRemover).setOnClickListener(this);
+        Button btnHorario = findViewById(R.id.btnHorario);
+        btnHorario.setOnClickListener(this);
+
+        //    findViewById(R.id.imbAdicionar).setOnClickListener(this);
+     //   findViewById(R.id.imbRemover).setOnClickListener(this);
 
         cor = App.medicamentoDTO.getCor();
 
@@ -150,7 +153,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
             Objects.requireNonNull(getSupportActionBar()).hide();
             textInpTextApelido.setFocusable(false);
             textInpTextQtdeEmbalagem.setFocusable(false);
-            textInpTextQtdeEstoque.setFocusable(false);
+       //     textInpTextQtdeEstoque.setFocusable(false);
             btnAlterar.setEnabled(true);
         }
 
@@ -230,6 +233,11 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
         return a1 || a2 || a3;
     }
 
+    final ActivityResultLauncher<Intent> mnutencaoHorarioActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+            });
+
     @Override
     public void onClick(View view) {
         if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
@@ -241,11 +249,25 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
                 alterarMedicamento();
             } else if (view.getId() == R.id.btnUtilizar) {
                 abrirDialogUtilizacao();
-            } else if (view.getId() == R.id.imbAdicionar) {
+            } else if (view.getId() == R.id.btnHorario) {
+
+                if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
+                    //gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, 0);
+                }
+                else {
+                    App.horarioDTO = null;
+                    Intent intent = new Intent(this, HorarioActivity.class);
+                    mnutencaoHorarioActivityResultLauncher.launch(intent);
+                }
+
+
+            }
+
+            /* else if (view.getId() == R.id.imbAdicionar) {
                 abrirDialogEntradaEstoque();
             } else if (view.getId() == R.id.imbRemover) {
                 abrirDialogSaidaEstoque();
-            }
+            } */
         }
     }
 
@@ -331,9 +353,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
 
     public void abrirDialogEntradaEstoque() {
 
-        if (App.integracaoUsuario.validarEntradaEstoque(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()))
+      /*  if (App.integracaoUsuario.validarEntradaEstoque(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()))
             return;
-
+*/
         //Instanciar AlertDialog
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
@@ -363,7 +385,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
         App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
         App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
         App.estoqueDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
-        App.estoqueDTO.setEntrada(Integer.parseInt(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()));
+     //   App.estoqueDTO.setEntrada(Integer.parseInt(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()));
         App.estoqueDTO.setSaida(0);
         App.estoqueDTO.setSaldo(0);
 
@@ -373,9 +395,9 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
 
     public void abrirDialogSaidaEstoque() {
 
-        if (App.integracaoUsuario.validarSaidaEstoque(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()))
+  /*      if (App.integracaoUsuario.validarSaidaEstoque(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()))
             return;
-
+*/
         //Instanciar AlertDialog
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
@@ -406,7 +428,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
         App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
         App.estoqueDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
         App.estoqueDTO.setEntrada(0);
-        App.estoqueDTO.setSaida(Integer.parseInt(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()));
+   //     App.estoqueDTO.setSaida(Integer.parseInt(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()));
         App.estoqueDTO.setSaldo(0);
 
         GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
@@ -512,20 +534,20 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
 
             if (qtde == 0) return;
 
-            textInpTextQtdeEstoque.setText(String.valueOf(qtde));
+         //   textInpTextQtdeEstoque.setText(String.valueOf(qtde));
 
-            if (App.integracaoUsuario.validarEntradaEstoque(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()))
-                return;
+//            if (App.integracaoUsuario.validarEntradaEstoque(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()))
+ //               return;
             efetuarEntradaEstoque();
         } else if (numeroAcao == Constantes.ACAO_VOZ_SAIDA_ESTOQUE) {
             int qtde = App.integracaoUsuario.obterQtde((String) parametro, ComandosVoz.SAIDA_ESTOQUE);
 
             if (qtde == 0) return;
 
-            textInpTextQtdeEstoque.setText(String.valueOf(qtde));
+        //    textInpTextQtdeEstoque.setText(String.valueOf(qtde));
 
-            if (App.integracaoUsuario.validarSaidaEstoque(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()))
-                return;
+  //          if (App.integracaoUsuario.validarSaidaEstoque(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()))
+   //             return;
             efetuarSaidaEstoque();
         } else if (numeroAcao == Constantes.ACAO_AVISAR_SALDO_ATUALIZADO) {
             App.integracaoUsuario.avisarSaldoAtualizadoComSucesso(((EstoqueDTO) parametro).getSaldo());

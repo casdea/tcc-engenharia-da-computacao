@@ -6,12 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".activity.HorarioActivity">
 
+    <Button
+        android:id="@+id/btnConfirmar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/Botao_Confirmar_Registro_Medicamento"
+        android:text="@string/confirmar"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView9"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="#D1CA48"
         android:text="@string/horarios"
@@ -21,7 +35,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btnConfirmar" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInpLayInicioAdministracao"
@@ -39,11 +53,11 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:enabled="true"
-            android:inputType="date"
+            android:focusable="true"
             android:hint="@string/inicio_administracao"
+            android:inputType="date"
             android:text="@string/exemplo_data_hora"
-            android:textStyle="bold"
-            android:focusable="true" />
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -171,22 +185,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:minHeight="48dp"
         android:contentDescription="Ativado ou Desativado"
+        android:minHeight="48dp"
         android:text="@string/ativo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInpLayDosesDia" />
-
-    <Button
-        android:id="@+id/btnConfirmar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:contentDescription="@string/Botao_Confirmar_Registro_Medicamento"
-        android:text="@string/confirmar"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInpLayQtdeDose" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

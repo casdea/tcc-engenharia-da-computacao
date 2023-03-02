@@ -53,7 +53,7 @@ public class BemVindoActivity extends IntroActivity implements View.OnClickListe
         {
             App.usuario = null;
             startActivity(new Intent(this, UsuarioActivity.class));
-            finish();
+            //finish();
         }
     }
 

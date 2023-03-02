@@ -91,7 +91,7 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
                     }
                 }));
 
-        FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
+/*        FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view1 -> {
             if (App.tipoPerfil.equals(TipoPerfil.PCD_VISAO_REDUZIDA)) {
                 gerenteServicosListener.executarAcao(Constantes.ACAO_CHAMAR_COMANDO_VOZ, 0);
@@ -102,7 +102,7 @@ public class HorariosFragment extends Fragment implements DetalheMedicamentoActi
                 mnutencaoHorarioActivityResultLauncher.launch(intent);
             }
         });
-
+*/
         return view;
     }
 

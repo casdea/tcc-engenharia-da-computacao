@@ -35,8 +35,9 @@
                 android:layout_weight="1"
                 android:text="@string/nova_consulta"
                 android:textAllCaps="false"
-                app:icon="@drawable/ic_outline_autorenew_24"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:icon="@drawable/ic_outline_autorenew_24" />
 
             <Button
                 android:id="@+id/btnCapturarDados"
@@ -46,8 +47,9 @@
                 android:layout_weight="1"
                 android:text="@string/capturar_dados"
                 android:textAllCaps="false"
-                app:icon="@drawable/ic_baseline_check_24"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:icon="@drawable/ic_baseline_check_24" />
 
         </LinearLayout>
 

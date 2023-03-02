@@ -78,7 +78,7 @@ public class MedicamentoActivity extends AppCompatActivity implements PickTimeLi
         App.escutandoComando = false;
 
         ActionBar actionBar = getSupportActionBar();
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
