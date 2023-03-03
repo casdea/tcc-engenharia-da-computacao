@@ -55,6 +55,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="alterar">Alterar</string>
     <string name="utilizar">Utilizar</string>
+    <string name="somar">Somar</string>
+    <string name="Diminuir">Diminuir</string>
     <string name="alarmes">Alarmes</string>
     <string name="data_hora">Data/Hora</string>
     <string name="entrada">Entrada</string>
