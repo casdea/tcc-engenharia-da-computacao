@@ -214,13 +214,20 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     private String findCorrespondencia(String[] palavras, String palavra) {
         String palavraSemAcento = StringUtil.removerAcentos(palavra);
 
+        int maiorCorrespondencia = 0;
+        String retorno = "";
+
         for (String s : palavras) {
-            if (s.equals(palavraSemAcento.toUpperCase()) || palavraSemAcento.toUpperCase().contains(s)) {
-                return s;
+            if (s.equals(palavraSemAcento.toUpperCase()) || palavraSemAcento.toUpperCase().contains(s))
+            {
+                if (s.length()>maiorCorrespondencia) {
+                    retorno = s;
+                    maiorCorrespondencia = s.length();
+                }
             }
         }
 
-        return "";
+        return retorno;
     }
 
     private int findNumero(String texto) {
