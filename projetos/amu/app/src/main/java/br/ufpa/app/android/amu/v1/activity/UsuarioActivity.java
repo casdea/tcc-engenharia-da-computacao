@@ -39,14 +39,16 @@ public class UsuarioActivity extends AppCompatActivity implements GerenteServico
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_usuario);
+        setContentView(R.layout.activity_usuario2);
         App.context = this;
-/*
+
         ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         // showing the back button in action bar
-        actionBar.setDisplayHomeAsUpEnabled(true);
-*/
+
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+
         campoNome = findViewById(R.id.editNome);
         campoEmail = findViewById(R.id.editEmail);
         campoSenha = findViewById(R.id.editSenha);
