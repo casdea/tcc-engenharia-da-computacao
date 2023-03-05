@@ -60,7 +60,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="#733030"
+            android:background="#5C0303"
             android:text="@string/nome_comercial"
             android:textColor="#034f4f"
             android:textSize="20sp"
