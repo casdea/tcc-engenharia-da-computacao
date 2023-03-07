@@ -106,7 +106,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/via_administracao"
-                android:textColor="#034f4f"
+                android:textColor="#E91E63"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/txvViaAdministracao"
