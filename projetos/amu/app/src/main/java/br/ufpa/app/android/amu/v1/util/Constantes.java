@@ -42,8 +42,8 @@ public class Constantes {
     public static final int ACAO_VOZ_ALTERNAR_PERFIL = 39;
     public static final int ACAO_VOZ_FECHAR_APP = 40;
     public static final int ACAO_ALTERAR_ALARME_CONCLUIDO = 44;
-    public static final int ACAO_VOZ_COMANDOS_TELA_PRINCIPAL = 46;
-    public static final int ACAO_VOZ_COMANDOS_DETALHE_MEDICAMENTO = 47;
+    public static final int ACAO_VOZ_COMANDOS_TELA = 46;
+    public static final int ACAO_VOZ_TELA_ATUAL = 47;
     public static final int ACAO_VOZ_MONTAR_LISTA_ANVISA = 48;
 
     public static final String[] intervalos = new String[] {

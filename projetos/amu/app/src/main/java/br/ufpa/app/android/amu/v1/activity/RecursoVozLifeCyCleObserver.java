@@ -96,13 +96,13 @@ public class RecursoVozLifeCyCleObserver implements DefaultLifecycleObserver {
                                 break;
                             }
 
-                            case ComandosVoz.COMANDOS_DISPONIVEL_TELA_PRINCIPAL: {
-                                gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_COMANDOS_TELA_PRINCIPAL, text.get(0));
+                            case ComandosVoz.COMANDOS_DISPONIVEL_TELA: {
+                                gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_COMANDOS_TELA, text.get(0));
                                 break;
                             }
 
-                            case ComandosVoz.COMANDOS_DISPONIVEL_DETALHE_MEDICAMENTO: {
-                                gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_COMANDOS_DETALHE_MEDICAMENTO, text.get(0));
+                            case ComandosVoz.COMANDOS_TELA_ATUAL: {
+                                gerenteServicosListener.executarAcao(Constantes.ACAO_VOZ_TELA_ATUAL, text.get(0));
                                 break;
                             }
 

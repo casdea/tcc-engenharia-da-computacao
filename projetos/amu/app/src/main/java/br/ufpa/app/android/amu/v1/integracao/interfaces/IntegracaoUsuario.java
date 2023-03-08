@@ -56,4 +56,6 @@ public interface IntegracaoUsuario {
     void avisarSaidaApp();
 
     void dispararAlarme(String descricao);
+
+    void listarComandosTela(String[] comandos);
 }

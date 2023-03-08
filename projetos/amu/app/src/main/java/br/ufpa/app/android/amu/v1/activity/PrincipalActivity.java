@@ -90,8 +90,8 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
 
         prepararLista();
 
-      //  if (timerHandler != null && timerRunnable != null)
-      ///      timerHandler.postDelayed(timerRunnable, 15000);
+        if (timerHandler != null && timerRunnable != null)
+            timerHandler.postDelayed(timerRunnable, 15000);
 
 
     }
@@ -264,6 +264,15 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
         } else if (numeroAcao == Constantes.ACAO_VOZ_FECHAR_APP) {
             finish();
         }
+        else
+        if (numeroAcao == Constantes.ACAO_VOZ_COMANDOS_TELA) {
+            String[] comandos = {"ADMINISTRAR","COMANDOS DA TELA","DETALHE + NOME DO REMÉDIO","LISTAR","TELA ATUAL","SAIR"};
+            App.integracaoUsuario.listarComandosTela(comandos);
+        }
+        else
+        if (numeroAcao == Constantes.ACAO_VOZ_TELA_ATUAL) {
+            App.integracaoUsuario.falar("Você está na tela de Medicamentos Cadastrados");
+        }
     }
 
     @Override
@@ -307,9 +316,7 @@ public class PrincipalActivity extends AppCompatActivity implements GerenteServi
     @Override
     protected void onStart() {
         super.onStart();
-   //    if (timerHandler != null && timerRunnable != null)
-  //          timerHandler.postDelayed(timerRunnable, 0);
-
-
+       if (timerHandler != null && timerRunnable != null)
+            timerHandler.postDelayed(timerRunnable, 15000);
     }
 }

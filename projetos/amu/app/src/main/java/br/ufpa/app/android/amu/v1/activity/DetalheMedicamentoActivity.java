@@ -370,7 +370,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
         dialog.setIcon(android.R.drawable.ic_btn_speak_now);
 
         //Configura acoes para sim e nao
-        dialog.setPositiveButton("Sim", (dialog12, which) -> efetuarEntradaEstoque());
+        //dialog.setPositiveButton("Sim", (dialog12, which) -> efetuarEntradaEstoque(Integer.parseInt(textInpTextQtdeEstoque.getText()).toString())));
 
         dialog.setNegativeButton("Não", (dialog1, which) -> dialog1.cancel());
 
@@ -379,13 +379,13 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
         dialog.show();
     }
 
-    void efetuarEntradaEstoque() {
+    void efetuarEntradaEstoque(String qtde) {
         App.estoqueDTO = new EstoqueDTO();
         App.estoqueDTO.setIdEstoque("0");
         App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
         App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
         App.estoqueDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
-     //   App.estoqueDTO.setEntrada(Integer.parseInt(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()));
+        App.estoqueDTO.setEntrada(Integer.parseInt(Objects.requireNonNull(qtde)));
         App.estoqueDTO.setSaida(0);
         App.estoqueDTO.setSaldo(0);
 
@@ -412,7 +412,7 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
         dialog.setIcon(android.R.drawable.ic_btn_speak_now);
 
         //Configura acoes para sim e nao
-        dialog.setPositiveButton("Sim", (dialog12, which) -> efetuarSaidaEstoque());
+        //dialog.setPositiveButton("Sim", (dialog12, which) -> efetuarSaidaEstoque(Integer.parseInt(textInpTextQtdeEstoque.getText()).toString())));
 
         dialog.setNegativeButton("Não", (dialog1, which) -> dialog1.cancel());
 
@@ -421,14 +421,14 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
         dialog.show();
     }
 
-    void efetuarSaidaEstoque() {
+    void efetuarSaidaEstoque(String qtde) {
         App.estoqueDTO = new EstoqueDTO();
         App.estoqueDTO.setIdEstoque("0");
         App.estoqueDTO.setIdUsuario(App.usuario.getIdUsuario());
         App.estoqueDTO.setIdMedicamento(App.medicamentoDTO.getIdMedicamento());
         App.estoqueDTO.setDataHora(DataUtil.convertDateTimeToString(new java.util.Date()));
         App.estoqueDTO.setEntrada(0);
-   //     App.estoqueDTO.setSaida(Integer.parseInt(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()));
+        App.estoqueDTO.setSaida(Integer.parseInt(Objects.requireNonNull(qtde)));
         App.estoqueDTO.setSaldo(0);
 
         GerenteServicos gerenteServicos = new GerenteServicos(DetalheMedicamentoActivity.this);
@@ -534,11 +534,11 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
 
             if (qtde == 0) return;
 
-         //   textInpTextQtdeEstoque.setText(String.valueOf(qtde));
+            //textInpTextQtdeEstoque.setText(String.valueOf(qtde));
 
-//            if (App.integracaoUsuario.validarEntradaEstoque(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()))
- //               return;
-            efetuarEntradaEstoque();
+            if (App.integracaoUsuario.validarEntradaEstoque(Objects.requireNonNull(String.valueOf(qtde))))
+               return;
+            efetuarEntradaEstoque(Objects.requireNonNull(String.valueOf(qtde)));
         } else if (numeroAcao == Constantes.ACAO_VOZ_SAIDA_ESTOQUE) {
             int qtde = App.integracaoUsuario.obterQtde((String) parametro, ComandosVoz.SAIDA_ESTOQUE);
 
@@ -546,11 +546,20 @@ public class DetalheMedicamentoActivity extends AppCompatActivity
 
         //    textInpTextQtdeEstoque.setText(String.valueOf(qtde));
 
-  //          if (App.integracaoUsuario.validarSaidaEstoque(Objects.requireNonNull(textInpTextQtdeEstoque.getText()).toString()))
-   //             return;
-            efetuarSaidaEstoque();
+            if (App.integracaoUsuario.validarSaidaEstoque(Objects.requireNonNull(String.valueOf(qtde))))
+               return;
+            efetuarSaidaEstoque(Objects.requireNonNull(String.valueOf(qtde)));
         } else if (numeroAcao == Constantes.ACAO_AVISAR_SALDO_ATUALIZADO) {
             App.integracaoUsuario.avisarSaldoAtualizadoComSucesso(((EstoqueDTO) parametro).getSaldo());
+        }
+        else
+        if (numeroAcao == Constantes.ACAO_VOZ_COMANDOS_TELA) {
+            String[] comandos = {"COMANDOS DA TELA","ENTRADA + QUANTIDADE","ESTOQUE","HORÁRIO","SAÍDA + QUANTIDADE","TELA ATUAL","VOLTAR"};
+            App.integracaoUsuario.listarComandosTela(comandos);
+        }
+        else
+        if (numeroAcao == Constantes.ACAO_VOZ_TELA_ATUAL) {
+            App.integracaoUsuario.falar("Você está na tela Detalhe do Medicamento");
         }
     }
 

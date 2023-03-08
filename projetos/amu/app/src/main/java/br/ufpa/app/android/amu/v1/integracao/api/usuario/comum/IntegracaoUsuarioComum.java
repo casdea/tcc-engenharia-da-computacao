@@ -186,4 +186,9 @@ public class IntegracaoUsuarioComum implements IntegracaoUsuario {
     public void dispararAlarme(String descricao) {
 
     }
+
+    @Override
+    public void listarComandosTela(String[] comandos) {
+
+    }
 }

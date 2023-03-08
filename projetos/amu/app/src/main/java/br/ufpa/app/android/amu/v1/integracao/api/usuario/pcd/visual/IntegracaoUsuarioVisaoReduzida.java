@@ -56,42 +56,15 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     }
 
     private final String[] TEXTOS_VOZ_LISTA_MEDICAMENTO = {
-            "LISTA",
-            "LISTA DE MEDICAMENTO",
-            "LISTAGEM DE MEDICAMENTO",
-            "QUAIS MEDICAMENTOS TENHO",
-            "LISTE MINHA FARMARCIA",
-            "MINHA FARMACIA",
-            "O QUE TENHO NA MINHA FARMACIA",
-            "O QUE TENHO NA FARMACIA"
+            "LISTAR"
     };
 
     private final String[] TEXTOS_VOZ_DESCREVE_MEDICAMENTO = {
-            "DETALHE",
-            "DESCRICAO DO MEDICAMENTO",
-            "DESCRICAO DO ITEM",
-            "DESCREVA O MEDICAMENTO",
-            "DESCREVA O ITEM",
-            "EXPLIQUE O MEDICAMENTO",
-            "EXPLIQUE O ITEM",
-            "DETALHE O MEDICAMENTO",
-            "DETALHE MEDICAMENTO",
-            "DETALHE O ITEM",
-            "QUERO SABER TUDO SOBRE O MEDICAMENTO",
-            "QUERO SABER TUDO SOBRE O ITEM",
-            "QUERO SABER DETALHES DO MEDICAMENTO",
-            "QUERO SABER DETALHES DO ITEM"
+            "DETALHE"
     };
 
     private final String[] TEXTOS_VOZ_HORARIO_MEDICAMENTO = {
-            "HORARIO DO MEDICAMENTO",
-            "HORARIO",
-            "HORARIO DO ITEM",
-            "QUERO SABER HORARIO DO MEDICAMENTO",
-            "QUERO SABER HORARIO DO ITEM",
-            "DEVO TOMAR QUE HORAS O MEDICAMENTO",
-            "DEVO TOMAR QUE HORAS O REMEDIO",
-            "DEVO TOMAR QUE HORAS O ITEM",
+            "HORARIO"
     };
 
     private final String[] TEXTOS_VOZ_NUMEROS = {
@@ -128,22 +101,15 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     };
 
     private final String[] TEXTOS_VOZ_TELA_ANTERIOR = {
-            "TELA ANTERIOR",
             "VOLTAR"
     };
 
     private final String[] TEXTOS_VOZ_UTILIZACAO = {
-            "TOMEI",
-            "TOMEI REMEDIO",
-            "REMEDIO UTILIZADO",
-            "TOMEI A DOSE",
-            "UTILIZAR REMEDIO"
+            "UTILIZAR"
     };
 
     private final String[] TEXTOS_VOZ_ESTOQUE_ATUAL = {
-            "ESTOQUE",
-            "QUANTOS REMEDIOS TEM",
-            "QUANTOS FALTA PRA ACABAR"
+            "ESTOQUE"
     };
 
     private final String[] TEXTOS_VOZ_ENTRADA_ESTOQUE = {
@@ -155,23 +121,23 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     };
 
     private final String[] TEXTOS_VOZ_ALTERNAR_PERFIL = {
-            "ALTERAR PERFIL",
-            "ADMINISTRAR",
-            "MUDAR PERFIL",
-            "GERENCIAR",
-            "USO ADMINISTRADOR",
-            "CONFIGURAR"
+            "ADMINISTRAR"
     };
 
     private final String[] TEXTOS_VOZ_FECHAR_APP = {
-            "SAIR",
-            "FECHAR APLICATIVO",
-            "SAIR DO APLICATIVO"
+            "SAIR"
     };
 
     private final String[] TEXTOS_VOZ_PESQUISAR_ANVISA = {
-            "PESQUISAR",
-            "PESQUISAR MEDICAMENTO"
+            "PESQUISAR"
+    };
+
+    private final String[] TEXTOS_VOZ_COMANDOS = {
+            "COMANDOS DA TELA",
+    };
+
+    private final String[] TEXTOS_VOZ_TELA = {
+            "TELA ATUAL",
     };
 
     private String[] getArrayVoz(int acao) {
@@ -266,6 +232,10 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
             return ComandosVoz.SAIR;
         } else if (findTexto(TEXTOS_VOZ_PESQUISAR_ANVISA, texto)) {
             return ComandosVoz.PESQUISAR_MEDICAMENTOS_ANVISA;
+        } else if (findTexto(TEXTOS_VOZ_COMANDOS, texto)) {
+            return ComandosVoz.COMANDOS_DISPONIVEL_TELA;
+        } else if (findTexto(TEXTOS_VOZ_TELA, texto)) {
+            return ComandosVoz.COMANDOS_TELA_ATUAL;
         }
 
         return -1;
@@ -571,5 +541,18 @@ public class IntegracaoUsuarioVisaoReduzida implements IntegracaoUsuario {
     @Override
     public void dispararAlarme(String descricao) {
         falar(descricao);
+    }
+
+    @Override
+    public void listarComandosTela(String[] comandos) {
+        reproduzirVoz(textoLido, "Os comandos a seguir estão disponiveis para a tela atual: ");
+
+        ThreadUtil.esperar(ThreadUtil.HUM_SEGUNDO);
+
+        for (String comando : comandos) {
+            reproduzirVoz(textoLido, comando);
+
+            ThreadUtil.esperar(ThreadUtil.HUM_SEGUNDO);
+        }
     }
 }

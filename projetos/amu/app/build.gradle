@@ -11,8 +11,8 @@ android {
         applicationId "br.ufpa.app.android.amu.v1"
         minSdk 21
         targetSdk 33
-        versionCode 107
-        versionName 'Versão de Teste 1.07'
+        versionCode 108
+        versionName 'Versão de Teste 1.08'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
