@@ -137,6 +137,7 @@
             android:id="@+id/rbUsuarioIdoso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:text="@string/usuario_idoso"
             android:textSize="14sp" />
 
@@ -144,6 +145,7 @@
             android:id="@+id/rbUsuarioSurdoMudo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:text="@string/usuario_surdo_e_mudo"
             android:textSize="14sp" />
 
@@ -158,6 +160,7 @@
             android:id="@+id/rbUsuarioTea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:text="@string/usuario_com_tea"
             android:textSize="14sp" />
 
